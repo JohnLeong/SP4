@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Game State Management">
+      <UniqueIdentifier>{9a6248ec-ad50-48c8-831a-3e31d5971492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game State Management\States">
+      <UniqueIdentifier>{d3bf3453-0e2b-481a-927c-b53bf8b47b2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{999e0a2b-5f81-4abf-8d16-65282396b306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game State Management\Scenes">
+      <UniqueIdentifier>{eccc683b-7363-4c3d-b7c2-275eb155a194}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game State Management\Scenes\Header Files">
+      <UniqueIdentifier>{29466555-367a-430b-a6fa-4ffbc0d55527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game State Management\Scenes\Source Files">
+      <UniqueIdentifier>{07406f1b-ae9c-47a6-a11b-6753e737eace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game State Management\States\Header Files">
+      <UniqueIdentifier>{392884f7-c7ed-4727-98e5-9519165fe994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game State Management\States\Source Files">
+      <UniqueIdentifier>{b29680cd-541f-4175-abec-bb7d2f25f6b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{4b57ce7b-317b-47a3-bb23-3908fb8b96c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{ead5c267-47ae-41b9-b702-cb35f988a667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh Tools">
+      <UniqueIdentifier>{a720fc85-01c2-4f1b-b996-fca243db0bb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TileMap">
+      <UniqueIdentifier>{16ebf384-ea11-4bfc-bca1-844dcc9f4572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{7bf61aa8-cc06-4ce4-bcfa-0256e2747997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Loaders">
+      <UniqueIdentifier>{b4223128-b404-477f-804d-55d7c6b9ee97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneMenu.cpp">
+      <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneOptions.cpp">
+      <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScenePlay.cpp">
+      <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneSplash.cpp">
+      <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\GameStateManager.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\MenuState.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\OptionsState.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\PlayState.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\SplashState.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera3.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadTGA.cpp">
+      <Filter>Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadOBJ.cpp">
+      <Filter>Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Mesh Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshBuilder.cpp">
+      <Filter>Mesh Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility.cpp">
+      <Filter>Mesh Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\shader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map.cpp">
+      <Filter>TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayInfo3PV.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LuaScript.cpp">
+      <Filter>Lua</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\SceneSplash.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneMenu.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneOptions.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScenePlay.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\GameStateManager.h">
+      <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\MenuState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\OptionsState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\PlayState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\SplashState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera3.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadOBJ.h">
+      <Filter>Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadTGA.h">
+      <Filter>Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshBuilder.h">
+      <Filter>Mesh Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Mesh Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility.h">
+      <Filter>Mesh Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vertex.h">
+      <Filter>Mesh Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Mesh Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Light.h">
+      <Filter>Mesh Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\shader.hpp">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Map.h">
+      <Filter>TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayInfo3PV.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LuaScript.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
