@@ -1,6 +1,8 @@
 #pragma once
 #include "Vector3.h"
 #include "Mesh.h"
+#include "Mtx44.h"
+#include "Camera3.h"
 
 class CPlayInfo3PV
 {
@@ -13,101 +15,59 @@ public:
 		GEO_AVATAR,
 		NUM_GEOMETRY,
 	};
+	Camera3 camera;
+	void Init(void);									// Initialise this class instance
 
-	// Initialise this class instance
-	void Init(void);
-
-	// Set Model
-	bool SetModel( Mesh* theAvatarMesh );
-
-	// Returns true if the player is on ground
-	bool isOnGround(void);
-	// Returns true if the player is jumping upwards
-	bool isJumpUpwards(void);
-	// Returns true if the player is on freefall
-	bool isFreeFall(void);
-	// Set the player's status to free fall mode
-	void SetOnFreeFall(bool isOnFreeFall);
-	// Set the player to jumping upwards
-	void SetToJumpUpwards(bool isOnJumpUpwards);
-	// Stop the player's movement
-	void SetToStop(void);
-	// Set position x of the player
-	void SetPos_x(float pos_x);
-	// Set position y of the player
-	void SetPos_y(float pos_y);
-	// Set position z of the player
-	void SetPos_z(float pos_y);
-	// Set Jumpspeed of the player
-	void SetJumpspeed(float jumpspeed);
+	bool SetModel( Mesh* theAvatarMesh );				// Set Model
+	bool isOnGround(void);								// Returns true if the player is on ground
+	bool isJumpUpwards(void);							// Returns true if the player is jumping upwards
+	bool isFreeFall(void);								// Returns true if the player is on freefall
+	
+	void SetOnFreeFall(bool isOnFreeFall);				// Set the player's status to free fall mode
+	void SetToJumpUpwards(bool isOnJumpUpwards);		// Set the player to jumping upwards
+	void SetToStop(void);								// Stop the player's movement
+	void SetPos_x(float pos_x);							// Set position x of the player
+	void SetPos_y(float pos_y);							// Set position y of the player
+	void SetPos_z(float pos_y);							// Set position z of the player
+	void SetJumpspeed(int jumpspeed);					// Set Jumpspeed of the player
 
 	// Update Movements
 	void MoveFrontBack(const bool mode, const float timeDiff);
 	void MoveLeftRight(const bool mode, const float timeDiff);
-	virtual void TurnLeft(const double dt);
-	virtual void TurnRight(const double dt);
-	virtual void LookUp(const double dt);
-	virtual void LookDown(const double dt);
 
-	virtual void Pitch(const double dt);
-	virtual void Yaw(const double dt);
+	float GetPos_x(void);									// Get position x of the player
+	float GetPos_y(void);									// Get position y of the player
+	float GetPos_z(void);									// Get position z of the player
+	int GetJumpspeed(void);								// Get Jumpspeed of the player
+	
+	Vector3 GetPosition();								// Get position of the player
+	Vector3 GetDirection();								// Get direction of the player
+		
+	void UpdateJumpUpwards();							// Update Jump Upward
+	void UpdateFreeFall();								// Update FreeFall
+	void UpdateMovement(const unsigned char key,		// Update
+		const bool status = true);
+	void Update(double dt);								// Update
 
-	// Get position x of the player
-	float GetPos_x(void);
-	// Get position y of the player
-	float GetPos_y(void);
-	// Get position z of the player
-	float GetPos_z(void);
-	// Get position of the player
-	Vector3 GetPosition();
-	// Get direction of the player
-	Vector3 GetDirection();
-	// Get Jumpspeed of the player
-	float GetJumpspeed(void);
 
-	// Update Jump Upwards
-	void UpdateJumpUpwards();
-	// Update FreeFall
-	void UpdateFreeFall();
-	// Update
-	void UpdateMovement(const unsigned char key, const bool status = true);
-	// Update
-	void Update(double dt);
+	Mesh*	theAvatarMesh;								// Avatar's Mesh
 
-	// Reset the avatar to default settings
-	void Reset();
-
-	// Constrain the position of the Hero to within the border
-	void ConstrainHero(const int leftBorder, const int rightBorder, 
-					   const int topBorder, const int bottomBorder, 
-					   float timeDiff);
-
-	// Avatar's Mesh
-	Mesh*	theAvatarMesh;
-
-	void ReloadCurrentWep(void);
-	void ReloadPaintGun(void);
-	void ReloadActGun(void);
-	void ChangeWeapon(void);
-	bool GetCurrentWep(void);
-	int GetCurrentWepAmmo(void);
-	void Shoot(void);
-
-	bool m_bReloading;
-	bool m_bCanShoot;
+	float acceleration;
+	float velocity;
 
 private:
 	// Hero's information
 	Vector3 curPosition;
-	Vector3 curDirection;
-	float jumpspeed;
+	Vector3 curDirection;	// curDirection = TransformationMatrix * curDirection;
+							// TransformationMatrix = [cos -sin 0 0]
+							//						  [ 0    0  1 0]
+							//						  [sin  cos 0 0]
+							//						  [ 0    0  0 1]
 
+	Mtx44 camRotation;
+	int jumpspeed;
 	bool myKeys[255];
 
-	int m_iPaintGunAmmo;
-	int m_iActGunAmmo;
-	bool m_bCurrentWeapon;	//true = paintgun, false = actgun
-	float m_fReloadTimer;
-	float m_fShootTimer;
+	Vector3 up, right;
 };
 

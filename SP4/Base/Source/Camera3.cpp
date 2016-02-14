@@ -4,7 +4,6 @@
 
 // The default camera speed
 static const float CAMERA_SPEED = 200.f;
-const float m_fTPVCameraOffset = 30.00f;	// Offset distance for the camera from the target
 
 /********************************************************************************
  Constructor
@@ -55,6 +54,8 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 
 	// Maximum movement speed
 	CAMERA_ACCEL = 10.0f;
+
+	m_fTPVCameraOffset = 30.00f;
 }
 
 /********************************************************************************
@@ -136,23 +137,25 @@ void Camera3::Update(double dt)
 }
 
 /********************************************************************************
- Update the camera for Third Person View
- Vector3 newPosition is the new position which the camera is to be based on
- ********************************************************************************/
-void Camera3::UpdatePosition(Vector3 newPosition, Vector3 newDirection)
-{
-	position = newPosition - newDirection.Normalized() * m_fTPVCameraOffset;
-	position.y += 20.f;
-	target = newPosition;// + newDirection.Normalized() * m_fTPVCameraOffset;
-	target.y += 15.f;
-}
-
-/********************************************************************************
  Update the camera status
  ********************************************************************************/
 void Camera3::UpdateStatus(const unsigned char key, const bool status)
 {
 	myKeys[key] = status;
+}
+
+/********************************************************************************
+Update the camera for Third Person View
+Vector3 newPosition is the new position which the camera is to be based on
+********************************************************************************/
+void Camera3::UpdatePosition(Vector3 newPosition, Vector3 newDirection)
+{
+	position = newPosition - newDirection.Normalized() * m_fTPVCameraOffset;
+	target = newPosition;
+
+	Vector3 right = Vector3(newDirection.x, 0, newDirection.z).Normalized().Cross(Vector3(0, 1, 0));
+	position += right * 5;
+	target += right * 5;
 }
 
 /********************************************************************************
@@ -415,7 +418,7 @@ void Camera3::UpdateJump(const double dt)
 	if (m_bJumping == true)
 	{
 		// Factor in gravity
-		JumpVel += GRAVITY * (float)dt;
+		JumpVel += GRAVITY * dt;
 
 		// Update the camera and target position
 		position.y += JumpVel * (float)dt;

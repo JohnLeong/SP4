@@ -51,7 +51,7 @@ public:
 	float MoveVel_S;
 	float MoveVel_A;
 	float MoveVel_D;
-
+	float m_fTPVCameraOffset;
 private:
 	bool myKeys[255];
 

@@ -1,17 +1,10 @@
 #include "PlayInfo3PV.h"
 #include "MeshBuilder.h"
-#include "Mtx44.h"
 #include "Application.h"
-
-#define MaxPaintgunAmmo 5
-#define MaxActgunAmmo 5
-#define ShootCD 0.2f
-#define ReloadCD 1.f
 
 CPlayInfo3PV::CPlayInfo3PV(void)
 	: theAvatarMesh(NULL)
 	, jumpspeed(0)
-	, m_bCurrentWeapon(true)
 {
 	Init();
 }
@@ -31,19 +24,15 @@ void CPlayInfo3PV::Init(void)
 {
 	curPosition.Set( 0, 0, 0);
 	curDirection.Set( 0, 0, 1 );
+	camRotation.SetToRotation(0, 0, 1, 0);
+
+	up = Vector3(0, 1, 0);
+	right = curDirection.Cross(up);
 
 	// Initialise the Avatar's movement flags
 	for(int i=0; i<255; i++){
 		myKeys[i] = false;
 	}
-
-	ReloadActGun();
-	ReloadPaintGun();
-
-	m_fReloadTimer = 0.f;
-	m_fShootTimer = 0.f;
-	m_bReloading = false;;
-	m_bCanShoot = true;
 }
 
 // Set Model
@@ -111,7 +100,7 @@ void CPlayInfo3PV::SetPos_z(float pos_z)
 }
 
 // Set Jumpspeed of the player
-void CPlayInfo3PV::SetJumpspeed(float jumpspeed)
+void CPlayInfo3PV::SetJumpspeed(int jumpspeed)
 {
 	this->jumpspeed = jumpspeed;
 }
@@ -127,17 +116,14 @@ void CPlayInfo3PV::SetToStop(void)
  ********************************************************************************/
 void CPlayInfo3PV::MoveFrontBack(const bool mode, const float timeDiff)
 {
+	Vector3 temp = Vector3(curDirection.x, 0, curDirection.z).Normalized();
 	if (mode)
 	{
-		curPosition -= curDirection.Normalized() * 200.f * timeDiff;
-		curPosition.y = 0.f;
-		//curDirection += curPosition;
+		curPosition -= temp * (float) (100.0f * timeDiff);
 	}
 	else
 	{
-		curPosition += curDirection.Normalized() * 200.f * timeDiff;
-		curPosition.y = 0.f;
-		//curDirection += curPosition;
+		curPosition += temp * (float) (100.0f * timeDiff);
 	}
 }
 
@@ -146,110 +132,20 @@ void CPlayInfo3PV::MoveFrontBack(const bool mode, const float timeDiff)
  ********************************************************************************/
 void CPlayInfo3PV::MoveLeftRight(const bool mode, const float timeDiff)
 {
-	Vector3 view = (curDirection).Normalized();
-	Mtx44 rotation;
-	float yaw = 90.f;
-
+	Vector3 temp = Vector3(curDirection.x, 0, curDirection.z).Normalized();
+	Vector3 rightDirection = temp.Cross(Vector3(0, 1, 0));
 	if (mode)
-		yaw = 90.f;
+	{
+		curPosition.x = curPosition.x - rightDirection.x * (int) (100.0f * timeDiff);
+		curPosition.z = curPosition.z - rightDirection.z * (int)(100.0f * timeDiff);
+	}
 	else
-		yaw = -90.f;
-
-	rotation.SetToRotation(yaw, 0, 1, 0);
-	view = rotation * view;
-	view.y = 0.f;
-	curPosition.x = curPosition.x + view.x *  timeDiff * 200.f;
-	curPosition.z = curPosition.z + view.z *  timeDiff * 200.f;
+	{
+		curPosition.x = curPosition.x + rightDirection.x * (int) (100.0f * timeDiff);
+		curPosition.z = curPosition.z + rightDirection.z * (int)(100.0f * timeDiff);
+	}
 }
 
-void CPlayInfo3PV::TurnLeft(const double dt)
-{
-	Vector3 view = curDirection;
-	//float yaw = (float)(-CAMERA_SPEED * Application::camera_yaw * (float)dt);
-	float yaw = (float)(-200 * (float)dt);
-	Mtx44 rotation;
-	rotation.SetToRotation(yaw, 0, 1, 0);
-	view = rotation * view;
-	curDirection = view;
-	curDirection.Normalize();
-}
-
-void CPlayInfo3PV::TurnRight(const double dt)
-{
-	Vector3 view = curDirection;
-	//float yaw = (float)(-CAMERA_SPEED * Application::camera_yaw * (float)dt);
-	float yaw = (float)(-200 * (float)dt);
-	Mtx44 rotation;
-	rotation.SetToRotation(yaw, 0, 1, 0);
-	view = rotation * view;
-	curDirection = view;
-	curDirection.Normalize();
-}
-
-void CPlayInfo3PV::Pitch(const double dt)
-{
-	if (Application::camera_pitch > 0.0)
-		LookUp(-Application::camera_pitch * dt);
-	else if (Application::camera_pitch < 0.0)
-		LookDown(-Application::camera_pitch * dt);
-}
-
-void CPlayInfo3PV::Yaw(const double dt)
-{
-	if (Application::camera_yaw > 0.0)
-		TurnRight(Application::camera_yaw * dt);
-	else if (Application::camera_yaw < 0.0)
-		TurnLeft(Application::camera_yaw * dt);
-}
-
-void CPlayInfo3PV::LookUp(const double dt)
-{
-	//Vector3 view = curDirection;
-	////float yaw = (float)(-CAMERA_SPEED * Application::camera_yaw * (float)dt);
-	//float yaw = (float)(-200.f * (float)dt);
-	//Mtx44 rotation;
-	//rotation.SetToRotation(yaw, 1, 0, 0);
-	//view = rotation * view;
-	//curDirection = view;
-	//curDirection.Normalize();
-	
-	//curDirection.x = ((curDirection.x) * cos(10)) - ((-curDirection.y) * sin(10));
-	//curDirection.y = ((-curDirection.y) * cos(10)) - ((curDirection.x) * sin(10));
-	Vector3 view = (curDirection).Normalized();
-	Mtx44 rotation;
-	float yaw = 90.f;
-	rotation.SetToRotation(yaw, 0, 1, 0);
-	view = rotation * view;
-
-	Vector3 view2 = curDirection;
-	float yaw2 = (float)(-200.f * (float)dt);
-	Mtx44 rotation2;
-	rotation2.SetToRotation(yaw2, view.x, view.y, view.z);
-	view2 = rotation2 * view2;
-	curDirection = view2;
-	curDirection.Normalize();
-}
-
-void CPlayInfo3PV::LookDown(const double dt)
-{
-	//Vector3 view = curDirection;
-	////float yaw = (float)(-CAMERA_SPEED * Application::camera_yaw * (float)dt);
-
-	Vector3 view = (curDirection).Normalized();
-	Mtx44 rotation;
-	float yaw = 90.f;
-	rotation.SetToRotation(yaw, 0, 1, 0);
-	view = rotation * view;
-
-	Vector3 view2 = curDirection;
-	float yaw2 = (float)(-200.f * (float)dt);
-	Mtx44 rotation2;
-	rotation2.SetToRotation(yaw2, view.x, view.y, view.z);
-	view2 = rotation2 * view2;
-	curDirection = view2;
-	curDirection.Normalize();
-
-}
 
 // Get position x of the player
 float CPlayInfo3PV::GetPos_x(void)
@@ -282,7 +178,7 @@ Vector3 CPlayInfo3PV::GetDirection()
 }
 
 // Get Jumpspeed of the player
-float CPlayInfo3PV::GetJumpspeed(void)
+int CPlayInfo3PV::GetJumpspeed(void)
 {
 	return jumpspeed;
 }
@@ -304,26 +200,6 @@ void CPlayInfo3PV::UpdateFreeFall()
 	jumpspeed += 1;
 }
 
-// Constrain the position of the Hero to within the border
-void CPlayInfo3PV::ConstrainHero(const int leftBorder, const int rightBorder, 
-								  const int topBorder, const int bottomBorder, 
-								  float timeDiff)
-{
-	if (curPosition.x < leftBorder)
-	{
-		curPosition.x = leftBorder;
-	}
-	else if (curPosition.x > rightBorder)
-	{
-		curPosition.x = rightBorder;
-	}
-
-	if (curPosition.y < topBorder)
-		curPosition.y = topBorder;
-	else if (curPosition.y > bottomBorder)
-		curPosition.y = bottomBorder;
-}
-
 
 /********************************************************************************
  Update Movement
@@ -341,142 +217,128 @@ void CPlayInfo3PV::Update(double dt)
 	// WASD movement
 	if (myKeys['w'] == true)
 	{
-		MoveFrontBack( false, dt );
+		MoveFrontBack(false, dt);
+		camera.m_fTPVCameraOffset = 30.00f;
 	}
 	else
 	{
-//		MoveVel_W = 0.0f;
+		//		MoveVel_W = 0.0f;
 	}
 	if (myKeys['s'] == true)
 	{
-		MoveFrontBack( true, dt );
+		MoveFrontBack(true, dt);
 	}
 	else
 	{
-//		MoveVel_S = 0.0f;
+		//		MoveVel_S = 0.0f;
 	}
 	if (myKeys['a'] == true)
 	{
-		MoveLeftRight( true, dt );
+		MoveLeftRight(true, dt);
 	}
 	else
 	{
-//		MoveVel_A = 0.0f;
+		//		MoveVel_A = 0.0f;
 	}
 	if (myKeys['d'] == true)
 	{
-		MoveLeftRight( false, dt );
+		MoveLeftRight(false, dt);
 	}
 	else
 	{
-//		MoveVel_D = 0.0f;
+		//		MoveVel_D = 0.0f;
 	}
 
 	// Rotation
 	/*
 	if ( myKeys[VK_UP] == true)
 	{
-		LookUp( dt );
+	LookUp( dt );
 	}
 	if (myKeys[VK_DOWN] == true)
 	{
-		LookUp( -dt );
+	LookUp( -dt );
 	}
 	if (myKeys[VK_LEFT] == true)
 	{
-		TurnLeft( -dt );
+	TurnLeft( -dt );
 	}
 	if (myKeys[VK_RIGHT] == true)
 	{
-		TurnRight( dt );
+	TurnRight( dt );
 	}
 
 	// Jump
 	if (myKeys[32] == true)
 	{
-		Jump( dt );
-		myKeys[32]	= false;
+	Jump( dt );
+	myKeys[32]	= false;
 	}
 	UpdateJump(dt);
 
 	//Update the camera direction based on mouse move
-	// left-right rotate
+	left-right rotate
 	if ( Application::camera_yaw != 0 )
-		Yaw( dt );
+	Yaw( dt );
 	if ( Application::camera_pitch != 0 )
-		Pitch( dt );
+	Pitch( dt );
 
 	if(Application::IsKeyPressed('R'))
 	{
-		Reset();
+	Reset();
 	}
 	*/
 
+	// Camera turn Left and Right
 	if (Application::camera_yaw != 0)
-		Yaw(dt);
-	if (Application::camera_pitch != 0)
-		Pitch(dt);
-
-	if (!m_bCanShoot)
 	{
-		m_fShootTimer -= dt;
-		if (m_fShootTimer < 0.f)
-			m_bCanShoot = true;
-	}
-	if (m_bReloading)
-	{
-		m_fReloadTimer -= dt;
-		if (m_fReloadTimer < 0.f)
+		if (Application::camera_yaw > 0.0)
 		{
-			if (m_bCurrentWeapon)
-				ReloadPaintGun();
-			else
-				ReloadActGun();
-			m_bReloading = false;
+			float yaw = (float)((Application::camera_yaw *- 100)*dt);
+			Mtx44 rotation;
+			rotation.SetToRotation(yaw, 0, 1, 0);
+			curDirection = rotation * curDirection;
+			right = curDirection.Cross(up);
+			right.y = 0;
+			right.Normalize();
+			up = right.Cross(curDirection).Normalized();
+		}
+		else if (Application::camera_yaw < 0.0)
+		{
+			float yaw = (float)((Application::camera_yaw *- 100)*dt);
+			Mtx44 rotation;
+			rotation.SetToRotation(yaw, 0, 1, 0);
+			curDirection = rotation * curDirection;
+			right.y = 0;
+			right.Normalize();
+			up = right.Cross(curDirection).Normalized();
 		}
 	}
-}
 
-void CPlayInfo3PV::ReloadCurrentWep(void)
-{
-	m_bReloading = true;
-	m_fReloadTimer = ReloadCD;
-}
+	// Camera turn Up and Down
+	if (Application::camera_pitch != 0)
+	{
+		if (Application::camera_pitch > 0.0)
+		{
+			float pitch = (float)((Application::camera_pitch *100)*dt);
+			Mtx44 rotation;
+			rotation.SetToRotation(pitch, 1, 0, 0);
+			curDirection = rotation * curDirection;
+			right = curDirection.Cross(up);
+			right.y = 0;
+			right.Normalize();
+			up = right.Cross(curDirection).Normalized();
+		}
 
-void CPlayInfo3PV::ReloadPaintGun(void)
-{
-	m_iPaintGunAmmo = MaxPaintgunAmmo;
-}
-
-void CPlayInfo3PV::ReloadActGun(void)
-{
-	m_iActGunAmmo = MaxActgunAmmo;
-}
-
-void CPlayInfo3PV::ChangeWeapon(void)
-{
-	m_bCurrentWeapon = !m_bCurrentWeapon;
-}
-
-bool CPlayInfo3PV::GetCurrentWep(void)
-{
-	return m_bCurrentWeapon;
-}
-
-int CPlayInfo3PV::GetCurrentWepAmmo(void)
-{
-	if (m_bCurrentWeapon)
-		return m_iPaintGunAmmo;
-	else
-		return m_iActGunAmmo;
-}
-
-void CPlayInfo3PV::Shoot(void)
-{
-	if (m_bCurrentWeapon)
-		--m_iPaintGunAmmo;
-	else
-		--m_iActGunAmmo;
-	m_bCanShoot = false;
-	m_fShootTimer = ShootCD;
+		else if (Application::camera_pitch < 0.0)
+		{
+			float pitch = (float)((Application::camera_pitch *100)*dt);
+			Mtx44 rotation;
+			rotation.SetToRotation(pitch, 1, 0, 0);
+			curDirection = rotation * curDirection;
+			right.y = 0;
+			right.Normalize();
+			up = right.Cross(curDirection).Normalized();
+		}
+	}
 }
