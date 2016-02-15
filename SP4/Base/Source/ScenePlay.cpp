@@ -92,8 +92,11 @@ void CScenePlay::Init()
 	//perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
 	
+	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	bLightEnabled = true;
+
+	m_cLevel.InitTilemap("LevelMap//MapDesign.csv", 10, 10, 25.f);
 }
 
 void CScenePlay::Update(double dt)
@@ -113,9 +116,9 @@ void CScenePlay::Update(double dt)
 	if(Application::IsKeyPressed('P'))
 		lights[0].position.y += (float)(10.f * dt);
 
-	m_cAvatar->Update(dt);
-	m_cAvatar->SetPos_y(-10.f);
-	camera.UpdatePosition( m_cAvatar->GetPosition(), m_cAvatar->GetDirection() );
+	//m_cAvatar->Update(dt);
+	//m_cAvatar->SetPos_y(-10.f);
+	//camera.UpdatePosition( m_cAvatar->GetPosition(), m_cAvatar->GetDirection() );
 }
 
 /********************************************************************************
@@ -123,7 +126,7 @@ void CScenePlay::Update(double dt)
  ********************************************************************************/
 void CScenePlay::UpdateCameraStatus(const unsigned char key, const bool status)
 {
-	camera.UpdateStatus(key, status);
+	//camera.UpdateStatus(key, status);
 }
 
 /********************************************************************************
@@ -248,20 +251,37 @@ void CScenePlay::RenderSkybox()
 	modelStack.PopMatrix();
 }
 
+void CScenePlay::RenderTilemap(void)
+{
+	for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); i++)
+	{
+		for (int k = 0; k < m_cLevel.GetTilemap()->GetNumOfTiles_Width(); k++)
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(i * m_cLevel.GetTilemap()->GetTileSize(), k * m_cLevel.GetTilemap()->GetTileSize(), 0);
+			modelStack.Scale(m_cLevel.GetTilemap()->GetTileSize(), m_cLevel.GetTilemap()->GetTileSize(), 1.f);
+			RenderMesh(meshList[GEO_GRASS_LIGHTGREEN], false);
+			modelStack.PopMatrix();
+		}
+	}
+}
+
 /********************************************************************************
  Render this scene
  ********************************************************************************/
 void CScenePlay::Render()
 {
-	CSceneManager::Render();
+	CSceneManager::Render2D();
 
+	
+	RenderTilemap();
 
-	RenderGround();
-	RenderSkybox();
-	RenderFixedObjects();
-	RenderMobileObjects();
+	//RenderGround();
+	//RenderSkybox();
+	//RenderFixedObjects();
+	//RenderMobileObjects();
 
-	RenderGUI();
+	//RenderGUI();
 #if _DEBUG
 	RenderTextOnScreen(meshList[GEO_TEXT], "ScenePlay", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 #endif

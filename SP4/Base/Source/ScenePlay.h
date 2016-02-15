@@ -8,6 +8,7 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "PlayInfo3PV.h"
+#include "Level.h"
 
 const float SKYBOXSIZE = 1000.f;
 
@@ -55,6 +56,7 @@ public:
 	void RenderLights();
 	void RenderGround();
 	void RenderSkybox();
+	void RenderTilemap(void);
 
 	bool m_bExitPlay;
 
@@ -68,6 +70,9 @@ private:
 
 	// Handle to 3rd Person View's avatar
 	CPlayInfo3PV* m_cAvatar;
+
+	//Level
+	CLevel m_cLevel;
 };
 
 #endif

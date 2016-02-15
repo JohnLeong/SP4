@@ -216,7 +216,7 @@ void CSceneManager::Update(double dt)
  ********************************************************************************/
 void CSceneManager::UpdateCameraStatus(const unsigned char key, const bool status)
 {
-	camera.UpdateStatus(key, status);
+	//camera.UpdateStatus(key, status);
 }
 
 /********************************************************************************
@@ -246,13 +246,22 @@ bool CSceneManager::IsKeyDown(unsigned short key)
 
 bool CSceneManager::IsKeyDownOnce(unsigned short key)
 {
-	return(myKeys[key] && !myKeysActive[key]);
+	if (myKeys[key] && !myKeysActive[key])
+	{
+		myKeysActive[key] = true;
+		return true;
+	}
+	else if (!myKeys[key] && myKeysActive[key])
+	{
+		myKeysActive[key] = false;
+	}
+	return false;
 }
 
 void CSceneManager::SetKeyDown(unsigned short key, bool b)
 {
-	if ((b && !myKeysActive[key]) || (!b && myKeysActive[key]))
-		myKeysActive[key] = b;
+	//if ((b && !myKeysActive[key]) || (!b && myKeysActive[key]))
+	//	myKeysActive[key] = b;
 	this->myKeys[key] = b;
 }
 
@@ -492,10 +501,10 @@ void CSceneManager::Render()
 
 void CSceneManager::Render2D()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	Mtx44 perspective;
 	//perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
-	perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
+	perspective.SetToOrtho(-160, 160, -90, 90, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
 
 	// Camera matrix

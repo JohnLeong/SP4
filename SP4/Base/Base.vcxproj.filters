@@ -34,9 +34,6 @@
     <Filter Include="Mesh Tools">
       <UniqueIdentifier>{a720fc85-01c2-4f1b-b996-fca243db0bb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TileMap">
-      <UniqueIdentifier>{16ebf384-ea11-4bfc-bca1-844dcc9f4572}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{7bf61aa8-cc06-4ce4-bcfa-0256e2747997}</UniqueIdentifier>
     </Filter>
@@ -52,6 +49,9 @@
     </Filter>
     <Filter Include="Enemies">
       <UniqueIdentifier>{618d133b-5a7c-4a30-9dfe-092ed33e98df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{16ebf384-ea11-4bfc-bca1-844dcc9f4572}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,9 +115,6 @@
     <ClCompile Include="Source\shader.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Map.cpp">
-      <Filter>TileMap</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PlayInfo3PV.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -130,7 +127,13 @@
     <ClCompile Include="Source\Graphics\SpriteAnimation.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Source\Tilemap.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -205,9 +208,6 @@
     <ClInclude Include="Source\shader.hpp">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Map.h">
-      <Filter>TileMap</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PlayInfo3PV.h">
       <Filter>Player</Filter>
     </ClInclude>
@@ -221,5 +221,11 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Source\Tilemap.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

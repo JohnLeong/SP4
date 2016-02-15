@@ -11,16 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Camera3.cpp" />
+    <ClCompile Include="Source\Enemy\Enemy.cpp" />
     <ClCompile Include="Source\Graphics\SpriteAnimation.cpp" />
+    <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="Source\LuaScript.cpp" />
     <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\Tilemap.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\Player\Player.cpp" />
@@ -45,11 +46,12 @@
     <ClInclude Include="Source\Camera3.h" />
     <ClInclude Include="Source\GameState.h" />
     <ClInclude Include="Source\Graphics\SpriteAnimation.h" />
+    <ClInclude Include="Source\Level.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />
     <ClInclude Include="Source\LuaScript.h" />
-    <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\Tilemap.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
