@@ -1,3 +1,2 @@
-playerposx = 0
-playerposy = 0
-playerposz = 0
+playerPosX = 0
+playerPosY = 0

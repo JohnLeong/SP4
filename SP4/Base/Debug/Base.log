@@ -1,44 +1,10 @@
-﻿Build started 14/2/2016 11:57:09 PM.
-     1>Project "C:\Users\john\Desktop\Studio Project 4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+﻿Build started 15/2/2016 2:21:37 PM.
+     1>Project "C:\Users\KickAsser Only\Documents\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\john\Desktop\Studio Project 4\SP4\/Common/Source" /I"C:\Users\john\Desktop\Studio Project 4\SP4\/glew/include" /I"C:\Users\john\Desktop\Studio Project 4\SP4\/glfw/include" /I"C:\Users\john\Desktop\Studio Project 4\SP4\/lua" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Application.cpp Source\Camera.cpp Source\Camera3.cpp Source\LoadOBJ.cpp Source\LoadTGA.cpp Source\LuaScript.cpp Source\main.cpp Source\Map.cpp Source\Mesh.cpp Source\MeshBuilder.cpp Source\PlayInfo3PV.cpp Source\SceneManager.cpp Source\SceneMenu.cpp Source\SceneOptions.cpp Source\ScenePlay.cpp Source\SceneSplash.cpp Source\shader.cpp Source\States\GameStateManager.cpp Source\States\MenuState.cpp Source\States\OptionsState.cpp Source\States\PlayState.cpp Source\States\SplashState.cpp Source\Utility.cpp
-         Utility.cpp
-         SplashState.cpp
-         PlayState.cpp
-     1>c:\users\john\desktop\studio project 4\sp4\base\source\states\playstate.cpp(111): warning C4805: '==' : unsafe mix of type 'const int' and type 'bool' in operation
-     1>c:\users\john\desktop\studio project 4\sp4\base\source\states\playstate.cpp(113): warning C4805: '==' : unsafe mix of type 'const int' and type 'bool' in operation
-         OptionsState.cpp
-         MenuState.cpp
-         GameStateManager.cpp
-         shader.cpp
-         SceneSplash.cpp
-         ScenePlay.cpp
-         SceneOptions.cpp
-         SceneMenu.cpp
-         SceneManager.cpp
-         PlayInfo3PV.cpp
-     1>c:\users\john\desktop\studio project 4\sp4\base\source\playinfo3pv.cpp(220): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
-     1>c:\users\john\desktop\studio project 4\sp4\base\source\playinfo3pv.cpp(229): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
-     1>c:\users\john\desktop\studio project 4\sp4\base\source\playinfo3pv.cpp(237): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
-     1>c:\users\john\desktop\studio project 4\sp4\base\source\playinfo3pv.cpp(245): warning C4244: 'argument' : conversion from 'double' to 'const float', possible loss of data
-         MeshBuilder.cpp
-         Mesh.cpp
-         Map.cpp
-         main.cpp
-         LuaScript.cpp
-     1>c:\users\john\desktop\studio project 4\sp4\base\source\luascript.cpp(50): warning C4305: 'return' : truncation from 'int' to 'bool'
-     1>c:\users\john\desktop\studio project 4\sp4\base\source\luascript.cpp(52): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-         LoadTGA.cpp
-         LoadOBJ.cpp
-         Generating Code...
-         Compiling...
-         Camera3.cpp
-     1>c:\users\john\desktop\studio project 4\sp4\base\source\camera3.cpp(421): warning C4244: '+=' : conversion from 'const double' to 'float', possible loss of data
-         Camera.cpp
-         Application.cpp
-         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\KickAsser Only\Documents\SP4\SP4\/Common/Source" /I"C:\Users\KickAsser Only\Documents\SP4\SP4\/glew/include" /I"C:\Users\KickAsser Only\Documents\SP4\SP4\/glfw/include" /I"C:\Users\KickAsser Only\Documents\SP4\SP4\/lua" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Player\Player.cpp
+         Player.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\john\Desktop\Studio Project 4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\john\Desktop\Studio Project 4\SP4\Debug" /LIBPATH:"C:\Users\john\Desktop\Studio Project 4\SP4\/glfw/lib-msvc100" /LIBPATH:"C:\Users\john\Desktop\Studio Project 4\SP4\/glew/lib" /LIBPATH:"C:\Users\john\Desktop\Studio Project 4\SP4\/lua" Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\john\Desktop\Studio Project 4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\john\Desktop\Studio Project 4\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\KickAsser Only\Documents\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\KickAsser Only\Documents\SP4\SP4\Debug" /LIBPATH:"C:\Users\KickAsser Only\Documents\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:"C:\Users\KickAsser Only\Documents\SP4\SP4\/glew/lib" /LIBPATH:"C:\Users\KickAsser Only\Documents\SP4\SP4\/lua" Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\KickAsser Only\Documents\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\KickAsser Only\Documents\SP4\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
          Debug\Camera.obj
          Debug\Camera3.obj
          Debug\LoadOBJ.obj
@@ -48,6 +14,7 @@
          Debug\Map.obj
          Debug\Mesh.obj
          Debug\MeshBuilder.obj
+         Debug\Player.obj
          Debug\PlayInfo3PV.obj
          Debug\SceneManager.obj
          Debug\SceneMenu.obj
@@ -63,9 +30,9 @@
          Debug\Utility.obj
      1>Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
      1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-         Base.vcxproj -> C:\Users\john\Desktop\Studio Project 4\SP4\Debug\Base.exe
-     1>Done Building Project "C:\Users\john\Desktop\Studio Project 4\SP4\Base\Base.vcxproj" (Build target(s)).
+         Base.vcxproj -> C:\Users\KickAsser Only\Documents\SP4\SP4\Debug\Base.exe
+     1>Done Building Project "C:\Users\KickAsser Only\Documents\SP4\SP4\Base\Base.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:23.45
+Time Elapsed 00:00:00.52
