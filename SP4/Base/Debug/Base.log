@@ -1,4 +1,4 @@
-﻿Build started 15/2/2016 5:31:23 PM.
+﻿Build started 15/2/2016 5:34:49 PM.
      1>Project "C:\Users\vincent's\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\vincent's\Desktop\SP4\SP4\/Common/Source" /I"C:\Users\vincent's\Desktop\SP4\SP4\/glew/include" /I"C:\Users\vincent's\Desktop\SP4\SP4\/glfw/include" /I"C:\Users\vincent's\Desktop\SP4\SP4\/lua" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\SceneMenu.cpp
@@ -38,4 +38,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.48
+Time Elapsed 00:00:01.43

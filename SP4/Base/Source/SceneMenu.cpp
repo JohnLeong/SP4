@@ -108,7 +108,7 @@ void CSceneMenu::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], "SceneMenu", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 #endif
 
-	if (CSceneManager::IsKeyDownOnce('w'))
+	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
 	{
 		choice++;
 
@@ -118,7 +118,7 @@ void CSceneMenu::Render()
 
 		//cout << "choice: " << choice << endl;
 	}
-	else if(CSceneManager::IsKeyDownOnce('s'))
+	else if(CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
 	{
 		choice--;
 
