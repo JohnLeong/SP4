@@ -66,7 +66,9 @@ void Camera3::Update(double dt)
 	// WASD movement
 	if ( myKeys['w'] == true)
 	{
-		Walk( dt );
+		position.y += dt * 10;
+		target.y += dt * 10;
+		//Walk( dt );
 	}
 	else
 	{
@@ -134,6 +136,15 @@ void Camera3::Update(double dt)
 	{
 		Reset();
 	}
+}
+
+/********************************************************************************
+Update the camera status
+********************************************************************************/
+void Camera3::UpdatePosition(Vector3 playerPos)
+{
+	position = playerPos;
+	target = playerPos + Vector3(0, 0, -1);
 }
 
 /********************************************************************************

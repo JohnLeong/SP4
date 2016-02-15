@@ -9,6 +9,7 @@
 #include "Light.h"
 #include "PlayInfo3PV.h"
 #include "Level.h"
+#include "Player\Player.h"
 
 const float SKYBOXSIZE = 1000.f;
 
@@ -70,6 +71,8 @@ private:
 
 	// Handle to 3rd Person View's avatar
 	CPlayInfo3PV* m_cAvatar;
+	
+	CPlayer* m_cPlayer;
 
 	//Level
 	CLevel m_cLevel;

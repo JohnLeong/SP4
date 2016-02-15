@@ -133,7 +133,6 @@
     <ClCompile Include="Source\Level.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -220,7 +219,6 @@
     <ClInclude Include="Source\Graphics\SpriteAnimation.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Source\Tilemap.h">
       <Filter>Level</Filter>
     </ClInclude>

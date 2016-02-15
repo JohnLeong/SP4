@@ -1,13 +1,28 @@
+<<<<<<< Updated upstream
 ﻿Build started 15/2/2016 5:34:49 PM.
      1>Project "C:\Users\vincent's\Desktop\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\vincent's\Desktop\SP4\SP4\/Common/Source" /I"C:\Users\vincent's\Desktop\SP4\SP4\/glew/include" /I"C:\Users\vincent's\Desktop\SP4\SP4\/glfw/include" /I"C:\Users\vincent's\Desktop\SP4\SP4\/lua" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\SceneMenu.cpp
          SceneMenu.cpp
+=======
+﻿Build started 15/2/2016 5:59:46 PM.
+     1>Project "C:\Users\KickAsser Only\Documents\SP4\SP4\Base\Base.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\KickAsser Only\Documents\SP4\SP4\/Common/Source" /I"C:\Users\KickAsser Only\Documents\SP4\SP4\/glew/include" /I"C:\Users\KickAsser Only\Documents\SP4\SP4\/glfw/include" /I"C:\Users\KickAsser Only\Documents\SP4\SP4\/lua" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Player\Player.cpp Source\ScenePlay.cpp
+         ScenePlay.cpp
+     1>c:\users\kickasser only\documents\sp4\sp4\base\source\sceneplay.cpp(284): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\kickasser only\documents\sp4\sp4\base\source\sceneplay.cpp(285): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Player.cpp
+         Generating Code...
+>>>>>>> Stashed changes
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\vincent's\Desktop\SP4\SP4\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\vincent's\Desktop\SP4\SP4\Debug" /LIBPATH:"C:\Users\vincent's\Desktop\SP4\SP4\/glfw/lib-msvc100" /LIBPATH:"C:\Users\vincent's\Desktop\SP4\SP4\/glew/lib" /LIBPATH:"C:\Users\vincent's\Desktop\SP4\SP4\/lua" Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib lua5.1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\vincent's\Desktop\SP4\SP4\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\vincent's\Desktop\SP4\SP4\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
          Debug\Camera.obj
          Debug\Camera3.obj
+<<<<<<< Updated upstream
          Debug\Enemy.obj
+=======
+>>>>>>> Stashed changes
          Debug\SpriteAnimation.obj
          Debug\Level.obj
          Debug\LoadOBJ.obj
@@ -38,4 +53,8 @@
 
 Build succeeded.
 
+<<<<<<< Updated upstream
 Time Elapsed 00:00:01.43
+=======
+Time Elapsed 00:00:01.50
+>>>>>>> Stashed changes

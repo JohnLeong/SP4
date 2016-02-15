@@ -1,9 +1,11 @@
 #pragma once
-#include "Vector2.h"
+#include "Vector3.h"
+#include "../Tilemap.h"
 
 
 class CPlayer
 {
+public:
 	CPlayer();
 	~CPlayer(void);
 
@@ -11,20 +13,21 @@ class CPlayer
 
 	void SetPos_x(float pos_x);							// Set position x of the player
 	void SetPos_y(float pos_y);							// Set position y of the player
-	void SetPos(Vector2 playerPos);							// Set position x of the player
+	void SetPos(Vector3 playerPos);						// Set position x of the player
 
 	// Update Movements
-	void MoveUpDown(const bool mode);
-	void MoveLeftRight(const bool mode);
+	void MoveUpDown(const bool mode, CTilemap* tile);
+	void MoveLeftRight(const bool mode, CTilemap* tile);
 
 	float GetPos_x(void);									// Get position x of the player
 	float GetPos_y(void);									// Get position y of the player
-	Vector2 GetPos();								// Get position of the player
+	Vector3 GetPos();								// Get position of the pl`ayer
 
 	void Update();								// Update
 
 private:
 	// Hero's information
-	Vector2 curPosition;
+	Vector3 playerPos;
+
 	bool myKeys[255];
 };

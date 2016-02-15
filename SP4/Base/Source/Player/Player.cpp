@@ -1,7 +1,9 @@
 #include "Player.h"
 
-CPlayer::CPlayer()
+CPlayer::CPlayer() :
+playerPos(0)
 {
+	//playerPos.SetZero();
 }
 
 
@@ -12,58 +14,72 @@ CPlayer::~CPlayer(void)
 // Initialise this class instance
 void CPlayer::Init(float playerPos_x, float playerPos_y)
 {
-	curPosition.Set(playerPos_x, playerPos_y);
-
-	// Initialise the Avatar's movement flags
+	playerPos.Set(playerPos_x, playerPos_y, 0);
+	
+	 //Initialise the Avatar's movement flags
 	for (int i = 0; i<255; i++){
 		myKeys[i] = false;
 	}
 }
 
-// Set position x of the player
+//Set position x of the player
 void CPlayer::SetPos_x(float pos_x)
 {
-	curPosition.x = pos_x;
+	playerPos.x = pos_x;
 }
 
 // Set position y of the player
 void CPlayer::SetPos_y(float pos_y)
 {
-	curPosition.y = pos_y;
+	playerPos.y = pos_y;
 }
 
 // Set position y of the player
-void CPlayer::SetPos(Vector2 pos)
+void CPlayer::SetPos(Vector3 pos)
 {
-	curPosition = pos;
+	playerPos = pos;
 }
 
 // Get position x of the player
 float CPlayer::GetPos_x(void)
 {
-	return curPosition.x;
+	return playerPos.x;
 }
 
 // Get position y of the player
 float CPlayer::GetPos_y(void)
 {
-	return curPosition.y;
+	return playerPos.y;
 }
 
 // Get position y of the player
-Vector2 CPlayer::GetPos(void)
+Vector3 CPlayer::GetPos(void)
 {
-	return curPosition;
+	return playerPos;
 }
 
-void CPlayer::MoveUpDown(const bool mode)
+void CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
 {
-
+	if (mode == true)
+	{
+		playerPos.y += tile->GetTileSize();
+	}
+	else if (mode == false)
+	{
+		playerPos.y -= tile->GetTileSize();
+	}
 }
 
-void CPlayer::MoveLeftRight(const bool mode)
+void CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 {
-
+	if (mode == true)
+	{
+		playerPos.x += tile->GetTileSize();
+	}
+	else if (mode == false)
+	{
+		playerPos.x -= tile->GetTileSize();
+	}
 }
 
 /********************************************************************************
@@ -71,37 +87,4 @@ Update
 ********************************************************************************/
 void CPlayer::Update()
 {
-	// WASD movement
-	if (myKeys['w'] == true)
-	{
-		MoveUpDown(false);
-	}
-	else
-	{
-		//		MoveVel_W = 0.0f;
-	}
-	if (myKeys['s'] == true)
-	{
-		MoveUpDown(true);
-	}
-	else
-	{
-		//		MoveVel_S = 0.0f;
-	}
-	if (myKeys['a'] == true)
-	{
-		MoveLeftRight(true);
-	}
-	else
-	{
-		//		MoveVel_A = 0.0f;
-	}
-	if (myKeys['d'] == true)
-	{
-		MoveLeftRight(false);
-	}
-	else
-	{
-		//		MoveVel_D = 0.0f;
-	}
 }

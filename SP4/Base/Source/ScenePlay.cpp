@@ -92,6 +92,10 @@ void CScenePlay::Init()
 	//perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
 	
+	std::cout << "Variables" << std::endl;
+
+	m_cPlayer = new CPlayer();
+	m_cPlayer->Init(0.f, 0.f);
 	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	bLightEnabled = true;
@@ -115,6 +119,25 @@ void CScenePlay::Update(double dt)
 		lights[0].position.y -= (float)(10.f * dt);
 	if(Application::IsKeyPressed('P'))
 		lights[0].position.y += (float)(10.f * dt);
+
+	m_cPlayer->Update();
+	if (IsKeyDownOnce('w'))
+	{
+		m_cPlayer->MoveUpDown(true, m_cLevel.GetTilemap());
+	}
+	if (IsKeyDownOnce('s'))
+	{
+		m_cPlayer->MoveUpDown(false, m_cLevel.GetTilemap());
+	}
+	if (IsKeyDownOnce('d'))
+	{
+		m_cPlayer->MoveLeftRight(true, m_cLevel.GetTilemap());
+	}
+	if (IsKeyDownOnce('a'))
+	{
+		m_cPlayer->MoveLeftRight(false, m_cLevel.GetTilemap());
+	}
+	camera.UpdatePosition(m_cPlayer->GetPos());
 
 	//m_cAvatar->Update(dt);
 	//m_cAvatar->SetPos_y(-10.f);
