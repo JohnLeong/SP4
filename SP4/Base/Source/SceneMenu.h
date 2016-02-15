@@ -18,6 +18,17 @@ class CSceneMenu : public CSceneManager
 		GEO_TEXT,
 		GEO_CROSSHAIR,
 		GEO_LIGHTBALL,
+		//menus (non highlighted)
+		GEO_PLAY,
+		GEO_INSTRUCTIONS,
+		GEO_OPTIONS,
+		GEO_EXIT,
+		//menus (highlighted)
+		GEO_PLAY_H,
+		GEO_INSTRUCTIONS_H,
+		GEO_OPTIONS_H,
+		GEO_EXIT_H,
+
 		NUM_GEOMETRY,
 	};
 
@@ -41,6 +52,9 @@ protected:
 	// Window size
 	int m_window_width;
 	int m_window_height;
+
+	//transverse the menu
+	int choice;
 };
 
 #endif

@@ -108,6 +108,8 @@ bool Application::GetMouseUpdate()
 bool Application::GetKeyboardUpdate()
 {
 	theGSM->HandleEvents(VK_RETURN, IsKeyPressed(VK_RETURN));
+	theGSM->HandleEvents('w', IsKeyPressed('W'));
+	theGSM->HandleEvents('s', IsKeyPressed('S'));
 
 	if (IsKeyPressed('A'))
 	{
@@ -124,22 +126,6 @@ bool Application::GetKeyboardUpdate()
 	else
 	{
 		theGSM->HandleEvents('d', false);
-	}
-	if (IsKeyPressed('W'))
-	{
-		theGSM->HandleEvents('w');
-	}
-	else
-	{
-		theGSM->HandleEvents('w', false);
-	}
-	if (IsKeyPressed('S'))
-	{
-		theGSM->HandleEvents('s');
-	}
-	else
-	{
-		theGSM->HandleEvents('s', false);
 	}
 	// Jump
 	if (IsKeyPressed(32))
@@ -255,7 +241,8 @@ void Application::Init()
 	// Initialise the GSM
 	theGSM = new CGameStateManager();
 	theGSM->Init("DM2240 Assignment 1", m_window_width, m_window_height);
-	theGSM->ChangeState( CSplashState::Instance() );
+	//theGSM->ChangeState( CSplashState::Instance() );
+	theGSM->ChangeState(CMenuState::Instance());
 }
 
 void Application::InitWindow(bool fullscreen)
