@@ -28,12 +28,14 @@ public:
 
 	void SetTileId(TILE_ID TileId);
 	void SetCollisionType(COLLISION_TYPE CollisionType);
+	void SetTint(bool b);
 
 	TILE_ID GetTileId(void);
 	COLLISION_TYPE GetCollisionType(void);
+	bool IsTinted(void);
 
 private:
 	TILE_ID m_iTileId;
 	COLLISION_TYPE m_iCollisionType;
-
+	bool m_bTint;			//Tint if any enemies are going to walk onto this tile
 };
