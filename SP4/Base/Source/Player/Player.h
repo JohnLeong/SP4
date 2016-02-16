@@ -9,25 +9,23 @@ public:
 	CPlayer();
 	~CPlayer(void);
 
-	void Init(float pos_x, float pos_y);									// Initialise this class instance
+	void Init(int pos_x, int pos_y);									// Initialise this class instance
 
-	void SetPos_x(float pos_x);							// Set position x of the player
-	void SetPos_y(float pos_y);							// Set position y of the player
-	void SetPos(Vector3 playerPos);						// Set position x of the player
+	void SetPos_x(int pos_x);							// Set position x of the player
+	void SetPos_y(int pos_y);							// Set position y of the player
 
 	// Update Movements
 	void MoveUpDown(const bool mode, CTilemap* tile);
 	void MoveLeftRight(const bool mode, CTilemap* tile);
 
-	float GetPos_x(void);									// Get position x of the player
-	float GetPos_y(void);									// Get position y of the player
-	Vector3 GetPos();								// Get position of the pl`ayer
+	int GetPos_x(void);									// Get position x of the player
+	int GetPos_y(void);									// Get position y of the player
 
 	void Update();								// Update
 
 private:
 	// Hero's information
-	Vector3 playerPos;
+	int playerPosX, playerPosY;
 
 	bool myKeys[255];
 };

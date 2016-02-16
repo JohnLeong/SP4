@@ -95,7 +95,7 @@ void CScenePlay::Init()
 	std::cout << "Variables" << std::endl;
 
 	m_cPlayer = new CPlayer();
-	m_cPlayer->Init(0.f, 0.f);
+	m_cPlayer->Init(0, 0);
 	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	bLightEnabled = true;
@@ -125,19 +125,19 @@ void CScenePlay::Update(double dt)
 	{
 		m_cPlayer->MoveUpDown(true, m_cLevel.GetTilemap());
 	}
-	if (IsKeyDownOnce('s'))
+	else if (IsKeyDownOnce('s'))
 	{
 		m_cPlayer->MoveUpDown(false, m_cLevel.GetTilemap());
 	}
-	if (IsKeyDownOnce('d'))
+	else if (IsKeyDownOnce('d'))
 	{
 		m_cPlayer->MoveLeftRight(true, m_cLevel.GetTilemap());
 	}
-	if (IsKeyDownOnce('a'))
+	else if (IsKeyDownOnce('a'))
 	{
 		m_cPlayer->MoveLeftRight(false, m_cLevel.GetTilemap());
 	}
-	camera.UpdatePosition(m_cPlayer->GetPos());
+	camera.UpdatePosition(Vector3(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize(), m_cPlayer->GetPos_y()* m_cLevel.GetTilemap()->GetTileSize(),0));
 
 	//m_cAvatar->Update(dt);
 	//m_cAvatar->SetPos_y(-10.f);

@@ -1,7 +1,8 @@
 #include "Player.h"
 
-CPlayer::CPlayer() :
-playerPos(0)
+CPlayer::CPlayer() 
+:playerPosX(0)
+,playerPosY(0)
 {
 	//playerPos.SetZero();
 }
@@ -12,9 +13,10 @@ CPlayer::~CPlayer(void)
 }
 
 // Initialise this class instance
-void CPlayer::Init(float playerPos_x, float playerPos_y)
+void CPlayer::Init(int playerPos_x, int playerPos_y)
 {
-	playerPos.Set(playerPos_x, playerPos_y, 0);
+	playerPosX = playerPos_x;
+	playerPosY = playerPos_y;
 	
 	 //Initialise the Avatar's movement flags
 	for (int i = 0; i<255; i++){
@@ -23,50 +25,38 @@ void CPlayer::Init(float playerPos_x, float playerPos_y)
 }
 
 //Set position x of the player
-void CPlayer::SetPos_x(float pos_x)
+void CPlayer::SetPos_x(int pos_x)
 {
-	playerPos.x = pos_x;
+	playerPosX = pos_x;
 }
 
 // Set position y of the player
-void CPlayer::SetPos_y(float pos_y)
+void CPlayer::SetPos_y(int pos_y)
 {
-	playerPos.y = pos_y;
-}
-
-// Set position y of the player
-void CPlayer::SetPos(Vector3 pos)
-{
-	playerPos = pos;
+	playerPosY = pos_y;
 }
 
 // Get position x of the player
-float CPlayer::GetPos_x(void)
+int CPlayer::GetPos_x(void)
 {
-	return playerPos.x;
+	return playerPosX;
 }
 
 // Get position y of the player
-float CPlayer::GetPos_y(void)
+int CPlayer::GetPos_y(void)
 {
-	return playerPos.y;
-}
-
-// Get position y of the player
-Vector3 CPlayer::GetPos(void)
-{
-	return playerPos;
+	return playerPosY;
 }
 
 void CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
 {
 	if (mode == true)
 	{
-		playerPos.y += tile->GetTileSize();
+		playerPosY += 1;
 	}
 	else if (mode == false)
 	{
-		playerPos.y -= tile->GetTileSize();
+		playerPosY -= 1;
 	}
 }
 
@@ -74,11 +64,11 @@ void CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 {
 	if (mode == true)
 	{
-		playerPos.x += tile->GetTileSize();
+		playerPosX += 1;
 	}
 	else if (mode == false)
 	{
-		playerPos.x -= tile->GetTileSize();
+		playerPosX -= 1;
 	}
 }
 
