@@ -2,12 +2,18 @@
 #include "Vector3.h"
 #include "../Tilemap.h"
 
-
 class CPlayer
 {
 public:
 	CPlayer();
 	~CPlayer(void);
+
+	enum CollisionReponse
+	{
+		COL_FLOOR,
+		COL_WALL,
+		NUM_COL
+	};
 
 	void Init(int pos_x, int pos_y);									// Initialise this class instance
 
@@ -22,6 +28,8 @@ public:
 	int GetPos_y(void);									// Get position y of the player
 
 	void Update();								// Update
+
+	CollisionReponse CheckCollision(CTiledata tileData);
 
 private:
 	// Hero's information

@@ -4,7 +4,6 @@ CPlayer::CPlayer()
 :playerPosX(0)
 ,playerPosY(0)
 {
-	//playerPos.SetZero();
 }
 
 
@@ -52,11 +51,23 @@ void CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
 {
 	if (mode == true)
 	{
-		playerPosY += 1;
+		if (playerPosY == tile->GetNumOfTiles_Height() - 1 || CheckCollision(tile->GetTile(playerPosX, playerPosY + 1)) == COL_WALL)
+		{
+		}
+		else
+		{
+			playerPosY += 1;
+		}
 	}
 	else if (mode == false)
 	{
-		playerPosY -= 1;
+		if (playerPosY == 0 || CheckCollision(tile->GetTile(playerPosX, playerPosY - 1)) == COL_WALL)
+		{
+		}
+		else
+		{
+			playerPosY -= 1;
+		}
 	}
 }
 
@@ -64,11 +75,35 @@ void CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 {
 	if (mode == true)
 	{
-		playerPosX += 1;
+		if (playerPosX == tile->GetNumOfTiles_Width() - 1 || CheckCollision(tile->GetTile(playerPosX + 1, playerPosY)) == COL_WALL)
+		{
+		}
+		else
+		{
+			playerPosX += 1;
+		}	
 	}
 	else if (mode == false)
 	{
-		playerPosX -= 1;
+		if (playerPosX == 0 || CheckCollision(tile->GetTile(playerPosX - 1, playerPosY)) == COL_WALL)
+		{
+		}
+		else
+		{
+			playerPosX -= 1;
+		}
+	}
+}
+
+CPlayer::CollisionReponse CPlayer::CheckCollision(CTiledata tileData)
+{
+	if (tileData.GetCollisionType() == tileData.COL_BLOCK)
+	{
+		return COL_WALL;
+	}
+	else
+	{
+		return COL_FLOOR;
 	}
 }
 

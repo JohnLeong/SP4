@@ -127,10 +127,16 @@
     <ClCompile Include="Source\Graphics\SpriteAnimation.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Level.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Tilemap.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Level.cpp">
+    <ClCompile Include="Source\Tiledata.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Tileinfo.cpp">
       <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
@@ -223,6 +229,12 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Source\Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tiledata.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tileinfo.h">
       <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>

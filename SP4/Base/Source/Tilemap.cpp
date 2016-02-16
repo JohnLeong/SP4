@@ -114,7 +114,7 @@ CTiledata CTilemap::GetTile(int XIndex, int YIndex)
 	if (XIndex >= theNumOfTiles_MapWidth || YIndex >= theNumOfTiles_MapHeight)
 	{
 		std::cout << "Tile map out of range"<<std::endl;
-		theScreenMap[0][0];
+		return theScreenMap[0][0];
 	}
 	return theScreenMap[XIndex][YIndex];
 }

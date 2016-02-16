@@ -215,39 +215,39 @@ void CPlayInfo3PV::UpdateMovement(const unsigned char key, const bool status)
 void CPlayInfo3PV::Update(double dt)
 {
 	// WASD movement
-	if (myKeys['w'] == true)
-	{
-		MoveFrontBack(false, dt);
-		camera.m_fTPVCameraOffset = 30.00f;
-	}
-	else
-	{
-		//		MoveVel_W = 0.0f;
-	}
-	if (myKeys['s'] == true)
-	{
-		MoveFrontBack(true, dt);
-	}
-	else
-	{
-		//		MoveVel_S = 0.0f;
-	}
-	if (myKeys['a'] == true)
-	{
-		MoveLeftRight(true, dt);
-	}
-	else
-	{
-		//		MoveVel_A = 0.0f;
-	}
-	if (myKeys['d'] == true)
-	{
-		MoveLeftRight(false, dt);
-	}
-	else
-	{
-		//		MoveVel_D = 0.0f;
-	}
+	//if (myKeys['w'] == true)
+	//{
+	//	MoveFrontBack(false, dt);
+	//	camera.m_fTPVCameraOffset = 30.00f;
+	//}
+	//else
+	//{
+	//	//		MoveVel_W = 0.0f;
+	//}
+	//if (myKeys['s'] == true)
+	//{
+	//	MoveFrontBack(true, dt);
+	//}
+	//else
+	//{
+	//	//		MoveVel_S = 0.0f;
+	//}
+	//if (myKeys['a'] == true)
+	//{
+	//	MoveLeftRight(true, dt);
+	//}
+	//else
+	//{
+	//	//		MoveVel_A = 0.0f;
+	//}
+	//if (myKeys['d'] == true)
+	//{
+	//	MoveLeftRight(false, dt);
+	//}
+	//else
+	//{
+	//	//		MoveVel_D = 0.0f;
+	//}
 
 	// Rotation
 	/*

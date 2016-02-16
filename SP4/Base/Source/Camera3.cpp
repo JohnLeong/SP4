@@ -66,9 +66,7 @@ void Camera3::Update(double dt)
 	// WASD movement
 	if ( myKeys['w'] == true)
 	{
-		position.y += dt * 10;
-		target.y += dt * 10;
-		//Walk( dt );
+		Walk( dt );
 	}
 	else
 	{
@@ -429,7 +427,7 @@ void Camera3::UpdateJump(const double dt)
 	if (m_bJumping == true)
 	{
 		// Factor in gravity
-		JumpVel += GRAVITY * dt;
+		//JumpVel += GRAVITY * dt;
 
 		// Update the camera and target position
 		position.y += JumpVel * (float)dt;
