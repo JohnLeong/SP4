@@ -54,21 +54,18 @@ bool CTilemap::LoadFile(const string mapName)
 			if  (theLineCounter>=theNumOfTiles_MapHeight)
 				break;
 
-			// If this line is not a comment line, then process it
+			//Do not read if line is commented out
 			if(!(aLineOfText.find("//*") == NULL) && aLineOfText != "")
 			{
 				if (theLineCounter == 0)
 				{
-					// This is the first line of the map data file
 					string token;
 					istringstream iss(aLineOfText);
 					while(getline(iss, token, ','))
 					{
-						// Count the number of columns
+						//Get total number of colums
 						theMaxNumOfColumns = atoi(token.c_str());
 					}
-					//if ( theMaxNumOfColumns != theNumOfTiles_MapWidth)
-						//return false;
 				}
 				else
 				{
@@ -78,7 +75,11 @@ bool CTilemap::LoadFile(const string mapName)
 					istringstream iss(aLineOfText);
 					while(getline(iss, token, ',') && (theColumnCounter<theNumOfTiles_MapWidth))
 					{
-						theScreenMap[theLineCounter][theColumnCounter++] = atoi(token.c_str());
+						//Cast to Tile Id enum
+						theScreenMap[theLineCounter][theColumnCounter].SetTileId(static_cast<CTiledata::TILE_ID>(atoi(token.c_str())));
+						//Get Collision type based on tile id
+						theScreenMap[theLineCounter][theColumnCounter].SetCollisionType(GetCollisionTypeFromId(theScreenMap[theLineCounter][theColumnCounter].GetTileId()));
+						++theColumnCounter;
 					}
 				}
 			}

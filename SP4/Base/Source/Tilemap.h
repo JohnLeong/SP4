@@ -4,6 +4,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include "Tileinfo.h"
+#include "Mesh.h"
 using namespace std;
 
 class CTilemap
@@ -17,8 +19,9 @@ public:
 	int GetNumOfTiles_Height(void);		// Get the number of tiles for height of the screen
 	int GetNumOfTiles_Width(void);		// Get the number of tiles for width of the screen
 	int GetTileSize(void);
+	void SetMeshArray(CTiledata::TILE_ID TileId);	//Set the mesh for the specified tile index
 
-	vector<vector<int> > theScreenMap;
+	vector<vector<CTiledata> > theScreenMap;
 
 private:
 	int theTileSize;
@@ -27,4 +30,6 @@ private:
 	int theNumOfTiles_MapWidth;		// Number of tiles in the map's width
 
 	bool LoadFile(const string mapName);
+
+	Mesh* meshArray[CTiledata::NUM_TILE];
 };

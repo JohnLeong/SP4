@@ -20,6 +20,8 @@
     <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="Source\LuaScript.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Tiledata.cpp" />
+    <ClCompile Include="Source\Tileinfo.cpp" />
     <ClCompile Include="Source\Tilemap.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
@@ -49,6 +51,8 @@
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />
     <ClInclude Include="Source\LuaScript.h" />
+    <ClInclude Include="Source\Tiledata.h" />
+    <ClInclude Include="Source\Tileinfo.h" />
     <ClInclude Include="Source\Tilemap.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
