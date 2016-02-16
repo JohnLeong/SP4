@@ -8,7 +8,10 @@ using std::vector;
 class AStar
 {
 public:
-	AStar(int sx, int sy, int gx, int gy, CTilemap* Tilemap);		// Constructor For Initialising Start And Goal x,y Nodes
+	AStar();		// Constructor For Initialising Start And Goal x,y Nodes
+	~AStar(void);
+	void Init(int sx, int sy, int gx, int gy, CTilemap* Tilemap);
+	void Reset(void);							//Reset 
 	Node* goal;									// Goal node
 	Node* start;								// Start node
 	vector <Node *> openList;					// Container For Open List ( nodes[list] To Examine When Searching)

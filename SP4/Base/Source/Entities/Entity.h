@@ -1,18 +1,12 @@
-#include "Vector3.h"
-#include "../Mesh.h"
-#include "MyMath.h"
+#include "../Graphics/SpriteAnimation.h"
+#include "../Tilemap.h"
+#include "../Player/Player.h"
 
-class CGameEntity
+class CEntity
 {
 public:
-	CGameEntity();
-	~CGameEntity();
-
-	virtual float GetXPos(void);
-	virtual float GetYPos(void);
-
-	virtual void SetXPos(float);
-	virtual void SetYPos(float);
+	CEntity();
+	~CEntity();
 
 	virtual void SetHealth(int);
 	virtual void SetMaxHealth(int);
@@ -20,15 +14,16 @@ public:
 	virtual int GetHealth(void);
 	virtual int GetMaxHealth(void);
 
-	virtual void Update(const float dt);
+	virtual void Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer);		// Update
+
+	void SetSprite(SpriteAnimation* sa);
+	SpriteAnimation* GetSprite(void);
 
 protected:
 	//Gameplay variables
-	int current_health;
-	int max_health;
-
-public:
-	Vector3 pos;					//Entity position
-	Mesh* mesh;
+	int m_iCurrent_health;
+	int m_iMax_health;
+	bool m_bAlive;
+	SpriteAnimation* m_cSprite;
 };
 

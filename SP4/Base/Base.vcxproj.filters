@@ -59,6 +59,12 @@
     <Filter Include="Pathfinding">
       <UniqueIdentifier>{718952ef-abf3-4b0a-bad4-4324d1938108}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Base classes">
+      <UniqueIdentifier>{c0a96dd9-f19d-43fb-a5ce-a99d5bff9c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\GameplayEntities">
+      <UniqueIdentifier>{3d20b0f2-b745-48fa-b8bd-37df1ec56bf9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\SceneManager.cpp">
@@ -133,10 +139,10 @@
     <ClCompile Include="Source\Graphics\SpriteAnimation.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Level.cpp">
+    <ClCompile Include="Source\Tilemap.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Tilemap.cpp">
+    <ClCompile Include="Source\Level.cpp">
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="Source\Tiledata.cpp">
@@ -144,9 +150,6 @@
     </ClCompile>
     <ClCompile Include="Source\Tileinfo.cpp">
       <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Entities\Entity.cpp">
-      <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="Source\Entities\Enemy.cpp">
       <Filter>Entities\Enemies</Filter>
@@ -154,17 +157,23 @@
     <ClCompile Include="Source\Entities\EnemyZombie.cpp">
       <Filter>Entities\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Tiledata.cpp">
-      <Filter>Level</Filter>
+    <ClCompile Include="Source\Entities\Entity.cpp">
+      <Filter>Entities\Base classes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Tileinfo.cpp">
-      <Filter>Level</Filter>
+    <ClCompile Include="Source\Entities\EntityIPos.cpp">
+      <Filter>Entities\Base classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entities\EntityVPos.cpp">
+      <Filter>Entities\Base classes</Filter>
     </ClCompile>
     <ClCompile Include="Source\AStar.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="Source\Node.cpp">
       <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entities\Entity_Hazard_Moving.cpp">
+      <Filter>Entities\GameplayEntities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -258,26 +267,35 @@
     <ClInclude Include="Source\Level.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Entities\Entity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities\Enemy.h">
-      <Filter>Entities\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities\EnemyZombie.h">
-      <Filter>Entities\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Tiledata.h">
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Source\Tileinfo.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Entities\EnemyZombie.h">
+      <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\Enemy.h">
+      <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\Entity.h">
+      <Filter>Entities\Base classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\EntityIPos.h">
+      <Filter>Entities\Base classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\EntityVPos.h">
+      <Filter>Entities\Base classes</Filter>
+    </ClInclude>
     <ClInclude Include="Source\AStar.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node.h">
       <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\Entity_Hazard_Moving.h">
+      <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

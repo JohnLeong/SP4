@@ -15,7 +15,16 @@ using namespace::std;
 // Declare Structure Representing Neighborhood Of A Node
 const struct { int x, y; } succ[4] = { { 0, -1 }, { 0, 1 }, { 1, 0 }, { -1, 0 } };
 
-AStar::AStar(int sx, int sy, int gx, int gy, CTilemap* Tilemap)
+AStar::AStar()
+{
+}
+
+AStar::~AStar(void)
+{
+	Reset();
+}
+
+void AStar::Init(int sx, int sy, int gx, int gy, CTilemap* Tilemap)
 {
 	this->m_cTilemap = Tilemap;
 	start = new Node;									// Create Node Objects & Allocate Memory
@@ -28,6 +37,25 @@ AStar::AStar(int sx, int sy, int gx, int gy, CTilemap* Tilemap)
 	cout << "Initialised goal....";
 	printInfo(goal->x, goal->y, goal->f, goal->g, goal->h);					// Show Initialised x,y,f values
 	cout << endl;
+}
+
+void AStar::Reset(void)
+{
+	delete start;
+	delete goal;
+
+	while (openList.size() > 0)
+	{
+		Node *go = openList.back();
+		delete go;
+		openList.pop_back();
+	}
+	while (closeList.size() > 0)
+	{
+		Node *go = closeList.back();
+		delete go;
+		closeList.pop_back();
+	}
 }
 
 // Get Best ( Minimum f ) Node From Open List

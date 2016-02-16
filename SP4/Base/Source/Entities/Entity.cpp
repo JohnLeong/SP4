@@ -1,61 +1,53 @@
 #include "Entity.h"
 
 
-CGameEntity::CGameEntity()
-: pos(0.f, 0.f, 0.f)
+CEntity::CEntity()
+: m_bAlive(true)
+, m_iCurrent_health(0)
+, m_iMax_health(0)
 {
 }
 
 
-CGameEntity::~CGameEntity()
+CEntity::~CEntity()
 {
 }
 
-float CGameEntity::GetXPos(void)
+void CEntity::SetHealth(int h)
 {
-	return pos.x;
+	this->m_iCurrent_health = h;
 }
 
-float CGameEntity::GetYPos(void)
+void CEntity::SetMaxHealth(int h)
 {
-	return pos.y;
+	this->m_iMax_health = h;
 }
 
-void CGameEntity::SetXPos(float x)
+void CEntity::DeductHealth(int h)
 {
-	this->pos.x = x;
+	this->m_iCurrent_health -= h;
 }
 
-void CGameEntity::SetYPos(float y)
+int CEntity::GetHealth(void)
 {
-	this->pos.y = y;
+	return m_iCurrent_health;
 }
 
-void CGameEntity::SetHealth(int h)
+int CEntity::GetMaxHealth(void)
 {
-	this->current_health = h;
+	return m_iMax_health;
 }
 
-void CGameEntity::SetMaxHealth(int h)
+void CEntity::SetSprite(SpriteAnimation* sa)
 {
-	this->max_health = h;
+	this->m_cSprite = sa;
 }
 
-void CGameEntity::DeductHealth(int h)
+SpriteAnimation* CEntity::GetSprite(void)
 {
-	this->current_health -= h;
+	return m_cSprite;
 }
 
-int CGameEntity::GetHealth(void)
-{
-	return current_health;
-}
-
-int CGameEntity::GetMaxHealth(void)
-{
-	return max_health;
-}
-
-void CGameEntity::Update(const float dt)
+void CEntity::Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer)
 {
 }
