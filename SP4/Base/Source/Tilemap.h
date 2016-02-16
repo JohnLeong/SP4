@@ -6,6 +6,7 @@
 #include <sstream>
 #include "Tileinfo.h"
 #include "Mesh.h"
+#include "Graphics\SpriteAnimation.h"
 using namespace std;
 
 class CTilemap
@@ -19,6 +20,7 @@ public:
 	int GetNumOfTiles_Height(void);		// Get the number of tiles for height of the screen
 	int GetNumOfTiles_Width(void);		// Get the number of tiles for width of the screen
 	int GetTileSize(void);
+	CTiledata GetTile(int XIndex, int YIndex);
 	void SetMeshArray(CTiledata::TILE_ID TileId);	//Set the mesh for the specified tile index
 
 	vector<vector<CTiledata> > theScreenMap;
@@ -31,5 +33,5 @@ private:
 
 	bool LoadFile(const string mapName);
 
-	Mesh* meshArray[CTiledata::NUM_TILE];
+	SpriteAnimation* meshArray[CTiledata::NUM_TILE];
 };

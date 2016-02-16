@@ -49,32 +49,23 @@ void CScenePlay::Init()
 	{
 		meshList[i] = NULL;
 	}
-	meshList[GEO_RAY] = MeshBuilder::GenerateRay("ray", 10.0f);
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");//, 1000, 1000, 1000);
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/anonymous.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 0, 0), 18, 36, 1.f);
-	
-	meshList[GEO_LEFT] = MeshBuilder::GenerateQuad("LEFT", Color(1, 1, 1), 1.f);
-	meshList[GEO_LEFT]->textureID = LoadTGA("Image//left.tga");
-	meshList[GEO_RIGHT] = MeshBuilder::GenerateQuad("RIGHT", Color(1, 1, 1), 1.f);
-	meshList[GEO_RIGHT]->textureID = LoadTGA("Image//right.tga");
-	meshList[GEO_TOP] = MeshBuilder::GenerateQuad("TOP", Color(1, 1, 1), 1.f);
-	meshList[GEO_TOP]->textureID = LoadTGA("Image//top.tga");
-	meshList[GEO_BOTTOM] = MeshBuilder::GenerateQuad("BOTTOM", Color(1, 1, 1), 1.f);
-	meshList[GEO_BOTTOM]->textureID = LoadTGA("Image//bottom.tga");
-	meshList[GEO_FRONT] = MeshBuilder::GenerateQuad("FRONT", Color(1, 1, 1), 1.f);
-	meshList[GEO_FRONT]->textureID = LoadTGA("Image//front.tga");
-	meshList[GEO_BACK] = MeshBuilder::GenerateQuad("BACK", Color(1, 1, 1), 1.f);
-	meshList[GEO_BACK]->textureID = LoadTGA("Image//back.tga");
 
 	// Load the ground mesh and texture
 	meshList[GEO_GRASS_DARKGREEN] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
 	meshList[GEO_GRASS_DARKGREEN]->textureID = LoadTGA("Image//grass_darkgreen.tga");
 	meshList[GEO_GRASS_LIGHTGREEN] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
 	meshList[GEO_GRASS_LIGHTGREEN]->textureID = LoadTGA("Image//grass_lightgreen.tga");
+
+	meshList[GEO_TILE_FLOOR_STONE_01] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
+	meshList[GEO_TILE_FLOOR_STONE_01]->textureID = LoadTGA("Image//grass_darkgreen.tga");
+	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
+	meshList[GEO_TILE_WALL_STONE_01]->textureID = LoadTGA("Image//grass_lightgreen.tga");
 
 	// Initialise and load a model into it
 	m_cAvatar = new CPlayInfo3PV();
@@ -100,6 +91,11 @@ void CScenePlay::Init()
 
 	bLightEnabled = true;
 
+	InitTilemap();
+}
+
+void CScenePlay::InitTilemap()
+{
 	m_cLevel.InitTilemap("LevelMap//MapDesign.csv", 10, 10, 25.f);
 }
 
@@ -177,103 +173,6 @@ void CScenePlay::RenderGUI()
 	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
 }
 
-/********************************************************************************
- Render mobile objects
- ********************************************************************************/
-void CScenePlay::RenderMobileObjects()
-{
-	// Render the Avatar
-	Vector3 tempDir = m_cAvatar->GetDirection();
-	float theta = Math::RadianToDegree(atan2(tempDir.x, tempDir.z));
-	modelStack.PushMatrix();
-	modelStack.Translate(m_cAvatar->GetPos_x(), m_cAvatar->GetPos_y(), m_cAvatar->GetPos_z());
-	modelStack.Rotate(theta, 0, 1, 0);
-	RenderMesh(m_cAvatar->theAvatarMesh, true);
-	modelStack.PopMatrix();
-}
-
-/********************************************************************************
- Render the lights in this scene
- ********************************************************************************/
-void CScenePlay::RenderFixedObjects()
-{
-	RenderMesh(meshList[GEO_AXES], false);
-}
-
-/********************************************************************************
- Render the ground in this scene
- ********************************************************************************/
-void CScenePlay::RenderGround()
-{
-	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Translate(0, 0, -10);
-	modelStack.Rotate(-90, 0, 0, 1);
-	modelStack.Scale(100.0f, 100.0f, 100.0f);
-
-	for (int x = 0; x < 15; x++)
-	{
-		for (int z = 0; z < 15; z++)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(x - 5.0f, z - 5.0f, 0.0f);
-			RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
-			modelStack.PopMatrix();
-		}
-	}
-	modelStack.PopMatrix();
-}
-
-/********************************************************************************
- Render the skybox in this scene
- ********************************************************************************/
-void CScenePlay::RenderSkybox()
-{
-	//left
-	modelStack.PushMatrix();
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Translate(0, 0, -SKYBOXSIZE / 2 + 2.f);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	RenderMesh(meshList[GEO_LEFT], false);
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 0, 1, 0);
-	modelStack.Translate(0, 0, -SKYBOXSIZE / 2 + 2.f);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	RenderMesh(meshList[GEO_RIGHT], false);
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -SKYBOXSIZE / 2 + 2.f);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	RenderMesh(meshList[GEO_FRONT], false);
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Rotate(180, 0, 1, 0);
-	modelStack.Translate(0, 0, -SKYBOXSIZE / 2 + 2.f);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	RenderMesh(meshList[GEO_BACK], false);
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Translate(0, 0, -SKYBOXSIZE / 2 + 2.f);
-	modelStack.Rotate(90, 0, 0, 1);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	RenderMesh(meshList[GEO_TOP], false);
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Translate(0, 0, -SKYBOXSIZE / 2 + 2.f);
-	modelStack.Rotate(-90, 0, 0, 1);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	RenderMesh(meshList[GEO_BOTTOM], false);
-	modelStack.PopMatrix();
-}
-
 void CScenePlay::RenderTilemap(void)
 {
 	for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); i++)
@@ -283,7 +182,8 @@ void CScenePlay::RenderTilemap(void)
 			modelStack.PushMatrix();
 			modelStack.Translate(i * m_cLevel.GetTilemap()->GetTileSize(), k * m_cLevel.GetTilemap()->GetTileSize(), 0);
 			modelStack.Scale(m_cLevel.GetTilemap()->GetTileSize(), m_cLevel.GetTilemap()->GetTileSize(), 1.f);
-			RenderMesh(meshList[GEO_GRASS_LIGHTGREEN], false);
+			RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+			//RenderMesh(m_cLevel.GetTilemap()->GetTile(i, k), false);
 			modelStack.PopMatrix();
 		}
 	}

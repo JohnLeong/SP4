@@ -6,6 +6,10 @@ CTilemap::CTilemap(void)
 , theTileSize(0)
 {
 	theScreenMap.clear();
+	for (int i = 0; i < CTiledata::NUM_TILE; ++i)
+	{
+		meshArray[i] = NULL;
+	}
 }
 
 CTilemap::~CTilemap(void)
@@ -103,4 +107,14 @@ int CTilemap::GetNumOfTiles_Width(void)
 int CTilemap::GetTileSize(void)
 {
 	return theTileSize;
+}
+
+CTiledata CTilemap::GetTile(int XIndex, int YIndex)
+{
+	if (XIndex >= theNumOfTiles_MapWidth || YIndex >= theNumOfTiles_MapHeight)
+	{
+		std::cout << "Tile map out of range"<<std::endl;
+		theScreenMap[0][0];
+	}
+	return theScreenMap[XIndex][YIndex];
 }

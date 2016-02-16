@@ -17,19 +17,16 @@ class CScenePlay : public CSceneManager
 {
 	enum GEOMETRY_TYPE
 	{
-		GEO_RAY,
 		GEO_AXES,
 		GEO_CROSSHAIR,
 		GEO_LIGHTBALL,
-		GEO_LEFT,
-		GEO_RIGHT,
-		GEO_TOP,
-		GEO_BOTTOM,
-		GEO_FRONT,
-		GEO_BACK,
 		GEO_GRASS_DARKGREEN,
 		GEO_GRASS_LIGHTGREEN,
 		GEO_TEXT,
+
+		//Tile geometry
+		GEO_TILE_FLOOR_STONE_01,
+		GEO_TILE_WALL_STONE_01,
 
 		NUM_GEOMETRY,
 	};
@@ -50,13 +47,10 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
+	void InitTilemap();
+
 	// Render the main components of this scene
 	void RenderGUI();
-	void RenderMobileObjects();
-	void RenderFixedObjects();
-	void RenderLights();
-	void RenderGround();
-	void RenderSkybox();
 	void RenderTilemap(void);
 
 	bool m_bExitPlay;
