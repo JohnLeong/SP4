@@ -20,9 +20,13 @@ public:
 	}
 
 	static bool IsKeyPressed(unsigned short key);
+	static bool IsMousePressed(unsigned short key);
 
 	bool GetMouseUpdate();
 	bool GetKeyboardUpdate();
+
+	static int getWindowHeight();
+	static int getWindowWidth();
 
 	void Init();
 	void InitWindow(bool fullscreen);
@@ -39,14 +43,16 @@ public:
 	static bool m_bFullscreen;
 	static bool m_bChangeRes;
 
+
+
+
 private:
 	Application();
 	~Application();
 
 	// Declare the window width and height as constant integer
-	const static int m_window_deadzone = 100;
-	int m_window_width;
-	int m_window_height;
+	const static int m_window_deadzone;
+	
 	std::string m_window_name;
 	//Declare a window object
 	StopWatch m_timer;
@@ -54,8 +60,12 @@ private:
 	double m_dAccumulatedTime_ThreadOne;
 	double m_dAccumulatedTime_ThreadTwo;
 
+	static int m_window_width;
+	static int m_window_height;
+
 	// Game State Management
 	CGameStateManager* theGSM;
+
 };
 
 #endif

@@ -6,6 +6,7 @@ using namespace std;
 #include "gamestate.h"
 #include "menustate.h"
 #include "OptionsState.h"
+#include "../Application.h"
 
 CMenuState CMenuState::theMenuState;
 
@@ -15,7 +16,7 @@ void CMenuState::Init()
 	cout << "CMenuState::Init" << endl;
 #endif
 
-	scene = new CSceneMenu(1280, 720);
+	scene = new CSceneMenu();
 	scene->Init();
 }
 
@@ -25,7 +26,7 @@ void CMenuState::Init(const int width, const int height)
 	cout << "CMenuState::Init" << endl;
 #endif
 
-	scene = new CSceneMenu(width, height);
+	scene = new CSceneMenu();
 	scene->Init();
 }
 
@@ -94,15 +95,34 @@ void CMenuState::Update(CGameStateManager* theGSM)
 	cout << "CMenuState::Update" << endl;
 #endif
 	scene->Update(0.16667);
-	if (scene->IsKeyDown(VK_RETURN))
+
+	
+	if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 4)
 		theGSM->ChangeState(CPlayState::Instance());
+	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 3)
+		theGSM->ChangeState(CPlayState::Instance());
+	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 2)
+		theGSM->ChangeState(COptionsState::Instance());
+	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 1)
+		exit(0);
 }
 
 void CMenuState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 {
 	scene->Update(m_dElapsedTime);
-	if (scene->IsKeyDown(VK_RETURN))
+
+	if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 4 
+		||((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && ((CSceneMenu*)scene)->getChoiceVal() == 4)
 		theGSM->ChangeState(CPlayState::Instance());
+	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 3
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && ((CSceneMenu*)scene)->getChoiceVal() == 3)
+		theGSM->ChangeState(CPlayState::Instance());
+	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 2
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && ((CSceneMenu*)scene)->getChoiceVal() == 2)
+		theGSM->ChangeState(COptionsState::Instance());
+	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 1
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && ((CSceneMenu*)scene)->getChoiceVal() == 1)
+		exit(0);
 }
 
 void CMenuState::Draw(CGameStateManager* theGSM) 

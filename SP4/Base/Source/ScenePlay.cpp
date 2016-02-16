@@ -123,6 +123,7 @@ void CScenePlay::Update(double dt)
 	if (IsKeyDownOnce('w'))
 	{
 		m_cPlayer->MoveUpDown(true, m_cLevel.GetTilemap());
+		cout << "works";
 	}
 	else if (IsKeyDownOnce('s'))
 	{

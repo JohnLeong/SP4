@@ -34,7 +34,6 @@ class CSceneMenu : public CSceneManager
 
 public:
 	CSceneMenu(void);
-	CSceneMenu(const int m_window_width, const int m_window_height);
 	~CSceneMenu(void);
 
 	virtual void Init();
@@ -46,15 +45,29 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
+	//get the value of choice
+	int getChoiceVal(void);
+	//set the value of choice
+	void setChoiceVal(int choice);
+
+	//check for collision
+	bool checkForcollision(float mouseX,float mouseY,float pos_buttonX, float pos_buttonY, float pos_buttonWidth, float pos_buttonHeight);
 protected:
 	Mesh* meshList[NUM_GEOMETRY];
 
-	// Window size
-	int m_window_width;
-	int m_window_height;
+	//World size
+	float m_world_width;
+	float m_world_height;
 
+	//get mouse position in world space
+	float worldX;
+	float worldY;
 	//transverse the menu
 	int choice;
+
+	//virutally create vector positions for the buttons
+	Vector3 geo_pos[4];
+
 };
 
 #endif

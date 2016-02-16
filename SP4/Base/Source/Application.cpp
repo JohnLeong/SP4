@@ -21,6 +21,7 @@ double Application::mouse_last_x = 0.0, Application::mouse_last_y = 0.0,
 double Application::camera_yaw = 0.0, Application::camera_pitch = 0.0;
 int Application::m_iPrevScoreBlue = 0, Application::m_iPrevScoreRed = 0;
 bool Application::m_bChangeRes = false, Application::m_bFullscreen = false;
+int Application::m_window_width = 1280; int Application::m_window_height = 720;
 
 /********************************************************************************
  Define an error callback
@@ -57,6 +58,27 @@ bool Application::IsKeyPressed(unsigned short key)
 }
 
 /********************************************************************************
+Get Mouse press states
+********************************************************************************/
+bool Application::IsMousePressed(unsigned short key) //0 - Left, 1 - Right, 2 - Middle
+{
+	return glfwGetMouseButton(m_window, key) != 0;
+}
+/********************************************************************************
+Get windows height
+********************************************************************************/
+int Application::getWindowWidth()
+{
+	return m_window_width;
+}
+/********************************************************************************
+Get windows width
+********************************************************************************/
+int Application::getWindowHeight()
+{
+	return m_window_height;
+}
+/********************************************************************************
  Get mouse updates
  ********************************************************************************/
 bool Application::GetMouseUpdate()
@@ -72,7 +94,7 @@ bool Application::GetMouseUpdate()
 	camera_pitch = mouse_diff_y * 0.0174555555555556f;// 3.142f / 180.0f );
 
 	// Do a wraparound if the mouse cursor has gone out of the deadzone
-	if ((mouse_current_x < m_window_deadzone) || (mouse_current_x > m_window_width-m_window_deadzone))
+	/*if ((mouse_current_x < m_window_deadzone) || (mouse_current_x > m_window_width-m_window_deadzone))
 	{
 		mouse_current_x = m_window_width >> 1;
 		glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
@@ -82,7 +104,7 @@ bool Application::GetMouseUpdate()
 		mouse_current_y = m_window_height >> 1;
 		glfwSetCursorPos(m_window, mouse_current_x, mouse_current_y);
 	}
-
+*/
 	// Store the current position as the last position
 	mouse_last_x = mouse_current_x;
 	mouse_last_y = mouse_current_y;
@@ -191,8 +213,6 @@ bool Application::GetKeyboardUpdate()
  ********************************************************************************/
 Application::Application()
 : theGSM(NULL)
-, m_window_width(1280)
-, m_window_height(720)
 , m_window_name("Application")
 {
 
@@ -253,7 +273,12 @@ void Application::InitWindow(bool fullscreen)
 	if (!fullscreen)
 		m_window = glfwCreateWindow(m_window_width, m_window_height, m_window_name.c_str(), NULL, NULL);
 	else
+	{
 		m_window = glfwCreateWindow(mode->width, mode->height, m_window_name.c_str(), glfwGetPrimaryMonitor(), NULL);
+		this->m_window_height = GetSystemMetrics(SM_CYSCREEN);
+		this->m_window_width = GetSystemMetrics(SM_CXSCREEN);
+	}
+
 
 	//m_window = glfwCreateWindow(mode->width, mode->height, "Y2S2_Framework", glfwGetPrimaryMonitor(), NULL);
 
@@ -284,7 +309,7 @@ void Application::InitWindow(bool fullscreen)
 	}
 
 	// Hide the cursor
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	//glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 }
 
 /********************************************************************************
