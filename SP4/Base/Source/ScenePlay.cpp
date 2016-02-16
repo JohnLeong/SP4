@@ -67,6 +67,9 @@ void CScenePlay::Init()
 	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
 	meshList[GEO_TILE_WALL_STONE_01]->textureID = LoadTGA("Image//grass_lightgreen.tga");
 
+	meshList[GEO_PLAYER] = MeshBuilder::GenerateSpriteAnimation2D("GEO_PLAYER", 4, 3);
+	meshList[GEO_PLAYER]->textureID = LoadTGA("Image//Entities//explorer.tga");
+
 	// Initialise and load a model into it
 	m_cAvatar = new CPlayInfo3PV();
 	//m_cAvatar->SetModel(MeshBuilder::GenerateCone("cone", Color(0.5f, 1, 0.3f), 36, 10.f, 10.f));
@@ -86,7 +89,7 @@ void CScenePlay::Init()
 	std::cout << "Variables" << std::endl;
 
 	m_cPlayer = new CPlayer();
-	m_cPlayer->Init(0, 0);
+	m_cPlayer->Init(0, 0, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]));
 	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	bLightEnabled = true;
@@ -116,7 +119,7 @@ void CScenePlay::Update(double dt)
 	if(Application::IsKeyPressed('P'))
 		lights[0].position.y += (float)(10.f * dt);
 
-	m_cPlayer->Update();
+	m_cPlayer->Update(dt, m_cLevel.GetTilemap());
 	if (IsKeyDownOnce('w'))
 	{
 		m_cPlayer->MoveUpDown(true, m_cLevel.GetTilemap());
@@ -133,7 +136,7 @@ void CScenePlay::Update(double dt)
 	{
 		m_cPlayer->MoveLeftRight(false, m_cLevel.GetTilemap());
 	}
-	camera.UpdatePosition(Vector3(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize(), m_cPlayer->GetPos_y()* m_cLevel.GetTilemap()->GetTileSize(),0));
+	camera.UpdatePosition(Vector3(static_cast<float>(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetOffSet_x()), static_cast<float>(m_cPlayer->GetPos_y()* m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetOffSet_y()), 0.f));
 
 	//m_cAvatar->Update(dt);
 	//m_cAvatar->SetPos_y(-10.f);
@@ -173,6 +176,17 @@ void CScenePlay::RenderGUI()
 	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
 }
 
+void CScenePlay::RenderPlayer()
+{
+	// Render the player
+	modelStack.PushMatrix();
+	modelStack.Translate((static_cast<float>(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetOffSet_x()), (static_cast<float>(m_cPlayer->GetPos_y()* m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetOffSet_y()), 0.f);
+	modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
+	RenderMesh(meshList[GEO_PLAYER], false);
+	//m_cPlayer->GetSpriteAnimation()->Render();
+	modelStack.PopMatrix();
+}
+
 void CScenePlay::RenderTilemap(void)
 {
 	for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); i++)
@@ -180,8 +194,8 @@ void CScenePlay::RenderTilemap(void)
 		for (int k = 0; k < m_cLevel.GetTilemap()->GetNumOfTiles_Width(); k++)
 		{
 			modelStack.PushMatrix();
-			modelStack.Translate(i * m_cLevel.GetTilemap()->GetTileSize(), k * m_cLevel.GetTilemap()->GetTileSize(), 0);
-			modelStack.Scale(m_cLevel.GetTilemap()->GetTileSize(), m_cLevel.GetTilemap()->GetTileSize(), 1.f);
+			modelStack.Translate(static_cast<float>(i * m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(k * m_cLevel.GetTilemap()->GetTileSize()), 0.f);
+			modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
 			RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
 			//RenderMesh(m_cLevel.GetTilemap()->GetTile(i, k), false);
 			modelStack.PopMatrix();
@@ -195,10 +209,9 @@ void CScenePlay::RenderTilemap(void)
 void CScenePlay::Render()
 {
 	CSceneManager::Render2D();
-
-	
+	glDisable(GL_DEPTH_TEST);
 	RenderTilemap();
-
+	RenderPlayer();
 	//RenderGround();
 	//RenderSkybox();
 	//RenderFixedObjects();

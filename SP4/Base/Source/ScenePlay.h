@@ -28,6 +28,8 @@ class CScenePlay : public CSceneManager
 		GEO_TILE_FLOOR_STONE_01,
 		GEO_TILE_WALL_STONE_01,
 
+		GEO_PLAYER,
+
 		NUM_GEOMETRY,
 	};
 
@@ -51,6 +53,7 @@ public:
 
 	// Render the main components of this scene
 	void RenderGUI();
+	void RenderPlayer();
 	void RenderTilemap(void);
 
 	bool m_bExitPlay;
