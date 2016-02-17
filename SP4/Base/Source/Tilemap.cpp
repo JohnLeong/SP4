@@ -19,7 +19,7 @@ CTilemap::~CTilemap(void)
 
 void CTilemap::Init(int theNumOfTiles_Height, int theNumOfTiles_Width, float theTileSize)
 {
-	this->theTileSize			= theTileSize;
+	this->theTileSize = static_cast<int>(theTileSize);
 
 	theNumOfTiles_MapHeight = theNumOfTiles_Height;
 	theNumOfTiles_MapWidth = theNumOfTiles_Width;

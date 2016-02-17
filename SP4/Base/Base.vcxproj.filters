@@ -151,30 +151,6 @@
     <ClCompile Include="Source\Tileinfo.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Entities\Enemy.cpp">
-      <Filter>Entities\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Entities\EnemyZombie.cpp">
-      <Filter>Entities\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Entities\Entity.cpp">
-      <Filter>Entities\Base classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Entities\EntityIPos.cpp">
-      <Filter>Entities\Base classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Entities\EntityVPos.cpp">
-      <Filter>Entities\Base classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AStar.cpp">
-      <Filter>Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node.cpp">
-      <Filter>Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Entities\Entity_Hazard_Moving.cpp">
-      <Filter>Entities\GameplayEntities</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -272,30 +248,6 @@
     </ClInclude>
     <ClInclude Include="Source\Tileinfo.h">
       <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities\EnemyZombie.h">
-      <Filter>Entities\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities\Enemy.h">
-      <Filter>Entities\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities\Entity.h">
-      <Filter>Entities\Base classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities\EntityIPos.h">
-      <Filter>Entities\Base classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities\EntityVPos.h">
-      <Filter>Entities\Base classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AStar.h">
-      <Filter>Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Node.h">
-      <Filter>Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities\Entity_Hazard_Moving.h">
-      <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

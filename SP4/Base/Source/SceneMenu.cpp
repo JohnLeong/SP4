@@ -8,7 +8,7 @@
 #include "LoadTGA.h"
 #include <sstream>
 
-#define buttonYoffset 55.5
+#define buttonYoffset 55.5f
 CSceneMenu::CSceneMenu(void):
 choice(1)
 {
@@ -87,8 +87,8 @@ void CSceneMenu::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
-	worldX = Application::mouse_current_x * m_world_width / Application::getWindowWidth();
-	worldY = (Application::getWindowHeight() - Application::mouse_current_y) * m_world_height / Application::getWindowHeight();
+	worldX = static_cast<float>(Application::mouse_current_x) * m_world_width / static_cast<float>(Application::getWindowWidth());
+	worldY = static_cast<float>((Application::getWindowHeight() - Application::mouse_current_y)) * m_world_height / static_cast<float>(Application::getWindowHeight());
 	
 	float fDelta = (float)dt;
 }
