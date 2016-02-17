@@ -65,6 +65,15 @@
     <Filter Include="Entities\GameplayEntities">
       <UniqueIdentifier>{3d20b0f2-b745-48fa-b8bd-37df1ec56bf9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sounds">
+      <UniqueIdentifier>{5e9f9ceb-c8b5-4055-8328-d22f2af40461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sounds\Header Files">
+      <UniqueIdentifier>{f7bd96ab-c8d1-4151-81ba-5d74244f6ea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sounds\Source Files">
+      <UniqueIdentifier>{5f2f6043-d875-4d99-99b0-45697f9ade47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\SceneManager.cpp">
@@ -169,18 +178,20 @@
     <ClCompile Include="Source\Entities\Enemy.cpp">
       <Filter>Entities\Base classes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CsoundManager.cpp" />
     <ClCompile Include="Source\AStar.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="Source\Node.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.cpp">
-      <Filter>Game State Management\States\Source Files</Filter>
+    <ClCompile Include="Source\SoundManager.cpp">
+      <Filter>Sounds\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneInstruction.cpp">
       <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,18 +309,20 @@
     <ClInclude Include="Source\Entities\Enemy.h">
       <Filter>Entities\Base classes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CsoundManager.h" />
     <ClInclude Include="Source\AStar.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h">
-      <Filter>Game State Management\States\Header Files</Filter>
+    <ClInclude Include="Source\SoundManager.h">
+      <Filter>Sounds\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneInstruction.h">
       <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

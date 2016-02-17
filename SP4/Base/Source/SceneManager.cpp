@@ -29,7 +29,7 @@ CSceneManager::~CSceneManager(void)
 void CSceneManager::Init()
 {
 	// Blue background
-	glClearColor(0.f, 0.f, 0.f, 0.0f);
+	glClearColor(0.9f, 0.9f, 0.9f, 0.0f);
 	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	//Calculating aspect ratio
