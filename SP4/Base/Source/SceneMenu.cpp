@@ -8,9 +8,9 @@
 #include "LoadTGA.h"
 #include <sstream>
 
-#define buttonYoffset 55.5
-CSceneMenu::CSceneMenu(void):
-choice(1)
+#define buttonXoffset 55.5f
+
+CSceneMenu::CSceneMenu(void)
 {
 }
 
@@ -22,10 +22,6 @@ void CSceneMenu::Init()
 {
 	CSceneManager::Init();
 
-	//Calculating aspect ratio
-	m_world_height = 100.f;
-	m_world_width = m_world_height * (float)Application::getWindowWidth() / Application::getWindowHeight();//m_window_width/ m_window_height;
-	
 	//init the choice
 	choice = 4;
 
@@ -39,10 +35,10 @@ void CSceneMenu::Init()
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 
 	//create virtual positions for the buttons
-	for (int i = 0; i < 4; i++) //left side of button
+	for (int i = 0; i < 4; i++)
 	{
 		//0 = play 1 = instructions 2 = options 3 = exit
-		geo_pos[i].Set(61, 67 - (16 * i), 0);
+		geo_pos[i].Set(61.0f, 67.0f - (16.0f * i), 0.0f);
 		cout << geo_pos[i] << endl;
 	}
 
@@ -87,9 +83,44 @@ void CSceneMenu::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
-	worldX = Application::mouse_current_x * m_world_width / Application::getWindowWidth();
-	worldY = (Application::getWindowHeight() - Application::mouse_current_y) * m_world_height / Application::getWindowHeight();
+	//update choice on button press
+	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
+	{
+		choice++;
+		setChoiceVal(choice);
+		//1 = exit, 2 = options, 3 = instructions, 4 = play
+		if (choice > 4)
+			setChoiceVal(1);
+	}
+	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
+	{
+		choice--;
+		setChoiceVal(choice);
+		//1 = exit, 2 = options, 3 = instructions, 4 = play
+		if (choice < 1)
+			setChoiceVal(4);
+	}
+
+
+	//Update image on mouse hover
+	if (checkForcollision(worldX, worldY, geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonXoffset, geo_pos[0].y + 8)) // play button
+	{
+		setChoiceVal(4);
+	}
+	else if (checkForcollision(worldX, worldY, geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonXoffset, geo_pos[1].y + 8)) // instructions button
+	{
+		setChoiceVal(3);
+	}
+	else if (checkForcollision(worldX, worldY, geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonXoffset, geo_pos[2].y + 8)) // options button
+	{
+		setChoiceVal(2);
+	}
+	else if (checkForcollision(worldX, worldY, geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonXoffset, geo_pos[3].y + 8)) // exit button
+	{
+		setChoiceVal(1);
+	}
 	
+
 	float fDelta = (float)dt;
 }
 
@@ -109,42 +140,6 @@ void CSceneMenu::UpdateKeyboardStatus(const unsigned char key)
 }
 
 /********************************************************************************
- Get the number in choice 
-********************************************************************************/
-int CSceneMenu::getChoiceVal(void)
-{
-	return choice;
-}
-
-/********************************************************************************
-Set the number in choice
-********************************************************************************/
-void CSceneMenu::setChoiceVal(int choice)
-{
-	this->choice = choice;
-}
-
-/********************************************************************************
-Check for collisions with button
-********************************************************************************/
-bool CSceneMenu::checkForcollision(float mouseX, float mouseY, float pos_buttonX, float pos_buttonY, float pos_buttonWidth, float pos_buttonHeight)
-{
-	if (mouseX > pos_buttonX && mouseX < pos_buttonWidth) //within the x
-	{
-		if (mouseY > pos_buttonY && mouseY < pos_buttonHeight) //within the x and y
-		{
-			//mouse position is inside the button
-			return true;
-		}
-	}
-	else
-	{
-		return false;
-	}
-	return false;
-}
-
-/********************************************************************************
  Render this scene
  ********************************************************************************/
 void CSceneMenu::Render()
@@ -153,61 +148,8 @@ void CSceneMenu::Render()
 #if _DEBUG
 	RenderTextOnScreen(meshList[GEO_TEXT], "SceneMenu", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 #endif
-	if (Application::IsKeyPressed('1'))
-	{
-		cout << "current mouse x: " << worldX << endl;
-		cout << "current mouse y: " << worldY << endl;
-		cout << "geo_pos.x: " << geo_pos[1].x << endl;
-		cout << "geo_pos.y: " << geo_pos[1].y << endl;
-		cout << "geo_pos.x R: " << geo_pos[1].x + 55.5 << endl;
-		cout << "geo_pos.y R: " << geo_pos[1].y + 8 << endl;
-
-	}
 	
-	//Update image on mouse hover
-	if (checkForcollision(worldX, worldY, geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonYoffset, geo_pos[0].y + 8)) // play button
-	{
-		setChoiceVal(4);
-	}
-	else if (checkForcollision(worldX, worldY, geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonYoffset, geo_pos[1].y + 8)) // instructions button
-	{
-		setChoiceVal(3);
-	}
-	else if (checkForcollision(worldX, worldY, geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonYoffset, geo_pos[2].y + 8)) // options button
-	{
-		setChoiceVal(2);
-	}
-	else if (checkForcollision(worldX, worldY, geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonYoffset, geo_pos[3].y + 8)) // exit button
-	{
-		setChoiceVal(1);
-	}
-	else
-	{
-		setChoiceVal(0);
-	}
-
-	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
-	{
-		choice++;
-		setChoiceVal(choice);
-		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (choice > 4)
-			setChoiceVal(4);
-
-		//cout << "choice: " << getChoiceVal() << endl;
-	}
-	else if(CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
-	{
-		choice--;
-		setChoiceVal(choice);
-		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (choice < 1)
-			setChoiceVal(1);
-
-		//cout << "choice: " << getChoiceVal() << endl;
-	}
-
-	switch (choice)
+	switch (getChoiceVal())
 	{
 	case 4: //play button highlighted
 		RenderMeshIn2D(meshList[GEO_PLAY_H], false, 1, 1, -50.0f, 30.0f);
@@ -237,6 +179,7 @@ void CSceneMenu::Render()
 		RenderMeshIn2D(meshList[GEO_EXIT_H], false, 1, 1, -50.0f, -52.5f);
 
 		break;
+
 	default: //default, no option chosen
 		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, -50.0f, 30.0f);
 		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, -50.0f, 2.5f);

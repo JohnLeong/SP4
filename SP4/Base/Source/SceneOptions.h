@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
+#include "SceneMenu.h"
 
 class CSceneOptions : public CSceneManager
 {
@@ -20,8 +21,8 @@ class CSceneOptions : public CSceneManager
 		GEO_TEXT,
 		GEO_LOGO,
 		GEO_QUAD,
-		GEO_WASD,
-		GEO_MOUSE,
+		GEO_BACK,
+		GEO_BACK_H,
 		NUM_GEOMETRY,
 	};
 
@@ -32,8 +33,10 @@ public:
 
 	virtual void Init();
 	virtual void Update(double dt);
+
 	// Update Camera status
 	virtual void UpdateCameraStatus(const unsigned char key, const bool status = true);
+
 	// Update Keyboard status
 	virtual void UpdateKeyboardStatus(const unsigned char key);
 	virtual void Render();
@@ -45,6 +48,9 @@ protected:
 	// Window size
 	int m_window_width;
 	int m_window_height;
+
+	//virutally create vector positions for the buttons
+	Vector3 geo_pos;
 };
 
 #endif

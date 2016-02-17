@@ -1,5 +1,5 @@
-#ifndef SCENE_MENU_H
-#define SCENE_MENU_H
+#ifndef SCENE_INSTRUCT_H
+#define SCENE_INSTRUCT_H
 
 #include "SceneManager.h"
 #include "Mtx44.h"
@@ -8,33 +8,30 @@
 #include "MatrixStack.h"
 #include "Light.h"
 
-
-class CSceneMenu : public CSceneManager
+class  CSceneInstruction : public CSceneManager
 {
 	enum GEOMETRY_TYPE
 	{
 		GEO_RAY,
 		GEO_AXES,
-		GEO_TEXT,
 		GEO_CROSSHAIR,
 		GEO_LIGHTBALL,
-		//menus (non highlighted)
-		GEO_PLAY,
-		GEO_INSTRUCTIONS,
-		GEO_OPTIONS,
-		GEO_EXIT,
-		//menus (highlighted)
-		GEO_PLAY_H,
-		GEO_INSTRUCTIONS_H,
-		GEO_OPTIONS_H,
-		GEO_EXIT_H,
-
+		GEO_SPHERE,
+		GEO_TEXT,
+		GEO_LOGO,
+		GEO_QUAD,
+		GEO_WASD,
+		GEO_MOUSE,
+		//buttons
+		GEO_BACK,
+		GEO_BACK_H,
 		NUM_GEOMETRY,
 	};
 
 public:
-	CSceneMenu(void);
-	~CSceneMenu(void);
+	CSceneInstruction(void);
+	CSceneInstruction(const int m_window_width, const int m_window_height);
+	~CSceneInstruction(void);
 
 	virtual void Init();
 	virtual void Update(double dt);
@@ -42,16 +39,18 @@ public:
 	virtual void UpdateCameraStatus(const unsigned char key, const bool status = true);
 	// Update Keyboard status
 	virtual void UpdateKeyboardStatus(const unsigned char key);
-
 	virtual void Render();
 	virtual void Exit();
-	
+
 protected:
 	Mesh* meshList[NUM_GEOMETRY];
 
-	//virutally create vector positions for the buttons
-	Vector3 geo_pos[4];
+	// Window size
+	int m_window_width;
+	int m_window_height;
 
+	//virutally create vector positions for the buttons
+	Vector3 geo_pos;
 };
 
 #endif

@@ -109,6 +109,10 @@ void COptionsState::Update(CGameStateManager* theGSM)
 void COptionsState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 {
 	scene->Update(m_dElapsedTime);
+
+	if (scene->IsKeyDown(VK_RETURN) && scene->getChoiceVal() == 1
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && scene->getChoiceVal() == 1)
+		theGSM->ChangeState(CMenuState::Instance());
 }
 
 void COptionsState::Draw(CGameStateManager* theGSM) 

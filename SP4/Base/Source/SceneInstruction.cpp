@@ -1,4 +1,4 @@
-#include "SceneOptions.h"
+#include "SceneInstruction.h"
 #include "GL\glew.h"
 
 #include "shader.hpp"
@@ -8,25 +8,25 @@
 #include "LoadTGA.h"
 #include <sstream>
 
-#define buttonXoffset 55.5f
+#define buttonXoffset 55.5
 
-CSceneOptions::CSceneOptions(void)
-	: m_window_width(800)
-	, m_window_height(600)
+CSceneInstruction::CSceneInstruction(void)
+: m_window_width(800)
+, m_window_height(600)
 {
 }
 
-CSceneOptions::CSceneOptions(const int m_window_width, const int m_window_height)
+CSceneInstruction::CSceneInstruction(const int m_window_width, const int m_window_height)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
 }
 
-CSceneOptions::~CSceneOptions(void)
+CSceneInstruction::~CSceneInstruction(void)
 {
 }
 
-void CSceneOptions::Init()
+void CSceneInstruction::Init()
 {
 	CSceneManager::Init();
 
@@ -36,9 +36,7 @@ void CSceneOptions::Init()
 	//create virtual positions for the buttons (back)
 	geo_pos.Set(61.0f, 19.0f, 0.0f);
 
-	//cout << geo_pos << endl;
-
-	for(int i = 0; i < NUM_GEOMETRY; ++i)
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		meshList[i] = NULL;
 	}
@@ -60,12 +58,9 @@ void CSceneOptions::Init()
 	//back button
 	meshList[GEO_BACK] = MeshBuilder::Generate2DMesh("backs button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
 	meshList[GEO_BACK]->textureID = LoadTGA("Image/MENU/back_button.tga");
-
-
 	//back button highlighted
 	meshList[GEO_BACK_H] = MeshBuilder::Generate2DMesh("back button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
 	meshList[GEO_BACK_H]->textureID = LoadTGA("Image/MENU//h_back_button.tga");
-
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -76,11 +71,11 @@ void CSceneOptions::Init()
 	bLightEnabled = true;
 }
 
-void CSceneOptions::Update(double dt)
+void CSceneInstruction::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
-	if (Application::IsKeyPressed ('1'))
+	if (Application::IsKeyPressed('1'))
 	{
 		cout << "Cursor X: " << CSceneManager::GetWorldX() << endl;
 		cout << "Cursor Y: " << CSceneManager::GetWorldY() << endl;
@@ -121,28 +116,28 @@ void CSceneOptions::Update(double dt)
 }
 
 /********************************************************************************
- Update Camera position
- ********************************************************************************/
-void CSceneOptions::UpdateCameraStatus(const unsigned char key, const bool status)
+Update Camera position
+********************************************************************************/
+void CSceneInstruction::UpdateCameraStatus(const unsigned char key, const bool status)
 {
 }
 
 /********************************************************************************
- Update Weapon status
- ********************************************************************************/
-void CSceneOptions::UpdateKeyboardStatus(const unsigned char key)
+Update Weapon status
+********************************************************************************/
+void CSceneInstruction::UpdateKeyboardStatus(const unsigned char key)
 {
 }
 
 /********************************************************************************
- Render this scene
- ********************************************************************************/
-void CSceneOptions::Render()
+Render this scene
+********************************************************************************/
+void CSceneInstruction::Render()
 {
 	CSceneManager::Render();
 
 #if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "SceneOptions", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "SceneInstructions", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 
 	std::ostringstream ss;
 	ss.precision(5);
@@ -150,7 +145,7 @@ void CSceneOptions::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
 #endif
 
-	switch (getChoiceVal())
+	switch (choice)
 	{
 	case 1:
 		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1, 1, -50.0f, -52.5f);
@@ -160,19 +155,18 @@ void CSceneOptions::Render()
 		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, -50.0f, -52.5f);
 		break;
 	}
+
 }
 
-
-
 /********************************************************************************
- Exit process for this scene
- ********************************************************************************/
-void CSceneOptions::Exit()
+Exit process for this scene
+********************************************************************************/
+void CSceneInstruction::Exit()
 {
 	// Cleanup VBO
-	for(int i = 0; i < NUM_GEOMETRY; ++i)
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
-		if(meshList[i])
+		if (meshList[i])
 			delete meshList[i];
 	}
 	glDeleteProgram(m_programID);

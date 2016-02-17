@@ -84,7 +84,25 @@ public:
 	virtual bool IsKeyDown(unsigned short key);
 	//Is key pressed once
 	virtual bool IsKeyDownOnce(unsigned short key);
+	//set the key when pressedx
 	virtual void SetKeyDown(unsigned short key, bool b);
+
+	//get the value of choice
+	int getChoiceVal(void);
+	//set the value of choice
+	void setChoiceVal(int choice);
+
+	//get X cursor position in world space 
+	float GetWorldX();
+	//get Y cursor position in world space
+	float GetWorldY();
+	//set X cursor position in world space
+	void SetWorldX(float worldX);
+	//set Y cursor position in world space
+	void SetWorldY(float worldY);
+
+	//check for collision
+	bool checkForcollision(float mouseX, float mouseY, float pos_buttonX, float pos_buttonY, float pos_buttonWidth, float pos_buttonHeight);
 
 	enum WEAPON_ACTION
 	{
@@ -115,6 +133,17 @@ protected:
 	// Window size
 	int m_window_width;
 	int m_window_height;
+
+	//World size
+	float m_world_width;
+	float m_world_height;
+
+	//get mouse position in world space
+	float worldX;
+	float worldY;
+
+	//for transversing the menu buttons
+	int choice;
 
 	Light lights[2];
 	bool bLightEnabled;
