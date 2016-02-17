@@ -15,8 +15,9 @@ using namespace::std;
 // Declare Structure Representing Neighborhood Of A Node
 const struct { int x, y; } succ[4] = { { 0, -1 }, { 0, 1 }, { 1, 0 }, { -1, 0 } };
 
-AStar::AStar()
+AStar::AStar(CTilemap* Tilemap)
 {
+	this->m_cTilemap = Tilemap;
 }
 
 AStar::~AStar(void)
@@ -24,9 +25,8 @@ AStar::~AStar(void)
 	Reset();
 }
 
-void AStar::Init(int sx, int sy, int gx, int gy, CTilemap* Tilemap)
+void AStar::Init(int sx, int sy, int gx, int gy)
 {
-	this->m_cTilemap = Tilemap;
 	start = new Node;									// Create Node Objects & Allocate Memory
 	goal = new Node;
 	start->x = sx; start->y = sy; goal->x = gx; goal->y = gy;		// Set Start and Goal x-y Values
@@ -44,18 +44,21 @@ void AStar::Reset(void)
 	delete start;
 	delete goal;
 
-	while (openList.size() > 0)
-	{
-		Node *go = openList.back();
-		delete go;
-		openList.pop_back();
-	}
-	while (closeList.size() > 0)
-	{
-		Node *go = closeList.back();
-		delete go;
-		closeList.pop_back();
-	}
+	openList.clear();
+	closeList.clear();
+	//while (openList.size() > 0)
+	//{
+	//	Node *go = openList.back();
+
+	//	delete go;
+	//	openList.pop_back();
+	//}
+	//while (closeList.size() > 0)
+	//{
+	//	Node *go = closeList.back();
+	//	delete go;
+	//	closeList.pop_back();
+	//}
 }
 
 // Get Best ( Minimum f ) Node From Open List
@@ -76,12 +79,20 @@ Node* AStar::GetSuccessor(Node *current, int i)
 	Node *n = NULL;										// Null Initialisation
 	int x = current->x + succ[i].x;						// Get x,y Position By Index
 	int y = current->y + succ[i].y;
-	if (m_cTilemap->theScreenMap[y][x].GetCollisionType() == CTiledata::COL_VOID) 
-	{// If Grid Element Contains Empty Space
-		n = new Node;									// Create A Node Object
-		n->x = x;										// Initialise To x-y Value Of Successor
-		n->y = y;
+	if (x < 0 || y < 0 || x >= m_cTilemap->GetNumOfTiles_Width() || y >= m_cTilemap->GetNumOfTiles_Height())
+	{
+		n = NULL;
 	}
+	else
+	{
+		if (m_cTilemap->theScreenMap[x][y].GetCollisionType() == CTiledata::COL_VOID)
+		{// If Grid Element Contains Empty Space
+			n = new Node;									// Create A Node Object
+			n->x = x;										// Initialise To x-y Value Of Successor
+			n->y = y;
+		}
+	}
+
 	return n;											// Return Successor Node
 }
 
@@ -146,6 +157,11 @@ Node* AStar::getFromCloseList(Node* succ)
 // Search For Best Path ( Minimum Cost )
 bool AStar::Search()
 {
+	if (start->x < 0 || start->x >= m_cTilemap->GetNumOfTiles_Width() || start->y < 0 || start->y > m_cTilemap->GetNumOfTiles_Height() ||
+		goal->x < 0 || goal->x >= m_cTilemap->GetNumOfTiles_Width() || goal->y < 0 || goal->y > m_cTilemap->GetNumOfTiles_Height())
+	{
+		return false;
+	}
 	Node *temp;
 	cout << "Searching....\n\n";
 	AddOpenList(start);									// Add Start Node To Open List
@@ -214,24 +230,32 @@ bool AStar::Search()
 void AStar::ShowPath(Node *walker)
 {
 	cout << "\nBEST PATH SOLUTION";
-	m_cTilemap->theScreenMap[goal->y][goal->x].SetTint(true);			// Mark "Goal" Node On Grid Array
+	m_cTilemap->theScreenMap[goal->x][goal->y].SetTint(true);			// Mark "Goal" Node On Grid Array
 	walker = walker->parent;				// Get Node On Best Path Linked To Goal 
 	while (walker->parent != NULL)			// If Start Point IS Not NULL
 	{
-		m_cTilemap->theScreenMap[walker->y][walker->x].SetTint(true);	// Grid Map Node Is Marked As Best Path Node
+		m_cTilemap->theScreenMap[walker->x][walker->y].SetTint(true);	// Grid Map Node Is Marked As Best Path Node
 		walker = walker->parent;			// Go To Next Link To The Path
 	}
-	m_cTilemap->theScreenMap[start->y][start->x].SetTint(true);		// Mark "Start" Node On Grid Array
+	m_cTilemap->theScreenMap[start->x][start->y].SetTint(true);		// Mark "Start" Node On Grid Array
 
 	cout << "\n";
-	for (int y = 0; y<m_cTilemap->GetNumOfTiles_Height(); y++)			// Loop Through 2D Array To Show Map & Path
-	{
-		for (int x = 0; x<m_cTilemap->GetNumOfTiles_Width(); x++)
-		{
-			cout << m_cTilemap->theScreenMap[y][x].IsTinted();
-		}
-		cout << "\n";
-	}
+	//for (int x = 0; x<m_cTilemap->GetNumOfTiles_Width(); x++)			// Loop Through 2D Array To Show Map & Path
+	//{
+	//	for (int y = 0; y<m_cTilemap->GetNumOfTiles_Height(); y++)
+	//	{
+	//		cout << m_cTilemap->theScreenMap[x][y].IsTinted();
+	//	}
+	//	cout << "\n";
+	//}
+	//for (int y = 0; y<m_cTilemap->GetNumOfTiles_Height(); y++)			// Loop Through 2D Array To Show Map & Path
+	//{
+	//	for (int x = 0; x<m_cTilemap->GetNumOfTiles_Width(); x++)
+	//	{
+	//		cout << m_cTilemap->theScreenMap[y][x].IsTinted();
+	//	}
+	//	cout << "\n";
+	//}
 	cout << "\n";
 }
 

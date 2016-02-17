@@ -11,7 +11,7 @@ CEnemy::~CEnemy(void)
 /********************************************************************************
 Update
 ********************************************************************************/
-void CEnemy::Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer)
+void CEnemy::Update(const float dt, CPlayer* cPlayer)
 {
 
 }

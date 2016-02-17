@@ -22,7 +22,7 @@ void CEntity_Hazard_Moving::Init(Vector3 pos, bool MoveDir, float m_fMoveDist)
 	this->m_fMoveDist = m_fMoveDist;
 }
 
-void CEntity_Hazard_Moving::Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer)
+void CEntity_Hazard_Moving::Update(const float dt, CPlayer* cPlayer)
 {
 	if (m_MoveDir == CEntity_Hazard_Moving::DIR_LEFT_RIGHT)
 	{

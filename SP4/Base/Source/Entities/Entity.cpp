@@ -48,6 +48,6 @@ SpriteAnimation* CEntity::GetSprite(void)
 	return m_cSprite;
 }
 
-void CEntity::Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer)
+void CEntity::Update(const float dt, CPlayer* cPlayer)
 {
 }

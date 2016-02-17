@@ -63,7 +63,7 @@ void CScenePlay::Init()
 	meshList[GEO_GRASS_LIGHTGREEN]->textureID = LoadTGA("Image//grass_lightgreen.tga");
 
 	meshList[GEO_TILE_FLOOR_STONE_01] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
-	meshList[GEO_TILE_FLOOR_STONE_01]->textureID = LoadTGA("Image//grass_darkgreen.tga");
+	meshList[GEO_TILE_FLOOR_STONE_01]->textureID = LoadTGA("Image//Entities//explorer.tga");
 	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
 	meshList[GEO_TILE_WALL_STONE_01]->textureID = LoadTGA("Image//grass_lightgreen.tga");
 
@@ -89,12 +89,23 @@ void CScenePlay::Init()
 	std::cout << "Variables" << std::endl;
 
 	m_cPlayer = new CPlayer();
-	m_cPlayer->Init(0, 0, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]));
+	m_cPlayer->Init(1, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]));
 	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	bLightEnabled = true;
 
 	InitTilemap();
+
+	for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); i++)
+	{
+		for (int k = 0; k < m_cLevel.GetTilemap()->GetNumOfTiles_Width(); k++)
+		{
+			std::cout << m_cLevel.GetTilemap()->GetTile(i, k).IsTinted() << ", ";
+		}
+		std::cout << std::endl;
+	}
+	CEnemyZombie* enemy = new CEnemyZombie(3, 7, m_cLevel.GetTilemap());
+	m_cLevel.m_cEntityIPosList.push_back(enemy);
 }
 
 void CScenePlay::InitTilemap()
@@ -123,25 +134,39 @@ void CScenePlay::Update(double dt)
 	if (IsKeyDownOnce('w'))
 	{
 		m_cPlayer->MoveUpDown(true, m_cLevel.GetTilemap());
-		cout << "works";
+		std::cout << m_cPlayer->GetPos_x() << ", " << m_cPlayer->GetPos_y()<<std::endl;
 	}
 	else if (IsKeyDownOnce('s'))
 	{
 		m_cPlayer->MoveUpDown(false, m_cLevel.GetTilemap());
+		std::cout << m_cPlayer->GetPos_x() << ", " << m_cPlayer->GetPos_y() << std::endl;
 	}
 	else if (IsKeyDownOnce('d'))
 	{
 		m_cPlayer->MoveLeftRight(true, m_cLevel.GetTilemap());
+		std::cout << m_cPlayer->GetPos_x() << ", " << m_cPlayer->GetPos_y() << std::endl;
 	}
 	else if (IsKeyDownOnce('a'))
 	{
 		m_cPlayer->MoveLeftRight(false, m_cLevel.GetTilemap());
+		std::cout << m_cPlayer->GetPos_x() << ", " << m_cPlayer->GetPos_y() << std::endl;
 	}
-	camera.UpdatePosition(Vector3(static_cast<float>(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetOffSet_x()), static_cast<float>(m_cPlayer->GetPos_y()* m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetOffSet_y()), 0.f));
+	camera.UpdatePosition(Vector3(static_cast<float>(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetOffSet_x()), static_cast<float>(m_cPlayer->GetPos_y()* -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetOffSet_y()), 0.f));
 
-	//m_cAvatar->Update(dt);
-	//m_cAvatar->SetPos_y(-10.f);
-	//camera.UpdatePosition( m_cAvatar->GetPosition(), m_cAvatar->GetDirection() );
+	if (IsKeyDownOnce('g'))
+	{
+		for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); i++)
+		{
+			for (int k = 0; k < m_cLevel.GetTilemap()->GetNumOfTiles_Width(); k++)
+			{
+				m_cLevel.m_cTilemap->theScreenMap[i][k].SetTint(false);
+			}
+		}
+		for (std::vector<CEntityIPos*>::iterator entity = m_cLevel.m_cEntityIPosList.begin(); entity != m_cLevel.m_cEntityIPosList.end(); entity++)
+		{
+			(*entity)->Update(dt, this->m_cPlayer);
+		}
+	}
 }
 
 /********************************************************************************
@@ -181,23 +206,59 @@ void CScenePlay::RenderPlayer()
 {
 	// Render the player
 	modelStack.PushMatrix();
-	modelStack.Translate((static_cast<float>(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetOffSet_x()), (static_cast<float>(m_cPlayer->GetPos_y()* m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetOffSet_y()), 0.f);
+	modelStack.Translate((static_cast<float>(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetOffSet_x()), (static_cast<float>(m_cPlayer->GetPos_y()* -m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetOffSet_y()), 0.f);
 	modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
 	RenderMesh(meshList[GEO_PLAYER], false);
 	//m_cPlayer->GetSpriteAnimation()->Render();
 	modelStack.PopMatrix();
 }
 
+void CScenePlay::RenderEnemies()
+{
+	for (unsigned i = 0; i < m_cLevel.m_cEntityIPosList.size(); ++i)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate((static_cast<float>(m_cLevel.m_cEntityIPosList[i]->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize()))
+			, (static_cast<float>(m_cLevel.m_cEntityIPosList[i]->GetYIndex()* -m_cLevel.GetTilemap()->GetTileSize()))
+			, 0.f);
+		modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
+		RenderMesh(meshList[GEO_PLAYER], false);
+		modelStack.PopMatrix();
+	}
+}
+
 void CScenePlay::RenderTilemap(void)
 {
-	for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); i++)
+	//for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); i++)
+	//{
+	//	for (int k = 0; k < m_cLevel.GetTilemap()->GetNumOfTiles_Width(); k++)
+	//	{
+	//		modelStack.PushMatrix();
+	//		modelStack.Translate(static_cast<float>(k * m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(-i * m_cLevel.GetTilemap()->GetTileSize()), 0.f);
+	//		modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
+	//		if (m_cLevel.GetTilemap()->GetTile(k, i).GetCollisionType() == CTiledata::COL_BLOCK)
+	//			RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+	//		else
+	//			RenderMesh(meshList[GEO_GRASS_LIGHTGREEN], false);
+	//		if (m_cLevel.GetTilemap()->GetTile(k, i).IsTinted())
+	//			RenderMesh(meshList[GEO_TILE_FLOOR_STONE_01], false);
+	//		//RenderMesh(m_cLevel.GetTilemap()->GetTile(i, k), false);
+	//		modelStack.PopMatrix();
+	//	}
+	//}
+	for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Width(); ++i)
 	{
-		for (int k = 0; k < m_cLevel.GetTilemap()->GetNumOfTiles_Width(); k++)
+		for (int j = 0; j < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); ++j)
 		{
 			modelStack.PushMatrix();
-			modelStack.Translate(static_cast<float>(i * m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(k * m_cLevel.GetTilemap()->GetTileSize()), 0.f);
+			modelStack.Translate(static_cast<float>(i * m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(-j * m_cLevel.GetTilemap()->GetTileSize()), 0.f);
 			modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
-			RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+			if (m_cLevel.GetTilemap()->GetTile(i, j).GetCollisionType() == CTiledata::COL_BLOCK)
+				RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+			else
+			RenderMesh(meshList[GEO_GRASS_LIGHTGREEN], false);
+			if (m_cLevel.GetTilemap()->GetTile(i, j).IsTinted())
+				RenderMesh(meshList[GEO_TILE_FLOOR_STONE_01], false);
 			//RenderMesh(m_cLevel.GetTilemap()->GetTile(i, k), false);
 			modelStack.PopMatrix();
 		}
@@ -213,10 +274,7 @@ void CScenePlay::Render()
 	glDisable(GL_DEPTH_TEST);
 	RenderTilemap();
 	RenderPlayer();
-	//RenderGround();
-	//RenderSkybox();
-	//RenderFixedObjects();
-	//RenderMobileObjects();
+	RenderEnemies();
 
 	//RenderGUI();
 #if _DEBUG

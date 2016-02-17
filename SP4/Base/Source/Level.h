@@ -1,5 +1,5 @@
 #include "Tilemap.h"
-#include "Entities\Entity.h"
+#include "Entities\EnemyZombie.h"
 #include <string>
 #include <vector>
 
@@ -12,9 +12,11 @@ public:
 	CTilemap* GetTilemap(void);
 	bool InitTilemap(std::string mapname, int iNumTileX, int iNumTileY, float fTileSize);
 
-private:
+	//List of entities
+	std::vector<CEntityIPos*> m_cEntityIPosList;
 	//Main tile map
 	CTilemap* m_cTilemap;
-	//List of entities
-	std::vector<CEntity*> m_cEntityList;
+private:
+
+
 };

@@ -41,6 +41,6 @@ void CEntityVPos::SetPos(Vector3 pos)
 	this->pos = pos;
 }
 
-void CEntityVPos::Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer)
+void CEntityVPos::Update(const float dt, CPlayer* cPlayer)
 {
 }

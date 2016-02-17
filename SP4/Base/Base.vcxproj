@@ -11,16 +11,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\CsoundManager.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\AStar.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Camera3.cpp" />
+    <ClCompile Include="Source\CsoundManager.cpp" />
+    <ClCompile Include="Source\Entities\Enemy.cpp" />
+    <ClCompile Include="Source\Entities\EnemyZombie.cpp" />
+    <ClCompile Include="Source\Entities\Entity.cpp" />
+    <ClCompile Include="Source\Entities\EntityIPos.cpp" />
+    <ClCompile Include="Source\Entities\EntityVPos.cpp" />
+    <ClCompile Include="Source\Entities\Entity_Hazard_Moving.cpp" />
     <ClCompile Include="Source\Graphics\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="Source\LuaScript.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Node.cpp" />
     <ClCompile Include="Source\Tiledata.cpp" />
     <ClCompile Include="Source\Tileinfo.cpp" />
     <ClCompile Include="Source\Tilemap.cpp" />
@@ -42,10 +50,17 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\CsoundManager.h" />
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\AStar.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Camera3.h" />
+    <ClInclude Include="Source\CsoundManager.h" />
+    <ClInclude Include="Source\Entities\Enemy.h" />
+    <ClInclude Include="Source\Entities\EnemyZombie.h" />
+    <ClInclude Include="Source\Entities\Entity.h" />
+    <ClInclude Include="Source\Entities\EntityIPos.h" />
+    <ClInclude Include="Source\Entities\EntityVPos.h" />
+    <ClInclude Include="Source\Entities\Entity_Hazard_Moving.h" />
     <ClInclude Include="Source\GameState.h" />
     <ClInclude Include="Source\Graphics\SpriteAnimation.h" />
     <ClInclude Include="Source\Level.h" />
@@ -53,6 +68,7 @@
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />
     <ClInclude Include="Source\LuaScript.h" />
+    <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\Tiledata.h" />
     <ClInclude Include="Source\Tileinfo.h" />
     <ClInclude Include="Source\Tilemap.h" />

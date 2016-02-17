@@ -8,9 +8,9 @@ using std::vector;
 class AStar
 {
 public:
-	AStar();		// Constructor For Initialising Start And Goal x,y Nodes
+	AStar(CTilemap* Tilemap);		// Constructor For Initialising Start And Goal x,y Nodes
 	~AStar(void);
-	void Init(int sx, int sy, int gx, int gy, CTilemap* Tilemap);
+	void Init(int sx, int sy, int gx, int gy);
 	void Reset(void);							//Reset 
 	Node* goal;									// Goal node
 	Node* start;								// Start node

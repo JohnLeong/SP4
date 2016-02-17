@@ -15,7 +15,7 @@ public:
 	virtual int GetXIndex(void);									// Get position x of the player
 	virtual int GetYIndex(void);									// Get position y of the player
 
-	virtual void Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer);		// Update
+	virtual void Update(const float dt, CPlayer* cPlayer);		// Update
 
 protected:
 	int m_iXIndex;			//X Index

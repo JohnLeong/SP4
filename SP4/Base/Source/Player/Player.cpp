@@ -126,8 +126,8 @@ void CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
 	if (moving == false)
 	{
 		if (mode == true)
-		{
-			if (playerPosY == tile->GetNumOfTiles_Height() - 1 || CheckCollision(tile->GetTile(playerPosX, playerPosY + 1)) == COL_WALL)
+		{//Up
+			if (playerPosY - 1 <= 0 || CheckCollision(tile->GetTile(playerPosX, playerPosY - 1)) == COL_WALL)
 			{
 			}
 			else
@@ -140,7 +140,7 @@ void CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
 		}
 		else if (mode == false)
 		{
-			if (playerPosY == 0 || CheckCollision(tile->GetTile(playerPosX, playerPosY - 1)) == COL_WALL)
+			if (playerPosY + 1 >= tile->GetNumOfTiles_Height() - 1|| CheckCollision(tile->GetTile(playerPosX, playerPosY + 1)) == COL_WALL)
 			{
 			}
 			else
@@ -159,8 +159,8 @@ void CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 	if (moving == false)
 	{
 		if (mode == true)
-		{
-			if (playerPosX == tile->GetNumOfTiles_Width() - 1 || CheckCollision(tile->GetTile(playerPosX + 1, playerPosY)) == COL_WALL)
+		{//Right
+			if (playerPosX + 1 >= tile->GetNumOfTiles_Width() - 1 || CheckCollision(tile->GetTile(playerPosX + 1, playerPosY)) == COL_WALL)
 			{
 			}
 			else
@@ -173,8 +173,8 @@ void CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 
 		}
 		else if (mode == false)
-		{
-			if (playerPosX == 0 || CheckCollision(tile->GetTile(playerPosX - 1, playerPosY)) == COL_WALL)
+		{//Left
+			if (playerPosX - 1 == 0 || CheckCollision(tile->GetTile(playerPosX - 1, playerPosY)) == COL_WALL)
 			{
 			}
 			else
@@ -190,7 +190,7 @@ void CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 
 CPlayer::CollisionReponse CPlayer::CheckCollision(CTiledata tileData)
 {
-	if (tileData.GetCollisionType() == tileData.COL_BLOCK)
+	if (tileData.GetCollisionType() == CTiledata::COL_BLOCK)
 	{
 		return COL_WALL;
 	}
@@ -212,21 +212,21 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionY)
 			{
-				yOffSet += static_cast<float>(dt * 100);
+				yOffSet += dt * 100;
 				if (yOffSet > tile->GetTileSize())
 				{
 					yOffSet = 0;
-					playerPosY += 1;
+					playerPosY -= 1;
 					moving = false;
 				}
 			}
 			else
 			{
-				yOffSet -= static_cast<float>(dt * 100);
+				yOffSet -= dt * 100;
 				if (yOffSet < -tile->GetTileSize())
 				{
 					yOffSet = 0;
-					playerPosY -= 1;
+					playerPosY += 1;
 					moving = false;
 				}
 			}
@@ -235,7 +235,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionX)
 			{
-				xOffSet += static_cast<float>(dt * 100);
+				xOffSet += dt * 100;
 				if (xOffSet > tile->GetTileSize())
 				{
 					xOffSet = 0;
@@ -245,7 +245,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 			}
 			else
 			{
-				xOffSet -= static_cast<float>(dt * 100);
+				xOffSet -= dt * 100;
 				if (xOffSet < -tile->GetTileSize())
 				{
 					xOffSet = 0;

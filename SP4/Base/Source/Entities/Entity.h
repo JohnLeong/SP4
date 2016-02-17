@@ -14,7 +14,7 @@ public:
 	virtual int GetHealth(void);
 	virtual int GetMaxHealth(void);
 
-	virtual void Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer);		// Update
+	virtual void Update(const float dt, CPlayer* cPlayer);		// Update
 
 	void SetSprite(SpriteAnimation* sa);
 	SpriteAnimation* GetSprite(void);
@@ -25,5 +25,6 @@ protected:
 	int m_iMax_health;
 	bool m_bAlive;
 	SpriteAnimation* m_cSprite;
+	CTilemap* m_cTilemap;
 };
 

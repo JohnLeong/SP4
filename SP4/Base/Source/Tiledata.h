@@ -9,6 +9,7 @@ public:
 		TILE_NULL = 0,		//For error handling
 		TILE_VOID,
 		TILE_WALL_STONE_01,
+		TILE_FLOOR_STONE_01,
 		NUM_TILE
 	};
 	//Collision check based on COLLISION_TYPE

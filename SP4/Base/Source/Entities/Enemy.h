@@ -7,5 +7,5 @@ public:
 	CEnemy();
 	~CEnemy(void);
 
-	virtual void Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer);		// Update
+	virtual void Update(const float dt, CPlayer* cPlayer);		// Update
 };

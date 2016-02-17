@@ -39,7 +39,7 @@ int CEntityIPos::GetYIndex(void)
 /********************************************************************************
 Update
 ********************************************************************************/
-void CEntityIPos::Update(const float dt, CTilemap* cTilemap, CPlayer* cPlayer)
+void CEntityIPos::Update(const float dt, CPlayer* cPlayer)
 {
 
 }

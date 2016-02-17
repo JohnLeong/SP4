@@ -19,7 +19,7 @@ CTilemap::~CTilemap(void)
 
 void CTilemap::Init(int theNumOfTiles_Height, int theNumOfTiles_Width, float theTileSize)
 {
-	this->theTileSize = static_cast<int>(theTileSize);
+	this->theTileSize			= theTileSize;
 
 	theNumOfTiles_MapHeight = theNumOfTiles_Height;
 	theNumOfTiles_MapWidth = theNumOfTiles_Width;
@@ -36,8 +36,6 @@ bool CTilemap::LoadMap(const string mapName)
 		printf("Map (%s) has been successfully loaded!\n", mapName.c_str());
 		return true;
 	}
-
-	
 	return false;
 }
 
@@ -80,9 +78,9 @@ bool CTilemap::LoadFile(const string mapName)
 					while(getline(iss, token, ',') && (theColumnCounter<theNumOfTiles_MapWidth))
 					{
 						//Cast to Tile Id enum
-						theScreenMap[theLineCounter][theColumnCounter].SetTileId(static_cast<CTiledata::TILE_ID>(atoi(token.c_str())));
+						theScreenMap[theColumnCounter][theLineCounter].SetTileId(static_cast<CTiledata::TILE_ID>(atoi(token.c_str())));
 						//Get Collision type based on tile id
-						theScreenMap[theLineCounter][theColumnCounter].SetCollisionType(GetCollisionTypeFromId(theScreenMap[theLineCounter][theColumnCounter].GetTileId()));
+						theScreenMap[theColumnCounter][theLineCounter].SetCollisionType(GetCollisionTypeFromId(theScreenMap[theColumnCounter][theLineCounter].GetTileId()));
 						++theColumnCounter;
 					}
 				}
