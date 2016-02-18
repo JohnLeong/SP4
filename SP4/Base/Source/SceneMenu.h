@@ -52,6 +52,9 @@ protected:
 	//virutally create vector positions for the buttons
 	Vector3 geo_pos[4];
 
+	//boolean to check if keyboard is used
+	bool keyboardActive;
+
 };
 
 #endif

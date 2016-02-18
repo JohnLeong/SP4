@@ -25,6 +25,9 @@ void CSceneMenu::Init()
 	//init the choice
 	choice = 4;
 
+	//init the keyboardActive boolean
+	keyboardActive = false;
+
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		meshList[i] = NULL;
@@ -91,14 +94,18 @@ void CSceneMenu::Update(double dt)
 		//1 = exit, 2 = options, 3 = instructions, 4 = play
 		if (choice > 4)
 			setChoiceVal(1);
+
+		keyboardActive = true;
 	}
 	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
 	{
-		choice--;
+		choice--;	
 		setChoiceVal(choice);
 		//1 = exit, 2 = options, 3 = instructions, 4 = play
 		if (choice < 1)
 			setChoiceVal(4);
+
+		keyboardActive = true;
 	}
 
 
@@ -106,18 +113,29 @@ void CSceneMenu::Update(double dt)
 	if (checkForcollision(worldX, worldY, geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonXoffset, geo_pos[0].y + 8)) // play button
 	{
 		setChoiceVal(4);
+		keyboardActive = false;
 	}
 	else if (checkForcollision(worldX, worldY, geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonXoffset, geo_pos[1].y + 8)) // instructions button
 	{
 		setChoiceVal(3);
+		keyboardActive = false;
 	}
 	else if (checkForcollision(worldX, worldY, geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonXoffset, geo_pos[2].y + 8)) // options button
 	{
 		setChoiceVal(2);
+		keyboardActive = false;
 	}
 	else if (checkForcollision(worldX, worldY, geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonXoffset, geo_pos[3].y + 8)) // exit button
 	{
 		setChoiceVal(1);
+		keyboardActive = false;
+	}
+	else
+	{
+		if (keyboardActive == false)
+		{
+			setChoiceVal(0);
+		}
 	}
 	
 
