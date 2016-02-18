@@ -99,23 +99,17 @@ void CScenePlay::Init()
 
 	InitLevel();
 
-	for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); i++)
-	{
-		for (int k = 0; k < m_cLevel.GetTilemap()->GetNumOfTiles_Width(); k++)
-		{
-			std::cout << m_cLevel.GetTilemap()->GetTile(i, k).IsTinted() << ", ";
-		}
-		std::cout << std::endl;
-	}
-	CEnemyZombie* enemy = new CEnemyZombie(3, 7, m_cLevel.GetTilemap());
-	//m_cLevel.m_cEntityIPosList.push_back(enemy);
-	CEntity_Block_Movable* entity = new CEntity_Block_Movable(6, 6);
+	CEnemyZombie* enemy = new CEnemyZombie(3, 3, m_cLevel.GetTilemap());
+	m_cLevel.m_cEntityIPosList.push_back(enemy);
+	CEntity_Block_Movable* entity = new CEntity_Block_Movable(6, 6, m_cLevel.GetTilemap());
+	m_cLevel.m_cEntityIPosList.push_back(entity);
+	entity = new CEntity_Block_Movable(2, 9, m_cLevel.GetTilemap());
 	m_cLevel.m_cEntityIPosList.push_back(entity);
 }
 
 void CScenePlay::InitLevel()
 {
-	m_cLevel.InitTilemap("LevelMap//MapDesign.csv", 10, 10, 25.f);
+	m_cLevel.InitTilemap("LevelMap//MapDesign.csv", 10, 12, 25.f);
 
 	// Init Level
 	int currentLevel = 1;
@@ -131,18 +125,27 @@ void CScenePlay::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
-	m_cLevel.SetDoMovements(true);
+	//m_cLevel.SetDoMovements(true);
+
+	//if (IsKeyDownOnce('w'))
+	//	m_cLevel.SetDoMovements(m_cPlayer->MoveUpDown(true, m_cLevel.GetTilemap()));
+	//else if (IsKeyDownOnce('s'))
+	//	m_cLevel.SetDoMovements(m_cPlayer->MoveUpDown(false, m_cLevel.GetTilemap()));
+	//else if (IsKeyDownOnce('d'))
+	//	m_cLevel.SetDoMovements(m_cPlayer->MoveLeftRight(true, m_cLevel.GetTilemap()));
+	//else if (IsKeyDownOnce('a'))
+	//	m_cLevel.SetDoMovements(m_cPlayer->MoveLeftRight(false, m_cLevel.GetTilemap()));
+	//else
+	//	m_cLevel.SetDoMovements(false);
 
 	if (IsKeyDownOnce('w'))
-		m_cPlayer->MoveUpDown(true, m_cLevel.GetTilemap());
+		m_cPlayer->SetNextDirection(CPlayer::PD_UP);
 	else if (IsKeyDownOnce('s'))
-		m_cPlayer->MoveUpDown(false, m_cLevel.GetTilemap());
+		m_cPlayer->SetNextDirection(CPlayer::PD_DOWN);
 	else if (IsKeyDownOnce('d'))
-		m_cPlayer->MoveLeftRight(true, m_cLevel.GetTilemap());
+		m_cPlayer->SetNextDirection(CPlayer::PD_RIGHT);
 	else if (IsKeyDownOnce('a'))
-		m_cPlayer->MoveLeftRight(false, m_cLevel.GetTilemap());
-	else
-		m_cLevel.SetDoMovements(false);
+		m_cPlayer->SetNextDirection(CPlayer::PD_LEFT);
 
 	//Update player
 	m_cPlayer->Update(dt, m_cLevel.GetTilemap());
@@ -203,13 +206,13 @@ void CScenePlay::RenderPlayer()
 	modelStack.PopMatrix();
 }
 
-void CScenePlay::RenderEnemies()
+void CScenePlay::RenderEntities()
 {
 	for (std::vector<CEntityIPos*>::iterator entity = m_cLevel.m_cEntityIPosList.begin(); entity != m_cLevel.m_cEntityIPosList.end(); entity++)
 	{
 		modelStack.PushMatrix();
-		modelStack.Translate((static_cast<float>((*entity)->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize()))
-			, (static_cast<float>((*entity)->GetYIndex()* -m_cLevel.GetTilemap()->GetTileSize()))
+		modelStack.Translate((static_cast<float>((*entity)->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize())) + (*entity)->GetXOffset()
+			, (static_cast<float>((*entity)->GetYIndex()* -m_cLevel.GetTilemap()->GetTileSize())) + (*entity)->GetYOffset()
 			, 0.f);
 		modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
 		RenderMesh(meshList[GEO_PLAYER], false);
@@ -246,7 +249,7 @@ void CScenePlay::Render()
 	glDisable(GL_DEPTH_TEST);
 	RenderTilemap();
 	RenderPlayer();
-	RenderEnemies();
+	RenderEntities();
 
 	//RenderGUI();
 #if _DEBUG

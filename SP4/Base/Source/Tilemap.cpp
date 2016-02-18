@@ -17,16 +17,16 @@ CTilemap::~CTilemap(void)
 	theScreenMap.clear();
 }
 
-void CTilemap::Init(int theNumOfTiles_Height, int theNumOfTiles_Width, float theTileSize)
+void CTilemap::Init(int theNumOfTiles_Width, const int theNumOfTiles_Height, float theTileSize)
 {
 	this->theTileSize			= theTileSize;
 
 	theNumOfTiles_MapHeight = theNumOfTiles_Height;
 	theNumOfTiles_MapWidth = theNumOfTiles_Width;
 
-	theScreenMap.resize(theNumOfTiles_MapHeight);
-	for (int i = 0; i < theNumOfTiles_MapHeight; ++i)
-		theScreenMap[i].resize(theNumOfTiles_MapWidth);
+	theScreenMap.resize(theNumOfTiles_MapWidth);
+	for (int i = 0; i < theNumOfTiles_MapWidth; ++i)
+		theScreenMap[i].resize(theNumOfTiles_Height);
 }
 
 bool CTilemap::LoadMap(const string mapName)

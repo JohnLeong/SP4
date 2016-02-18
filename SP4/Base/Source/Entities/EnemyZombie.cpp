@@ -25,26 +25,28 @@ Update
 ********************************************************************************/
 void CEnemyZombie::Update(const float dt, CPlayer* cPlayer)
 {
-
+	CEntityIPos::Update(dt, cPlayer);
 }
 
-void CEnemyZombie::UpdateMovement(const float dt, CPlayer* cPlayer)
+void CEnemyZombie::UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*> entityList)
 {
-	m_cAStar->Init(this->m_iXIndex, this->m_iYIndex, cPlayer->GetPos_x(), cPlayer->GetPos_y());
+	if (this->m_iXIndex == cPlayer->GetPos_x() && this->m_iYIndex == cPlayer->GetPos_y())
+		return;
+	m_cAStar->Init(this->m_iXIndex, this->m_iYIndex, cPlayer->GetPos_x(), cPlayer->GetPos_y(), &entityList);
 
 	switch (m_cAStar->Search())
 	{
 	case AStar::DIR_UP:
-		--this->m_iYIndex;
+		this->m_MoveDir = CEntityIPos::DIR_UP;
 		break;
 	case AStar::DIR_DOWN:
-		++this->m_iYIndex;
+		this->m_MoveDir = CEntityIPos::DIR_DOWN;
 		break;
 	case AStar::DIR_LEFT:
-		--this->m_iXIndex;
+		this->m_MoveDir = CEntityIPos::DIR_LEFT;
 		break;
 	case AStar::DIR_RIGHT:
-		++this->m_iXIndex;
+		this->m_MoveDir = CEntityIPos::DIR_RIGHT;
 		break;
 	case AStar::DIR_NONE:
 		break;

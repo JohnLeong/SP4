@@ -1,3 +1,6 @@
+#ifndef ENTITY_ENEMY_ZOMBIE_H
+#define ENTITY_ENEMY_ZOMBIE_H
+
 #include "Enemy.h"
 #include "../AStar.h"
 
@@ -11,8 +14,10 @@ public:
 	~CEnemyZombie(void);
 
 	virtual void Update(const float dt, CPlayer* cPlayer);			// Update
-	virtual void UpdateMovement(const float dt, CPlayer* cPlayer);
+	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*> entityList);
 
 private:
 	AStar* m_cAStar;	//Astar for pathfinding to player
 };
+
+#endif

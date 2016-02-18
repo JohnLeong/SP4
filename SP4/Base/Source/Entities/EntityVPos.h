@@ -1,7 +1,10 @@
+#ifndef ENTITYVPOS_H
+#define ENTITYVPOS_H
+
 #include "Vector3.h"
 #include "Entity.h"
 
-class CEntityVPos
+class CEntityVPos	: public CEntity
 {
 public:
 	CEntityVPos();
@@ -21,3 +24,4 @@ protected:
 	Vector3 pos;					//Entity position
 };
 
+#endif

@@ -1,3 +1,6 @@
+#ifndef ENTITY_H
+#define ENTITY_H
+
 #include "../Graphics/SpriteAnimation.h"
 #include "../Tilemap.h"
 #include "../Player/Player.h"
@@ -28,3 +31,4 @@ protected:
 	CTilemap* m_cTilemap;
 };
 
+#endif

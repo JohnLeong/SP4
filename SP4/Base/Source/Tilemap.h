@@ -15,7 +15,7 @@ public:
 	CTilemap(void);
 	~CTilemap(void);
 
-	void Init(const int theNumOfTiles_Height, const int theNumOfTiles_Width, const float theTileSize=25.f);
+	void Init(const int theNumOfTiles_Width, const int theNumOfTiles_Height, const float theTileSize = 25.f);
 	bool LoadMap(const string mapName);
 	int GetNumOfTiles_Height(void);		// Get the number of tiles for height of the screen
 	int GetNumOfTiles_Width(void);		// Get the number of tiles for width of the screen

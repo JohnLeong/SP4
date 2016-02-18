@@ -1,6 +1,7 @@
 #include "Node.h"
 #include "Tilemap.h"
 #include <vector>
+#include "Entities\EntityIPos.h"
 
 using std::vector;
 
@@ -18,7 +19,7 @@ public:
 	};
 	AStar(CTilemap* Tilemap);		// Constructor For Initialising Start And Goal x,y Nodes
 	~AStar(void);
-	void Init(int sx, int sy, int gx, int gy);
+	void Init(int sx, int sy, int gx, int gy, std::vector<CEntityIPos*>* entityList);
 	void Reset(void);							//Reset 
 	Node* goal;									// Goal node
 	Node* start;								// Start node
@@ -40,4 +41,5 @@ public:
 	Node* AStar::getFromCloseList(Node* succ);
 	CTilemap* m_cTilemap;
 	PATH_DIR GetPathDir(Node *walker);
+	std::vector<CEntityIPos*>* entityList;
 };

@@ -7,6 +7,7 @@ CPlayer::CPlayer()
 , action(PA_IDLE_DOWN)
 , xOffSet(0.f)
 , yOffSet(0.f)
+, m_NextDir(PD_NONE)
 {
 
 }
@@ -121,71 +122,44 @@ float CPlayer::GetOffSet_y(void)
 	return yOffSet;
 }
 
-void CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
+bool CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
 {
 	if (moving == false)
 	{
 		if (mode == true)
 		{//Up
-			if (playerPosY - 1 <= 0 || CheckCollision(tile->GetTile(playerPosX, playerPosY - 1)) == COL_WALL)
-			{
-			}
-			else
-			{
-				moving = true;
-				offSetDirectionY = true;
-				XYDirection = true;
-			}
-			direction = PD_UP;
+			moving = true;
+			offSetDirectionY = true;
+			XYDirection = true;
+			return true;
 		}
 		else if (mode == false)
 		{
-			if (playerPosY + 1 >= tile->GetNumOfTiles_Height() - 1|| CheckCollision(tile->GetTile(playerPosX, playerPosY + 1)) == COL_WALL)
-			{
-			}
-			else
-			{
-				moving = true;
-				offSetDirectionY = false;
-				XYDirection = true;
-				
-			}
-			direction = PD_DOWN;
+			moving = true;
+			offSetDirectionY = false;
+			XYDirection = true;
+			return true;
 		}
 	}
 }
 
-void CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
+bool CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 {
 	if (moving == false)
 	{
 		if (mode == true)
 		{//Right
-			if (playerPosX + 1 >= tile->GetNumOfTiles_Width() - 1 || CheckCollision(tile->GetTile(playerPosX + 1, playerPosY)) == COL_WALL)
-			{
-			}
-			else
-			{
-				moving = true;
-				offSetDirectionX = true;
-				XYDirection = false;
-				
-			}
-			direction = PD_RIGHT;
+			moving = true;
+			offSetDirectionX = true;
+			XYDirection = false;
+			return true;
 		}
 		else if (mode == false)
 		{//Left
-			if (playerPosX - 1 == 0 || CheckCollision(tile->GetTile(playerPosX - 1, playerPosY)) == COL_WALL)
-			{
-			}
-			else
-			{
-				moving = true;
-				offSetDirectionX = false;
-				XYDirection = false;
-				
-			}
-			direction = PD_LEFT;
+			moving = true;
+			offSetDirectionX = false;
+			XYDirection = false;
+			return true;
 		}
 	}
 }
@@ -205,6 +179,17 @@ CPlayer::CollisionReponse CPlayer::CheckCollision(CTiledata tileData)
 CPlayer::PlayerDirection CPlayer::GetDirection(void)
 {
 	return this->direction;
+}
+
+CPlayer::PlayerDirection CPlayer::GetNextDirection(void)
+{
+	return this->m_NextDir;
+}
+
+void CPlayer::SetNextDirection(CPlayer::PlayerDirection p)
+{
+	this->m_NextDir = p;
+	this->direction = p;
 }
 
 /********************************************************************************

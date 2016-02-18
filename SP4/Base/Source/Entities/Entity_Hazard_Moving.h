@@ -1,3 +1,6 @@
+#ifndef ENTITY_HAZARD_MOVING_H
+#define ENTITY_HAZARD_MOVING_H
+
 #include "Vector3.h"
 #include "EntityVPos.h"
 
@@ -25,3 +28,4 @@ protected:
 	float m_fMoveDist;
 };
 
+#endif

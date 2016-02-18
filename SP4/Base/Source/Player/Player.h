@@ -22,6 +22,7 @@ public:
 		PD_DOWN,
 		PD_LEFT,
 		PD_RIGHT,
+		PD_NONE,
 		NUM_PLAYER_DIRECTION
 	};
 
@@ -44,8 +45,8 @@ public:
 	void SetPos_y(int pos_y);							// Set position y of the player
 
 	// Update Movements
-	void MoveUpDown(const bool mode, CTilemap* tile);
-	void MoveLeftRight(const bool mode, CTilemap* tile);
+	bool MoveUpDown(const bool mode, CTilemap* tile);
+	bool MoveLeftRight(const bool mode, CTilemap* tile);
 
 	int GetPos_x(void);									// Get position x of the player
 	int GetPos_y(void);									// Get position y of the player
@@ -59,6 +60,9 @@ public:
 
 	CollisionReponse CheckCollision(CTiledata tileData);
 	PlayerDirection GetDirection(void);
+
+	PlayerDirection GetNextDirection(void);
+	void SetNextDirection(PlayerDirection);
 
 	void AddAnimation(Animation* _anim, PlayerAction playerState);
 
@@ -76,6 +80,7 @@ private:
 	bool offSetDirectionY;
 
 	PlayerDirection direction;
+	PlayerDirection m_NextDir;
 
 	PlayerAction action;
 

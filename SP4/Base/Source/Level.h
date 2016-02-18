@@ -27,7 +27,8 @@ public:
 	CLuaScript* m_cluascript;
 
 	void SetDoMovements(bool bDoMovements);
-	void CheckEntityCollisions(CPlayer* cPlayer);
+	bool CheckPlayerCollisions(CPlayer* cPlayer);
+	bool CheckEntityCollisions(CPlayer* cPlayer, int iXIndex, int iYIndex);
 private:
 	bool m_bDoMovements;
 	int playerStartPosX, playerStartPosY, maxNumberOfEnemies;

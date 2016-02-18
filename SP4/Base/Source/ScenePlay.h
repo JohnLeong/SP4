@@ -56,7 +56,7 @@ public:
 	// Render the main components of this scene
 	void RenderGUI();
 	void RenderPlayer();
-	void RenderEnemies();
+	void RenderEntities();
 	void RenderTilemap(void);
 
 	bool m_bExitPlay;

@@ -22,18 +22,14 @@ AStar::~AStar(void)
 	Reset();
 }
 
-void AStar::Init(int sx, int sy, int gx, int gy)
+void AStar::Init(int sx, int sy, int gx, int gy, std::vector<CEntityIPos*>* entityList)
 {
+	this->entityList = entityList;
 	start = new Node;									// Create Node Objects & Allocate Memory
 	goal = new Node;
 	start->x = sx; start->y = sy; goal->x = gx; goal->y = gy;		// Set Start and Goal x-y Values
-	cout << "Initialised start...";
 	start->h = Compute_h(start);
-	start->f = start->g + start->h;
-	printInfo(start->x, start->y, start->f, start->g, start->h);
-	cout << "Initialised goal....";
-	printInfo(goal->x, goal->y, goal->f, goal->g, goal->h);					// Show Initialised x,y,f values
-	cout << endl;
+	start->f = start->g + start->h;				// Show Initialised x,y,f values
 }
 
 void AStar::Reset(void)
@@ -84,6 +80,11 @@ Node* AStar::GetSuccessor(Node *current, int i)
 	{
 		if (m_cTilemap->theScreenMap[x][y].GetCollisionType() == CTiledata::COL_VOID)
 		{// If Grid Element Contains Empty Space
+			for (std::vector<CEntityIPos*>::iterator entity = (*this->entityList).begin(); entity != (*this->entityList).end(); entity++)
+			{
+				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y)
+					return n;
+			}
 			n = new Node;									// Create A Node Object
 			n->x = x;										// Initialise To x-y Value Of Successor
 			n->y = y;
@@ -160,15 +161,15 @@ AStar::PATH_DIR AStar::Search()
 		return DIR_NONE;
 	}
 	Node *temp;
-	cout << "Searching....\n\n";
+	//cout << "Searching....\n\n";
 	AddOpenList(start);									// Add Start Node To Open List
 	while ((int)openList.size() != 0)					// Checking If Open List Is Empty
 	{
 		Node *n = GetBest();							// Get Best Node With Minimum 'f' Value
-		cout << "Getting best node (minimum f) ... ";
-		printInfo(n->x, n->y, n->f, n->g, n->h);						// List The Node Info
-		cout << "Matching  (" << n->x << "," << n->y << ") with  goal ";
-		cout << "(" << goal->x << "," << goal->y << ")" << endl;
+		//cout << "Getting best node (minimum f) ... ";
+		//printInfo(n->x, n->y, n->f, n->g, n->h);						// List The Node Info
+		//cout << "Matching  (" << n->x << "," << n->y << ") with  goal ";
+		//cout << "(" << goal->x << "," << goal->y << ")" << endl;
 		//cin.get();									// UNCOMMENT TO SEE INTERMEDIATE RESULTS		
 		if ((n->x == goal->x) && (n->y == goal->y))			// If Current Node 'n' Matches Goal Node in x,y Values
 		{												// ie: Reached Goal
@@ -189,8 +190,8 @@ AStar::PATH_DIR AStar::Search()
 					successor->g = Compute_g(successor);		// Calculate 'g' Cost Value
 					successor->h = Compute_h(successor);		// Calculate 'h' Cost Value
 					successor->f = successor->g + successor->h;   // Calculate 'f' Cost Value
-					cout << "Getting successor ....";
-					printInfo(successor->x, successor->y, successor->f, successor->g, successor->h);	// List Successor x,y,f Values
+					//cout << "Getting successor ....";
+					//printInfo(successor->x, successor->y, successor->f, successor->g, successor->h);	// List Successor x,y,f Values
 					if (InList(openList, successor))						// If Proposed Succesor Exists In Open List..
 					{
 						temp = getFromOpenList(successor);				// Get The Node Concerned
@@ -281,16 +282,16 @@ AStar::PATH_DIR AStar::GetPathDir(Node *walker)
 // Add To Open List, Show Its Content
 void AStar::AddOpenList(Node *n) {
 	openList.push_back(n);	// Add To Open List
-	cout << "Add to open list...\nOpen list content :\n";
+	//cout << "Add to open list...\nOpen list content :\n";
 	ShowList(openList);		// Show List Content
-	cout << endl;
+	//cout << endl;
 }
 // Add To Close List, Show Its Content
 void AStar::AddCloseList(Node *n){
 	closeList.push_back(n);	// Add To Close List
-	cout << "Add to close list...\nClose list content :\n";
+	//cout << "Add to close list...\nClose list content :\n";
 	ShowList(closeList);	// Show List Content
-	cout << endl;
+	//cout << endl;
 }
 
 // Remove Node From Open List After It Is Examined For Minimum 'f' Value
@@ -299,14 +300,14 @@ void AStar::RemoveOpenList(Node *n) {
 	{
 		if ((openList[i]->x == n->x) && (openList[i]->y == n->y))											// If Found The Item 
 		{
-			cout << "Removing from open list.. ";
-			printInfo(openList[i]->x, openList[i]->y, openList[i]->f, openList[i]->g, openList[i]->h);		// List Node(To Erase) x,y,f Values
+			//cout << "Removing from open list.. ";
+			//printInfo(openList[i]->x, openList[i]->y, openList[i]->f, openList[i]->g, openList[i]->h);		// List Node(To Erase) x,y,f Values
 			openList.erase(openList.begin() + i, openList.begin() + i + 1);									// Erase Item From List	
 		}
 	}
-	cout << "Open List content :\n";																		// Show Updated Open List Content
+	//cout << "Open List content :\n";																		// Show Updated Open List Content
 	ShowList(openList);
-	cout << endl;
+	//cout << endl;
 }
 
 // Remove Node From Close List After It Is Examined For Minimum 'f' Value
@@ -315,14 +316,14 @@ void AStar::RemoveCloseList(Node *n) {
 	{
 		if ((closeList[i]->x == n->x) && (closeList[i]->y == n->y)) // If Found The Item 
 		{
-			cout << "Removing from close list.. ";
-			printInfo(closeList[i]->x, closeList[i]->y, closeList[i]->f, closeList[i]->g, closeList[i]->h);	// List Node(To Erase) x,y,f Values
+			//cout << "Removing from close list.. ";
+			//printInfo(closeList[i]->x, closeList[i]->y, closeList[i]->f, closeList[i]->g, closeList[i]->h);	// List Node(To Erase) x,y,f Values
 			closeList.erase(closeList.begin() + i, closeList.begin() + i + 1);	// Erase Item From List	
 		}
 	}
-	cout << "Close List content :\n";
+	//cout << "Close List content :\n";
 	ShowList(closeList);												// Show Updated Close List Content
-	cout << endl;
+	//cout << endl;
 }
 
 // Show Open or Close  List Content
@@ -330,6 +331,6 @@ void AStar::ShowList(vector <Node*> list)
 {
 	for (int i = 0; i<(int)list.size(); i++)
 	{
-		printInfo(list[i]->x, list[i]->y, list[i]->f, list[i]->g, list[i]->h);
+		//printInfo(list[i]->x, list[i]->y, list[i]->f, list[i]->g, list[i]->h);
 	}
 }
