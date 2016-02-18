@@ -9,9 +9,6 @@ using namespace::std;
 #define MIN_COST (float) 1.0		// Minimum Permissible Cost	For Heuristics	
 #define ALPHA    (float) 0.5		// Scaling Factor For Heuristics
 
-//const int ROWS = 7;	// Declare Number Of Rows & Columns For Map Grid
-//const int COLS = 7;
-
 // Declare Structure Representing Neighborhood Of A Node
 const struct { int x, y; } succ[4] = { { 0, -1 }, { 0, 1 }, { 1, 0 }, { -1, 0 } };
 
@@ -155,12 +152,12 @@ Node* AStar::getFromCloseList(Node* succ)
 }
 
 // Search For Best Path ( Minimum Cost )
-bool AStar::Search()
+AStar::PATH_DIR AStar::Search()
 {
 	if (start->x < 0 || start->x >= m_cTilemap->GetNumOfTiles_Width() || start->y < 0 || start->y > m_cTilemap->GetNumOfTiles_Height() ||
 		goal->x < 0 || goal->x >= m_cTilemap->GetNumOfTiles_Width() || goal->y < 0 || goal->y > m_cTilemap->GetNumOfTiles_Height())
 	{
-		return false;
+		return DIR_NONE;
 	}
 	Node *temp;
 	cout << "Searching....\n\n";
@@ -175,8 +172,8 @@ bool AStar::Search()
 		//cin.get();									// UNCOMMENT TO SEE INTERMEDIATE RESULTS		
 		if ((n->x == goal->x) && (n->y == goal->y))			// If Current Node 'n' Matches Goal Node in x,y Values
 		{												// ie: Reached Goal
-			ShowPath(n);								// Show Path In Text Mode & Return True(Found For Search)
-			return true;
+			//ShowPath(n);								// Show Path In Text Mode & Return True(Found For Search)
+			return GetPathDir(n);
 		}
 		else											// Goal Not Reached Yet 
 		{
@@ -221,7 +218,7 @@ bool AStar::Search()
 			}
 		}
 	}
-	return false;					// Return False(Not Found)
+	return DIR_NONE;					// Return False(Not Found)
 
 }
 
@@ -230,7 +227,7 @@ bool AStar::Search()
 void AStar::ShowPath(Node *walker)
 {
 	cout << "\nBEST PATH SOLUTION";
-	m_cTilemap->theScreenMap[goal->x][goal->y].SetTint(true);			// Mark "Goal" Node On Grid Array
+
 	walker = walker->parent;				// Get Node On Best Path Linked To Goal 
 	while (walker->parent != NULL)			// If Start Point IS Not NULL
 	{
@@ -257,6 +254,28 @@ void AStar::ShowPath(Node *walker)
 	//	cout << "\n";
 	//}
 	cout << "\n";
+}
+
+AStar::PATH_DIR AStar::GetPathDir(Node *walker)
+{
+	walker = walker->parent;				// Get Node On Best Path Linked To Goal 
+	m_cTilemap->theScreenMap[goal->x][goal->y].SetTint(true);			// Mark "Goal" Node On Grid Array
+	while (walker->parent != NULL)			// If Start Point IS Not NULL
+	{
+		m_cTilemap->theScreenMap[walker->x][walker->y].SetTint(true);	// Grid Map Node Is Marked As Best Path Node
+		if (walker->parent->parent == NULL)
+			break;
+		walker = walker->parent;			// Go To Next Link To The Path
+	}
+	if (walker->x < start->x)
+		return DIR_LEFT;
+	if (walker->x > start->x)
+		return DIR_RIGHT;
+	if (walker->y < start->y)
+		return DIR_UP;
+	if (walker->y > start->y)
+		return DIR_DOWN;
+	return DIR_NONE;
 }
 
 // Add To Open List, Show Its Content

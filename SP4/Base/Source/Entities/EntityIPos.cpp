@@ -43,3 +43,8 @@ void CEntityIPos::Update(const float dt, CPlayer* cPlayer)
 {
 
 }
+
+void CEntityIPos::UpdateMovement(const float dt, CPlayer* cPlayer)
+{
+
+}

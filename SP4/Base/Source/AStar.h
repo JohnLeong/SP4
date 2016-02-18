@@ -8,6 +8,14 @@ using std::vector;
 class AStar
 {
 public:
+	enum PATH_DIR
+	{
+		DIR_UP,
+		DIR_DOWN,
+		DIR_LEFT,
+		DIR_RIGHT,
+		DIR_NONE,
+	};
 	AStar(CTilemap* Tilemap);		// Constructor For Initialising Start And Goal x,y Nodes
 	~AStar(void);
 	void Init(int sx, int sy, int gx, int gy);
@@ -26,9 +34,10 @@ public:
 	float Compute_g(Node* n);					// Calculate 'g' Cost
 	float Compute_h(Node* n);					// Calculate 'h' Cost
 	bool InList(vector <Node*> list, Node *n);	// Check If Node 'n' Is In List
-	bool Search();								// Search For Best Path
+	PATH_DIR Search();								// Search For Best Path
 	void ShowPath(Node *walker);				// Show In Text Mode The Map And Best Path (walker=navigating node)
 	Node* AStar::getFromOpenList(Node* succ);	// Get From List Item Same As 'succ' Successor
 	Node* AStar::getFromCloseList(Node* succ);
 	CTilemap* m_cTilemap;
+	PATH_DIR GetPathDir(Node *walker);
 };

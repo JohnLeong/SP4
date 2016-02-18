@@ -9,7 +9,6 @@
 #include "Light.h"
 #include "PlayInfo3PV.h"
 #include "Level.h"
-#include "Player\Player.h"
 
 const float SKYBOXSIZE = 1000.f;
 
@@ -23,6 +22,9 @@ class CScenePlay : public CSceneManager
 		GEO_GRASS_DARKGREEN,
 		GEO_GRASS_LIGHTGREEN,
 		GEO_TEXT,
+
+		//Tile overlay
+		GEO_OVERLAY_RED,
 
 		//Tile geometry
 		GEO_TILE_FLOOR_STONE_01,

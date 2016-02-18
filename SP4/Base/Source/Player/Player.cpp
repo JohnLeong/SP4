@@ -200,6 +200,11 @@ CPlayer::CollisionReponse CPlayer::CheckCollision(CTiledata tileData)
 	}
 }
 
+CPlayer::PlayerDirection CPlayer::GetDirection(void)
+{
+	return this->direction;
+}
+
 /********************************************************************************
 Update
 ********************************************************************************/

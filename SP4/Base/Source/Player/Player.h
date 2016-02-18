@@ -58,6 +58,7 @@ public:
 	void Update(double dt, CTilemap* tile);								// Update
 
 	CollisionReponse CheckCollision(CTiledata tileData);
+	PlayerDirection GetDirection(void);
 
 	void AddAnimation(Animation* _anim, PlayerAction playerState);
 

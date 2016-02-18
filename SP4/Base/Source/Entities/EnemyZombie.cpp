@@ -25,12 +25,32 @@ Update
 ********************************************************************************/
 void CEnemyZombie::Update(const float dt, CPlayer* cPlayer)
 {
+
+}
+
+void CEnemyZombie::UpdateMovement(const float dt, CPlayer* cPlayer)
+{
 	m_cAStar->Init(this->m_iXIndex, this->m_iYIndex, cPlayer->GetPos_x(), cPlayer->GetPos_y());
-#if _DEBUG
-	if (!m_cAStar->Search())
-		std::cout<<"No Path found"<<std::endl;
-#else
-	m_cAStar->Search();
-#endif
+
+	switch (m_cAStar->Search())
+	{
+	case AStar::DIR_UP:
+		--this->m_iYIndex;
+		break;
+	case AStar::DIR_DOWN:
+		++this->m_iYIndex;
+		break;
+	case AStar::DIR_LEFT:
+		--this->m_iXIndex;
+		break;
+	case AStar::DIR_RIGHT:
+		++this->m_iXIndex;
+		break;
+	case AStar::DIR_NONE:
+		break;
+	default:
+		break;
+	}
+	
 	m_cAStar->Reset();
 }

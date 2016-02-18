@@ -23,6 +23,7 @@
     <ClCompile Include="Source\Entities\Entity.cpp" />
     <ClCompile Include="Source\Entities\EntityIPos.cpp" />
     <ClCompile Include="Source\Entities\EntityVPos.cpp" />
+    <ClCompile Include="Source\Entities\Entity_Block_Movable.cpp" />
     <ClCompile Include="Source\Entities\Entity_Hazard_Moving.cpp" />
     <ClCompile Include="Source\Graphics\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Level.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="Source\Entities\Entity.h" />
     <ClInclude Include="Source\Entities\EntityIPos.h" />
     <ClInclude Include="Source\Entities\EntityVPos.h" />
+    <ClInclude Include="Source\Entities\Entity_Block_Movable.h" />
     <ClInclude Include="Source\Entities\Entity_Hazard_Moving.h" />
     <ClInclude Include="Source\GameState.h" />
     <ClInclude Include="Source\Graphics\SpriteAnimation.h" />
