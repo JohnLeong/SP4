@@ -190,6 +190,12 @@
     <ClCompile Include="Source\SoundManager.cpp">
       <Filter>Sounds\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneInstruction.cpp">
+      <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\InstructionState.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -312,11 +318,17 @@
     <ClInclude Include="Source\Node.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
-     <ClInclude Include="Source\SoundManager.h">
+    <ClInclude Include="Source\SoundManager.h">
       <Filter>Sounds\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entities\Entity_Block_Movable.h">
       <Filter>Entities\GameplayEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneInstruction.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
