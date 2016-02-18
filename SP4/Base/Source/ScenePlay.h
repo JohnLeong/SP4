@@ -51,7 +51,7 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
-	void InitTilemap();
+	void InitLevel();
 
 	// Render the main components of this scene
 	void RenderGUI();

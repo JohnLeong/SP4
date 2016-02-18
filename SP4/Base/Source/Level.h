@@ -3,7 +3,7 @@
 #include "Entities\Entity_Block_Movable.h"
 #include <string>
 #include <vector>
-
+#include "LuaScript.h"
 class CLevel
 {
 public:
@@ -12,6 +12,11 @@ public:
 
 	CTilemap* GetTilemap(void);
 	bool InitTilemap(std::string mapname, int iNumTileX, int iNumTileY, float fTileSize);
+	bool InitLua(std::string levelName);
+
+	int GetPlayerStartPosX();
+	int GetPlayerStartPosY();
+
 	void Update(const float dt, CPlayer* cPlayer);
 	void UpdateMovement(const float dt, CPlayer* cPlayer);
 
@@ -19,10 +24,11 @@ public:
 	std::vector<CEntityIPos*> m_cEntityIPosList;
 	//Main tile map
 	CTilemap* m_cTilemap;
+	CLuaScript* m_cluascript;
 
 	void SetDoMovements(bool bDoMovements);
 	void CheckEntityCollisions(CPlayer* cPlayer);
 private:
 	bool m_bDoMovements;
-
+	int playerStartPosX, playerStartPosY, maxNumberOfEnemies;
 };

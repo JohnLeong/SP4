@@ -135,8 +135,8 @@ void CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
 				moving = true;
 				offSetDirectionY = true;
 				XYDirection = true;
-				direction = PD_UP;
 			}
+			direction = PD_UP;
 		}
 		else if (mode == false)
 		{
@@ -148,8 +148,9 @@ void CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
 				moving = true;
 				offSetDirectionY = false;
 				XYDirection = true;
-				direction = PD_DOWN;
+				
 			}
+			direction = PD_DOWN;
 		}
 	}
 }
@@ -168,9 +169,9 @@ void CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 				moving = true;
 				offSetDirectionX = true;
 				XYDirection = false;
-				direction = PD_RIGHT;
+				
 			}
-
+			direction = PD_RIGHT;
 		}
 		else if (mode == false)
 		{//Left
@@ -182,8 +183,9 @@ void CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 				moving = true;
 				offSetDirectionX = false;
 				XYDirection = false;
-				direction = PD_LEFT;
+				
 			}
+			direction = PD_LEFT;
 		}
 	}
 }

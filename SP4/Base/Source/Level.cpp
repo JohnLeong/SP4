@@ -25,6 +25,34 @@ bool CLevel::InitTilemap(std::string mapname, int iNumTileX, int iNumTileY, floa
 	return(m_cTilemap->LoadMap(mapname));
 }
 
+int CLevel::GetPlayerStartPosX()
+{
+	return playerStartPosX;
+}
+
+int CLevel::GetPlayerStartPosY()
+{
+	return playerStartPosY;
+}
+
+bool CLevel::InitLua(std::string levelName)
+{
+	m_cluascript = new CLuaScript(levelName);
+	playerStartPosX = m_cluascript->getIntVariable("playerPosX ");
+	playerStartPosY = m_cluascript->getIntVariable("playerPosY ");
+	maxNumberOfEnemies = m_cluascript->getIntVariable("maxNumOfEnemies");
+	for (int i = 0; i < maxNumberOfEnemies; i++)
+	{
+		int currentEnemy = i + 1;
+		ostringstream convertor;
+		string getEnemy = "enemy";
+		convertor << currentEnemy;
+		getEnemy.append(convertor.str());
+		m_cluascript->getNsetEnemyVariables(getEnemy);
+	}
+	return true;
+}
+
 void CLevel::SetDoMovements(bool bDoMovements)
 {
 	this->m_bDoMovements = bDoMovements;

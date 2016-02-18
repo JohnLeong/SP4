@@ -97,7 +97,7 @@ void CScenePlay::Init()
 
 	bLightEnabled = true;
 
-	InitTilemap();
+	InitLevel();
 
 	for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Height(); i++)
 	{
@@ -113,9 +113,18 @@ void CScenePlay::Init()
 	m_cLevel.m_cEntityIPosList.push_back(entity);
 }
 
-void CScenePlay::InitTilemap()
+void CScenePlay::InitLevel()
 {
 	m_cLevel.InitTilemap("LevelMap//MapDesign.csv", 10, 10, 25.f);
+
+	// Init Level
+	int currentLevel = 1;
+	ostringstream convertor;
+	string getLevel = "Level";
+	convertor << currentLevel;
+	getLevel.append(convertor.str());
+
+	m_cLevel.InitLua(getLevel);
 }
 
 void CScenePlay::Update(double dt)

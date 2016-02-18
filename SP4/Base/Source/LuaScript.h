@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+//#include "Entities\EnemyZombie.h"
 
 using std::string;
 
@@ -22,6 +23,8 @@ public:
 	int getIntVariable(string name);
 	bool getBoolVariable(string name);
 	float getFloatVariable(string name);
+
+	void getNsetEnemyVariables(string name);
 
 	int luaAdd(int x, int y);
 	int luaMinus(int x, int y);
