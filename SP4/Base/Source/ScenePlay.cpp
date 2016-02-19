@@ -65,9 +65,10 @@ void CScenePlay::Init()
 	meshList[GEO_OVERLAY_RED] = MeshBuilder::GenerateQuad("OVERLAY_RED", Color(1, 1, 1), 1.f);
 	meshList[GEO_OVERLAY_RED]->textureID = LoadTGA("Image//Tiles/overlay_red.tga");
 
-	meshList[GEO_TILE_FLOOR_STONE_01] = MeshBuilder::GenerateQuad("GRASS_DARKGREEN", Color(1, 1, 1), 1.f);
+	//Load Tile textures
+	meshList[GEO_TILE_FLOOR_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 2);
 	meshList[GEO_TILE_FLOOR_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_FLOOR_STONE_01.tga");
-	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(1, 1, 1), 1.f);
+	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_WALL_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_WALL_STONE_01.tga");
 
 	meshList[GEO_PLAYER] = MeshBuilder::GenerateSpriteAnimation2D("GEO_PLAYER", 4, 3);
@@ -103,7 +104,9 @@ void CScenePlay::Init()
 	m_cLevel.m_cEntityIPosList.push_back(enemy);
 	CEntity_Block_Movable* entity = new CEntity_Block_Movable(6, 6, m_cLevel.GetTilemap());
 	m_cLevel.m_cEntityIPosList.push_back(entity);
-	entity = new CEntity_Block_Movable(2, 9, m_cLevel.GetTilemap());
+	entity = new CEntity_Block_Movable(6, 8, m_cLevel.GetTilemap());
+	m_cLevel.m_cEntityIPosList.push_back(entity);
+	entity = new CEntity_Block_Movable(3, 1, m_cLevel.GetTilemap());
 	m_cLevel.m_cEntityIPosList.push_back(entity);
 
 	InitAchievements();
@@ -111,7 +114,10 @@ void CScenePlay::Init()
 
 void CScenePlay::InitLevel()
 {
-	m_cLevel.InitTilemap("LevelMap//MapDesign.csv", 10, 12, 25.f);
+	m_cLevel.InitTilemap(14, 18, TILE_SIZE);
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_STONE_01]), new Animation(0, 3, 0, 0.5f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WALL_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.LoadTilemap("LevelMap//MapDesign.csv");
 
 	// Init Level
 	int currentLevel = 1;
@@ -237,9 +243,11 @@ void CScenePlay::RenderTilemap(void)
 			modelStack.PushMatrix();
 			modelStack.Translate(static_cast<float>(i * m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(-j * m_cLevel.GetTilemap()->GetTileSize()), 0.f);
 			modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
-			RenderMesh(meshList[GEO_TILE_FLOOR_STONE_01], false);
-			if (m_cLevel.GetTilemap()->GetTile(i, j).GetCollisionType() == CTiledata::COL_BLOCK)
-				RenderMesh(meshList[GEO_TILE_WALL_STONE_01], false);
+
+			if (m_cLevel.m_cTilemap->GetTileSprite(m_cLevel.GetTilemap()->GetTile(i, j).GetTileId()) == NULL)
+				RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+			else
+				RenderMesh(m_cLevel.m_cTilemap->GetTileSprite(m_cLevel.GetTilemap()->GetTile(i, j).GetTileId()), false);
 
 			if (m_cLevel.GetTilemap()->GetTile(i, j).IsTinted())
 				RenderMesh(meshList[GEO_OVERLAY_RED], false);

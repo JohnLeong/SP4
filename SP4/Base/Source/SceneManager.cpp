@@ -599,6 +599,7 @@ void CSceneManager::Render2D()
 	Mtx44 perspective;
 	//perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 	perspective.SetToOrtho(-160, 160, -90, 90, -1000, 1000);
+//	perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
 
 	// Camera matrix
@@ -610,6 +611,7 @@ void CSceneManager::Render2D()
 		);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
+	glDisable(GL_DEPTH_TEST);
 }
 
 /********************************************************************************

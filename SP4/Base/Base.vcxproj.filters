@@ -351,5 +351,8 @@
     <ClInclude Include="Source\Achievements\Achieve.h">
       <Filter>Achievements</Filter>
     </ClInclude>
+    <ClInclude Include="Source\define.h">
+      <Filter>Application</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

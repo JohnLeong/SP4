@@ -14,7 +14,7 @@ public:
 	~CEnemyZombie(void);
 
 	virtual void Update(const float dt, CPlayer* cPlayer);			// Update
-	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*> entityList);
+	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList);
 
 private:
 	AStar* m_cAStar;	//Astar for pathfinding to player

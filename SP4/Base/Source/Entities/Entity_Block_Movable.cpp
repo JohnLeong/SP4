@@ -16,9 +16,43 @@ CEntity_Block_Movable::~CEntity_Block_Movable()
 {
 }
 
-void CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir)
+bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos*>* entityList)
 {
+	int iIndexCheckX, iIndexCheckY;
+	switch (m_MoveDir)
+	{
+	case DIR_UP:
+		iIndexCheckX = this->m_iXIndex;
+		iIndexCheckY = this->m_iYIndex - 1;
+		break;
+	case DIR_DOWN:
+		iIndexCheckX = this->m_iXIndex;
+		iIndexCheckY = this->m_iYIndex + 1;
+		break;
+	case DIR_RIGHT:
+		iIndexCheckX = this->m_iXIndex + 1;
+		iIndexCheckY = this->m_iYIndex;
+		break;
+	case DIR_LEFT:
+		iIndexCheckX = this->m_iXIndex - 1;
+		iIndexCheckY = this->m_iYIndex;
+		break;
+	default:
+		std::cout << "NULL Collision Direction" << std::endl;
+		break;
+	}
+	if (this->m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() != CTiledata::COL_VOID &&
+		this->m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() != CTiledata::COL_ICE)
+		return true;
+	for (std::vector<CEntityIPos*>::iterator entity = (*entityList).begin(); entity != (*entityList).end(); entity++)
+	{
+		if ((*entity)->GetXIndex() == iIndexCheckX && (*entity)->GetYIndex() == iIndexCheckY)
+		{
+			return true;
+		}
+	}
 	this->m_MoveDir = m_MoveDir;
+	return false;
 }
 
 void CEntity_Block_Movable::Update(const float dt, CPlayer* cPlayer)
@@ -26,7 +60,7 @@ void CEntity_Block_Movable::Update(const float dt, CPlayer* cPlayer)
 	CEntityIPos::Update(dt, cPlayer);
 }
 
-void CEntity_Block_Movable::UpdateMovement(const float dt, CPlayer* cPlayer)
+void CEntity_Block_Movable::UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList)
 {
 	//int iIndexCheckX, iIndexCheckY;
 	////Collision check

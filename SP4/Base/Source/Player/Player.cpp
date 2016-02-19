@@ -141,6 +141,7 @@ bool CPlayer::MoveUpDown(const bool mode, CTilemap* tile)
 			return true;
 		}
 	}
+	return false;
 }
 
 bool CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
@@ -162,6 +163,7 @@ bool CPlayer::MoveLeftRight(const bool mode, CTilemap* tile)
 			return true;
 		}
 	}
+	return false;
 }
 
 CPlayer::CollisionReponse CPlayer::CheckCollision(CTiledata tileData)
@@ -186,10 +188,56 @@ CPlayer::PlayerDirection CPlayer::GetNextDirection(void)
 	return this->m_NextDir;
 }
 
+Vector3 CPlayer::GetNextDirectionPos(void)
+{
+	switch (m_NextDir)
+	{
+	case PD_UP:
+		return (Vector3(this->playerPosX, this->playerPosY - 1, 0));
+	case PD_DOWN:
+		return (Vector3(this->playerPosX, this->playerPosY + 1, 0));
+	case PD_RIGHT:
+		return (Vector3(this->playerPosX + 1, this->playerPosY, 0));
+	case PD_LEFT:
+		return (Vector3(this->playerPosX - 1, this->playerPosY, 0));
+	default:
+		return (Vector3(this->playerPosX, this->playerPosY, 0));
+	}
+	return (Vector3(this->playerPosX, this->playerPosY, 0));
+}
+
+bool CPlayer::IsMoving(void)
+{
+	return moving;
+}
+
 void CPlayer::SetNextDirection(CPlayer::PlayerDirection p)
 {
 	this->m_NextDir = p;
 	this->direction = p;
+}
+
+void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
+{
+	switch (cTilemap->GetTile(this->GetPos_x(), this->GetPos_y()).GetCollisionType())
+	{
+	case CTiledata::COL_VOID:
+		moving = false;
+		break;
+	case CTiledata::COL_ICE:
+		if (cTilemap->GetTile(GetNextDirectionPos().x, GetNextDirectionPos().y).GetCollisionType() == CTiledata::COL_BLOCK)
+			moving = false;
+		break;
+	case CTiledata::COL_HAZARD:
+		//Do player death here
+		moving = false;
+		break;
+	case CTiledata::COL_BLOCK:
+		std::cout << "ERMAHGAD COLLISION ERROR" << std::endl;
+		break;
+	default:
+		break;
+	}
 }
 
 /********************************************************************************
@@ -197,29 +245,28 @@ Update
 ********************************************************************************/
 void CPlayer::Update(double dt, CTilemap* tile)
 {
-
 	if (moving == true)
 	{
 		if (XYDirection)
 		{
 			if (offSetDirectionY)
 			{
-				yOffSet += static_cast<float>(dt * 100);
+				yOffSet += dt * ENTITY_MOVE_SPEED;
 				if (yOffSet > tile->GetTileSize())
 				{
 					yOffSet = 0;
 					playerPosY -= 1;
-					moving = false;
+					DoCurrentTileCollision(tile);
 				}
 			}
 			else
 			{
-				yOffSet -= static_cast<float>(dt * 100);
+				yOffSet -= dt * ENTITY_MOVE_SPEED;
 				if (yOffSet < -tile->GetTileSize())
 				{
 					yOffSet = 0;
 					playerPosY += 1;
-					moving = false;
+					DoCurrentTileCollision(tile);
 				}
 			}
 		}
@@ -227,22 +274,22 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionX)
 			{
-				xOffSet += static_cast<float>(dt * 100);
+				xOffSet += dt * ENTITY_MOVE_SPEED;
 				if (xOffSet > tile->GetTileSize())
 				{
 					xOffSet = 0;
 					playerPosX += 1;
-					moving = false;
+					DoCurrentTileCollision(tile);
 				}
 			}
 			else
 			{
-				xOffSet -= static_cast<float>(dt * 100);
+				xOffSet -= dt * ENTITY_MOVE_SPEED;
 				if (xOffSet < -tile->GetTileSize())
 				{
 					xOffSet = 0;
 					playerPosX -= 1;
-					moving = false;
+					DoCurrentTileCollision(tile);
 				}
 			}
 		}

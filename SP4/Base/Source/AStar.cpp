@@ -78,7 +78,7 @@ Node* AStar::GetSuccessor(Node *current, int i)
 	}
 	else
 	{
-		if (m_cTilemap->theScreenMap[x][y].GetCollisionType() == CTiledata::COL_VOID)
+		if (m_cTilemap->theScreenMap[x][y].GetCollisionType() != CTiledata::COL_BLOCK)
 		{// If Grid Element Contains Empty Space
 			for (std::vector<CEntityIPos*>::iterator entity = (*this->entityList).begin(); entity != (*this->entityList).end(); entity++)
 			{

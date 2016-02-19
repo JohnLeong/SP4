@@ -11,6 +11,7 @@ CEntity::CEntity()
 
 CEntity::~CEntity()
 {
+	delete this->m_cSprite;
 }
 
 void CEntity::SetHealth(int h)

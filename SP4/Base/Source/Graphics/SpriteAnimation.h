@@ -16,6 +16,14 @@ struct Animation
 		Set(0, 1, 1, 1.0f);
 	}
 
+	Animation(int startFrame, int endFrame, int repeat, float time)
+	{
+		this->startFrame = startFrame;
+		this->endFrame = endFrame;
+		this->repeatCount = repeat;
+		this->animTime = time;
+	}
+
 	void Set(int startFrame, int endFrame, int repeat, float time)
 	{
 		this->startFrame = startFrame;

@@ -19,7 +19,7 @@ public:
 		COL_VOID,			//No collision
 		COL_BLOCK,			//Filled area - unpassable
 		COL_HAZARD,			//Death on entry
-		COL_SLIPPERY,		//Slide to next spot if possible
+		COL_ICE,		//Slide to next spot if possible
 		NUM_COL
 	};
 

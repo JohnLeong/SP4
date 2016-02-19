@@ -28,11 +28,11 @@ void CEnemyZombie::Update(const float dt, CPlayer* cPlayer)
 	CEntityIPos::Update(dt, cPlayer);
 }
 
-void CEnemyZombie::UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*> entityList)
+void CEnemyZombie::UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList)
 {
 	if (this->m_iXIndex == cPlayer->GetPos_x() && this->m_iYIndex == cPlayer->GetPos_y())
 		return;
-	m_cAStar->Init(this->m_iXIndex, this->m_iYIndex, cPlayer->GetPos_x(), cPlayer->GetPos_y(), &entityList);
+	m_cAStar->Init(this->m_iXIndex, this->m_iYIndex, cPlayer->GetPos_x(), cPlayer->GetPos_y(), entityList);
 
 	switch (m_cAStar->Search())
 	{

@@ -21,9 +21,12 @@ public:
 	int GetNumOfTiles_Width(void);		// Get the number of tiles for width of the screen
 	int GetTileSize(void);
 	CTiledata GetTile(int XIndex, int YIndex);
-	void SetMeshArray(CTiledata::TILE_ID TileId);	//Set the mesh for the specified tile index
+	void SetMeshArray(CTiledata::TILE_ID TileId, SpriteAnimation* sa, Animation* anim);	//Set the mesh for the specified tile index
+	SpriteAnimation* GetTileSprite(CTiledata::TILE_ID TileId);
 
 	vector<vector<CTiledata> > theScreenMap;
+
+	void UpdateSprites(double dt);
 
 private:
 	int theTileSize;

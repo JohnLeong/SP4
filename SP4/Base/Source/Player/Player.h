@@ -2,6 +2,7 @@
 #include "Vector3.h"
 #include "../Tilemap.h"
 #include "../Graphics/SpriteAnimation.h"
+#include "../define.h"
 
 class CPlayer
 {
@@ -54,14 +55,18 @@ public:
 	float GetOffSet_x(void);
 	float GetOffSet_y(void);
 
+	bool IsMoving(void);
+
 	SpriteAnimation* GetSpriteAnimation(void);
 
 	void Update(double dt, CTilemap* tile);								// Update
 
 	CollisionReponse CheckCollision(CTiledata tileData);
+	void DoCurrentTileCollision(CTilemap* cTilemap);
 	PlayerDirection GetDirection(void);
 
 	PlayerDirection GetNextDirection(void);
+	Vector3 GetNextDirectionPos(void);
 	void SetNextDirection(PlayerDirection);
 
 	void AddAnimation(Animation* _anim, PlayerAction playerState);

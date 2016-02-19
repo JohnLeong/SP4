@@ -11,10 +11,10 @@ public:
 	CEntity_Block_Movable(int iXIndex, int iYIndex, CTilemap* cTilemap);
 	~CEntity_Block_Movable();
 
-	virtual void DoColDir(MOVE_DIR m_MoveDir);
+	virtual bool DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos*>* entityList);
 
 	virtual void Update(const float dt, CPlayer* cPlayer);			// Update
-	virtual void UpdateMovement(const float dt, CPlayer* cPlayer);
+	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList);
 };
 
 #endif

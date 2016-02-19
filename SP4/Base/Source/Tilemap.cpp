@@ -27,6 +27,11 @@ void CTilemap::Init(int theNumOfTiles_Width, const int theNumOfTiles_Height, flo
 	theScreenMap.resize(theNumOfTiles_MapWidth);
 	for (int i = 0; i < theNumOfTiles_MapWidth; ++i)
 		theScreenMap[i].resize(theNumOfTiles_Height);
+
+	for (int i = 0; i < CTiledata::NUM_TILE; ++i)
+	{
+		meshArray[i] = NULL;
+	}
 }
 
 bool CTilemap::LoadMap(const string mapName)
@@ -57,19 +62,19 @@ bool CTilemap::LoadFile(const string mapName)
 				break;
 
 			//Do not read if line is commented out
-			if(!(aLineOfText.find("//*") == NULL) && aLineOfText != "")
+			//if(!(aLineOfText.find("//*") == NULL) && aLineOfText != "")
 			{
-				if (theLineCounter == 0)
-				{
-					string token;
-					istringstream iss(aLineOfText);
-					while(getline(iss, token, ','))
-					{
-						//Get total number of colums
-						theMaxNumOfColumns = atoi(token.c_str());
-					}
-				}
-				else
+				//if (theLineCounter == 0)
+				//{
+				//	string token;
+				//	istringstream iss(aLineOfText);
+				//	while(getline(iss, token, ','))
+				//	{
+				//		//Get total number of colums
+				//		theMaxNumOfColumns = atoi(token.c_str());
+				//	}
+				//}
+				//else
 				{
 					int theColumnCounter = 0;
 
@@ -105,6 +110,27 @@ int CTilemap::GetNumOfTiles_Width(void)
 int CTilemap::GetTileSize(void)
 {
 	return theTileSize;
+}
+
+void CTilemap::SetMeshArray(CTiledata::TILE_ID TileId, SpriteAnimation* sa, Animation* anim)
+{
+	meshArray[TileId] = sa;
+	meshArray[TileId]->m_anim = anim;
+}
+
+SpriteAnimation* CTilemap::GetTileSprite(CTiledata::TILE_ID TileId)
+{
+	return (meshArray[TileId]);
+}
+
+void CTilemap::UpdateSprites(double dt)
+{
+	for (int i = 0; i < CTiledata::NUM_TILE; ++i)
+	{
+		if (meshArray[i] == NULL)
+			continue;
+		meshArray[i]->Update(dt);
+	}
 }
 
 CTiledata CTilemap::GetTile(int XIndex, int YIndex)

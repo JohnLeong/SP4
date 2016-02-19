@@ -11,7 +11,8 @@ public:
 	~CLevel(void);
 
 	CTilemap* GetTilemap(void);
-	bool InitTilemap(std::string mapname, int iNumTileX, int iNumTileY, float fTileSize);
+	bool InitTilemap(int iNumTileX, int iNumTileY, float fTileSize);
+	bool LoadTilemap(std::string mapname);
 	bool InitLua(std::string levelName);
 
 	int GetPlayerStartPosX();
@@ -28,8 +29,15 @@ public:
 
 	void SetDoMovements(bool bDoMovements);
 	bool CheckPlayerCollisions(CPlayer* cPlayer);
+	bool CheckPlayerCollisionsCurrent(CPlayer* cPlayer);
 	bool CheckEntityCollisions(CPlayer* cPlayer, int iXIndex, int iYIndex);
+
+	bool IsMovementReady(void);
+	void SetMovementReady(bool b);
+
 private:
 	bool m_bDoMovements;
 	int playerStartPosX, playerStartPosY, maxNumberOfEnemies;
+	bool m_bMovementReady;		//Controller for next player movement
+	bool m_bDoTileCheck;			//Check tiles player and entities are standing on
 };

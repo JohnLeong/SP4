@@ -2,6 +2,8 @@
 
 CLevel::CLevel(void)
 : m_bDoMovements(false)
+, m_bMovementReady(true)
+, m_bDoTileCheck(false)
 {
 }
 
@@ -14,7 +16,7 @@ CTilemap* CLevel::GetTilemap(void)
 	return m_cTilemap;
 }
 
-bool CLevel::InitTilemap(std::string mapname, int iNumTileX, int iNumTileY, float fTileSize)
+bool CLevel::InitTilemap(int iNumTileX, int iNumTileY, float fTileSize)
 {
 	/*if (m_cTilemap)
 		delete m_cTilemap;*/
@@ -22,6 +24,11 @@ bool CLevel::InitTilemap(std::string mapname, int iNumTileX, int iNumTileY, floa
 	m_cTilemap = new CTilemap();
 	m_cTilemap->Init(iNumTileX, iNumTileY, fTileSize);
 
+	return true;
+}
+
+bool CLevel::LoadTilemap(std::string mapname)
+{
 	return(m_cTilemap->LoadMap(mapname));
 }
 
@@ -60,23 +67,69 @@ void CLevel::SetDoMovements(bool bDoMovements)
 
 void CLevel::Update(const float dt, CPlayer* cPlayer)
 {
+	if (m_bMovementReady)
+	{
+		if (CheckPlayerCollisions(cPlayer))
+			m_bDoMovements = true;
+	}
+
+	this->m_bMovementReady = true;
+
+	if (cPlayer->IsMoving())
+		this->m_bMovementReady = false;
+	else
+		cPlayer->SetNextDirection(CPlayer::PD_NONE);
+
 	for (std::vector<CEntityIPos*>::iterator entity = m_cEntityIPosList.begin(); entity != m_cEntityIPosList.end(); entity++)
 	{
 		(*entity)->Update(dt, cPlayer);
+		if ((*entity)->IsMoving())
+			this->m_bMovementReady = false;
 	}
 
-	if (CheckPlayerCollisions(cPlayer))
-		m_bDoMovements = true;
+	//if (this->m_bMovementReady == true && this->m_bDoTileCheck)
+	//{
+	//	m_bDoTileCheck = false;
+	//	if (CheckPlayerCollisionsCurrent(cPlayer))
+	//	{
+	//		m_bMovementReady = false;
+	//		switch (cPlayer->GetNextDirection())
+	//		{
+	//		case CPlayer::PD_UP:
+	//			cPlayer->MoveUpDown(true, m_cTilemap);
+	//			break;
+	//		case CPlayer::PD_DOWN:
+	//			cPlayer->MoveUpDown(false, m_cTilemap);
+	//			break;
+	//		case CPlayer::PD_LEFT:
+	//			cPlayer->MoveLeftRight(false, m_cTilemap);
+	//			break;
+	//		case CPlayer::PD_RIGHT:
+	//			cPlayer->MoveLeftRight(true, m_cTilemap);
+	//			break;
+	//		default:
+	//			break;
+	//		}
+	//	}
+	//	else
+	//	{
+	//		cPlayer->SetNextDirection(CPlayer::PD_NONE);
+	//	}
+	//}
 
 	if (this->m_bDoMovements)
 	{
 		UpdateMovement(dt, cPlayer);
 		this->m_bDoMovements = false;
+		this->m_bDoTileCheck = true;
 	}
+
+	m_cTilemap->UpdateSprites(static_cast<double>(dt));
 }
 
 void CLevel::UpdateMovement(const float dt, CPlayer* cPlayer)
 {
+	//Reset tile tint
 	for (int i = 0; i < this->m_cTilemap->GetNumOfTiles_Height(); i++)
 	{
 		for (int k = 0; k < this->m_cTilemap->GetNumOfTiles_Width(); k++)
@@ -86,8 +139,23 @@ void CLevel::UpdateMovement(const float dt, CPlayer* cPlayer)
 	}
 	for (std::vector<CEntityIPos*>::iterator entity = m_cEntityIPosList.begin(); entity != m_cEntityIPosList.end(); entity++)
 	{
-		(*entity)->UpdateMovement(dt, cPlayer, m_cEntityIPosList);
+		(*entity)->UpdateMovement(dt, cPlayer, &this->m_cEntityIPosList);
 	}
+}
+
+bool CLevel::CheckPlayerCollisionsCurrent(CPlayer* cPlayer)
+{
+	switch (m_cTilemap->GetTile(cPlayer->GetPos_x(), cPlayer->GetPos_y()).GetCollisionType())
+	{
+	case CTiledata::COL_ICE:
+		std::cout << "ICE";
+		if (m_cTilemap->GetTile(cPlayer->GetNextDirectionPos().x, cPlayer->GetNextDirectionPos().y).GetCollisionType() == CTiledata::COL_BLOCK)
+			return false;
+		return true;
+	default:
+		return false;
+	}
+	return false;
 }
 
 bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
@@ -97,7 +165,7 @@ bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 	case CPlayer::PD_UP:
 		if (m_cTilemap->GetTile(cPlayer->GetPos_x(), cPlayer->GetPos_y() - 1).GetCollisionType() == CTiledata::COL_BLOCK || cPlayer->GetPos_y() - 1 <= 0)
 		{
-			cPlayer->SetNextDirection(CPlayer::PD_NONE);
+			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
 		}
 		else
@@ -105,17 +173,17 @@ bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 			if (!CheckEntityCollisions(cPlayer, cPlayer->GetPos_x(), cPlayer->GetPos_y() - 1))
 			{
 				cPlayer->MoveUpDown(true, m_cTilemap);
-				cPlayer->SetNextDirection(CPlayer::PD_NONE);
+				//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 				return true;
 			}
-			cPlayer->SetNextDirection(CPlayer::PD_NONE);
+			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
 		}
 		break;
 	case CPlayer::PD_DOWN:
 		if (m_cTilemap->GetTile(cPlayer->GetPos_x(), cPlayer->GetPos_y() + 1).GetCollisionType() == CTiledata::COL_BLOCK || cPlayer->GetPos_y() + 2 >= m_cTilemap->GetNumOfTiles_Height())
 		{
-			cPlayer->SetNextDirection(CPlayer::PD_NONE);
+			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
 		}
 		else
@@ -123,17 +191,17 @@ bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 			if (!CheckEntityCollisions(cPlayer, cPlayer->GetPos_x(), cPlayer->GetPos_y() + 1))
 			{
 				cPlayer->MoveUpDown(false, m_cTilemap);
-				cPlayer->SetNextDirection(CPlayer::PD_NONE);
+				//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 				return true;
 			}
-			cPlayer->SetNextDirection(CPlayer::PD_NONE);
+			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
 		}
 		break;
 	case CPlayer::PD_RIGHT:
 		if (m_cTilemap->GetTile(cPlayer->GetPos_x() + 1, cPlayer->GetPos_y()).GetCollisionType() == CTiledata::COL_BLOCK || cPlayer->GetPos_x() + 2 >= m_cTilemap->GetNumOfTiles_Width())
 		{
-			cPlayer->SetNextDirection(CPlayer::PD_NONE);
+			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
 		}
 		else
@@ -141,17 +209,17 @@ bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 			if (!CheckEntityCollisions(cPlayer, cPlayer->GetPos_x() + 1, cPlayer->GetPos_y()))
 			{
 				cPlayer->MoveLeftRight(true, m_cTilemap);
-				cPlayer->SetNextDirection(CPlayer::PD_NONE);
+				//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 				return true;
 			}
-			cPlayer->SetNextDirection(CPlayer::PD_NONE);
+			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
 		}
 		break;
 	case CPlayer::PD_LEFT:
 		if (m_cTilemap->GetTile(cPlayer->GetPos_x() - 1, cPlayer->GetPos_y()).GetCollisionType() == CTiledata::COL_BLOCK || cPlayer->GetPos_x() - 1 <= 0)
 		{
-			cPlayer->SetNextDirection(CPlayer::PD_NONE);
+			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
 		}
 		else
@@ -159,10 +227,10 @@ bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 			if (!CheckEntityCollisions(cPlayer, cPlayer->GetPos_x() - 1, cPlayer->GetPos_y()))
 			{
 				cPlayer->MoveLeftRight(false, m_cTilemap);
-				cPlayer->SetNextDirection(CPlayer::PD_NONE);
+				//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 				return true;
 			}
-			cPlayer->SetNextDirection(CPlayer::PD_NONE);
+			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
 		}
 		break;
@@ -182,37 +250,27 @@ bool CLevel::CheckEntityCollisions(CPlayer* cPlayer, int iXIndex, int iYIndex)
 			switch (cPlayer->GetNextDirection())
 			{
 			case CPlayer::PD_UP:
-				if (!CheckEntityCollisions(cPlayer, (*entity)->GetXIndex(), (*entity)->GetYIndex() - 1) && m_cTilemap->GetTile((*entity)->GetXIndex(), (*entity)->GetYIndex() - 1).GetCollisionType() == CTiledata::COL_VOID)
-				{
-					(*entity)->DoColDir(CEntityIPos::DIR_UP);
-					return false;
-				}
-				return true;
+				return((*entity)->DoColDir(CEntityIPos::DIR_UP, &this->m_cEntityIPosList));
 			case CPlayer::PD_DOWN:
-				if (!CheckEntityCollisions(cPlayer, (*entity)->GetXIndex(), (*entity)->GetYIndex() + 1) && m_cTilemap->GetTile((*entity)->GetXIndex(), (*entity)->GetYIndex() + 1).GetCollisionType() == CTiledata::COL_VOID)
-				{
-					(*entity)->DoColDir(CEntityIPos::DIR_DOWN);
-					return false;
-				}
-				return true;
+				return((*entity)->DoColDir(CEntityIPos::DIR_DOWN, &this->m_cEntityIPosList));
 			case CPlayer::PD_RIGHT:
-				if (!CheckEntityCollisions(cPlayer, (*entity)->GetXIndex() + 1, (*entity)->GetYIndex()) && m_cTilemap->GetTile((*entity)->GetXIndex() + 1, (*entity)->GetYIndex()).GetCollisionType() == CTiledata::COL_VOID)
-				{
-					(*entity)->DoColDir(CEntityIPos::DIR_RIGHT);
-					return false;
-				}
-				return true;
+				return((*entity)->DoColDir(CEntityIPos::DIR_RIGHT, &this->m_cEntityIPosList));
 			case CPlayer::PD_LEFT:
-				if (!CheckEntityCollisions(cPlayer, (*entity)->GetXIndex() - 1, (*entity)->GetYIndex()) && m_cTilemap->GetTile((*entity)->GetXIndex() - 1, (*entity)->GetYIndex()).GetCollisionType() == CTiledata::COL_VOID)
-				{
-					(*entity)->DoColDir(CEntityIPos::DIR_LEFT);
-					return false;
-				}
-				return true;
+				return((*entity)->DoColDir(CEntityIPos::DIR_LEFT, &this->m_cEntityIPosList));
 			default:
 				break;
 			}
 		}
 	}
 	return false;
+}
+
+bool CLevel::IsMovementReady(void)
+{
+	return this->m_bMovementReady;
+}
+
+void CLevel::SetMovementReady(bool b)
+{
+	this->m_bMovementReady = b;
 }
