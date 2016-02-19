@@ -25,6 +25,11 @@ void CEntity::SetMaxHealth(int h)
 	this->m_iMax_health = h;
 }
 
+void CEntity::SetAlive(bool b)
+{
+	this->m_bAlive = b;
+}
+
 void CEntity::DeductHealth(int h)
 {
 	this->m_iCurrent_health -= h;
@@ -55,6 +60,6 @@ SpriteAnimation* CEntity::GetSprite(void)
 	return m_cSprite;
 }
 
-void CEntity::Update(const float dt, CPlayer* cPlayer)
+void CEntity::Update(const float dt)
 {
 }

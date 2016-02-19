@@ -10,12 +10,12 @@ class CEnemyZombie : public CEnemy
 {
 public:
 	CEnemyZombie();
-	CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAnimation* cSprite);	
+	CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, CEntityIPos* cPlayerPtr, std::vector<CEntityIPos*>* cEntityList);
 	~CEnemyZombie(void);
 
 	void InitAnimation();
-	virtual void Update(const float dt, CPlayer* cPlayer);			// Update
-	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList);
+	virtual void Update(const float dt);			// Update
+	virtual void UpdateMovement(const float dt);
 
 private:
 	AStar* m_cAStar;	//Astar for pathfinding to player

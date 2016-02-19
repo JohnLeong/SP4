@@ -18,7 +18,7 @@ public:
 	virtual void SetYPos(float);
 	virtual void SetPos(Vector3);
 
-	virtual void Update(const float dt, CPlayer* cPlayer);			// Update
+	virtual void Update(const float dt);			// Update
 
 protected:
 	Vector3 pos;					//Entity position

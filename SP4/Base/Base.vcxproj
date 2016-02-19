@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Entities\Entity_Fire.cpp" />
+    <ClCompile Include="Source\Entities\Entity_Key_Red.cpp" />
     <ClCompile Include="Source\SceneInstruction.cpp" />
     <ClCompile Include="Source\SoundManager.cpp" />
     <ClCompile Include="Source\Application.cpp" />
@@ -55,6 +57,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneInstruction.h" />
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h" />
+    <ClInclude Include="Source\define.h" />
+    <ClInclude Include="Source\Entities\Entity_Fire.h" />
+    <ClInclude Include="Source\Entities\Entity_Key_Red.h" />
     <ClInclude Include="Source\SoundManager.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\AStar.h" />

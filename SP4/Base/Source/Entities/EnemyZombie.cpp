@@ -6,12 +6,14 @@ CEnemyZombie::CEnemyZombie()
 	std::cout << "NULLASTAR" << std::endl;
 }
 
-CEnemyZombie::CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAnimation* cSprite)
+CEnemyZombie::CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, CEntityIPos* cPlayerPtr, std::vector<CEntityIPos*>* cEntityList)
 {
 	this->m_iXIndex = iXIndex;
 	this->m_iYIndex = YIndex;
 	this->m_bAlive = true;
 	this->m_cTilemap = cTilemap;
+	this->m_cPlayerPtr = cPlayerPtr;
+	this->m_cEntityList = cEntityList;
 	m_cAStar = new AStar(cTilemap);
 	this->m_cSprite = cSprite;
 	InitAnimation();
@@ -69,16 +71,16 @@ void CEnemyZombie::InitAnimation()
 /********************************************************************************
 Update
 ********************************************************************************/
-void CEnemyZombie::Update(const float dt, CPlayer* cPlayer)
+void CEnemyZombie::Update(const float dt)
 {
-	CEnemy::Update(dt, cPlayer);
+	CEnemy::Update(dt);
 }
 
-void CEnemyZombie::UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList)
+void CEnemyZombie::UpdateMovement(const float dt)
 {
-	if (this->m_iXIndex == cPlayer->GetPos_x() && this->m_iYIndex == cPlayer->GetPos_y())
+	if (this->m_iXIndex == m_cPlayerPtr->GetXIndex() && this->m_iYIndex == m_cPlayerPtr->GetYIndex())
 		return;
-	m_cAStar->Init(this->m_iXIndex, this->m_iYIndex, cPlayer->GetPos_x(), cPlayer->GetPos_y(), entityList);
+	m_cAStar->Init(this->m_iXIndex, this->m_iYIndex, m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
 
 	switch (m_cAStar->Search())
 	{

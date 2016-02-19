@@ -19,7 +19,7 @@ public:
 	~CEntity_Hazard_Moving();
 
 	virtual void Init(Vector3 pos, bool MoveDir, float m_fMoveDist);
-	virtual void Update(const float dt, CPlayer* cPlayer);			// Update
+	virtual void Update(const float dt);			// Update
 
 protected:
 	bool m_bDir;

@@ -16,9 +16,9 @@ void CEnemy::AddAnimation(Animation* cAnim, MOVE_DIR cMoveDir)
 /********************************************************************************
 Update
 ********************************************************************************/
-void CEnemy::Update(const float dt, CPlayer* cPlayer)
+void CEnemy::Update(const float dt)
 {
-	CEntityIPos::Update(dt, cPlayer);
+	CEntityIPos::Update(dt);
 
 	this->m_cSprite->m_anim = m_animationList[this->m_AnimDir];
 	this->m_cSprite->Update(static_cast<double>(dt));

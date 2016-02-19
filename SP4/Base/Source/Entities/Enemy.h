@@ -11,7 +11,7 @@ public:
 	~CEnemy(void);
 
 	virtual void AddAnimation(Animation* cAnim, MOVE_DIR cMoveDir);
-	virtual void Update(const float dt, CPlayer* cPlayer);		// Update
+	virtual void Update(const float dt);		// Update
 
 	Animation* m_animationList[NUM_DIR];
 };

@@ -3,7 +3,7 @@
 
 #include "../Graphics/SpriteAnimation.h"
 #include "../Tilemap.h"
-#include "../Player/Player.h"
+#include "../define.h"
 
 class CEntity
 {
@@ -13,12 +13,13 @@ public:
 
 	virtual void SetHealth(int);
 	virtual void SetMaxHealth(int);
+	virtual void SetAlive(bool);
 	virtual void DeductHealth(int);
 	virtual int GetHealth(void);
 	virtual int GetMaxHealth(void);
 	virtual bool IsAlive(void);
-
-	virtual void Update(const float dt, CPlayer* cPlayer);		// Update
+	
+	virtual void Update(const float dt);		// Update
 
 	void SetSprite(SpriteAnimation* sa);
 	SpriteAnimation* GetSprite(void);

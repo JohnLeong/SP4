@@ -63,7 +63,7 @@ void CScenePlay::Init()
 	meshList[GEO_GRASS_LIGHTGREEN]->textureID = LoadTGA("Image//grass_lightgreen.tga");
 
 	meshList[GEO_OVERLAY_RED] = MeshBuilder::GenerateQuad("OVERLAY_RED", Color(1, 1, 1), 1.f);
-	meshList[GEO_OVERLAY_RED]->textureID = LoadTGA("Image//Tiles/overlay_red.tga");
+	meshList[GEO_OVERLAY_RED]->textureID = LoadTGA("Image//Tiles/cross.tga");
 
 	//Load Tile textures
 	meshList[GEO_TILE_FLOOR_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
@@ -94,31 +94,37 @@ void CScenePlay::Init()
 	
 	std::cout << "Variables" << std::endl;
 
-	m_cPlayer = new CPlayer();
-	m_cPlayer->Init(1, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]));
-	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
-
 	bLightEnabled = true;
 
 	InitLevel();
 
+	m_cPlayer = new CPlayer();
+	m_cPlayer->Init(m_cLevel.GetTilemap(), 1, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]), &m_cLevel.m_cEntityIPosList);
+	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+
+	/*To be removed*/
 	Mesh* temp_mesh;
 	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
 	temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
-	CEnemyZombie* enemy = new CEnemyZombie(3, 3, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh));
+	CEnemyZombie* enemy = new CEnemyZombie(3, 3, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
 	m_cLevel.m_cEntityIPosList.push_back(enemy);
 	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("BOX", 1, 1);
 	temp_mesh->textureID = LoadTGA("Image//Entities//box.tga");
-	CEntity_Block_Movable* entity = new CEntity_Block_Movable(6, 6, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh));
+	CEntity_Block_Movable* entity = new CEntity_Block_Movable(6, 6, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
 	m_cLevel.m_cEntityIPosList.push_back(entity);
-	entity = new CEntity_Block_Movable(6, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh));
+	entity = new CEntity_Block_Movable(6, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
 	m_cLevel.m_cEntityIPosList.push_back(entity);
-	entity = new CEntity_Block_Movable(3, 1, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh));
+	entity = new CEntity_Block_Movable(3, 1, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
 	m_cLevel.m_cEntityIPosList.push_back(entity);
 	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("KEEE", 1, 11);
 	temp_mesh->textureID = LoadTGA("Image//Entities//key.tga");
-	CEntity_Key_Red* key = new CEntity_Key_Red(8, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f));
+	CEntity_Key_Red* key = new CEntity_Key_Red(8, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
 	m_cLevel.m_cEntityIPosList.push_back(key);
+	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("FIYAH", 2, 5);
+	temp_mesh->textureID = LoadTGA("Image//Entities//fire.tga");
+	CEntity_Fire* fire = new CEntity_Fire(9, 9, CEntity_Fire::STATE_01, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
+	m_cLevel.m_cEntityIPosList.push_back(fire);
+	/*To be removed*/
 
 	InitAchievements();
 }
@@ -140,7 +146,6 @@ void CScenePlay::InitLevel()
 
 	m_cLevel.InitLua(getLevel);
 }
-
 
 void CScenePlay::InitAchievements()
 {
@@ -175,7 +180,7 @@ void CScenePlay::Update(double dt)
 	m_cLevel.Update(static_cast<float>(dt), this->m_cPlayer);
 
 	//Update camera position based on player position
-	camera.UpdatePosition(Vector3(static_cast<float>(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetOffSet_x()), static_cast<float>(m_cPlayer->GetPos_y()* -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetOffSet_y()), 0.f));
+	camera.UpdatePosition(Vector3(static_cast<float>(m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset()), static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
 }
 
 /********************************************************************************
@@ -208,14 +213,19 @@ void CScenePlay::UpdateWeaponStatus(const unsigned char key)
 void CScenePlay::RenderGUI()
 {
 	// Render the crosshair
-	RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
+	//RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
+
+	if (m_cPlayer->IsAlive())
+		RenderTextOnScreen(meshList[GEO_TEXT], "ALIVE", Color(0.f, 0.f, 0.f), 20.f, -160.f, 10.f);
+	else
+		RenderTextOnScreen(meshList[GEO_TEXT], "DEAD", Color(0.f, 0.f, 0.f), 20.f, -160.f, 10.f);
 }
 
 void CScenePlay::RenderPlayer()
 {
 	// Render the player
 	modelStack.PushMatrix();
-	modelStack.Translate((static_cast<float>(m_cPlayer->GetPos_x() * m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetOffSet_x()), (static_cast<float>(m_cPlayer->GetPos_y()* -m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetOffSet_y()), 0.f);
+	modelStack.Translate((static_cast<float>(m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetXOffset()), (static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetYOffset()), 0.f);
 	modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
 	RenderMesh(meshList[GEO_PLAYER], false);
 	//m_cPlayer->GetSpriteAnimation()->Render();
@@ -269,12 +279,13 @@ void CScenePlay::RenderTilemap(void)
 void CScenePlay::Render()
 {
 	CSceneManager::Render2D();
-	glDisable(GL_DEPTH_TEST);
-	RenderTilemap();
-	RenderPlayer();
-	RenderEntities();
 
-	//RenderGUI();
+	RenderTilemap();
+
+	RenderEntities();
+	RenderPlayer();
+
+	RenderGUI();
 #if _DEBUG
 	RenderTextOnScreen(meshList[GEO_TEXT], "ScenePlay", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 #endif

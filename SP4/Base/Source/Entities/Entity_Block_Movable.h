@@ -8,13 +8,13 @@ class CEntity_Block_Movable : public CEntityIPos
 {
 public:
 	CEntity_Block_Movable();
-	CEntity_Block_Movable(int iXIndex, int iYIndex, CTilemap* cTilemap, SpriteAnimation* cSprite);
+	CEntity_Block_Movable(int iXIndex, int iYIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, CEntityIPos* cPlayerPtr, std::vector<CEntityIPos*>* cEntityList);
 	~CEntity_Block_Movable();
 
-	virtual bool DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos*>* entityList);
+	virtual bool DoColDir(MOVE_DIR m_MoveDir);
 
-	virtual void Update(const float dt, CPlayer* cPlayer);			// Update
-	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList);
+	virtual void Update(const float dt);			// Update
+	virtual void UpdateMovement(const float dt);
 };
 
 #endif

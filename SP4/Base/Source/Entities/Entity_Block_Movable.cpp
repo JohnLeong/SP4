@@ -5,12 +5,14 @@ CEntity_Block_Movable::CEntity_Block_Movable()
 {
 }
 
-CEntity_Block_Movable::CEntity_Block_Movable(int iXIndex, int iYIndex, CTilemap* cTilemap, SpriteAnimation* cSprite)
+CEntity_Block_Movable::CEntity_Block_Movable(int iXIndex, int iYIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, CEntityIPos* cPlayerPtr, std::vector<CEntityIPos*>* cEntityList)
 {
 	this->m_iXIndex = iXIndex;
 	this->m_iYIndex = iYIndex;
 	this->m_cTilemap = cTilemap;
 	this->m_cSprite = cSprite;
+	this->m_cPlayerPtr = cPlayerPtr;
+	this->m_cEntityList = cEntityList;
 	Animation* cAnim = new Animation(0, 0, 0, 1.f);
 	cSprite->m_anim = cAnim;
 }
@@ -19,7 +21,7 @@ CEntity_Block_Movable::~CEntity_Block_Movable()
 {
 }
 
-bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos*>* entityList)
+bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir)
 {
 	int iIndexCheckX, iIndexCheckY;
 	switch (m_MoveDir)
@@ -47,7 +49,7 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos
 	if (this->m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() != CTiledata::COL_VOID &&
 		this->m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() != CTiledata::COL_ICE)
 		return true;
-	for (std::vector<CEntityIPos*>::iterator entity = (*entityList).begin(); entity != (*entityList).end(); entity++)
+	for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 	{
 		if ((*entity)->GetXIndex() == iIndexCheckX && (*entity)->GetYIndex() == iIndexCheckY && (*entity)->IsAlive())
 		{
@@ -58,14 +60,14 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos
 	return false;
 }
 
-void CEntity_Block_Movable::Update(const float dt, CPlayer* cPlayer)
+void CEntity_Block_Movable::Update(const float dt)
 {
-	CEntityIPos::Update(dt, cPlayer);
+	CEntityIPos::Update(dt);
 
 	this->m_cSprite->Update(static_cast<double>(dt));
 }
 
-void CEntity_Block_Movable::UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList)
+void CEntity_Block_Movable::UpdateMovement(const float dt)
 {
 	//int iIndexCheckX, iIndexCheckY;
 	////Collision check

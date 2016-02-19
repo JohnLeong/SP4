@@ -1,21 +1,12 @@
 #pragma once
 #include "Vector3.h"
-#include "../Tilemap.h"
-#include "../Graphics/SpriteAnimation.h"
-#include "../define.h"
+#include "../Entities/EntityIPos.h"
 
-class CPlayer
+class CPlayer : public CEntityIPos
 {
 public:
 	CPlayer();
 	~CPlayer(void);
-
-	enum CollisionReponse
-	{
-		COL_FLOOR,
-		COL_WALL,
-		NUM_COL
-	};
 
 	enum PlayerDirection
 	{
@@ -40,20 +31,11 @@ public:
 		NUM_PLAYER_ACTION,
 	};
 
-	void Init(int pos_x, int pos_y, SpriteAnimation* mesh);		// Initialise this class instance
-
-	void SetPos_x(int pos_x);							// Set position x of the player
-	void SetPos_y(int pos_y);							// Set position y of the player
+	void Init(CTilemap* cTilemap, int pos_x, int pos_y, SpriteAnimation* mesh, std::vector<CEntityIPos*>* cEntityList);		// Initialise this class instance
 
 	// Update Movements
 	bool MoveUpDown(const bool mode, CTilemap* tile);
 	bool MoveLeftRight(const bool mode, CTilemap* tile);
-
-	int GetPos_x(void);									// Get position x of the player
-	int GetPos_y(void);									// Get position y of the player
-
-	float GetOffSet_x(void);
-	float GetOffSet_y(void);
 
 	bool IsMoving(void);
 
@@ -61,21 +43,16 @@ public:
 
 	void Update(double dt, CTilemap* tile);								// Update
 
-	CollisionReponse CheckCollision(CTiledata tileData);
 	void DoCurrentTileCollision(CTilemap* cTilemap);
 	PlayerDirection GetDirection(void);
 
 	PlayerDirection GetNextDirection(void);
-	Vector3 GetNextDirectionPos(void);
+	Vector3 GetNextDirectionPosition(void);
 	void SetNextDirection(PlayerDirection);
 
 	void AddAnimation(Animation* _anim, PlayerAction playerState);
 
 private:
-	// Hero's information
-	int playerPosX, playerPosY;
-
-	float xOffSet, yOffSet;
 
 	bool myKeys[255];
 

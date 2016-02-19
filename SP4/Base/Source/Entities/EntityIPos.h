@@ -29,7 +29,7 @@ public:
 	virtual void SetXIndex(int iXIndex);							// Set position x of the player
 	virtual void SetYIndex(int iYIndex);							// Set position y of the player
 	virtual void SetPos(int iXIndex, int iYIndex);					// Set position x of the player
-	virtual bool DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos*>* entityList);						//Do collision response in specified direction
+	virtual bool DoColDir(MOVE_DIR m_MoveDir);						//Do collision response in specified direction
 
 	virtual int GetXIndex(void);									// Get position x of the player
 	virtual int GetYIndex(void);									// Get position y of the player
@@ -41,8 +41,8 @@ public:
 
 	virtual bool IsMoving(void);
 
-	virtual void Update(const float dt, CPlayer* cPlayer);		// Update
-	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList);
+	virtual void Update(const float dt);		// Update
+	virtual void UpdateMovement(const float dt);
 
 	virtual	bool DoCurrentTileCollision();
 
@@ -55,6 +55,9 @@ protected:
 
 	MOVE_DIR m_MoveDir;		//Current movement direction of entity
 	MOVE_DIR m_AnimDir;
+
+	CEntityIPos* m_cPlayerPtr;							//Pointer to player
+	std::vector<CEntityIPos*>* m_cEntityList;		//Pointer to list of entities
 };
 
 #endif

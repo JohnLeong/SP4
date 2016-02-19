@@ -6,14 +6,32 @@
 class CEntity_Fire : public CEntityIPos
 {
 public:
+	enum FIRE_STATE
+	{
+		STATE_01,
+		STATE_02,
+		STATE_03,
+		STATE_04,
+		STATE_05,		//Fire is active
+		NUM_FIRE_STATE,
+	};
+public:
 	CEntity_Fire();
-	CEntity_Fire(int iXIndex, int iYIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, Animation* anim);
+	CEntity_Fire(int iXIndex, int iYIndex, FIRE_STATE cFire_State, CTilemap* cTilemap, SpriteAnimation* cSprite, CEntityIPos* cPlayerPtr, std::vector<CEntityIPos*>* cEntityList);
 	~CEntity_Fire();
 
-	virtual bool DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos*>* entityList);
+	void InitAnimation();
+	void AddAnimation(Animation* cAnim, FIRE_STATE state);
 
-	virtual void Update(const float dt, CPlayer* cPlayer);			// Update
-	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList);
+	virtual bool DoColDir(MOVE_DIR m_MoveDir);
+
+	virtual void Update(const float dt);			// Update
+	virtual void UpdateMovement(const float dt);
+
+private:
+	Animation* m_animationList[NUM_FIRE_STATE];
+
+	FIRE_STATE m_cFire_State;
 };
 
 #endif

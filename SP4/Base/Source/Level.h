@@ -2,6 +2,8 @@
 #include "Entities\EnemyZombie.h"
 #include "Entities\Entity_Block_Movable.h"
 #include "Entities\Entity_Key_Red.h"
+#include "Entities\Entity_Fire.h"
+#include "Player\Player.h"
 #include <string>
 #include <vector>
 #include "LuaScript.h"

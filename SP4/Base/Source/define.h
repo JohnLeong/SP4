@@ -1,2 +1,2 @@
-#define ENTITY_MOVE_SPEED 100.f
+#define ENTITY_MOVE_SPEED 200.f
 #define TILE_SIZE 25.f
