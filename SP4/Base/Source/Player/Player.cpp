@@ -204,7 +204,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionY)
 			{
-				yOffSet += dt * 100;
+				yOffSet += static_cast<float>(dt * 100);
 				if (yOffSet > tile->GetTileSize())
 				{
 					yOffSet = 0;
@@ -214,7 +214,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 			}
 			else
 			{
-				yOffSet -= dt * 100;
+				yOffSet -= static_cast<float>(dt * 100);
 				if (yOffSet < -tile->GetTileSize())
 				{
 					yOffSet = 0;
@@ -227,7 +227,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionX)
 			{
-				xOffSet += dt * 100;
+				xOffSet += static_cast<float>(dt * 100);
 				if (xOffSet > tile->GetTileSize())
 				{
 					xOffSet = 0;
@@ -237,7 +237,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 			}
 			else
 			{
-				xOffSet -= dt * 100;
+				xOffSet -= static_cast<float>(dt * 100);
 				if (xOffSet < -tile->GetTileSize())
 				{
 					xOffSet = 0;

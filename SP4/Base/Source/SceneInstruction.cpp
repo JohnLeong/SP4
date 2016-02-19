@@ -102,7 +102,7 @@ void CSceneInstruction::Update(double dt)
 	}
 
 	//Update image on mouse hover
-	if (checkForcollision(worldX, worldY, geo_pos.x, geo_pos.y, geo_pos.x + buttonXoffset, geo_pos.y + 8)) // back button
+	if (checkForcollision(worldX, worldY, geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + 8)) // back button
 	{
 		setChoiceVal(1);
 	}

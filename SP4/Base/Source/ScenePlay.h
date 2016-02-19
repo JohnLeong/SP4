@@ -9,6 +9,7 @@
 #include "Light.h"
 #include "PlayInfo3PV.h"
 #include "Level.h"
+#include "Achievements\Achievements.h"
 
 const float SKYBOXSIZE = 1000.f;
 
@@ -52,6 +53,7 @@ public:
 	virtual void Exit();
 
 	void InitLevel();
+	void InitAchievements();
 
 	// Render the main components of this scene
 	void RenderGUI();
@@ -76,6 +78,9 @@ private:
 
 	//Level
 	CLevel m_cLevel;
+
+	//Achievements
+	CAchievements* m_cAchievements;
 };
 
 #endif

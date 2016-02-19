@@ -105,6 +105,8 @@ void CScenePlay::Init()
 	m_cLevel.m_cEntityIPosList.push_back(entity);
 	entity = new CEntity_Block_Movable(2, 9, m_cLevel.GetTilemap());
 	m_cLevel.m_cEntityIPosList.push_back(entity);
+
+	InitAchievements();
 }
 
 void CScenePlay::InitLevel()
@@ -119,6 +121,12 @@ void CScenePlay::InitLevel()
 	getLevel.append(convertor.str());
 
 	m_cLevel.InitLua(getLevel);
+}
+
+
+void CScenePlay::InitAchievements()
+{
+
 }
 
 void CScenePlay::Update(double dt)
