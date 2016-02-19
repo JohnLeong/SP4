@@ -10,7 +10,10 @@ public:
 	CEnemy();
 	~CEnemy(void);
 
+	virtual void AddAnimation(Animation* cAnim, MOVE_DIR cMoveDir);
 	virtual void Update(const float dt, CPlayer* cPlayer);		// Update
+
+	Animation* m_animationList[NUM_DIR];
 };
 
 #endif

@@ -10,11 +10,16 @@ class CEntityIPos : public CEntity
 public:
 	enum MOVE_DIR
 	{
-		DIR_UP,
+		DIR_UP = 0,
 		DIR_DOWN,
 		DIR_LEFT,
 		DIR_RIGHT,
-		DIR_NONE,
+		DIR_IDLE_UP,
+		DIR_IDLE_DOWN,
+		DIR_IDLE_LEFT,
+		DIR_IDLE_RIGHT,
+		NUM_DIR,
+		DIR_NONE
 	};
 
 public:
@@ -39,7 +44,7 @@ public:
 	virtual void Update(const float dt, CPlayer* cPlayer);		// Update
 	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList);
 
-	virtual	void DoCurrentTileCollision();
+	virtual	bool DoCurrentTileCollision();
 
 protected:
 	int m_iXIndex;			//X Index
@@ -49,6 +54,7 @@ protected:
 	float m_fOffSetY;		//Render offset for translation in Y axis
 
 	MOVE_DIR m_MoveDir;		//Current movement direction of entity
+	MOVE_DIR m_AnimDir;
 };
 
 #endif

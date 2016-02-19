@@ -66,9 +66,11 @@ void CScenePlay::Init()
 	meshList[GEO_OVERLAY_RED]->textureID = LoadTGA("Image//Tiles/overlay_red.tga");
 
 	//Load Tile textures
-	meshList[GEO_TILE_FLOOR_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 2);
+	meshList[GEO_TILE_FLOOR_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_FLOOR_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_FLOOR_STONE_01.tga");
-	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_FLOOR_ICE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 2);
+	meshList[GEO_TILE_FLOOR_ICE_01]->textureID = LoadTGA("Image//Tiles/TILE_FLOOR_ICE_01.tga");
+	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 2);
 	meshList[GEO_TILE_WALL_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_WALL_STONE_01.tga");
 
 	meshList[GEO_PLAYER] = MeshBuilder::GenerateSpriteAnimation2D("GEO_PLAYER", 4, 3);
@@ -100,14 +102,23 @@ void CScenePlay::Init()
 
 	InitLevel();
 
-	CEnemyZombie* enemy = new CEnemyZombie(3, 3, m_cLevel.GetTilemap());
+	Mesh* temp_mesh;
+	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
+	temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
+	CEnemyZombie* enemy = new CEnemyZombie(3, 3, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh));
 	m_cLevel.m_cEntityIPosList.push_back(enemy);
-	CEntity_Block_Movable* entity = new CEntity_Block_Movable(6, 6, m_cLevel.GetTilemap());
+	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("BOX", 1, 1);
+	temp_mesh->textureID = LoadTGA("Image//Entities//box.tga");
+	CEntity_Block_Movable* entity = new CEntity_Block_Movable(6, 6, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh));
 	m_cLevel.m_cEntityIPosList.push_back(entity);
-	entity = new CEntity_Block_Movable(6, 8, m_cLevel.GetTilemap());
+	entity = new CEntity_Block_Movable(6, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh));
 	m_cLevel.m_cEntityIPosList.push_back(entity);
-	entity = new CEntity_Block_Movable(3, 1, m_cLevel.GetTilemap());
+	entity = new CEntity_Block_Movable(3, 1, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh));
 	m_cLevel.m_cEntityIPosList.push_back(entity);
+	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("KEEE", 1, 11);
+	temp_mesh->textureID = LoadTGA("Image//Entities//key.tga");
+	CEntity_Key_Red* key = new CEntity_Key_Red(8, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f));
+	m_cLevel.m_cEntityIPosList.push_back(key);
 
 	InitAchievements();
 }
@@ -115,8 +126,9 @@ void CScenePlay::Init()
 void CScenePlay::InitLevel()
 {
 	m_cLevel.InitTilemap(14, 18, TILE_SIZE);
-	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_STONE_01]), new Animation(0, 3, 0, 0.5f));
-	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WALL_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_STONE_01]), new Animation(0, 0, 1, 0.5f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_ICE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 3, 0, 0.5f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WALL_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
 	m_cLevel.LoadTilemap("LevelMap//MapDesign.csv");
 
 	// Init Level
@@ -139,27 +151,17 @@ void CScenePlay::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
-	//m_cLevel.SetDoMovements(true);
-
-	//if (IsKeyDownOnce('w'))
-	//	m_cLevel.SetDoMovements(m_cPlayer->MoveUpDown(true, m_cLevel.GetTilemap()));
-	//else if (IsKeyDownOnce('s'))
-	//	m_cLevel.SetDoMovements(m_cPlayer->MoveUpDown(false, m_cLevel.GetTilemap()));
-	//else if (IsKeyDownOnce('d'))
-	//	m_cLevel.SetDoMovements(m_cPlayer->MoveLeftRight(true, m_cLevel.GetTilemap()));
-	//else if (IsKeyDownOnce('a'))
-	//	m_cLevel.SetDoMovements(m_cPlayer->MoveLeftRight(false, m_cLevel.GetTilemap()));
-	//else
-	//	m_cLevel.SetDoMovements(false);
-
-	if (IsKeyDownOnce('w'))
-		m_cPlayer->SetNextDirection(CPlayer::PD_UP);
-	else if (IsKeyDownOnce('s'))
-		m_cPlayer->SetNextDirection(CPlayer::PD_DOWN);
-	else if (IsKeyDownOnce('d'))
-		m_cPlayer->SetNextDirection(CPlayer::PD_RIGHT);
-	else if (IsKeyDownOnce('a'))
-		m_cPlayer->SetNextDirection(CPlayer::PD_LEFT);
+	if (m_cLevel.IsMovementReady())
+	{
+		if (IsKeyDownOnce('w'))
+			m_cPlayer->SetNextDirection(CPlayer::PD_UP);
+		else if (IsKeyDownOnce('s'))
+			m_cPlayer->SetNextDirection(CPlayer::PD_DOWN);
+		else if (IsKeyDownOnce('d'))
+			m_cPlayer->SetNextDirection(CPlayer::PD_RIGHT);
+		else if (IsKeyDownOnce('a'))
+			m_cPlayer->SetNextDirection(CPlayer::PD_LEFT);
+	}
 
 	//Update player
 	m_cPlayer->Update(dt, m_cLevel.GetTilemap());
@@ -224,12 +226,17 @@ void CScenePlay::RenderEntities()
 {
 	for (std::vector<CEntityIPos*>::iterator entity = m_cLevel.m_cEntityIPosList.begin(); entity != m_cLevel.m_cEntityIPosList.end(); entity++)
 	{
+		if (!(*entity)->IsAlive())
+			continue;
 		modelStack.PushMatrix();
 		modelStack.Translate((static_cast<float>((*entity)->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize())) + (*entity)->GetXOffset()
 			, (static_cast<float>((*entity)->GetYIndex()* -m_cLevel.GetTilemap()->GetTileSize())) + (*entity)->GetYOffset()
 			, 0.f);
 		modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
-		RenderMesh(meshList[GEO_PLAYER], false);
+		if ((*entity)->GetSprite() == NULL)
+			RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+		else
+			RenderMesh((*entity)->GetSprite(), false);
 		modelStack.PopMatrix();
 	}
 }

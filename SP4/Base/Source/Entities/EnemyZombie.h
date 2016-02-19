@@ -10,9 +10,10 @@ class CEnemyZombie : public CEnemy
 {
 public:
 	CEnemyZombie();
-	CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap);	
+	CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAnimation* cSprite);	
 	~CEnemyZombie(void);
 
+	void InitAnimation();
 	virtual void Update(const float dt, CPlayer* cPlayer);			// Update
 	virtual void UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList);
 

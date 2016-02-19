@@ -19,7 +19,7 @@ public:
 	bool LoadMap(const string mapName);
 	int GetNumOfTiles_Height(void);		// Get the number of tiles for height of the screen
 	int GetNumOfTiles_Width(void);		// Get the number of tiles for width of the screen
-	int GetTileSize(void);
+	float GetTileSize(void);
 	CTiledata GetTile(int XIndex, int YIndex);
 	void SetMeshArray(CTiledata::TILE_ID TileId, SpriteAnimation* sa, Animation* anim);	//Set the mesh for the specified tile index
 	SpriteAnimation* GetTileSprite(CTiledata::TILE_ID TileId);
@@ -29,7 +29,7 @@ public:
 	void UpdateSprites(double dt);
 
 private:
-	int theTileSize;
+	float theTileSize;
 
 	int theNumOfTiles_MapHeight;	// Number of tiles in the map's height
 	int theNumOfTiles_MapWidth;		// Number of tiles in the map's width

@@ -16,6 +16,7 @@ public:
 	virtual void DeductHealth(int);
 	virtual int GetHealth(void);
 	virtual int GetMaxHealth(void);
+	virtual bool IsAlive(void);
 
 	virtual void Update(const float dt, CPlayer* cPlayer);		// Update
 

@@ -74,9 +74,6 @@
     <Filter Include="Sounds\Source Files">
       <UniqueIdentifier>{5f2f6043-d875-4d99-99b0-45697f9ade47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Achievements">
-      <UniqueIdentifier>{72493c52-a0d9-4bda-8cd6-5c3536ba0b2d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\SceneManager.cpp">
@@ -199,14 +196,11 @@
     <ClCompile Include="Source\States\InstructionState.cpp">
       <Filter>Game State Management\States\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Achievements\Achievements.cpp">
-      <Filter>Achievements</Filter>
+    <ClCompile Include="Source\Entities\Entity_Fire.cpp">
+      <Filter>Entities\GameplayEntities</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Achievements\Properties.cpp">
-      <Filter>Achievements</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Achievements\Achieve.cpp">
-      <Filter>Achievements</Filter>
+    <ClCompile Include="Source\Entities\Entity_Key_Red.cpp">
+      <Filter>Entities\GameplayEntities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -342,17 +336,11 @@
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h">
       <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Achievements\Achievements.h">
-      <Filter>Achievements</Filter>
+    <ClInclude Include="Source\Entities\Entity_Fire.h">
+      <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Achievements\Properties.h">
-      <Filter>Achievements</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Achievements\Achieve.h">
-      <Filter>Achievements</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\define.h">
-      <Filter>Application</Filter>
+    <ClInclude Include="Source\Entities\Entity_Key_Red.h">
+      <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

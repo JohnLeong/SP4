@@ -5,6 +5,7 @@ CEntityIPos::CEntityIPos()
 : m_fOffSetX(0.f)
 , m_fOffSetY(0.f)
 , m_MoveDir(DIR_NONE)
+, m_AnimDir(DIR_IDLE_DOWN)
 {
 }
 
@@ -59,22 +60,26 @@ Vector3 CEntityIPos::GetNextDirectionPos(void)
 	switch (m_MoveDir)
 	{
 	case DIR_UP:
-		return (Vector3(this->m_iXIndex, this->m_iYIndex - 1, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex - 1), 0));
 	case DIR_DOWN:
-		return (Vector3(this->m_iXIndex, this->m_iYIndex + 1, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex + 1), 0));
 	case DIR_RIGHT:
-		return (Vector3(this->m_iXIndex + 1, this->m_iYIndex, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex + 1), static_cast<float>(this->m_iYIndex), 0));
 	case DIR_LEFT:
-		return (Vector3(this->m_iXIndex - 1, this->m_iYIndex, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex - 1), static_cast<float>(this->m_iYIndex), 0));
 	default:
-		return (Vector3(this->m_iXIndex, this->m_iYIndex, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex), 0));
 	}
-	return (Vector3(this->m_iXIndex, this->m_iYIndex, 0));
+	return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex), 0));
 }
 
 bool CEntityIPos::IsMoving(void)
 {
-	return (m_MoveDir != DIR_NONE);
+	if (m_MoveDir == DIR_NONE)
+		return false;
+	else
+		return true;
+	///return (m_MoveDir != DIR_NONE);
 }
 
 /********************************************************************************
@@ -89,7 +94,8 @@ void CEntityIPos::Update(const float dt, CPlayer* cPlayer)
 		{
 			this->m_fOffSetY = 0;
 			--this->m_iYIndex;
-			DoCurrentTileCollision();
+			if (DoCurrentTileCollision())
+				m_AnimDir = DIR_IDLE_UP;
 			break;
 		}
 		this->m_fOffSetY += dt * ENTITY_MOVE_SPEED;
@@ -99,7 +105,8 @@ void CEntityIPos::Update(const float dt, CPlayer* cPlayer)
 		{
 			this->m_fOffSetY = 0;
 			++this->m_iYIndex;
-			DoCurrentTileCollision();
+			if (DoCurrentTileCollision())
+				m_AnimDir = DIR_IDLE_DOWN;
 			break;
 		}
 		this->m_fOffSetY -= dt * ENTITY_MOVE_SPEED;
@@ -109,7 +116,8 @@ void CEntityIPos::Update(const float dt, CPlayer* cPlayer)
 		{
 			this->m_fOffSetX = 0;
 			--this->m_iXIndex;
-			DoCurrentTileCollision();
+			if (DoCurrentTileCollision())
+				m_AnimDir = DIR_IDLE_LEFT;
 			break;
 		}
 		this->m_fOffSetX -= dt * ENTITY_MOVE_SPEED;
@@ -119,7 +127,8 @@ void CEntityIPos::Update(const float dt, CPlayer* cPlayer)
 		{
 			this->m_fOffSetX = 0;
 			++this->m_iXIndex;
-			DoCurrentTileCollision();
+			if (DoCurrentTileCollision())
+				m_AnimDir = DIR_IDLE_RIGHT;
 			break;
 		}
 
@@ -135,18 +144,22 @@ void CEntityIPos::UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<C
 
 }
 
-void CEntityIPos::DoCurrentTileCollision()
+bool CEntityIPos::DoCurrentTileCollision()
 {
 	switch (this->m_cTilemap->GetTile(this->m_iXIndex, this->m_iYIndex).GetCollisionType())
 	{
 	case CTiledata::COL_VOID:
 		this->m_MoveDir = DIR_NONE;
-		break;
+		return false;
 	case CTiledata::COL_ICE:
-		if (this->m_cTilemap->GetTile(GetNextDirectionPos().x, GetNextDirectionPos().y).GetCollisionType() == CTiledata::COL_BLOCK)
+		if (this->m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).GetCollisionType() == CTiledata::COL_BLOCK)
+		{
 			this->m_MoveDir = DIR_NONE;
-		break;
+			return false;
+		}
+		return true;
 	default:
-		break;
+		this->m_MoveDir = DIR_NONE;
+		return false;
 	}
 }

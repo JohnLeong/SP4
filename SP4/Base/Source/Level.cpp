@@ -149,7 +149,7 @@ bool CLevel::CheckPlayerCollisionsCurrent(CPlayer* cPlayer)
 	{
 	case CTiledata::COL_ICE:
 		std::cout << "ICE";
-		if (m_cTilemap->GetTile(cPlayer->GetNextDirectionPos().x, cPlayer->GetNextDirectionPos().y).GetCollisionType() == CTiledata::COL_BLOCK)
+		if (m_cTilemap->GetTile(static_cast<int>(cPlayer->GetNextDirectionPos().x), static_cast<int>(cPlayer->GetNextDirectionPos().y)).GetCollisionType() == CTiledata::COL_BLOCK)
 			return false;
 		return true;
 	default:
@@ -245,7 +245,7 @@ bool CLevel::CheckEntityCollisions(CPlayer* cPlayer, int iXIndex, int iYIndex)
 {
 	for (std::vector<CEntityIPos*>::iterator entity = m_cEntityIPosList.begin(); entity != m_cEntityIPosList.end(); entity++)
 	{
-		if ((*entity)->GetXIndex() == iXIndex && (*entity)->GetYIndex() == iYIndex)
+		if ((*entity)->GetXIndex() == iXIndex && (*entity)->GetYIndex() == iYIndex && (*entity)->IsAlive())
 		{
 			switch (cPlayer->GetNextDirection())
 			{

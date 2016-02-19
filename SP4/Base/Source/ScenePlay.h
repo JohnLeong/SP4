@@ -29,6 +29,7 @@ class CScenePlay : public CSceneManager
 
 		//Tile geometry
 		GEO_TILE_FLOOR_STONE_01,
+		GEO_TILE_FLOOR_ICE_01,
 		GEO_TILE_WALL_STONE_01,
 
 		GEO_PLAYER,

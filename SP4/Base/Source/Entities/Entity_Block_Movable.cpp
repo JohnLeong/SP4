@@ -5,11 +5,14 @@ CEntity_Block_Movable::CEntity_Block_Movable()
 {
 }
 
-CEntity_Block_Movable::CEntity_Block_Movable(int iXIndex, int iYIndex, CTilemap* cTilemap)
+CEntity_Block_Movable::CEntity_Block_Movable(int iXIndex, int iYIndex, CTilemap* cTilemap, SpriteAnimation* cSprite)
 {
 	this->m_iXIndex = iXIndex;
 	this->m_iYIndex = iYIndex;
 	this->m_cTilemap = cTilemap;
+	this->m_cSprite = cSprite;
+	Animation* cAnim = new Animation(0, 0, 0, 1.f);
+	cSprite->m_anim = cAnim;
 }
 
 CEntity_Block_Movable::~CEntity_Block_Movable()
@@ -46,7 +49,7 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos
 		return true;
 	for (std::vector<CEntityIPos*>::iterator entity = (*entityList).begin(); entity != (*entityList).end(); entity++)
 	{
-		if ((*entity)->GetXIndex() == iIndexCheckX && (*entity)->GetYIndex() == iIndexCheckY)
+		if ((*entity)->GetXIndex() == iIndexCheckX && (*entity)->GetYIndex() == iIndexCheckY && (*entity)->IsAlive())
 		{
 			return true;
 		}
@@ -58,6 +61,8 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos
 void CEntity_Block_Movable::Update(const float dt, CPlayer* cPlayer)
 {
 	CEntityIPos::Update(dt, cPlayer);
+
+	this->m_cSprite->Update(static_cast<double>(dt));
 }
 
 void CEntity_Block_Movable::UpdateMovement(const float dt, CPlayer* cPlayer, std::vector<CEntityIPos*>* entityList)

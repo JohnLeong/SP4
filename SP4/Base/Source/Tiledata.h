@@ -10,6 +10,7 @@ public:
 		TILE_VOID,
 		TILE_WALL_STONE_01,
 		TILE_FLOOR_STONE_01,
+		TILE_FLOOR_ICE_01,
 		NUM_TILE
 	};
 	//Collision check based on COLLISION_TYPE

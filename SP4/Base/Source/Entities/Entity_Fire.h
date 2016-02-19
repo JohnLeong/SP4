@@ -1,15 +1,14 @@
-#ifndef ENTITY_BLOCK_MOVABLE_H
-#define ENTITY_BLOCK_MOVABLE_H
+#ifndef ENTITY_FIRE_H
+#define ENTITY_FIRE_H
 
-#include "Vector3.h"
 #include "EntityIPos.h"
 
-class CEntity_Block_Movable : public CEntityIPos
+class CEntity_Fire : public CEntityIPos
 {
 public:
-	CEntity_Block_Movable();
-	CEntity_Block_Movable(int iXIndex, int iYIndex, CTilemap* cTilemap, SpriteAnimation* cSprite);
-	~CEntity_Block_Movable();
+	CEntity_Fire();
+	CEntity_Fire(int iXIndex, int iYIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, Animation* anim);
+	~CEntity_Fire();
 
 	virtual bool DoColDir(MOVE_DIR m_MoveDir, std::vector<CEntityIPos*>* entityList);
 

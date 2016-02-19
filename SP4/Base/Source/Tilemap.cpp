@@ -107,7 +107,7 @@ int CTilemap::GetNumOfTiles_Width(void)
 	return theNumOfTiles_MapWidth;
 }
 
-int CTilemap::GetTileSize(void)
+float CTilemap::GetTileSize(void)
 {
 	return theTileSize;
 }

@@ -82,7 +82,7 @@ Node* AStar::GetSuccessor(Node *current, int i)
 		{// If Grid Element Contains Empty Space
 			for (std::vector<CEntityIPos*>::iterator entity = (*this->entityList).begin(); entity != (*this->entityList).end(); entity++)
 			{
-				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y)
+				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y && (*entity)->IsAlive())
 					return n;
 			}
 			n = new Node;									// Create A Node Object

@@ -1,6 +1,7 @@
 #include "Tilemap.h"
 #include "Entities\EnemyZombie.h"
 #include "Entities\Entity_Block_Movable.h"
+#include "Entities\Entity_Key_Red.h"
 #include <string>
 #include <vector>
 #include "LuaScript.h"
