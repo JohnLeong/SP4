@@ -143,17 +143,17 @@ Vector3 CPlayer::GetNextDirectionPosition(void)
 	switch (m_NextDir)
 	{
 	case PD_UP:
-		return (Vector3(this->m_iXIndex, this->m_iYIndex - 1, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex - 1), 0));
 	case PD_DOWN:
-		return (Vector3(this->m_iXIndex, this->m_iYIndex + 1, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex + 1), 0));
 	case PD_RIGHT:
-		return (Vector3(this->m_iXIndex + 1, this->m_iYIndex, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex + 1), static_cast<float>(this->m_iYIndex), 0));
 	case PD_LEFT:
-		return (Vector3(this->m_iXIndex - 1, this->m_iYIndex, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex - 1), static_cast<float>(this->m_iYIndex), 0));
 	default:
-		return (Vector3(this->m_iXIndex, this->m_iYIndex, 0));
+		return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex), 0));
 	}
-	return (Vector3(this->m_iXIndex, this->m_iYIndex, 0));
+	return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex), 0));
 }
 
 bool CPlayer::IsMoving(void)
@@ -175,7 +175,7 @@ void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
 		moving = false;
 		break;
 	case CTiledata::COL_ICE:
-		if (cTilemap->GetTile(GetNextDirectionPosition().x, GetNextDirectionPosition().y).GetCollisionType() != CTiledata::COL_BLOCK)
+		if (cTilemap->GetTile(static_cast<int>(GetNextDirectionPosition().x), static_cast<int>(GetNextDirectionPosition().y)).GetCollisionType() != CTiledata::COL_BLOCK)
 		{
 			for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 			{
@@ -212,7 +212,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionY)
 			{
-				this->m_fOffSetY += dt * ENTITY_MOVE_SPEED;
+				this->m_fOffSetY += static_cast<float>(dt) * ENTITY_MOVE_SPEED;
 				if (this->m_fOffSetY > tile->GetTileSize())
 				{
 					this->m_fOffSetY = 0;
@@ -222,7 +222,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 			}
 			else
 			{
-				m_fOffSetY -= dt * ENTITY_MOVE_SPEED;
+				m_fOffSetY -= static_cast<float>(dt) * ENTITY_MOVE_SPEED;
 				if (m_fOffSetY < -tile->GetTileSize())
 				{
 					m_fOffSetY = 0;
