@@ -330,9 +330,6 @@
     <ClInclude Include="Source\Entities\Entity_Block_Movable.h">
       <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneInstruction.h">
-      <Filter>Game State Management\Scenes\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h">
       <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
@@ -344,6 +341,9 @@
     </ClInclude>
     <ClInclude Include="Source\define.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneInstruction.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

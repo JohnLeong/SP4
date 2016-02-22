@@ -90,6 +90,70 @@ void CLuaScript::getNsetEnemyVariables(string name)
 	}*/
 }
 
+
+void CLuaScript::getAchievementVariables(string name)
+{
+	string addName = "Name";
+	string addProperties = "Properties";
+
+	name += addName;
+	lua_getglobal(L2, name.c_str());
+	string getName = (string)lua_tostring(L2, -1);
+	name.erase(name.begin() + 6, name.end() - 4);
+
+	name += addProperties;
+	lua_getglobal(L2, name.c_str());
+	string getPosX = (string)lua_tostring(L2, -1);
+}
+
+void CLuaScript::getAchievementPropertiesVariables(string name)
+{
+	string addName = "Name";
+	string addValue = "Value";
+	string addActive = "Active";
+	string addActValue = "ActValue";
+
+	name += addName;
+	lua_getglobal(L2, name.c_str());
+	string getName = (string)lua_tostring(L2, -1);
+	name.erase(name.begin() + 6, name.end() - 4);
+
+	name += addValue;
+	lua_getglobal(L2, name.c_str());
+	int getPosX = (int)lua_tonumber(L2, -1);
+	name.erase(name.begin() + 6, name.end() - 5);
+
+	name += addActive;
+	lua_getglobal(L2, name.c_str());
+	string getPosY = (string)lua_tostring(L2, -1);
+	name.erase(name.begin() + 6, name.end() - 6);
+
+	name += addActValue;
+	lua_getglobal(L2, name.c_str());
+	int getActValue = (int)lua_tonumber(L2, -1);
+}
+
+void CLuaScript::recordAchievementProgress(string name, string value, string changedValue)
+{
+	name = name + " = " + value;
+	const char * Search = name.c_str();
+	const char * ChoseReplacement = value.c_str();
+	const char * Replacment = changedValue.c_str();
+
+	luaL_gsub(L2, Search, ChoseReplacement, Replacment);
+}
+
+
+void CLuaScript::recordAchievementPropertiesProgress(string name, string value, string changedValue)
+{
+	name = name + " = " + value;
+	const char * Search = name.c_str();
+	const char * ChoseReplacement = value.c_str();
+	const char * Replacment = changedValue.c_str();
+
+	luaL_gsub(L2, Search, ChoseReplacement, Replacment);
+}
+
 int CLuaScript::luaAdd(int x, int y)
 {
 	int sum;

@@ -26,6 +26,12 @@ public:
 
 	void getNsetEnemyVariables(string name);
 
+	void getAchievementVariables(string name);
+	void getAchievementPropertiesVariables(string name);
+
+	void recordAchievementProgress(string name, string value, string changedValue);
+	void recordAchievementPropertiesProgress(string name, string value, string changedValue);
+
 	int luaAdd(int x, int y);
 	int luaMinus(int x, int y);
 };

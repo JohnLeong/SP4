@@ -55,11 +55,11 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneInstruction.h" />
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h" />
     <ClInclude Include="Source\define.h" />
     <ClInclude Include="Source\Entities\Entity_Fire.h" />
     <ClInclude Include="Source\Entities\Entity_Key_Red.h" />
+    <ClInclude Include="Source\SceneInstruction.h" />
     <ClInclude Include="Source\SoundManager.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\AStar.h" />

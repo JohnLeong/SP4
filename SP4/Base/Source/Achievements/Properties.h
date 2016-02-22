@@ -3,7 +3,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "../LuaScript.h"
+#include <sstream>
 
+using namespace std;
 using std::string;
 using std::vector;
 
@@ -30,10 +33,13 @@ public:
 	int GetValue();
 
 	bool GetClearActivation();
+
+	void ChangeValue(int changeNumber);
 private:
 	string mName;
 	int mActivationValue;
 	int mValue;
 	mActivation mActive;
 	bool mClearActive;
+	CLuaScript* m_cluascript;
 };

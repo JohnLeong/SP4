@@ -110,9 +110,9 @@ void CInstructionState::Update(CGameStateManager* theGSM, const double m_dElapse
 {
 	scene->Update(m_dElapsedTime);
 
-	if (scene->IsKeyDown(VK_RETURN) && scene->getChoiceVal() == 1
+	/*if (scene->IsKeyDown(VK_RETURN) && scene->getChoiceVal() == 1
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && scene->getChoiceVal() == 1)
-		theGSM->ChangeState(CMenuState::Instance());
+		theGSM->ChangeState(CMenuState::Instance());*/
 }
 
 void CInstructionState::Draw(CGameStateManager* theGSM)

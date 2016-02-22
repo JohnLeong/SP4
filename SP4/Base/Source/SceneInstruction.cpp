@@ -31,7 +31,7 @@ void CSceneInstruction::Init()
 	CSceneManager::Init();
 
 	//reset choice back to 0 (default)
-	setChoiceVal(0);
+	/*setChoiceVal(0);*/
 
 	//create virtual positions for the buttons (back)
 	geo_pos.Set(61.0f, 19.0f, 0.0f);
@@ -75,37 +75,37 @@ void CSceneInstruction::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
-	if (Application::IsKeyPressed('1'))
-	{
-		cout << "Cursor X: " << CSceneManager::GetWorldX() << endl;
-		cout << "Cursor Y: " << CSceneManager::GetWorldY() << endl;
+	//if (Application::IsKeyPressed('1'))
+	//{
+	//	cout << "Cursor X: " << CSceneManager::GetWorldX() << endl;
+	//	cout << "Cursor Y: " << CSceneManager::GetWorldY() << endl;
 
-		cout << "choice: " << choice << endl;
-	}
+	//	cout << "choice: " << choice << endl;
+	//}
 
-	//update choice on button press
-	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
-	{
-		choice++;
-		setChoiceVal(choice);
-		// 0 = default 1 = back 
-		if (choice > 1)
-			setChoiceVal(0);
-	}
-	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
-	{
-		choice--;
-		setChoiceVal(choice);
-		// 0 = default 1 = back 
-		if (choice < 0)
-			setChoiceVal(1);
-	}
+	////update choice on button press
+	//if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
+	//{
+	//	choice++;
+	//	setChoiceVal(choice);
+	//	// 0 = default 1 = back 
+	//	if (choice > 1)
+	//		setChoiceVal(0);
+	//}
+	//else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
+	//{
+	//	choice--;
+	//	setChoiceVal(choice);
+	//	// 0 = default 1 = back 
+	//	if (choice < 0)
+	//		setChoiceVal(1);
+	//}
 
-	//Update image on mouse hover
-	if (checkForcollision(worldX, worldY, geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + 8)) // back button
-	{
-		setChoiceVal(1);
-	}
+	////Update image on mouse hover
+	//if (checkForcollision(worldX, worldY, geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + 8)) // back button
+	//{
+	//	setChoiceVal(1);
+	//}
 	//else
 	//{
 	//	setChoiceVal(0);
@@ -145,16 +145,16 @@ void CSceneInstruction::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
 #endif
 
-	switch (choice)
-	{
-	case 1:
-		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1, 1, -50.0f, -52.5f);
-		break;
+	//switch (choice)
+	//{
+	//case 1:
+	//	RenderMeshIn2D(meshList[GEO_BACK_H], false, 1, 1, -50.0f, -52.5f);
+	//	break;
 
-	default: //default, no option chosen
-		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, -50.0f, -52.5f);
-		break;
-	}
+	//default: //default, no option chosen
+	//	RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, -50.0f, -52.5f);
+	//	break;
+	//}
 
 }
 

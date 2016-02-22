@@ -8,12 +8,6 @@
 #include "LoadTGA.h"
 #include <sstream>
 
-extern "C"{
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
-
 #define MatchTimeLimit 15.f
 
 CScenePlay::CScenePlay(void)

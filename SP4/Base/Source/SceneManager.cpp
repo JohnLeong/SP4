@@ -517,6 +517,7 @@ void CSceneManager::Render2D()
 		);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
+	glDisable(GL_DEPTH_TEST);
 }
 
 /********************************************************************************

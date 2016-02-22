@@ -55,3 +55,23 @@ bool  CProperties::GetClearActivation()
 {
 	return mClearActive;
 }
+
+void CProperties::ChangeValue(int changeNumber)
+{
+	int mChangedValue = mValue + changeNumber;
+
+	ostringstream convertor;
+	string getValue = "";
+	convertor << mValue;
+	getValue.append(convertor.str());
+
+	ostringstream convertor2;
+	string getChangedValue = "";
+	convertor2 << mChangedValue;
+	getChangedValue.append(convertor2.str());
+
+	m_cluascript = new CLuaScript("AchievementProperties");
+	m_cluascript->recordAchievementPropertiesProgress(mName, getValue, getChangedValue);
+
+	mValue += changeNumber;
+}
