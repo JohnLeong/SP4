@@ -194,10 +194,27 @@ void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
 		this->m_bAlive = false;
 		moving = false;
 		break;
+	case CTiledata::COL_WIND_UP:
+		moving = false;
+		MoveUpDown(true, cTilemap);
+		break;
+	case CTiledata::COL_WIND_DOWN:
+		moving = false;
+		MoveUpDown(false, cTilemap);
+		break;
+	case CTiledata::COL_WIND_LEFT:
+		moving = false;
+		MoveLeftRight(false, cTilemap);
+		break;
+	case CTiledata::COL_WIND_RIGHT:
+		moving = false;
+		MoveLeftRight(true, cTilemap);
+		break;
 	case CTiledata::COL_BLOCK:
 		std::cout << "ERMAHGAD COLLISION ERROR" << std::endl;
 		break;
 	default:
+		moving = false;
 		break;
 	}
 }

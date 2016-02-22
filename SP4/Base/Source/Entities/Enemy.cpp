@@ -51,6 +51,23 @@ bool CEnemy::DoCurrentTileCollision()
 	case CTiledata::COL_HOLE:
 		this->m_MoveDir = DIR_NONE;
 		return false;
+	case CTiledata::COL_WIND_UP:
+		this->m_MoveDir = DIR_UP;
+		return false;
+	case CTiledata::COL_WIND_DOWN:
+		this->m_MoveDir = DIR_DOWN;
+		return false;
+	case CTiledata::COL_WIND_LEFT:
+		this->m_MoveDir = DIR_LEFT;
+		return false;
+	case CTiledata::COL_WIND_RIGHT:
+		this->m_MoveDir = DIR_RIGHT;
+		return false;
+	case CTiledata::COL_RUNE:
+		this->m_MoveDir = DIR_NONE;
+		this->SetAlive(false);
+		//m_cTilemap->
+		return false;
 	default:
 		this->m_MoveDir = DIR_NONE;
 		return false;

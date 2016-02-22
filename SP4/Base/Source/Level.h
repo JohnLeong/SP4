@@ -45,7 +45,6 @@ public:
 	bool IsMovementReady(void);
 	void SetMovementReady(bool b);
 
-	void CreateEntityAtIndex(int iXIndex, int iYIndex, ENTITY_TO_CREATE cEntity, CEntityIPos* cPlayer);
 
 private:
 	bool m_bDoMovements;

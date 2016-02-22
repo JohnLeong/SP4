@@ -15,6 +15,11 @@ public:
 		TILE_DOOR_BLUE,
 		TILE_DOOR_GREEN,
 		TILE_HOLE_STONE_01,
+		TILE_WIND_UP,			//Pushes player up
+		TILE_WIND_DOWN,			//Pushes player down
+		TILE_WIND_LEFT,			//Pushes player to the left
+		TILE_WIND_RIGHT,		//Pushes player to the right
+		TILE_RUNE,				//Kills enemies on touch
 		NUM_TILE
 	};
 	//Collision check based on COLLISION_TYPE
@@ -26,6 +31,11 @@ public:
 		COL_HOLE,			//Unpassable until filled
 		COL_HAZARD,			//Death on entry
 		COL_ICE,		//Slide to next spot if possible
+		COL_WIND_UP,
+		COL_WIND_DOWN,
+		COL_WIND_LEFT,
+		COL_WIND_RIGHT,
+		COL_RUNE,
 		NUM_COL
 	};
 

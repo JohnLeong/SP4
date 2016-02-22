@@ -255,24 +255,3 @@ void CLevel::SetMovementReady(bool b)
 {
 	this->m_bMovementReady = b;
 }
-
-void CLevel::CreateEntityAtIndex(int iXIndex, int iYIndex, ENTITY_TO_CREATE cEntity, CEntityIPos* cPlayer)
-{
-	switch (cEntity)
-	{
-	case CLevel::ENTITY_KEY_RED:
-	{
-								   Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("KEEE", 1, 11);
-								   temp_mesh->textureID = LoadTGA("Image//Entities//key.tga");
-								   CEntity_Key_Red* entity = new CEntity_Key_Red(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), cPlayer, &m_cEntityIPosList);
-								   this->m_cEntityIPosList.push_back(entity);
-								   break;
-	}
-	case CLevel::ENTITY_KEY_BLUE:
-		break;
-	case CLevel::ENTITY_KEY_GREEN:
-		break;
-	default:
-		break;
-	}
-}

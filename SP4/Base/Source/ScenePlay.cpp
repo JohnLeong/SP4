@@ -14,11 +14,13 @@ CScenePlay::CScenePlay(void)
 	: m_window_width(800)
 	, m_window_height(600)
 	, m_bExitPlay(false)
+	, m_iCurrentLevel(1)
 {
 }
 
 CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 	:m_bExitPlay(false)
+	, m_iCurrentLevel(1)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -110,21 +112,23 @@ void CScenePlay::Init()
 
 void CScenePlay::InitLevel()
 {
+	// Init Level entities
+	ostringstream convertor;
+	string getLevel = "Level";
+	convertor << m_iCurrentLevel;
+	getLevel.append(convertor.str());
+
+	m_cLevel.InitLua(getLevel);
+
+	//Init level tilemap
 	m_cLevel.InitTilemap(14, 18, TILE_SIZE);
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_STONE_01]), new Animation(0, 0, 1, 0.5f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_ICE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 3, 0, 0.5f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WALL_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 2, 0, 0.3f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_UP, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
+	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 	m_cLevel.LoadTilemap("LevelMap//MapDesign.csv");
-
-	// Init Level
-	int currentLevel = 1;
-	ostringstream convertor;
-	string getLevel = "Level";
-	convertor << currentLevel;
-	getLevel.append(convertor.str());
-
-	m_cLevel.InitLua(getLevel);
 }
 
 void CScenePlay::InitAchievements()
