@@ -11,6 +11,10 @@ public:
 		TILE_WALL_STONE_01,
 		TILE_FLOOR_STONE_01,
 		TILE_FLOOR_ICE_01,
+		TILE_DOOR_RED,
+		TILE_DOOR_BLUE,
+		TILE_DOOR_GREEN,
+		TILE_HOLE_STONE_01,
 		NUM_TILE
 	};
 	//Collision check based on COLLISION_TYPE
@@ -19,6 +23,7 @@ public:
 		COL_NULL = 0,		//For error handling
 		COL_VOID,			//No collision
 		COL_BLOCK,			//Filled area - unpassable
+		COL_HOLE,			//Unpassable until filled
 		COL_HAZARD,			//Death on entry
 		COL_ICE,		//Slide to next spot if possible
 		NUM_COL
@@ -35,6 +40,8 @@ public:
 	TILE_ID GetTileId(void);
 	COLLISION_TYPE GetCollisionType(void);
 	bool IsTinted(void);
+
+	void ChangeIdState(void);
 
 private:
 	TILE_ID m_iTileId;

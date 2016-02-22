@@ -7,7 +7,6 @@
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
-#include "PlayInfo3PV.h"
 #include "Level.h"
 #include "Achievements\Achievements.h"
 
@@ -73,7 +72,7 @@ private:
 	int m_window_height;
 
 	// Handle to 3rd Person View's avatar
-	CPlayInfo3PV* m_cAvatar;
+	//CPlayInfo3PV* m_cAvatar;
 	
 	CPlayer* m_cPlayer;
 

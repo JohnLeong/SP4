@@ -46,6 +46,10 @@ public:
 
 	virtual	bool DoCurrentTileCollision();
 
+	//For player
+	virtual int GetCoins(void);
+	virtual void AddCoin(int iAmt);
+
 protected:
 	int m_iXIndex;			//X Index
 	int m_iYIndex;			//Y Index

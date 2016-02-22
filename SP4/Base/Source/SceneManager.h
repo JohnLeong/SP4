@@ -7,7 +7,6 @@
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
-#include "PlayInfo3PV.h"
 
 #define NUMKEYS 255
 

@@ -2,10 +2,8 @@
 #include "GL\glew.h"
 
 #include "shader.hpp"
-#include "MeshBuilder.h"
 #include "Application.h"
 #include "Utility.h"
-#include "LoadTGA.h"
 #include <sstream>
 
 CSceneManager::CSceneManager(void)

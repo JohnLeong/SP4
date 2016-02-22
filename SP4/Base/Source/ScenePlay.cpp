@@ -2,25 +2,23 @@
 #include "GL\glew.h"
 
 #include "shader.hpp"
-#include "MeshBuilder.h"
 #include "Application.h"
 #include "Utility.h"
-#include "LoadTGA.h"
 #include <sstream>
+#include "MeshBuilder.h"
+#include "LoadTGA.h"
 
 #define MatchTimeLimit 15.f
 
 CScenePlay::CScenePlay(void)
 	: m_window_width(800)
 	, m_window_height(600)
-	, m_cAvatar(NULL)
 	, m_bExitPlay(false)
 {
 }
 
 CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
-	: m_cAvatar(NULL)
-	, m_bExitPlay(false)
+	:m_bExitPlay(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -28,11 +26,6 @@ CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 
 CScenePlay::~CScenePlay(void)
 {
-	if (m_cAvatar)
-	{
-		delete m_cAvatar;
-		m_cAvatar = NULL;
-	}
 }
 
 void CScenePlay::Init()
@@ -69,14 +62,6 @@ void CScenePlay::Init()
 
 	meshList[GEO_PLAYER] = MeshBuilder::GenerateSpriteAnimation2D("GEO_PLAYER", 4, 3);
 	meshList[GEO_PLAYER]->textureID = LoadTGA("Image//Entities//explorer.tga");
-
-	// Initialise and load a model into it
-	m_cAvatar = new CPlayInfo3PV();
-	//m_cAvatar->SetModel(MeshBuilder::GenerateCone("cone", Color(0.5f, 1, 0.3f), 36, 10.f, 10.f));
-	Mesh* newmesh = new Mesh("player");
-	newmesh = MeshBuilder::GenerateOBJ("OBJ1", "OBJ//legoman2.obj");
-	newmesh->textureID = LoadTGA("Image//chair.tga");
-	m_cAvatar->SetModel(newmesh);
 
 	Math::InitRNG();
 
@@ -129,6 +114,7 @@ void CScenePlay::InitLevel()
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_STONE_01]), new Animation(0, 0, 1, 0.5f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_ICE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 3, 0, 0.5f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WALL_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 2, 0, 0.3f));
 	m_cLevel.LoadTilemap("LevelMap//MapDesign.csv");
 
 	// Init Level

@@ -7,9 +7,16 @@
 #include <string>
 #include <vector>
 #include "LuaScript.h"
+
 class CLevel
 {
 public:
+	enum ENTITY_TO_CREATE
+	{
+		ENTITY_KEY_RED,
+		ENTITY_KEY_BLUE,
+		ENTITY_KEY_GREEN,
+	};
 	CLevel(void);
 	~CLevel(void);
 
@@ -37,6 +44,8 @@ public:
 
 	bool IsMovementReady(void);
 	void SetMovementReady(bool b);
+
+	void CreateEntityAtIndex(int iXIndex, int iYIndex, ENTITY_TO_CREATE cEntity, CEntityIPos* cPlayer);
 
 private:
 	bool m_bDoMovements;

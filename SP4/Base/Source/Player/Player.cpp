@@ -4,6 +4,7 @@ CPlayer::CPlayer()
 : direction(PD_DOWN)
 , action(PA_IDLE_DOWN)
 , m_NextDir(PD_NONE)
+, m_iCoins(0)
 {
 
 }
@@ -190,7 +191,7 @@ void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
 			moving = false;
 		break;
 	case CTiledata::COL_HAZARD:
-		//Do player death here
+		this->m_bAlive = false;
 		moving = false;
 		break;
 	case CTiledata::COL_BLOCK:
@@ -307,4 +308,19 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		sprites->m_anim = m__animationList[action];
 		sprites->Update(dt);
 	}
+}
+
+int CPlayer::GetCoins(void)
+{
+	return m_iCoins;
+}
+
+void CPlayer::AddCoin(int iAmt)
+{
+	this->m_iCoins += iAmt;
+}
+
+void CPlayer::Reset(void)
+{
+	this->m_iCoins = 0;
 }

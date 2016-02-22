@@ -7,11 +7,20 @@
 class CEnemy : public CEntityIPos
 {
 public:
+	enum HOLDINGKEY_TYPE
+	{
+		HOLDING_KEY_NONE,
+		HOLDING_KEY_RED,
+		HOLDING_KEY_GREEN,
+		HOLDING_KEY_BLUE,
+	};
 	CEnemy();
 	~CEnemy(void);
 
 	virtual void AddAnimation(Animation* cAnim, MOVE_DIR cMoveDir);
 	virtual void Update(const float dt);		// Update
+
+	virtual	bool DoCurrentTileCollision();
 
 	Animation* m_animationList[NUM_DIR];
 };

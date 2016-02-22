@@ -146,30 +146,15 @@ void CEntityIPos::UpdateMovement(const float dt)
 
 bool CEntityIPos::DoCurrentTileCollision()
 {
-	switch (this->m_cTilemap->GetTile(this->m_iXIndex, this->m_iYIndex).GetCollisionType())
-	{
-	case CTiledata::COL_VOID:
-		this->m_MoveDir = DIR_NONE;
-		return false;
-	case CTiledata::COL_ICE:
-		if (this->m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).GetCollisionType() != CTiledata::COL_BLOCK)
-		{
-			for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
-			{
-				if ((*entity) == this)
-					continue;
-				if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
-				{
-					this->m_MoveDir = DIR_NONE;
-					return false;
-				}
-			}
-			return true;
-		}
-		this->m_MoveDir = DIR_NONE;
-		return false;
-	default:
-		this->m_MoveDir = DIR_NONE;
-		return false;
-	}
+	return false;
+}
+
+int CEntityIPos::GetCoins(void)
+{
+	return -1;
+}
+
+void CEntityIPos::AddCoin(int iAmt)
+{
+
 }

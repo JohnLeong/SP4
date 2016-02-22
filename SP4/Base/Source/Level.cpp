@@ -1,5 +1,8 @@
 #include "Level.h"
 
+#include "MeshBuilder.h"
+#include "LoadTGA.h"
+
 CLevel::CLevel(void)
 : m_bDoMovements(false)
 , m_bMovementReady(true)
@@ -133,7 +136,9 @@ bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 	switch (cPlayer->GetNextDirection())
 	{
 	case CPlayer::PD_UP:
-		if (m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() - 1).GetCollisionType() == CTiledata::COL_BLOCK || cPlayer->GetYIndex() - 1 <= 0)
+		if (m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() - 1).GetCollisionType() == CTiledata::COL_BLOCK || 
+			m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() - 1).GetCollisionType() == CTiledata::COL_HOLE ||
+			cPlayer->GetYIndex() - 1 <= 0)
 		{
 			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
@@ -151,7 +156,9 @@ bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 		}
 		break;
 	case CPlayer::PD_DOWN:
-		if (m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() + 1).GetCollisionType() == CTiledata::COL_BLOCK || cPlayer->GetYIndex() + 2 >= m_cTilemap->GetNumOfTiles_Height())
+		if (m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() + 1).GetCollisionType() == CTiledata::COL_BLOCK || 
+			m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() + 1).GetCollisionType() == CTiledata::COL_HOLE || 
+			cPlayer->GetYIndex() + 2 >= m_cTilemap->GetNumOfTiles_Height())
 		{
 			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
@@ -169,7 +176,9 @@ bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 		}
 		break;
 	case CPlayer::PD_RIGHT:
-		if (m_cTilemap->GetTile(cPlayer->GetXIndex() + 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_BLOCK || cPlayer->GetXIndex() + 2 >= m_cTilemap->GetNumOfTiles_Width())
+		if (m_cTilemap->GetTile(cPlayer->GetXIndex() + 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_BLOCK || 
+			m_cTilemap->GetTile(cPlayer->GetXIndex() + 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_HOLE || 
+			cPlayer->GetXIndex() + 2 >= m_cTilemap->GetNumOfTiles_Width())
 		{
 			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
@@ -187,7 +196,9 @@ bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 		}
 		break;
 	case CPlayer::PD_LEFT:
-		if (m_cTilemap->GetTile(cPlayer->GetXIndex() - 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_BLOCK || cPlayer->GetXIndex() - 1 <= 0)
+		if (m_cTilemap->GetTile(cPlayer->GetXIndex() - 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_BLOCK || 
+			m_cTilemap->GetTile(cPlayer->GetXIndex() - 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_HOLE || 
+			cPlayer->GetXIndex() - 1 <= 0)
 		{
 			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
 			return false;
@@ -243,4 +254,25 @@ bool CLevel::IsMovementReady(void)
 void CLevel::SetMovementReady(bool b)
 {
 	this->m_bMovementReady = b;
+}
+
+void CLevel::CreateEntityAtIndex(int iXIndex, int iYIndex, ENTITY_TO_CREATE cEntity, CEntityIPos* cPlayer)
+{
+	switch (cEntity)
+	{
+	case CLevel::ENTITY_KEY_RED:
+	{
+								   Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("KEEE", 1, 11);
+								   temp_mesh->textureID = LoadTGA("Image//Entities//key.tga");
+								   CEntity_Key_Red* entity = new CEntity_Key_Red(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), cPlayer, &m_cEntityIPosList);
+								   this->m_cEntityIPosList.push_back(entity);
+								   break;
+	}
+	case CLevel::ENTITY_KEY_BLUE:
+		break;
+	case CLevel::ENTITY_KEY_GREEN:
+		break;
+	default:
+		break;
+	}
 }

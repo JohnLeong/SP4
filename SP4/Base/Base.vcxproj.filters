@@ -202,6 +202,9 @@
     <ClCompile Include="Source\Entities\Entity_Key_Red.cpp">
       <Filter>Entities\GameplayEntities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Entities\Entity_Coin.cpp">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -344,6 +347,9 @@
     </ClInclude>
     <ClInclude Include="Source\SceneInstruction.h">
       <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\Entity_Coin.h">
+      <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,6 +13,8 @@ CTiledata::COLLISION_TYPE GetCollisionTypeFromId(CTiledata::TILE_ID id)
 		break;
 	case CTiledata::TILE_FLOOR_ICE_01:
 		return CTiledata::COL_ICE;
+	case CTiledata::TILE_HOLE_STONE_01:
+		return CTiledata::COL_HOLE;
 	default:
 		return CTiledata::COL_VOID;
 		break;

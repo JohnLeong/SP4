@@ -52,6 +52,11 @@ public:
 
 	void AddAnimation(Animation* _anim, PlayerAction playerState);
 
+	int GetCoins(void);
+	void AddCoin(int iAmt);
+
+	void Reset(void);
+
 private:
 
 	bool myKeys[255];
@@ -70,5 +75,6 @@ private:
 
 	Animation* m__animationList[NUM_PLAYER_ACTION]; 
 
+	int m_iCoins;
 	//Mesh* mesh;
 };

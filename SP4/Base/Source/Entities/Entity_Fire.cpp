@@ -70,6 +70,7 @@ void CEntity_Fire::Update(const float dt)
 
 void CEntity_Fire::UpdateMovement(const float dt)
 {
+	//Change animation to play based on state
 	switch (this->m_cFire_State)
 	{
 	case STATE_01:
