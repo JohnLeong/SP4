@@ -11,7 +11,6 @@
 CSceneManager::CSceneManager(void)
 	: m_window_width(800)
 	, m_window_height(600)
-	,choice(0)
 {
 }
 
@@ -29,13 +28,8 @@ CSceneManager::~CSceneManager(void)
 void CSceneManager::Init()
 {
 	// Blue background
-	glClearColor(0.9f, 0.9f, 0.9f, 0.0f);
+	glClearColor(0.f, 0.f, 0.f, 0.0f);
 	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
-	//Calculating aspect ratio
-	m_world_height = 100.f;
-	m_world_width = m_world_height * (float)Application::getWindowWidth() / Application::getWindowHeight();//m_window_width/ m_window_height;
-
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
@@ -213,10 +207,6 @@ void CSceneManager::Update(double dt)
 	if(Application::IsKeyPressed('P'))
 		lights[0].position.y += (float)(10.f * dt);
 
-	worldX = static_cast<float>(Application::mouse_current_x) * m_world_width / static_cast<float>(Application::getWindowWidth());
-	SetWorldX(worldX);
-	worldY = static_cast<float>((Application::getWindowHeight() - Application::mouse_current_y)) * m_world_height / static_cast<float>(Application::getWindowHeight());
-	SetWorldY(worldY);
 
 	fps = (float)(1.f / dt);
 	//std::cout << fps << std::endl;
@@ -245,93 +235,16 @@ void CSceneManager::UpdateWeaponStatus(const unsigned char key)
 
 }
 
-/********************************************************************************
-Get the number in choice
-********************************************************************************/
-int CSceneManager::getChoiceVal(void)
-{
-	return choice;
-}
-
-/********************************************************************************
-Set the number in choice
-********************************************************************************/
-void CSceneManager::setChoiceVal(int choice)
-{
-	this->choice = choice;
-}
-
-/********************************************************************************
-Get X cursor position in world space
-********************************************************************************/
-float CSceneManager::GetWorldX(void)
-{
-	return worldX;
-}
-
-/********************************************************************************
-Get Y cursor position in world space
-********************************************************************************/
-float CSceneManager::GetWorldY(void)
-{
-	return worldY;
-}
-
-/********************************************************************************
-Set X cursor position in world space
-********************************************************************************/
-void CSceneManager::SetWorldX(float worldX)
-{
-	this->worldX = worldX;
-}
-
-/********************************************************************************
-Set Y cursor position in world space
-********************************************************************************/
-void CSceneManager::SetWorldY(float worldY)
-{
-	this->worldY = worldY;
-}
-
-/********************************************************************************
-Check for collisions with button
-********************************************************************************/
-bool CSceneManager::checkForcollision(float mouseX, float mouseY, float pos_buttonX, float pos_buttonY, float pos_buttonWidth, float pos_buttonHeight)
-{
-	if (mouseX > pos_buttonX && mouseX < pos_buttonWidth) //within the x
-	{
-		if (mouseY > pos_buttonY && mouseY < pos_buttonHeight) //within the x and y
-		{
-			//mouse position is inside the button
-			return true;
-		}
-	}
-	else
-	{
-		return false;
-	}
-	return false;
-}
-
-/********************************************************************************
-Update the Keyboard status
-********************************************************************************/
 void CSceneManager::UpdateKeyboardStatus(const unsigned char key)
 {
 
 }
 
-/********************************************************************************
-Check if the particular key is pressed (or hold)
-********************************************************************************/
 bool CSceneManager::IsKeyDown(unsigned short key)
 {
 	return myKeys[key];
 }
 
-/********************************************************************************
-Check if the particular key is pressed (Allow update only once per press)
-********************************************************************************/
 bool CSceneManager::IsKeyDownOnce(unsigned short key)
 {
 	if (myKeys[key] && !myKeysActive[key])
@@ -346,9 +259,6 @@ bool CSceneManager::IsKeyDownOnce(unsigned short key)
 	return false;
 }
 
-/********************************************************************************
-Set the Key pressed
-********************************************************************************/
 void CSceneManager::SetKeyDown(unsigned short key, bool b)
 {
 	//if ((b && !myKeysActive[key]) || (!b && myKeysActive[key]))
@@ -590,16 +500,12 @@ void CSceneManager::Render()
 	RenderLights();
 }
 
-/********************************************************************************
-Render this scene in 2D
-********************************************************************************/
 void CSceneManager::Render2D()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	Mtx44 perspective;
 	//perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 	perspective.SetToOrtho(-160, 160, -90, 90, -1000, 1000);
-//	perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
 
 	// Camera matrix
@@ -611,7 +517,6 @@ void CSceneManager::Render2D()
 		);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
-	glDisable(GL_DEPTH_TEST);
 }
 
 /********************************************************************************
