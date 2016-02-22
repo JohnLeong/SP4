@@ -6,7 +6,7 @@ CEnemyZombie::CEnemyZombie()
 	std::cout << "NULLASTAR" << std::endl;
 }
 
-CEnemyZombie::CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, CEntityIPos* cPlayerPtr, std::vector<CEntityIPos*>* cEntityList)
+CEnemyZombie::CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, CEntityIPos* cPlayerPtr, std::vector<CEntityIPos*>* cEntityList, CEntityIPos* cKeyPtr)
 {
 	this->m_iXIndex = iXIndex;
 	this->m_iYIndex = YIndex;
@@ -16,6 +16,9 @@ CEnemyZombie::CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAn
 	this->m_cEntityList = cEntityList;
 	m_cAStar = new AStar(cTilemap);
 	this->m_cSprite = cSprite;
+	this->m_cKeyPtr = cKeyPtr;
+	this->m_cKeyPtr->SetAlive(false);
+	this->m_bHoldingKey = true;
 	InitAnimation();
 }
 

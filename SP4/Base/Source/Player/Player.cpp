@@ -182,7 +182,28 @@ void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
 			{
 				if (static_cast<int>(GetNextDirectionPosition().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPosition().y) == (*entity)->GetYIndex())
 				{
-					moving = false;
+					switch (m_NextDir)
+					{
+					case CPlayer::PD_UP:
+						if ((*entity)->DoColDir(CEntityIPos::DIR_UP))
+							moving = false;
+						break;
+					case CPlayer::PD_DOWN:
+						if ((*entity)->DoColDir(CEntityIPos::DIR_DOWN))
+							moving = false;
+						break;
+					case CPlayer::PD_RIGHT:
+						if ((*entity)->DoColDir(CEntityIPos::DIR_RIGHT))
+							moving = false;
+						break;
+					case CPlayer::PD_LEFT:
+						if ((*entity)->DoColDir(CEntityIPos::DIR_LEFT))
+							moving = false;
+						break;
+					default:
+						break;
+					}
+					
 					break;
 				}
 			}

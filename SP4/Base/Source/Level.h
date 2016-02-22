@@ -3,6 +3,7 @@
 #include "Entities\Entity_Block_Movable.h"
 #include "Entities\Entity_Key_Red.h"
 #include "Entities\Entity_Fire.h"
+#include "Entities\Entity_Coin.h"
 #include "Player\Player.h"
 #include <string>
 #include <vector>
@@ -45,10 +46,16 @@ public:
 	bool IsMovementReady(void);
 	void SetMovementReady(bool b);
 
+	void SetPlayerPtr(CPlayer* cPlayer);
+
+	CEnemyZombie* GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t);
+	CEntity_Key_Red* GenerateRedKeyEntity(int iXIndex, int iYIndex);
+	CEntity_Coin* GenerateCoinEntity(int iXIndex, int iYIndex);
 
 private:
 	bool m_bDoMovements;
 	int playerStartPosX, playerStartPosY, maxNumberOfEnemies;
 	bool m_bMovementReady;		//Controller for next player movement
 	bool m_bDoTileCheck;			//Check tiles player and entities are standing on
+	CPlayer* m_cPlayerPtr;
 };

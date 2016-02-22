@@ -6,6 +6,7 @@ CEntityIPos::CEntityIPos()
 , m_fOffSetY(0.f)
 , m_MoveDir(DIR_NONE)
 , m_AnimDir(DIR_IDLE_DOWN)
+, m_bHoldingKey(false)
 {
 }
 
@@ -157,4 +158,9 @@ int CEntityIPos::GetCoins(void)
 void CEntityIPos::AddCoin(int iAmt)
 {
 
+}
+
+bool CEntityIPos::IsHoldingKey(void)
+{
+	return this->m_bHoldingKey;
 }

@@ -61,6 +61,8 @@ void CScenePlay::Init()
 	meshList[GEO_TILE_FLOOR_ICE_01]->textureID = LoadTGA("Image//Tiles/TILE_FLOOR_ICE_01.tga");
 	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 2);
 	meshList[GEO_TILE_WALL_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_WALL_STONE_01.tga");
+	meshList[GEO_TILE_HOLE_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_HOLE_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_HOLE_STONE_01.tga");
 
 	meshList[GEO_PLAYER] = MeshBuilder::GenerateSpriteAnimation2D("GEO_PLAYER", 4, 3);
 	meshList[GEO_PLAYER]->textureID = LoadTGA("Image//Entities//explorer.tga");
@@ -77,18 +79,22 @@ void CScenePlay::Init()
 
 	bLightEnabled = true;
 
-	InitLevel();
+
 
 	m_cPlayer = new CPlayer();
 	m_cPlayer->Init(m_cLevel.GetTilemap(), 1, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]), &m_cLevel.m_cEntityIPosList);
 	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
+	//Init level after player
+	InitLevel();
+
 	/*To be removed*/
+	m_cLevel.GenerateZombieEntity(3, 3, CEnemy::HOLDING_KEY_RED);
 	Mesh* temp_mesh;
-	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
-	temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
-	CEnemyZombie* enemy = new CEnemyZombie(3, 3, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
-	m_cLevel.m_cEntityIPosList.push_back(enemy);
+	//temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
+	//temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
+	//CEnemyZombie* enemy = new CEnemyZombie(3, 3, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
+	//m_cLevel.m_cEntityIPosList.push_back(enemy);
 	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("BOX", 1, 1);
 	temp_mesh->textureID = LoadTGA("Image//Entities//box.tga");
 	CEntity_Block_Movable* entity = new CEntity_Block_Movable(6, 6, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
@@ -97,14 +103,19 @@ void CScenePlay::Init()
 	m_cLevel.m_cEntityIPosList.push_back(entity);
 	entity = new CEntity_Block_Movable(3, 1, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
 	m_cLevel.m_cEntityIPosList.push_back(entity);
-	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("KEEE", 1, 11);
+	/*temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("KEEE", 1, 11);
 	temp_mesh->textureID = LoadTGA("Image//Entities//key.tga");
 	CEntity_Key_Red* key = new CEntity_Key_Red(8, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
-	m_cLevel.m_cEntityIPosList.push_back(key);
+	m_cLevel.m_cEntityIPosList.push_back(key);*/
+	m_cLevel.GenerateRedKeyEntity(8, 8);
 	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("FIYAH", 2, 5);
 	temp_mesh->textureID = LoadTGA("Image//Entities//fire.tga");
 	CEntity_Fire* fire = new CEntity_Fire(9, 9, CEntity_Fire::STATE_01, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
 	m_cLevel.m_cEntityIPosList.push_back(fire);
+	m_cLevel.GenerateCoinEntity(9, 10);
+	m_cLevel.GenerateCoinEntity(9, 11);
+	m_cLevel.GenerateCoinEntity(9, 12);
+	m_cLevel.GenerateCoinEntity(9, 13);
 	/*To be removed*/
 
 	InitAchievements();
@@ -112,6 +123,7 @@ void CScenePlay::Init()
 
 void CScenePlay::InitLevel()
 {
+	m_cLevel.SetPlayerPtr(this->m_cPlayer);
 	// Init Level entities
 	ostringstream convertor;
 	string getLevel = "Level";
@@ -125,7 +137,7 @@ void CScenePlay::InitLevel()
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_STONE_01]), new Animation(0, 0, 1, 0.5f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_ICE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 3, 0, 0.5f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WALL_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
-	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 2, 0, 0.3f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_HOLE_STONE_01]), new Animation(0, 0, 1, 0.3f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_UP, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
 	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 	m_cLevel.LoadTilemap("LevelMap//MapDesign.csv");
@@ -226,13 +238,23 @@ void CScenePlay::RenderEntities()
 		modelStack.Translate((static_cast<float>((*entity)->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize())) + (*entity)->GetXOffset()
 			, (static_cast<float>((*entity)->GetYIndex()* -m_cLevel.GetTilemap()->GetTileSize())) + (*entity)->GetYOffset()
 			, 0.f);
-		modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
+		modelStack.PushMatrix();
+		modelStack.Scale(TILE_SIZE, TILE_SIZE, 1.f);
 		if ((*entity)->GetSprite() == NULL)
 			RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
 		else
 			RenderMesh((*entity)->GetSprite(), false);
 		modelStack.PopMatrix();
+		if ((*entity)->IsHoldingKey())
+		{
+			modelStack.Translate(0.f, KEY_HUD_OFFSET, 0.f);
+			modelStack.Scale(KEY_HUD_SIZE, KEY_HUD_SIZE, 1.f);
+			RenderMesh((*entity)->m_cKeyPtr->GetSprite(), false);
+		}
+
+		modelStack.PopMatrix();
 	}
+	int test;
 }
 
 void CScenePlay::RenderTilemap(void)

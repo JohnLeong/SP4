@@ -85,6 +85,9 @@ void CLevel::Update(const float dt, CPlayer* cPlayer)
 
 	for (std::vector<CEntityIPos*>::iterator entity = m_cEntityIPosList.begin(); entity != m_cEntityIPosList.end(); entity++)
 	{
+		//Skip if entity is not alive
+		if (!(*entity)->IsAlive())
+			continue;
 		(*entity)->Update(dt);
 		if ((*entity)->IsMoving())
 			this->m_bMovementReady = false;
@@ -112,6 +115,9 @@ void CLevel::UpdateMovement(const float dt, CPlayer* cPlayer)
 	}
 	for (std::vector<CEntityIPos*>::iterator entity = m_cEntityIPosList.begin(); entity != m_cEntityIPosList.end(); entity++)
 	{
+		//Skip if entity is not alive
+		if (!(*entity)->IsAlive())
+			continue;
 		(*entity)->UpdateMovement(dt);
 	}
 }
@@ -254,4 +260,51 @@ bool CLevel::IsMovementReady(void)
 void CLevel::SetMovementReady(bool b)
 {
 	this->m_bMovementReady = b;
+}
+
+void CLevel::SetPlayerPtr(CPlayer* cPlayer)
+{
+	this->m_cPlayerPtr = cPlayer;
+}
+
+CEnemyZombie* CLevel::GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t)
+{
+	CEnemyZombie* zombie;
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
+	temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
+	switch (t)
+	{
+	case CEnemy::HOLDING_KEY_NONE:
+		zombie = new CEnemyZombie(3, 3, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
+		break;
+	case CEnemy::HOLDING_KEY_RED:
+		zombie = new CEnemyZombie(3, 3, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateRedKeyEntity(0, 0));
+		break;
+	case CEnemy::HOLDING_KEY_GREEN:
+		break;
+	case CEnemy::HOLDING_KEY_BLUE:
+		break;
+	default:
+		break;
+	}
+	m_cEntityIPosList.push_back(zombie);
+	return zombie;
+}
+
+CEntity_Key_Red* CLevel::GenerateRedKeyEntity(int iXIndex, int iYIndex)
+{
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("Key", 1, 11);
+	temp_mesh->textureID = LoadTGA("Image//Entities//key.tga");
+	CEntity_Key_Red* key = new CEntity_Key_Red(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), this->m_cPlayerPtr, &m_cEntityIPosList);
+	m_cEntityIPosList.push_back(key);
+	return key;
+}
+
+CEntity_Coin* CLevel::GenerateCoinEntity(int iXIndex, int iYIndex)
+{
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("Key", 1, 8);
+	temp_mesh->textureID = LoadTGA("Image//Entities//coin.tga");
+	CEntity_Coin* coin = new CEntity_Coin(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
+	m_cEntityIPosList.push_back(coin);
+	return coin;
 }

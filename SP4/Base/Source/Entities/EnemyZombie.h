@@ -10,7 +10,7 @@ class CEnemyZombie : public CEnemy
 {
 public:
 	CEnemyZombie();
-	CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, CEntityIPos* cPlayerPtr, std::vector<CEntityIPos*>* cEntityList);
+	CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAnimation* cSprite, CEntityIPos* cPlayerPtr, std::vector<CEntityIPos*>* cEntityList, CEntityIPos* cKeyPtr = NULL);
 	~CEnemyZombie(void);
 
 	void InitAnimation();

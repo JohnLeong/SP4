@@ -47,7 +47,7 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir)
 		break;
 	}
 	if (this->m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() == CTiledata::COL_BLOCK)
-		return false;
+		return true;
 	for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 	{
 		if ((*entity)->GetXIndex() == iIndexCheckX && (*entity)->GetYIndex() == iIndexCheckY && (*entity)->IsAlive())

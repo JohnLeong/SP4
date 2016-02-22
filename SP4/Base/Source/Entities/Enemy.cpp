@@ -66,7 +66,11 @@ bool CEnemy::DoCurrentTileCollision()
 	case CTiledata::COL_RUNE:
 		this->m_MoveDir = DIR_NONE;
 		this->SetAlive(false);
-		//m_cTilemap->
+		if (this->m_cKeyPtr != NULL)
+		{
+			this->m_cKeyPtr->SetAlive(true);
+			this->m_cKeyPtr->SetPos(this->m_iXIndex, this->m_iYIndex);
+		}
 		return false;
 	default:
 		this->m_MoveDir = DIR_NONE;

@@ -30,7 +30,7 @@ class CScenePlay : public CSceneManager
 		GEO_TILE_FLOOR_STONE_01,
 		GEO_TILE_FLOOR_ICE_01,
 		GEO_TILE_WALL_STONE_01,
-
+		GEO_TILE_HOLE_STONE_01,
 		GEO_PLAYER,
 
 		NUM_GEOMETRY,
@@ -80,7 +80,7 @@ private:
 	CLevel m_cLevel;
 
 	//Achievements
-	CAchievements* m_cAchievements; 
+	CAchievements* m_cAchievements;
 
 	int m_iCurrentLevel;
 };

@@ -23,6 +23,7 @@ public:
 	virtual	bool DoCurrentTileCollision();
 
 	Animation* m_animationList[NUM_DIR];
+
 };
 
 #endif

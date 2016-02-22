@@ -24,12 +24,17 @@ CEntity_Coin::~CEntity_Coin()
 void CEntity_Coin::InitAnimation()
 {
 	Animation* cAnim;
+
+	cAnim = new Animation();
+	cAnim->Set(0, 7, 0, 0.5f);
+	this->m_cSprite->m_anim = cAnim;
 }
 
 bool CEntity_Coin::DoColDir(MOVE_DIR m_MoveDir)
 {
 	//Add coin here
 	m_cPlayerPtr->AddCoin(1);
+	this->SetAlive(false);
 	return false;
 }
 

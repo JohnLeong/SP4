@@ -50,6 +50,11 @@ public:
 	virtual int GetCoins(void);
 	virtual void AddCoin(int iAmt);
 
+	//For enemy
+	virtual bool IsHoldingKey(void);
+
+	CEntityIPos* m_cKeyPtr;
+
 protected:
 	int m_iXIndex;			//X Index
 	int m_iYIndex;			//Y Index
@@ -62,6 +67,7 @@ protected:
 
 	CEntityIPos* m_cPlayerPtr;							//Pointer to player
 	std::vector<CEntityIPos*>* m_cEntityList;		//Pointer to list of entities
+	bool m_bHoldingKey;
 };
 
 #endif
