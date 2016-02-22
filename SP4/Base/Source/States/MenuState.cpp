@@ -97,13 +97,17 @@ void CMenuState::Update(CGameStateManager* theGSM)
 	scene->Update(0.16667);
 
 	
-	if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 4)
+	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 4
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 4)
 		theGSM->ChangeState(CPlayState::Instance());
-	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 3)
+	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 3
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 3)
 		theGSM->ChangeState(CPlayState::Instance());
-	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 2)
+	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 2
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 2)
 		theGSM->ChangeState(COptionsState::Instance());
-	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 1)
+	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
 		exit(0);
 }
 
@@ -111,17 +115,17 @@ void CMenuState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 {
 	scene->Update(m_dElapsedTime);
 
-	if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 4 
-		||((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && ((CSceneMenu*)scene)->getChoiceVal() == 4)
+	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 4 
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 4)
 		theGSM->ChangeState(CPlayState::Instance());
-	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 3
-		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && ((CSceneMenu*)scene)->getChoiceVal() == 3)
+	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 3
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 3)
 		theGSM->ChangeState(CPlayState::Instance());
-	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 2
-		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && ((CSceneMenu*)scene)->getChoiceVal() == 2)
+	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 2
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 2)
 		theGSM->ChangeState(COptionsState::Instance());
-	else if (scene->IsKeyDown(VK_RETURN) && ((CSceneMenu*)scene)->getChoiceVal() == 1
-		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && ((CSceneMenu*)scene)->getChoiceVal() == 1)
+	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
 		exit(0);
 }
 

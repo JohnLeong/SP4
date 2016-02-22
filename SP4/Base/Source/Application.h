@@ -28,6 +28,9 @@ public:
 	static int getWindowHeight();
 	static int getWindowWidth();
 
+	static float getMouseWorldX();
+	static float getMouseWorldY();
+
 	void Init();
 	void InitWindow(bool fullscreen);
 	void Run();
@@ -43,8 +46,13 @@ public:
 	static bool m_bFullscreen;
 	static bool m_bChangeRes;
 
+	//get the value of choice
+	static int getChoiceVal(void);
+	//set the value of choice
+	static void setChoiceVal(int choice);
 
-
+	//check for collision
+	static bool checkForcollision(float mouseX, float mouseY, float pos_buttonX, float pos_buttonY, float pos_buttonWidth, float pos_buttonHeight);
 
 private:
 	Application();
@@ -62,6 +70,17 @@ private:
 
 	static int m_window_width;
 	static int m_window_height;
+
+	//get mouse position in world space
+	static float mouseWorldX;
+	static float mouseWorldY;
+
+	//World size
+	float m_world_width;
+	float m_world_height;
+
+	//transverse the menu
+	static int choice;
 
 	// Game State Management
 	CGameStateManager* theGSM;

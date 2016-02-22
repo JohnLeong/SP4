@@ -22,7 +22,7 @@ double Application::camera_yaw = 0.0, Application::camera_pitch = 0.0;
 int Application::m_iPrevScoreBlue = 0, Application::m_iPrevScoreRed = 0;
 bool Application::m_bChangeRes = false, Application::m_bFullscreen = false;
 int Application::m_window_width = 1280; int Application::m_window_height = 720;
-
+int Application::choice = 0; float Application::mouseWorldX = 0; float Application::mouseWorldY = 0;
 /********************************************************************************
  Define an error callback
  ********************************************************************************/
@@ -79,6 +79,57 @@ int Application::getWindowHeight()
 	return m_window_height;
 }
 /********************************************************************************
+Get the number in choice
+********************************************************************************/
+int Application::getChoiceVal(void)
+{
+	return choice;
+}
+
+/********************************************************************************
+Get the number in choice
+********************************************************************************/
+float Application::getMouseWorldX(void)
+{
+	return mouseWorldX;
+}
+
+/********************************************************************************
+Get the number in choice
+********************************************************************************/
+float Application::getMouseWorldY(void)
+{
+	return mouseWorldY;
+}
+
+/********************************************************************************
+Set the number in choice
+********************************************************************************/
+void Application::setChoiceVal(int choice)
+{
+	Application::choice = choice;
+}
+/********************************************************************************
+check for collision
+********************************************************************************/
+bool Application::checkForcollision(float mouseX, float mouseY, float pos_buttonX, float pos_buttonY, float pos_buttonWidth, float pos_buttonHeight)
+{
+	if (mouseX > pos_buttonX && mouseX < pos_buttonWidth) //within the x
+	{
+		if (mouseY > pos_buttonY && mouseY < pos_buttonHeight) //within the x and y
+		{
+			//mouse position is inside the button
+			return true;
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return false;
+}
+
+/********************************************************************************
  Get mouse updates
  ********************************************************************************/
 bool Application::GetMouseUpdate()
@@ -92,6 +143,9 @@ bool Application::GetMouseUpdate()
 	//Calculate the yaw and pitch
 	camera_yaw = (float) mouse_diff_x * 0.0174555555555556f;// * 3.142f / 180.0f;
 	camera_pitch = mouse_diff_y * 0.0174555555555556f;// 3.142f / 180.0f );
+
+	mouseWorldX = Application::mouse_current_x * m_world_width / Application::getWindowWidth();
+	mouseWorldY = (Application::getWindowHeight() - Application::mouse_current_y) * m_world_height / Application::getWindowHeight();
 
 	// Do a wraparound if the mouse cursor has gone out of the deadzone
 	/*if ((mouse_current_x < m_window_deadzone) || (mouse_current_x > m_window_width-m_window_deadzone))
@@ -238,6 +292,10 @@ void Application::Init()
 {
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
+
+	//Calculating aspect ratio
+	m_world_height = 100.f;
+	m_world_width = m_world_height * (float)Application::getWindowWidth() / Application::getWindowHeight();//m_window_width/ m_window_height;
 
 	//Initialize GLFW
 	if (!glfwInit())

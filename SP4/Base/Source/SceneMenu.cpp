@@ -10,7 +10,7 @@
 
 #define buttonYoffset 55.5
 CSceneMenu::CSceneMenu(void):
-choice(1)
+isKeyBoard(false)
 {
 }
 
@@ -22,12 +22,8 @@ void CSceneMenu::Init()
 {
 	CSceneManager::Init();
 
-	//Calculating aspect ratio
-	m_world_height = 100.f;
-	m_world_width = m_world_height * (float)Application::getWindowWidth() / Application::getWindowHeight();//m_window_width/ m_window_height;
-	
 	//init the choice
-	choice = 4;
+	Application::setChoiceVal(4);
 
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
@@ -86,9 +82,6 @@ void CSceneMenu::Init()
 void CSceneMenu::Update(double dt)
 {
 	CSceneManager::Update(dt);
-
-	worldX = Application::mouse_current_x * m_world_width / Application::getWindowWidth();
-	worldY = (Application::getWindowHeight() - Application::mouse_current_y) * m_world_height / Application::getWindowHeight();
 	
 	float fDelta = (float)dt;
 }
@@ -109,42 +102,6 @@ void CSceneMenu::UpdateKeyboardStatus(const unsigned char key)
 }
 
 /********************************************************************************
- Get the number in choice 
-********************************************************************************/
-int CSceneMenu::getChoiceVal(void)
-{
-	return choice;
-}
-
-/********************************************************************************
-Set the number in choice
-********************************************************************************/
-void CSceneMenu::setChoiceVal(int choice)
-{
-	this->choice = choice;
-}
-
-/********************************************************************************
-Check for collisions with button
-********************************************************************************/
-bool CSceneMenu::checkForcollision(float mouseX, float mouseY, float pos_buttonX, float pos_buttonY, float pos_buttonWidth, float pos_buttonHeight)
-{
-	if (mouseX > pos_buttonX && mouseX < pos_buttonWidth) //within the x
-	{
-		if (mouseY > pos_buttonY && mouseY < pos_buttonHeight) //within the x and y
-		{
-			//mouse position is inside the button
-			return true;
-		}
-	}
-	else
-	{
-		return false;
-	}
-	return false;
-}
-
-/********************************************************************************
  Render this scene
  ********************************************************************************/
 void CSceneMenu::Render()
@@ -155,8 +112,8 @@ void CSceneMenu::Render()
 #endif
 	if (Application::IsKeyPressed('1'))
 	{
-		cout << "current mouse x: " << worldX << endl;
-		cout << "current mouse y: " << worldY << endl;
+		cout << "current mouse x: " << Application::getMouseWorldX() << endl;
+		cout << "current mouse y: " << Application::getMouseWorldY() << endl;
 		cout << "geo_pos.x: " << geo_pos[1].x << endl;
 		cout << "geo_pos.y: " << geo_pos[1].y << endl;
 		cout << "geo_pos.x R: " << geo_pos[1].x + 55.5 << endl;
@@ -165,49 +122,55 @@ void CSceneMenu::Render()
 	}
 	
 	//Update image on mouse hover
-	if (checkForcollision(worldX, worldY, geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonYoffset, geo_pos[0].y + 8)) // play button
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonYoffset, geo_pos[0].y + 8)) // play button
 	{
-		setChoiceVal(4);
+		Application::setChoiceVal(4);
+		isKeyBoard = false;
 	}
-	else if (checkForcollision(worldX, worldY, geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonYoffset, geo_pos[1].y + 8)) // instructions button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonYoffset, geo_pos[1].y + 8)) // instructions button
 	{
-		setChoiceVal(3);
+		Application::setChoiceVal(3);
+		isKeyBoard = false;
 	}
-	else if (checkForcollision(worldX, worldY, geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonYoffset, geo_pos[2].y + 8)) // options button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonYoffset, geo_pos[2].y + 8)) // options button
 	{
-		setChoiceVal(2);
+		Application::setChoiceVal(2);
+		isKeyBoard = false;
 	}
-	else if (checkForcollision(worldX, worldY, geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonYoffset, geo_pos[3].y + 8)) // exit button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonYoffset, geo_pos[3].y + 8)) // exit button
 	{
-		setChoiceVal(1);
+		Application::setChoiceVal(1);
+		isKeyBoard = false;
 	}
 	else
 	{
-		setChoiceVal(0);
+		if (!isKeyBoard)
+			Application::setChoiceVal(0);
 	}
 
 	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
 	{
-		choice++;
-		setChoiceVal(choice);
-		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (choice > 4)
-			setChoiceVal(4);
 
+		Application::setChoiceVal(Application::getChoiceVal()+1);
+		//1 = play, 2 = instructions, 3 = options, 4 = exit
+		if (Application::getChoiceVal() > 4)
+			Application::setChoiceVal(1);
+
+		isKeyBoard = true;
 		//cout << "choice: " << getChoiceVal() << endl;
 	}
 	else if(CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
 	{
-		choice--;
-		setChoiceVal(choice);
+		Application::setChoiceVal(Application::getChoiceVal() - 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (choice < 1)
-			setChoiceVal(1);
+		if (Application::getChoiceVal()  < 1)
+			Application::setChoiceVal(4);
 
+		isKeyBoard = true;
 		//cout << "choice: " << getChoiceVal() << endl;
 	}
 
-	switch (choice)
+	switch (Application::getChoiceVal())
 	{
 	case 4: //play button highlighted
 		RenderMeshIn2D(meshList[GEO_PLAY_H], false, 1, 1, -50.0f, 30.0f);

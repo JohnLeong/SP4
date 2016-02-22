@@ -9,8 +9,8 @@
 #include <sstream>
 
 CSceneOptions::CSceneOptions(void)
-	: m_window_width(800)
-	, m_window_height(600)
+: m_window_width(800)
+, m_window_height(600)
 {
 }
 
@@ -45,10 +45,15 @@ void CSceneOptions::Init()
 	meshList[GEO_QUAD]->material.kAmbient.Set(0.f, 0.f, 0.f);
 	meshList[GEO_QUAD]->material.kDiffuse.Set(0.f, 0.f, 0.f);
 	meshList[GEO_QUAD]->textureID = LoadTGA("Image//GUI/blank_tile.tga");
-	meshList[GEO_WASD] = MeshBuilder::GenerateQuad("wasd", Color(1, 1, 1), 1.f);
-	meshList[GEO_WASD]->textureID = LoadTGA("Image//wasd.tga");
-	meshList[GEO_MOUSE] = MeshBuilder::GenerateQuad("mouse", Color(1, 1, 1), 1.f);
-	meshList[GEO_MOUSE]->textureID = LoadTGA("Image//mouse.tga");
+
+	//back button
+	meshList[GEO_BACK] = MeshBuilder::Generate2DMesh("back button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_BACK]->textureID = LoadTGA("Image/MENU//back_button.tga");
+
+	//back button highlighted
+	meshList[GEO_BACK_H] = MeshBuilder::Generate2DMesh("back button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_BACK_H]->textureID = LoadTGA("Image/MENU//back_button.tga");
+
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
@@ -62,6 +67,11 @@ void CSceneOptions::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
+	//if (CSceneMenu::checkForcollision(worldX, worldY, geo_pos[3].x, geo_pos[3].y, geo_pos[3].x, geo_pos[3].y + 8)) // exit button
+	//{
+	//	setChoiceVal(1);
+	//	isKeyBoard = false;
+	//}
 	float fDelta = (float)dt;
 
 }
@@ -95,6 +105,12 @@ void CSceneOptions::Render()
 	ss << fps;
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
 #endif
+
+	//render the buttons
+	//switch ()
+	//{
+
+	//}
 }
 
 /********************************************************************************

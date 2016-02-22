@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
+#include "SceneOptions.h"
 
 class CSceneOptions : public CSceneManager
 {
@@ -20,8 +21,8 @@ class CSceneOptions : public CSceneManager
 		GEO_TEXT,
 		GEO_LOGO,
 		GEO_QUAD,
-		GEO_WASD,
-		GEO_MOUSE,
+		GEO_BACK,
+		GEO_BACK_H,
 		NUM_GEOMETRY,
 	};
 

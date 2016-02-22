@@ -80,7 +80,9 @@ private:
 	CLevel m_cLevel;
 
 	//Achievements
-	CAchievements* m_cAchievements;
+	CAchievements* m_cAchievements; 
+
+	int m_iCurrentLevel;
 };
 
 #endif
