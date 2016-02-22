@@ -116,7 +116,14 @@ void CScenePlay::Init()
 	m_cLevel.GenerateCoinEntity(9, 11);
 	m_cLevel.GenerateCoinEntity(9, 12);
 	m_cLevel.GenerateCoinEntity(9, 13);
+
+	CProperties * test = new CProperties("Deaths", 0, CProperties::ACTIVE_GREATER, 1, false);
+	m_cPropertyList.push_back(test);
+	string testAchievement = "You died";
+	CAchievements* testTest = new CAchievements(testAchievement, m_cPropertyList);
 	/*To be removed*/
+
+	
 
 	InitAchievements();
 }

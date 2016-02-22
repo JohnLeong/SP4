@@ -82,6 +82,9 @@ private:
 	//Achievements
 	CAchievements* m_cAchievements;
 
+	vector<CProperties*> m_cPropertyList;
+	CProperties* m_cProperties;
+
 	int m_iCurrentLevel;
 };
 

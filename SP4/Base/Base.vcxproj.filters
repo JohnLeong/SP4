@@ -74,6 +74,9 @@
     <Filter Include="Sounds\Source Files">
       <UniqueIdentifier>{5f2f6043-d875-4d99-99b0-45697f9ade47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Achievements">
+      <UniqueIdentifier>{76f13743-f0d0-4152-a8e5-2aa10615aa1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\SceneManager.cpp">
@@ -204,6 +207,12 @@
     </ClCompile>
     <ClCompile Include="Source\Entities\Entity_Coin.cpp">
       <Filter>Entities\GameplayEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Achievements\Achievements.cpp">
+      <Filter>Achievements</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Achievements\Properties.cpp">
+      <Filter>Achievements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -350,6 +359,12 @@
     </ClInclude>
     <ClInclude Include="Source\Entities\Entity_Coin.h">
       <Filter>Entities\GameplayEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Achievements\Achievements.h">
+      <Filter>Achievements</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Achievements\Properties.h">
+      <Filter>Achievements</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

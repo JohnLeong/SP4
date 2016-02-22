@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Achievements\Achievements.cpp" />
+    <ClCompile Include="Source\Achievements\Properties.cpp" />
     <ClCompile Include="Source\Entities\Entity_Coin.cpp" />
     <ClCompile Include="Source\Entities\Entity_Fire.cpp" />
     <ClCompile Include="Source\Entities\Entity_Key_Red.cpp" />
@@ -57,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h" />
+    <ClInclude Include="Source\Achievements\Achievements.h" />
+    <ClInclude Include="Source\Achievements\Properties.h" />
     <ClInclude Include="Source\define.h" />
     <ClInclude Include="Source\Entities\Entity_Coin.h" />
     <ClInclude Include="Source\Entities\Entity_Fire.h" />
