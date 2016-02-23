@@ -46,8 +46,11 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir)
 		std::cout << "NULL Collision Direction" << std::endl;
 		break;
 	}
-	if (this->m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() == CTiledata::COL_BLOCK)
-		return true;
+	if (!this->m_cTilemap->AllowCollision(iIndexCheckX, iIndexCheckY))//->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() == CTiledata::COL_BLOCK)
+	{
+		if (this->m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() != CTiledata::COL_HOLE)
+			return true;
+	}
 	for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 	{
 		if ((*entity)->GetXIndex() == iIndexCheckX && (*entity)->GetYIndex() == iIndexCheckY && (*entity)->IsAlive())

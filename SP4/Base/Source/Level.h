@@ -47,7 +47,6 @@ public:
 
 	void SetDoMovements(bool bDoMovements);
 	bool CheckPlayerCollisions(CPlayer* cPlayer);
-	bool CheckPlayerCollisionsCurrent(CPlayer* cPlayer);
 	bool CheckEntityCollisions(CPlayer* cPlayer, int iXIndex, int iYIndex);
 
 	bool IsMovementReady(void);

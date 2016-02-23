@@ -142,3 +142,15 @@ CTiledata CTilemap::GetTile(int XIndex, int YIndex)
 	}
 	return theScreenMap[XIndex][YIndex];
 }
+
+bool CTilemap::AllowCollision(int iXIndex, int iYIndex)
+{
+	if (theScreenMap[iXIndex][iYIndex].GetCollisionType() == CTiledata::COL_BLOCK ||
+		theScreenMap[iXIndex][iYIndex].GetCollisionType() == CTiledata::COL_HOLE ||
+		theScreenMap[iXIndex][iYIndex].GetCollisionType() == CTiledata::COL_LOCK_RED ||
+		theScreenMap[iXIndex][iYIndex].GetCollisionType() == CTiledata::COL_LOCK_BLUE ||
+		theScreenMap[iXIndex][iYIndex].GetCollisionType() == CTiledata::COL_LOCK_GREEN ||
+		theScreenMap[iXIndex][iYIndex].GetCollisionType() == CTiledata::COL_LOCK_YELLOW)
+		return false;
+	return true;
+}

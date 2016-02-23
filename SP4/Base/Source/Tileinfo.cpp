@@ -25,6 +25,14 @@ CTiledata::COLLISION_TYPE GetCollisionTypeFromId(CTiledata::TILE_ID id)
 		return CTiledata::COL_WIND_RIGHT;
 	case CTiledata::TILE_RUNE:
 		return CTiledata::COL_RUNE;
+	case CTiledata::TILE_DOOR_RED:
+		return CTiledata::COL_LOCK_RED;
+	case CTiledata::TILE_DOOR_BLUE:
+		return CTiledata::COL_LOCK_BLUE;
+	case CTiledata::TILE_DOOR_GREEN:
+		return CTiledata::COL_LOCK_GREEN;
+	case CTiledata::TILE_DOOR_YELLOW:
+		return CTiledata::COL_LOCK_YELLOW;
 	default:
 		return CTiledata::COL_VOID;
 		break;

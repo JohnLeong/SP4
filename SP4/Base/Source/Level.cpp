@@ -122,108 +122,70 @@ void CLevel::UpdateMovement(const float dt, CPlayer* cPlayer)
 	}
 }
 
-bool CLevel::CheckPlayerCollisionsCurrent(CPlayer* cPlayer)
-{
-	/*switch (m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex()).GetCollisionType())
-	{
-	case CTiledata::COL_ICE:
-		std::cout << "ICE";
-		if (m_cTilemap->GetTile(static_cast<int>(cPlayer->GetNextDirectionPos().x), static_cast<int>(cPlayer->GetNextDirectionPos().y)).GetCollisionType() == CTiledata::COL_BLOCK)
-			return false;
-		return true;
-	default:
-		return false;
-	}*/
-	return false;
-}
-
 bool CLevel::CheckPlayerCollisions(CPlayer* cPlayer)
 {
+	int iXCheckIndex, iYCheckIndex;
 	switch (cPlayer->GetNextDirection())
 	{
 	case CPlayer::PD_UP:
-		if (m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() - 1).GetCollisionType() == CTiledata::COL_BLOCK || 
-			m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() - 1).GetCollisionType() == CTiledata::COL_HOLE ||
-			cPlayer->GetYIndex() - 1 <= 0)
-		{
-			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
+		if (cPlayer->GetYIndex() - 1 <= 0)
 			return false;
-		}
-		else
-		{
-			if (!CheckEntityCollisions(cPlayer, cPlayer->GetXIndex(), cPlayer->GetYIndex() - 1))
-			{
-				cPlayer->MoveUpDown(true, m_cTilemap);
-				//cPlayer->SetNextDirection(CPlayer::PD_NONE);
-				return true;
-			}
-			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
-			return false;
-		}
+		iXCheckIndex = cPlayer->GetXIndex();
+		iYCheckIndex = cPlayer->GetYIndex() - 1;
 		break;
 	case CPlayer::PD_DOWN:
-		if (m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() + 1).GetCollisionType() == CTiledata::COL_BLOCK || 
-			m_cTilemap->GetTile(cPlayer->GetXIndex(), cPlayer->GetYIndex() + 1).GetCollisionType() == CTiledata::COL_HOLE || 
-			cPlayer->GetYIndex() + 2 >= m_cTilemap->GetNumOfTiles_Height())
-		{
-			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
+		if (cPlayer->GetYIndex() + 2 >= m_cTilemap->GetNumOfTiles_Height())
 			return false;
-		}
-		else
-		{
-			if (!CheckEntityCollisions(cPlayer, cPlayer->GetXIndex(), cPlayer->GetYIndex() + 1))
-			{
-				cPlayer->MoveUpDown(false, m_cTilemap);
-				//cPlayer->SetNextDirection(CPlayer::PD_NONE);
-				return true;
-			}
-			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
-			return false;
-		}
+		iXCheckIndex = cPlayer->GetXIndex();
+		iYCheckIndex = cPlayer->GetYIndex() + 1;
 		break;
 	case CPlayer::PD_RIGHT:
-		if (m_cTilemap->GetTile(cPlayer->GetXIndex() + 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_BLOCK || 
-			m_cTilemap->GetTile(cPlayer->GetXIndex() + 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_HOLE || 
-			cPlayer->GetXIndex() + 2 >= m_cTilemap->GetNumOfTiles_Width())
-		{
-			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
+		if (cPlayer->GetXIndex() + 2 >= m_cTilemap->GetNumOfTiles_Width())
 			return false;
-		}
-		else
-		{
-			if (!CheckEntityCollisions(cPlayer, cPlayer->GetXIndex() + 1, cPlayer->GetYIndex()))
-			{
-				cPlayer->MoveLeftRight(true, m_cTilemap);
-				//cPlayer->SetNextDirection(CPlayer::PD_NONE);
-				return true;
-			}
-			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
-			return false;
-		}
+		iXCheckIndex = cPlayer->GetXIndex() + 1;
+		iYCheckIndex = cPlayer->GetYIndex();
 		break;
 	case CPlayer::PD_LEFT:
-		if (m_cTilemap->GetTile(cPlayer->GetXIndex() - 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_BLOCK || 
-			m_cTilemap->GetTile(cPlayer->GetXIndex() - 1, cPlayer->GetYIndex()).GetCollisionType() == CTiledata::COL_HOLE || 
-			cPlayer->GetXIndex() - 1 <= 0)
-		{
-			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
+		if (cPlayer->GetXIndex() - 1 <= 0)
 			return false;
-		}
-		else
-		{
-			if (!CheckEntityCollisions(cPlayer, cPlayer->GetXIndex() - 1, cPlayer->GetYIndex()))
-			{
-				cPlayer->MoveLeftRight(false, m_cTilemap);
-				//cPlayer->SetNextDirection(CPlayer::PD_NONE);
-				return true;
-			}
-			//cPlayer->SetNextDirection(CPlayer::PD_NONE);
-			return false;
-		}
+		iXCheckIndex = cPlayer->GetXIndex() - 1;
+		iYCheckIndex = cPlayer->GetYIndex();
 		break;
+	case CPlayer::PD_NONE:
+		return false;
 	default:
+		iXCheckIndex = cPlayer->GetXIndex();
+		iYCheckIndex = cPlayer->GetYIndex();
 		break;
 	}
+
+	if (!m_cTilemap->AllowCollision(iXCheckIndex, iYCheckIndex))
+		return false;
+	else
+	{
+		if (!CheckEntityCollisions(cPlayer, iXCheckIndex, iYCheckIndex))
+		{
+			switch (cPlayer->GetNextDirection())
+			{
+			case CPlayer::PD_UP:
+				cPlayer->MoveUpDown(true, m_cTilemap);
+				return true;
+			case CPlayer::PD_DOWN:
+				cPlayer->MoveUpDown(false, m_cTilemap);
+				return true;
+			case CPlayer::PD_RIGHT:
+				cPlayer->MoveLeftRight(true, m_cTilemap);
+				return true;
+			case CPlayer::PD_LEFT:
+				cPlayer->MoveLeftRight(false, m_cTilemap);
+				return true;
+			default:
+				break;
+			}
+		}
+		return false;
+	}
+
 	cPlayer->SetNextDirection(CPlayer::PD_NONE);
 	return false;
 }

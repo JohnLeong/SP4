@@ -14,6 +14,7 @@ public:
 		TILE_DOOR_RED,
 		TILE_DOOR_BLUE,
 		TILE_DOOR_GREEN,
+		TILE_DOOR_YELLOW,		//Can only be opened with yellow key
 		TILE_HOLE_STONE_01,
 		TILE_WIND_UP,			//Pushes player up
 		TILE_WIND_DOWN,			//Pushes player down
@@ -36,6 +37,10 @@ public:
 		COL_WIND_LEFT,
 		COL_WIND_RIGHT,
 		COL_RUNE,
+		COL_LOCK_RED,
+		COL_LOCK_BLUE,
+		COL_LOCK_GREEN,
+		COL_LOCK_YELLOW,
 		NUM_COL
 	};
 

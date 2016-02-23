@@ -24,6 +24,8 @@ public:
 	void SetMeshArray(CTiledata::TILE_ID TileId, SpriteAnimation* sa, Animation* anim);	//Set the mesh for the specified tile index
 	SpriteAnimation* GetTileSprite(CTiledata::TILE_ID TileId);
 
+	bool AllowCollision(int iXIndex, int iYIndex);	//Check specified tile for collision
+
 	vector<vector<CTiledata> > theScreenMap;
 
 	void UpdateSprites(double dt);
