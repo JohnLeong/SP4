@@ -78,12 +78,16 @@ Node* AStar::GetSuccessor(Node *current, int i)
 	}
 	else
 	{
-		if (m_cTilemap->AllowCollision(x, y) && !m_cTilemap->GetTile(x, y).IsTinted())
+		if (m_cTilemap->AllowCollision(x, y))// && !m_cTilemap->GetTile(x, y).IsTinted())
 		{// If Grid Element Contains Empty Space
+			if (m_cTilemap->GetTile(x, y).IsTinted() && x != goal->x && y != goal->y)
+				return n;
 			for (std::vector<CEntityIPos*>::iterator entity = (*this->entityList).begin(); entity != (*this->entityList).end(); entity++)
 			{
 				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y && (*entity)->IsAlive() && !(*entity)->AllowEnemyMovement())
+				{
 					return n;
+				}
 			}
 			n = new Node;									// Create A Node Object
 			n->x = x;										// Initialise To x-y Value Of Successor

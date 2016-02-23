@@ -23,6 +23,7 @@ int Application::m_iPrevScoreBlue = 0, Application::m_iPrevScoreRed = 0;
 bool Application::m_bChangeRes = false, Application::m_bFullscreen = false;
 int Application::m_window_width = 1280; int Application::m_window_height = 720;
 int Application::choice = 0; float Application::mouseWorldX = 0; float Application::mouseWorldY = 0;
+bool Application::m_bPauseDT = false;
 /********************************************************************************
  Define an error callback
  ********************************************************************************/
@@ -436,7 +437,13 @@ void Application::Run()
 
 			// Update the GSM
 			theGSM->HandleEvents();
-			theGSM->Update(m_dElapsedTime);
+			if (Application::m_bPauseDT)
+			{
+				theGSM->Update(0.0);
+				Application::m_bPauseDT = false;
+			}
+			else
+				theGSM->Update(m_dElapsedTime);
 
 			m_dAccumulatedTime_ThreadOne = 0.0;
 		}

@@ -1,4 +1,6 @@
 #include "EnemyZombie.h"
+#include "../Application.h"
+
 
 CEnemyZombie::CEnemyZombie()
 {
@@ -119,6 +121,7 @@ void CEnemyZombie::UpdateMovement(const float dt)
 	}
 	
 	m_cAStar->Reset();
+	Application::m_bPauseDT = true;
 }
 
 bool CEnemyZombie::DeathOnEntry(void)

@@ -48,6 +48,9 @@ public:
 	static bool m_bFullscreen;
 	static bool m_bChangeRes;
 
+	//Handle to pause dt - dt set to 0 when true
+	static bool m_bPauseDT;
+
 	//get the value of choice
 	static int getChoiceVal(void);
 	//set the value of choice

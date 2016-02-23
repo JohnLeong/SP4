@@ -105,7 +105,7 @@ void CScenePlay::Init()
 	m_cLevel.GenerateCoinEntity(9, 13);
 	m_cLevel.GenerateFireEntity(9, 9, CEntity_Fire::STATE_01);
 	m_cLevel.GenerateZombieEntity(3, 6, CEnemy::HOLDING_COIN);
-	//m_cLevel.GenerateZombieEntity(5, 6, CEnemy::HOLDING_KEY_GREEN);
+	m_cLevel.GenerateZombieEntity(5, 6, CEnemy::HOLDING_KEY_GREEN);
 
 
 	/*To be removed*/
