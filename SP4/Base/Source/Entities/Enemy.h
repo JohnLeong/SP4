@@ -7,12 +7,13 @@
 class CEnemy : public CEntityIPos
 {
 public:
-	enum HOLDINGKEY_TYPE
+	enum HOLDING_OBJ_TYPE
 	{
-		HOLDING_KEY_NONE,
+		HOLDING_NONE,
 		HOLDING_KEY_RED,
 		HOLDING_KEY_GREEN,
 		HOLDING_KEY_BLUE,
+		HOLDING_COIN,
 	};
 	CEnemy();
 	~CEnemy(void);
@@ -22,6 +23,8 @@ public:
 
 	virtual bool DoColDir(MOVE_DIR m_MoveDir);						//Do collision response in specified direction
 	virtual	bool DoCurrentTileCollision();
+
+	virtual bool DeathOnEntry(void);
 
 protected:
 	Animation* m_animationList[NUM_DIR];

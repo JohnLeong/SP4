@@ -21,6 +21,7 @@ public:
 		TILE_WIND_LEFT,			//Pushes player to the left
 		TILE_WIND_RIGHT,		//Pushes player to the right
 		TILE_RUNE,				//Kills enemies on touch
+		TILE_RUNE_USED,
 		NUM_TILE
 	};
 	//Collision check based on COLLISION_TYPE

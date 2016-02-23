@@ -104,7 +104,10 @@ void CScenePlay::Init()
 	m_cLevel.GenerateCoinEntity(9, 12);
 	m_cLevel.GenerateCoinEntity(9, 13);
 	m_cLevel.GenerateFireEntity(9, 9, CEntity_Fire::STATE_01);
-	m_cLevel.GenerateZombieEntity(3, 6, CEnemy::HOLDING_KEY_BLUE);
+	m_cLevel.GenerateZombieEntity(3, 6, CEnemy::HOLDING_COIN);
+	//m_cLevel.GenerateZombieEntity(5, 6, CEnemy::HOLDING_KEY_GREEN);
+
+
 	/*To be removed*/
 }
 
@@ -127,6 +130,7 @@ void CScenePlay::InitLevel()
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_HOLE_STONE_01]), new Animation(0, 0, 1, 0.3f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_UP, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_DOOR_RED, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_RED]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_RUNE_USED, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_RED]), new Animation(0, 0, 1, 1.f));
 	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 	m_cLevel.LoadTilemap("LevelMap//MapDesign.csv");
 }
@@ -238,11 +242,11 @@ void CScenePlay::RenderEntities()
 		else
 			RenderMesh((*entity)->GetSprite(), false);
 		modelStack.PopMatrix();
-		if ((*entity)->IsHoldingKey())
+		if ((*entity)->IsHoldingObj())
 		{
 			modelStack.Translate(0.f, KEY_HUD_OFFSET, 0.f);
 			modelStack.Scale(KEY_HUD_SIZE, KEY_HUD_SIZE, 1.f);
-			RenderMesh((*entity)->m_cKeyPtr->GetSprite(), false);
+			RenderMesh((*entity)->GetHoldingObj()->GetSprite(), false);
 		}
 
 		modelStack.PopMatrix();

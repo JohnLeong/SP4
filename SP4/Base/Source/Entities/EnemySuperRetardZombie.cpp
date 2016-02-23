@@ -18,9 +18,9 @@ CEnemySuperRetardZombie::CEnemySuperRetardZombie(int iXIndex, int YIndex, CTilem
 	this->m_cEntityList = cEntityList;
 	m_cAStar = new AStar(cTilemap);
 	this->m_cSprite = cSprite;
-	this->m_cKeyPtr = cKeyPtr;
-	this->m_cKeyPtr->SetAlive(false);
-	this->m_bHoldingKey = true;
+	this->m_cObjPtr = cKeyPtr;
+	this->m_cObjPtr->SetAlive(false);
+	this->m_bHoldingObj = true;
 	InitAnimation();
 }
 
@@ -89,31 +89,42 @@ void CEnemySuperRetardZombie::UpdateMovement(const float dt)
 
 	if (this->m_iXIndex == m_cPlayerPtr->GetXIndex() && this->m_iYIndex == m_cPlayerPtr->GetYIndex())
 		return;
-	m_cAStar->Init(this->m_iXIndex, this->m_iYIndex, m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
+
+	m_cAStar->Init(static_cast<int>(this->GetNextDirectionPos().x), static_cast<int>(this->GetNextDirectionPos().y), m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
 
 	switch (m_cAStar->Search())
 	{
 	case AStar::DIR_UP:
-		this->m_MoveDir = CEntityIPos::DIR_UP;
-		this->m_AnimDir = CEntityIPos::DIR_UP;
+		this->m_NextDir = CEntityIPos::DIR_UP;
+		this->m_MoveDir = this->m_NextDir;
+		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_DOWN:
-		this->m_MoveDir = CEntityIPos::DIR_DOWN;
-		this->m_AnimDir = CEntityIPos::DIR_DOWN;
+		this->m_NextDir = CEntityIPos::DIR_DOWN;
+		this->m_MoveDir = this->m_NextDir;
+		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_LEFT:
-		this->m_MoveDir = CEntityIPos::DIR_LEFT;
-		this->m_AnimDir = CEntityIPos::DIR_LEFT;
+		this->m_NextDir = CEntityIPos::DIR_LEFT;
+		this->m_MoveDir = this->m_NextDir;
+		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_RIGHT:
-		this->m_MoveDir = CEntityIPos::DIR_RIGHT;
-		this->m_AnimDir = CEntityIPos::DIR_RIGHT;
+		this->m_NextDir = CEntityIPos::DIR_RIGHT;
+		this->m_MoveDir = this->m_NextDir;
+		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_NONE:
+		this->m_NextDir = CEntityIPos::DIR_NONE;
 		break;
 	default:
 		break;
 	}
-	
+
 	m_cAStar->Reset();
+}
+
+bool CEnemySuperRetardZombie::DeathOnEntry(void)
+{
+	return CEnemy::DeathOnEntry();
 }

@@ -55,8 +55,8 @@ public:
 	void SetPlayerPtr(CPlayer* cPlayer);
 
 	//Generate entities
-	CEnemyZombie* GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t);
-	CEnemySuperRetardZombie* GenerateSuperRetardZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t);
+	CEnemyZombie* GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t);
+	CEnemySuperRetardZombie* GenerateSuperRetardZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t);
 	CEntity_Key_Red* GenerateRedKeyEntity(int iXIndex, int iYIndex);
 	CEntity_Key_Blue* GenerateBlueKeyEntity(int iXIndex, int iYIndex);
 	CEntity_Key_Green* GenerateGreenKeyEntity(int iXIndex, int iYIndex);

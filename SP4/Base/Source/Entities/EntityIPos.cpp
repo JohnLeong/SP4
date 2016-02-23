@@ -6,7 +6,7 @@ CEntityIPos::CEntityIPos()
 , m_fOffSetY(0.f)
 , m_MoveDir(DIR_NONE)
 , m_AnimDir(DIR_IDLE_DOWN)
-, m_bHoldingKey(false)
+, m_bHoldingObj(false)
 {
 }
 
@@ -155,6 +155,11 @@ bool CEntityIPos::AllowEnemyMovement(void)
 	return false;
 }
 
+bool CEntityIPos::DeathOnEntry(void)
+{
+	return false;
+}
+
 int CEntityIPos::GetCoins(void)
 {
 	return -1;
@@ -165,7 +170,12 @@ void CEntityIPos::AddCoin(int iAmt)
 
 }
 
-bool CEntityIPos::IsHoldingKey(void)
+bool CEntityIPos::IsHoldingObj(void)
 {
-	return this->m_bHoldingKey;
+	return this->m_bHoldingObj;
+}
+
+CEntityIPos* CEntityIPos::GetHoldingObj(void)
+{
+	return this->m_cObjPtr;
 }

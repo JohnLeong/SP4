@@ -781,6 +781,57 @@ Mesh* MeshBuilder::Generate2DMesh(const std::string &meshName, Color color, floa
 	return mesh;
 }
 
+Mesh* MeshBuilder::Generate2DMeshCenter(const std::string &meshName, Color color, float pos_x, float pos_y, float width, float height)
+{
+	Vertex v;
+	std::vector<Vertex> vertex_buffer_data;
+	std::vector<GLuint> index_buffer_data;
+
+	// Vertex #1
+	v.pos.Set((width * -0.5f) + pos_x, (height * -0.5f) + pos_y, 0);
+	v.color = color;
+	v.normal.Set(0, 0, 1);
+	v.texCoord.Set(0, 0);
+	vertex_buffer_data.push_back(v);
+	// Vertex #2
+	v.pos.Set((width * 0.5f) + pos_x, (height * -0.5f) + pos_y, 0);
+	v.color = color;
+	v.normal.Set(0, 0, 1);
+	v.texCoord.Set(1.0f, 0);
+	vertex_buffer_data.push_back(v);
+	// Vertex #3
+	v.pos.Set((width * 0.5f) + pos_x, (height * 0.5f) + pos_y, 0);
+	v.color = color;
+	v.normal.Set(0, 0, 1);
+	v.texCoord.Set(1.0f, 1.0f);
+	vertex_buffer_data.push_back(v);
+	// Vertex #4
+	v.pos.Set((width * -0.5f) + pos_x, (height * 0.5f) + pos_y, 0);
+	v.color = color;
+	v.normal.Set(0, 0, 1);
+	v.texCoord.Set(0, 1.0f);
+	vertex_buffer_data.push_back(v);
+
+	index_buffer_data.push_back(3);
+	index_buffer_data.push_back(0);
+	index_buffer_data.push_back(2);
+	index_buffer_data.push_back(1);
+	index_buffer_data.push_back(2);
+	index_buffer_data.push_back(0);
+
+	Mesh *mesh = new Mesh(meshName);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
+
+	mesh->indexSize = index_buffer_data.size();
+	mesh->mode = Mesh::DRAW_TRIANGLES;
+
+	return mesh;
+}
+
 //The last 2 variables change the size rendered
 SpriteAnimation* MeshBuilder::GenerateSpriteAnimation2D(const std::string &meshName, unsigned numRow, unsigned numCol, int posX/* = 0*/, int posY/* = 0*/, int ScaleX, int ScaleY)
 {

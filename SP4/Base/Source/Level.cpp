@@ -199,7 +199,7 @@ bool CLevel::CheckEntityCollisions(CPlayer* cPlayer, int iXIndex, int iYIndex)
 			switch (cPlayer->GetNextDirection())
 			{
 			case CPlayer::PD_UP:
-				return((*entity)->DoColDir(CEntityIPos::DIR_UP));
+				return ((*entity)->DoColDir(CEntityIPos::DIR_UP));
 			case CPlayer::PD_DOWN:
 				return((*entity)->DoColDir(CEntityIPos::DIR_DOWN));
 			case CPlayer::PD_RIGHT:
@@ -229,14 +229,14 @@ void CLevel::SetPlayerPtr(CPlayer* cPlayer)
 	this->m_cPlayerPtr = cPlayer;
 }
 
-CEnemyZombie* CLevel::GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t)
+CEnemyZombie* CLevel::GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t)
 {
 	CEnemyZombie* zombie;
 	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
 	temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
 	switch (t)
 	{
-	case CEnemy::HOLDING_KEY_NONE:
+	case CEnemy::HOLDING_NONE:
 		zombie = new CEnemyZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
 		break;
 	case CEnemy::HOLDING_KEY_RED:
@@ -248,29 +248,38 @@ CEnemyZombie* CLevel::GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOL
 	case CEnemy::HOLDING_KEY_BLUE:
 		zombie = new CEnemyZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateBlueKeyEntity(0, 0));
 		break;
+	case CEnemy::HOLDING_COIN:
+		zombie = new CEnemyZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateCoinEntity(0, 0));
+		break;
 	default:
+		std::cout << "Enemy generation error";
 		break;
 	}
 	m_cEntityIPosList.push_back(zombie);
 	return zombie;
 }
 
-CEnemySuperRetardZombie* CLevel::GenerateSuperRetardZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t)
+CEnemySuperRetardZombie* CLevel::GenerateSuperRetardZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t)
 {
 	CEnemySuperRetardZombie* zombie;
 	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
 	temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
 	switch (t)
 	{
-	case CEnemy::HOLDING_KEY_NONE:
+	case CEnemy::HOLDING_NONE:
 		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
 		break;
 	case CEnemy::HOLDING_KEY_RED:
 		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateRedKeyEntity(0, 0));
 		break;
 	case CEnemy::HOLDING_KEY_GREEN:
+		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateGreenKeyEntity(0, 0));
 		break;
 	case CEnemy::HOLDING_KEY_BLUE:
+		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateBlueKeyEntity(0, 0));
+		break; 
+	case CEnemy::HOLDING_COIN:
+		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateCoinEntity(0, 0));
 		break;
 	default:
 		break;

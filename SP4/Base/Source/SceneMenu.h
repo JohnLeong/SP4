@@ -29,6 +29,11 @@ class CSceneMenu : public CSceneManager
 		GEO_OPTIONS_H,
 		GEO_EXIT_H,
 
+		//Backgrounds
+		GEO_BACKGROUND_BASE,
+		GEO_TEMPLE,
+		GEO_GROUND,
+
 		NUM_GEOMETRY,
 	};
 

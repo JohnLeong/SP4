@@ -68,12 +68,22 @@ void CSceneMenu::Init()
 	meshList[GEO_EXIT_H] = MeshBuilder::Generate2DMesh("play button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
 	meshList[GEO_EXIT_H]->textureID = LoadTGA("Image/MENU//h_exit_button.tga");
 
+	//Backgrounds
+	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.5f, 0.85f);
+	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
+	meshList[GEO_TEMPLE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 0.8f, 0.8f);
+	meshList[GEO_TEMPLE]->textureID = LoadTGA("Image//Background/temple.tga");
+	meshList[GEO_GROUND] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, -0.33f, 1.5f, 0.2f);
+	meshList[GEO_GROUND]->textureID = LoadTGA("Image//Background/ground.tga");
+
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 	//perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
 	
+	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+
 	rotateAngle = 0;
 
 	bLightEnabled = true;
@@ -110,6 +120,13 @@ void CSceneMenu::Render()
 #if _DEBUG
 	RenderTextOnScreen(meshList[GEO_TEXT], "SceneMenu", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 #endif
+	glDisable(GL_DEPTH_TEST);
+
+	//Render backgrounds
+	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
+	RenderMesh(meshList[GEO_GROUND], false);
+	//RenderMesh(meshList[GEO_TEMPLE], false);
+
 	if (Application::IsKeyPressed('1'))
 	{
 		cout << "current mouse x: " << Application::getMouseWorldX() << endl;

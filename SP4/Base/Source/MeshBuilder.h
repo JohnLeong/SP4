@@ -28,6 +28,7 @@ public:
 	static Mesh* GenerateMinimapBorder(const std::string &meshName, Color color, float length = 1.f);
 	static Mesh* GenerateMinimapAvatar(const std::string &meshName, Color color, float length = 1.f);
 	static Mesh* Generate2DMesh(const std::string &meshName, Color color, float pos_x, float pos_y, float width, float height);
+	static Mesh* Generate2DMeshCenter(const std::string &meshName, Color color, float pos_x, float pos_y, float width, float height);
 	static SpriteAnimation* GenerateSpriteAnimation2D(const std::string &meshName, unsigned numRow, unsigned numCol, int posX = 0, int posY = 0, int ScaleX = 1, int ScaleY = 1);
 };
 

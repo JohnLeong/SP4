@@ -37,7 +37,7 @@ public:
 	virtual float GetXOffset(void);
 	virtual float GetYOffset(void);
 
-	Vector3 GetNextDirectionPos(void);
+	virtual Vector3 GetNextDirectionPos(void);
 
 	virtual bool IsMoving(void);
 
@@ -47,15 +47,15 @@ public:
 	virtual	bool DoCurrentTileCollision(void);
 
 	virtual bool AllowEnemyMovement(void);
+	virtual bool DeathOnEntry(void);
 
 	//For player
 	virtual int GetCoins(void);
 	virtual void AddCoin(int iAmt);
 
 	//For enemy
-	virtual bool IsHoldingKey(void);
-
-	CEntityIPos* m_cKeyPtr;
+	virtual bool IsHoldingObj(void);
+	virtual CEntityIPos* GetHoldingObj(void);
 
 protected:
 	int m_iXIndex;			//X Index
@@ -68,8 +68,9 @@ protected:
 	MOVE_DIR m_AnimDir;
 
 	CEntityIPos* m_cPlayerPtr;							//Pointer to player
+	CEntityIPos* m_cObjPtr;							//Pointer to object this entity is holding
 	std::vector<CEntityIPos*>* m_cEntityList;		//Pointer to list of entities
-	bool m_bHoldingKey;
+	bool m_bHoldingObj;
 };
 
 #endif

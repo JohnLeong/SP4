@@ -17,6 +17,8 @@ public:
 	virtual void Update(const float dt);			// Update
 	virtual void UpdateMovement(const float dt);
 
+	virtual bool DeathOnEntry(void);
+
 private:
 	AStar* m_cAStar;	//Astar for pathfinding to player
 };

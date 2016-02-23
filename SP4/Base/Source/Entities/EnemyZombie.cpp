@@ -16,9 +16,9 @@ CEnemyZombie::CEnemyZombie(int iXIndex, int YIndex, CTilemap* cTilemap, SpriteAn
 	this->m_cEntityList = cEntityList;
 	m_cAStar = new AStar(cTilemap);
 	this->m_cSprite = cSprite;
-	this->m_cKeyPtr = cKeyPtr;
-	this->m_cKeyPtr->SetAlive(false);
-	this->m_bHoldingKey = true;
+	this->m_cObjPtr = cKeyPtr;
+	this->m_cObjPtr->SetAlive(false);
+	this->m_bHoldingObj = true;
 	InitAnimation();
 }
 
@@ -84,27 +84,32 @@ void CEnemyZombie::UpdateMovement(const float dt)
 	if (this->m_iXIndex == m_cPlayerPtr->GetXIndex() && this->m_iYIndex == m_cPlayerPtr->GetYIndex())
 		return;
 
-	if (this->m_NextDir != CEntityIPos::DIR_NONE)
-	{
-		this->m_MoveDir = this->m_NextDir;
-		this->m_AnimDir = this->m_NextDir;
-	}
+	if (this->m_iXIndex == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().x) && this->m_iYIndex == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().y))
+		return;
 
-	m_cAStar->Init(static_cast<int>(this->GetNextDirectionPos().x), static_cast<int>(this->GetNextDirectionPos().y), m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
+	m_cAStar->Init(m_iXIndex, m_iYIndex, m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
 
 	switch (m_cAStar->Search())
 	{
 	case AStar::DIR_UP:
 		this->m_NextDir = CEntityIPos::DIR_UP;
+		this->m_MoveDir = this->m_NextDir;
+		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_DOWN:
 		this->m_NextDir = CEntityIPos::DIR_DOWN;
+		this->m_MoveDir = this->m_NextDir;
+		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_LEFT:
 		this->m_NextDir = CEntityIPos::DIR_LEFT;
+		this->m_MoveDir = this->m_NextDir;
+		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_RIGHT:
 		this->m_NextDir = CEntityIPos::DIR_RIGHT;
+		this->m_MoveDir = this->m_NextDir;
+		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_NONE:
 		this->m_NextDir = CEntityIPos::DIR_NONE;
@@ -114,4 +119,9 @@ void CEnemyZombie::UpdateMovement(const float dt)
 	}
 	
 	m_cAStar->Reset();
+}
+
+bool CEnemyZombie::DeathOnEntry(void)
+{
+	return CEnemy::DeathOnEntry();
 }

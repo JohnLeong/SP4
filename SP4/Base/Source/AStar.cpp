@@ -78,7 +78,7 @@ Node* AStar::GetSuccessor(Node *current, int i)
 	}
 	else
 	{
-		if (m_cTilemap->AllowCollision(x, y))
+		if (m_cTilemap->AllowCollision(x, y) && !m_cTilemap->GetTile(x, y).IsTinted())
 		{// If Grid Element Contains Empty Space
 			for (std::vector<CEntityIPos*>::iterator entity = (*this->entityList).begin(); entity != (*this->entityList).end(); entity++)
 			{
@@ -259,17 +259,25 @@ void AStar::ShowPath(Node *walker)
 
 AStar::PATH_DIR AStar::GetPathDir(Node *walker)
 {
-	if (walker->parent == NULL)
-		return DIR_NONE;
-	walker = walker->parent;				// Get Node On Best Path Linked To Goal 
-	m_cTilemap->theScreenMap[goal->x][goal->y].SetTint(true);			// Mark "Goal" Node On Grid Array
-	while (walker->parent != NULL)			// If Start Point IS Not NULL
+	if (walker->parent == start)
 	{
-		m_cTilemap->theScreenMap[walker->x][walker->y].SetTint(true);	// Grid Map Node Is Marked As Best Path Node
-		if (walker->parent->parent == NULL)
-			break;
-		walker = walker->parent;			// Go To Next Link To The Path
+		m_cTilemap->theScreenMap[walker->x][walker->y].SetTint(true);
 	}
+	else
+	{
+		walker = walker->parent;				// Get Node On Best Path Linked To Goal 
+		//m_cTilemap->theScreenMap[goal->x][goal->y].SetTint(true);			// Mark "Goal" Node On Grid Array
+
+		while (walker->parent != NULL)			// If Start Point IS Not NULL
+		{
+			//m_cTilemap->theScreenMap[walker->x][walker->y].SetTint(true);	// Grid Map Node Is Marked As Best Path Node
+			if (walker->parent->parent == NULL)
+				break;
+			walker = walker->parent;			// Go To Next Link To The Path
+		}
+		m_cTilemap->theScreenMap[walker->x][walker->y].SetTint(true);
+	}
+
 	if (walker->x < start->x)
 		return DIR_LEFT;
 	if (walker->x > start->x)

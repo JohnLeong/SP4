@@ -21,6 +21,9 @@ void CEnemy::Update(const float dt)
 {
 	CEntityIPos::Update(dt);
 
+	if (this->m_iXIndex == this->m_cPlayerPtr->GetXIndex() && this->m_iYIndex == this->m_cPlayerPtr->GetYIndex())
+		m_cPlayerPtr->SetAlive(false);
+
 	this->m_cSprite->m_anim = m_animationList[this->m_AnimDir];
 	this->m_cSprite->Update(static_cast<double>(dt));
 }
@@ -45,7 +48,7 @@ bool CEnemy::DoCurrentTileCollision()
 			{
 				if ((*entity) == this)
 					continue;
-				if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+				if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex() && !(*entity)->AllowEnemyMovement())
 				{
 					this->m_MoveDir = DIR_NONE;
 					return false;
@@ -73,14 +76,20 @@ bool CEnemy::DoCurrentTileCollision()
 	case CTiledata::COL_RUNE:
 		this->m_MoveDir = DIR_NONE;
 		this->SetAlive(false);
-		if (this->m_cKeyPtr != NULL)
+		this->m_cTilemap->theScreenMap[this->m_iXIndex][this->m_iYIndex].ChangeIdState();	//Change tile to normal tile
+		if (this->m_cObjPtr != NULL)
 		{
-			this->m_cKeyPtr->SetAlive(true);
-			this->m_cKeyPtr->SetPos(this->m_iXIndex, this->m_iYIndex);
+			this->m_cObjPtr->SetAlive(true);
+			this->m_cObjPtr->SetPos(this->m_iXIndex, this->m_iYIndex);
 		}
 		return false;
 	default:
 		this->m_MoveDir = DIR_NONE;
 		return false;
 	}
+}
+
+bool CEnemy::DeathOnEntry(void)
+{
+	return true;
 }
