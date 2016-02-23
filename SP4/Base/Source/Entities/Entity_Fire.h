@@ -28,6 +28,8 @@ public:
 	virtual void Update(const float dt);			// Update
 	virtual void UpdateMovement(const float dt);
 
+	virtual bool AllowEnemyMovement(void);
+
 private:
 	Animation* m_animationList[NUM_FIRE_STATE];
 

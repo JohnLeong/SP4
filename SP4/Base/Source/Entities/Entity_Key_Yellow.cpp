@@ -36,3 +36,8 @@ void CEntity_Key_Yellow::Update(const float dt)
 void CEntity_Key_Yellow::UpdateMovement(const float dt)
 {
 }
+
+bool CEntity_Key_Yellow::AllowEnemyMovement(void)
+{
+	return true;
+}

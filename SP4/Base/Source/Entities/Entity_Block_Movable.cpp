@@ -119,3 +119,8 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 		return false;
 	}
 }
+
+bool CEntity_Block_Movable::AllowEnemyMovement(void)
+{
+	return false;
+}

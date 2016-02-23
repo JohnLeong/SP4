@@ -41,7 +41,7 @@ void CScenePlay::Init()
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");//, 1000, 1000, 1000);
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/anonymous.tga");
+	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/8BitWonder.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("lightball", Color(1, 0, 0), 18, 36, 1.f);
 
@@ -91,10 +91,10 @@ void CScenePlay::Init()
 	InitLevel();
 
 	/*To be removed*/
-	m_cLevel.GenerateZombieEntity(3, 3, CEnemy::HOLDING_KEY_RED);
+	
 	m_cLevel.GenerateMovableBlockEntity(6, 6);
 	m_cLevel.GenerateMovableBlockEntity(6, 8);
-	m_cLevel.GenerateMovableBlockEntity(3, 1);
+	m_cLevel.GenerateMovableBlockEntity(3, 3);
 	m_cLevel.GenerateRedKeyEntity(8, 8);
 	m_cLevel.GenerateBlueKeyEntity(9, 8);
 	m_cLevel.GenerateGreenKeyEntity(10, 8);
@@ -104,6 +104,7 @@ void CScenePlay::Init()
 	m_cLevel.GenerateCoinEntity(9, 12);
 	m_cLevel.GenerateCoinEntity(9, 13);
 	m_cLevel.GenerateFireEntity(9, 9, CEntity_Fire::STATE_01);
+	m_cLevel.GenerateZombieEntity(3, 6, CEnemy::HOLDING_KEY_BLUE);
 
 	CProperties * test = new CProperties("Deaths", 0, CProperties::ACTIVE_GREATER, 1, false);
 	m_cPropertyList.push_back(test);
@@ -150,7 +151,7 @@ void CScenePlay::Update(double dt)
 
 	if (m_cLevel.IsMovementReady())
 	{
-		if (IsKeyDown('w'))
+		if (IsKeyDownOnce('w'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_UP);
 		else if (IsKeyDownOnce('s'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_DOWN);
@@ -172,8 +173,7 @@ void CScenePlay::Update(double dt)
 	m_cLevel.Update(static_cast<float>(dt), this->m_cPlayer);
 
 	//Update camera position based on player position
-	camera.UpdatePosition(Vector3(static_cast<float>(m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset()), static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
-
+	camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
 
 	if (m_cPlayer->GetHasReachedEndLevel() == true)
 	{
@@ -214,9 +214,9 @@ void CScenePlay::RenderGUI()
 	//RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
 
 	if (m_cPlayer->IsAlive())
-		RenderTextOnScreen(meshList[GEO_TEXT], "ALIVE", Color(0.f, 0.f, 0.f), 20.f, -160.f, 10.f);
+		RenderTextOnScreen(meshList[GEO_TEXT], "ALIVE", Color(0.f, 0.f, 0.f), 10.f, -160.f, 10.f);
 	else
-		RenderTextOnScreen(meshList[GEO_TEXT], "DEAD", Color(0.f, 0.f, 0.f), 20.f, -160.f, 10.f);
+		RenderTextOnScreen(meshList[GEO_TEXT], "DEAD", Color(0.f, 0.f, 0.f), 10.f, -160.f, 10.f);
 }
 
 void CScenePlay::RenderPlayer()

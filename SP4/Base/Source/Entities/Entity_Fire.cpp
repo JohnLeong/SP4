@@ -43,7 +43,7 @@ void CEntity_Fire::InitAnimation()
 	AddAnimation(cAnim, STATE_04);
 
 	cAnim = new Animation();
-	cAnim->Set(0, 4, 0, 0.5f);
+	cAnim->Set(0, 4, 0, 0.1f);
 	AddAnimation(cAnim, STATE_05);
 
 	this->m_cSprite->m_anim = m_animationList[m_cFire_State];
@@ -96,4 +96,9 @@ void CEntity_Fire::UpdateMovement(const float dt)
 	default:
 		break;
 	}
+}
+
+bool CEntity_Fire::AllowEnemyMovement(void)
+{
+	return true;
 }

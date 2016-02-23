@@ -20,9 +20,12 @@ public:
 	virtual void AddAnimation(Animation* cAnim, MOVE_DIR cMoveDir);
 	virtual void Update(const float dt);		// Update
 
+	virtual bool DoColDir(MOVE_DIR m_MoveDir);						//Do collision response in specified direction
 	virtual	bool DoCurrentTileCollision();
 
+protected:
 	Animation* m_animationList[NUM_DIR];
+	MOVE_DIR m_NextDir;
 
 };
 

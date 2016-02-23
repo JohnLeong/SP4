@@ -82,7 +82,7 @@ Node* AStar::GetSuccessor(Node *current, int i)
 		{// If Grid Element Contains Empty Space
 			for (std::vector<CEntityIPos*>::iterator entity = (*this->entityList).begin(); entity != (*this->entityList).end(); entity++)
 			{
-				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y && (*entity)->IsAlive())
+				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y && (*entity)->IsAlive() && !(*entity)->AllowEnemyMovement())
 					return n;
 			}
 			n = new Node;									// Create A Node Object
@@ -259,6 +259,8 @@ void AStar::ShowPath(Node *walker)
 
 AStar::PATH_DIR AStar::GetPathDir(Node *walker)
 {
+	if (walker->parent == NULL)
+		return DIR_NONE;
 	walker = walker->parent;				// Get Node On Best Path Linked To Goal 
 	m_cTilemap->theScreenMap[goal->x][goal->y].SetTint(true);			// Mark "Goal" Node On Grid Array
 	while (walker->parent != NULL)			// If Start Point IS Not NULL

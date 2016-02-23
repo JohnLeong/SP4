@@ -49,3 +49,8 @@ void CEntity_Coin::UpdateMovement(const float dt)
 {
 
 }
+
+bool CEntity_Coin::AllowEnemyMovement(void)
+{
+	return true;
+}

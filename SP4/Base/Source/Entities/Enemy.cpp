@@ -1,6 +1,7 @@
 #include "Enemy.h"
 
 CEnemy::CEnemy()
+: m_NextDir(DIR_NONE)
 {
 }
 
@@ -22,6 +23,12 @@ void CEnemy::Update(const float dt)
 
 	this->m_cSprite->m_anim = m_animationList[this->m_AnimDir];
 	this->m_cSprite->Update(static_cast<double>(dt));
+}
+
+bool CEnemy::DoColDir(MOVE_DIR m_MoveDir)
+{
+	m_cPlayerPtr->SetAlive(false);
+	return false;
 }
 
 bool CEnemy::DoCurrentTileCollision()

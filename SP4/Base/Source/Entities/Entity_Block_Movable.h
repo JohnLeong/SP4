@@ -17,6 +17,7 @@ public:
 	virtual void UpdateMovement(const float dt);
 
 	virtual	bool DoCurrentTileCollision();
+	virtual bool AllowEnemyMovement(void);
 };
 
 #endif

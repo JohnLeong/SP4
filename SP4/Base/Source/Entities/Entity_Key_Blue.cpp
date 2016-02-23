@@ -36,3 +36,8 @@ void CEntity_Key_Blue::Update(const float dt)
 void CEntity_Key_Blue::UpdateMovement(const float dt)
 {
 }
+
+bool CEntity_Key_Blue::AllowEnemyMovement(void)
+{
+	return true;
+}

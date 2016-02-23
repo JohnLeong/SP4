@@ -44,7 +44,9 @@ public:
 	virtual void Update(const float dt);		// Update
 	virtual void UpdateMovement(const float dt);
 
-	virtual	bool DoCurrentTileCollision();
+	virtual	bool DoCurrentTileCollision(void);
+
+	virtual bool AllowEnemyMovement(void);
 
 	//For player
 	virtual int GetCoins(void);

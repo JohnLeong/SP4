@@ -150,6 +150,11 @@ bool CEntityIPos::DoCurrentTileCollision()
 	return false;
 }
 
+bool CEntityIPos::AllowEnemyMovement(void)
+{
+	return false;
+}
+
 int CEntityIPos::GetCoins(void)
 {
 	return -1;

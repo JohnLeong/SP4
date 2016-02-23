@@ -83,27 +83,31 @@ void CEnemyZombie::UpdateMovement(const float dt)
 {
 	if (this->m_iXIndex == m_cPlayerPtr->GetXIndex() && this->m_iYIndex == m_cPlayerPtr->GetYIndex())
 		return;
-	m_cAStar->Init(this->m_iXIndex, this->m_iYIndex, m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
+
+	if (this->m_NextDir != CEntityIPos::DIR_NONE)
+	{
+		this->m_MoveDir = this->m_NextDir;
+		this->m_AnimDir = this->m_NextDir;
+	}
+
+	m_cAStar->Init(static_cast<int>(this->GetNextDirectionPos().x), static_cast<int>(this->GetNextDirectionPos().y), m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
 
 	switch (m_cAStar->Search())
 	{
 	case AStar::DIR_UP:
-		this->m_MoveDir = CEntityIPos::DIR_UP;
-		this->m_AnimDir = CEntityIPos::DIR_UP;
+		this->m_NextDir = CEntityIPos::DIR_UP;
 		break;
 	case AStar::DIR_DOWN:
-		this->m_MoveDir = CEntityIPos::DIR_DOWN;
-		this->m_AnimDir = CEntityIPos::DIR_DOWN;
+		this->m_NextDir = CEntityIPos::DIR_DOWN;
 		break;
 	case AStar::DIR_LEFT:
-		this->m_MoveDir = CEntityIPos::DIR_LEFT;
-		this->m_AnimDir = CEntityIPos::DIR_LEFT;
+		this->m_NextDir = CEntityIPos::DIR_LEFT;
 		break;
 	case AStar::DIR_RIGHT:
-		this->m_MoveDir = CEntityIPos::DIR_RIGHT;
-		this->m_AnimDir = CEntityIPos::DIR_RIGHT;
+		this->m_NextDir = CEntityIPos::DIR_RIGHT;
 		break;
 	case AStar::DIR_NONE:
+		this->m_NextDir = CEntityIPos::DIR_NONE;
 		break;
 	default:
 		break;
