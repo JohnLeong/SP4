@@ -1,6 +1,6 @@
 #include "Properties.h"
 
-CProperties::CProperties(string theName, int theInitialValue, mActivation theActivation, int theActivationValue, bool clearActivation)
+CProperties::CProperties(string theName, int theInitialValue, string theActivation, int theActivationValue, bool clearActivation)
 {
 	mName = theName;
 	mValue = theInitialValue;
@@ -16,23 +16,24 @@ CProperties::~CProperties(void)
 
 void CProperties::Update()
 {
-	switch (mActive)
+	if (mActive == "ACTIVE_GREATER")
 	{
-	case ACTIVE_GREATER:
 		if (mValue > mActivationValue)
 			mClearActive = true;
-		break;
-	case ACTIVE_LESSER:
+	}
+	else if (mActive == "ACTIVE_LESSER")
+	{
 		if (mValue < mActivationValue)
 			mClearActive = true;
-		break;
-	case ACTIVE_EQUAL:
+	}
+	else if (mActive == "ACTIVE_EQUAL")
+	{
 		if (mValue == mActivationValue)
 			mClearActive = true;
-		break;
-	default:
+	}
+	else
+	{
 		mClearActive = false;
-		break;
 	}
 }
 
@@ -70,8 +71,8 @@ void CProperties::ChangeValue(int changeNumber)
 	convertor2 << mChangedValue;
 	getChangedValue.append(convertor2.str());
 
-	m_cluascript = new CLuaScript("AchievementProperties");
-	m_cluascript->recordAchievementPropertiesProgress(mName, getValue, getChangedValue);
+	m_cLuaScript = new CLuaScript("AchievementProperties");
+	m_cLuaScript->recordAchievementPropertiesProgress(mName, getValue, getChangedValue);
 
 	mValue += changeNumber;
 }

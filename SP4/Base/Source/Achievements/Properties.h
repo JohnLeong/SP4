@@ -3,8 +3,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../LuaScript.h"
 #include <sstream>
+#include "../LuaScript.h"
 
 using namespace std;
 using std::string;
@@ -13,15 +13,7 @@ using std::vector;
 class CProperties
 {
 public:
-	enum mActivation
-	{
-		ACTIVE_GREATER,
-		ACTIVE_LESSER,
-		ACTIVE_EQUAL,
-		NUM_ACTIVE
-	};
-
-	CProperties(string theName, int theInitialValue, mActivation theActivation, int theActivationValue, bool clearActivation);
+	CProperties(string theName, int theInitialValue, string theActivation, int theActivationValue, bool clearActivation);
 	~CProperties(void);
 
 	void Update();								// Update
@@ -39,7 +31,7 @@ private:
 	string mName;
 	int mActivationValue;
 	int mValue;
-	mActivation mActive;
+	string mActive;
 	bool mClearActive;
-	CLuaScript* m_cluascript;
+	CLuaScript* m_cLuaScript;
 };

@@ -1,15 +1,22 @@
 #pragma once
-#include "Properties.h"
+#include <string>
+#include <vector>
+#include <sstream>
 
+using namespace std;
+using std::string;
+using std::vector;
+
+class CProperties;
 class CAchievements
 {
 public:
-	CAchievements(string theId, vector<CProperties*> theRelatedProps);
+	CAchievements(string theName, vector<string> theRelatedProps, bool mUnlocked);
 	~CAchievements(void);
-	void Update();								// Update
+	void Update(vector<CProperties*> propertyList);								// Update
 
 private:
 	string mName; // achievement name
+	vector<string> mProps;
 	bool mUnlocked;
-	vector<CProperties*> mProps; // array of related properties
 };

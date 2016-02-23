@@ -105,16 +105,7 @@ void CScenePlay::Init()
 	m_cLevel.GenerateCoinEntity(9, 13);
 	m_cLevel.GenerateFireEntity(9, 9, CEntity_Fire::STATE_01);
 	m_cLevel.GenerateZombieEntity(3, 6, CEnemy::HOLDING_KEY_BLUE);
-
-	CProperties * test = new CProperties("Deaths", 0, CProperties::ACTIVE_GREATER, 1, false);
-	m_cPropertyList.push_back(test);
-	string testAchievement = "You died";
-	CAchievements* testTest = new CAchievements(testAchievement, m_cPropertyList);
 	/*To be removed*/
-
-	
-
-	InitAchievements();
 }
 
 void CScenePlay::InitLevel()

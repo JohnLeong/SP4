@@ -8,7 +8,7 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "Level.h"
-#include "Achievements\Achievements.h"
+
 
 const float SKYBOXSIZE = 1000.f;
 
@@ -81,11 +81,6 @@ private:
 	CLevel m_cLevel;
 
 	//Achievements
-	CAchievements* m_cAchievements;
-
-	vector<CProperties*> m_cPropertyList;
-	CProperties* m_cProperties;
-
 	int m_iCurrentLevel;
 };
 

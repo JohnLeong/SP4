@@ -1,10 +1,10 @@
 #include "Achievements.h"
-
-CAchievements::CAchievements(string theId, vector<CProperties*> theRelatedProps)
+#include "Properties.h"
+CAchievements::CAchievements(string theName, vector<string> theRelatedProps, bool mUnlocked)
 {
-	mName = theId;
+	mName = theName;
 	mProps = theRelatedProps;
-	mUnlocked = false;
+	this->mUnlocked = mUnlocked;
 }
 
 
@@ -12,13 +12,13 @@ CAchievements::~CAchievements(void)
 {
 }
 
-void CAchievements::Update()
+void CAchievements::Update(vector<CProperties*> propertyList)
 {
 	if (mUnlocked == false)
 	{
-		for (unsigned int i = 0; i < mProps.size(); i++)
+		for (unsigned int i = 0; i < propertyList.size(); i++)
 		{
-			if (mProps[i]->GetClearActivation() == false)
+			if (propertyList[i]->GetClearActivation() == false)
 			{
 				break;
 			}

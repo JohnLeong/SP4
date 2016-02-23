@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 //#include "Entities\EnemyZombie.h"
+#include "Achievements\Achievements.h"
+
 
 using std::string;
 
@@ -26,8 +28,8 @@ public:
 
 	void getNsetEnemyVariables(string name);
 
-	void getAchievementVariables(string name);
-	void getAchievementPropertiesVariables(string name);
+	CAchievements* getAchievementVariables(string name);
+	CProperties* getAchievementPropertiesVariables(string name);
 
 	void recordAchievementProgress(string name, string value, string changedValue);
 	void recordAchievementPropertiesProgress(string name, string value, string changedValue);

@@ -317,6 +317,32 @@ void Application::Init()
 
 	InitWindow(false);
 
+	m_cLuaScript = new CLuaScript("AchievementProperties");
+	int totalProperties = 0;
+	totalProperties = m_cLuaScript->getIntVariable("TotalProperties");
+	for (int i = 1; i < totalProperties + 1; i++)
+	{
+		ostringstream converter;
+		string changedInt = "";
+		converter << i;
+		changedInt = converter.str();
+		CProperties* test = m_cLuaScript->getAchievementPropertiesVariables(changedInt);
+		m_cPropertyList.push_back(test);
+	}
+
+	m_cLuaScript = new CLuaScript("Achievements");
+	int totalAchievements = 0;
+	totalAchievements = m_cLuaScript->getIntVariable("TotalAchievements");
+	for (int i = 1; i < totalProperties + 1; i++)
+	{
+		ostringstream converter;
+		string changedInt = "";
+		converter << i;
+		changedInt = converter.str();
+		CAchievements* testTest = m_cLuaScript->getAchievementVariables(changedInt);
+		m_cAchievementList.push_back(testTest);
+	}
+
 	// Initialise the GSM
 	theGSM = new CGameStateManager();
 	theGSM->Init("DM2240 Assignment 1", m_window_width, m_window_height);

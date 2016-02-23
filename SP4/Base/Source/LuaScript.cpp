@@ -1,4 +1,5 @@
 #include "LuaScript.h"
+#include "Achievements\Properties.h"
 
 CLuaScript::CLuaScript(string path)
 {
@@ -91,23 +92,38 @@ void CLuaScript::getNsetEnemyVariables(string name)
 }
 
 
-void CLuaScript::getAchievementVariables(string name)
+CAchievements* CLuaScript::getAchievementVariables(string name)
 {
+	CAchievements* newAchievement;
+	vector<string> propertyList;
 	string addName = "Name";
 	string addProperties = "Properties";
 
 	name += addName;
 	lua_getglobal(L2, name.c_str());
 	string getName = (string)lua_tostring(L2, -1);
-	name.erase(name.begin() + 6, name.end() - 4);
+	name.erase(name.begin() + 1);
 
 	name += addProperties;
-	lua_getglobal(L2, name.c_str());
-	string getPosX = (string)lua_tostring(L2, -1);
+
+	int totalAchievementProperties = 0;
+	for (int i = 1; i < totalAchievementProperties + 1; i++)
+	{
+		ostringstream converter;
+		converter << i;
+		name = converter.str();
+		lua_getglobal(L2, name.c_str());
+		string getPropertyName = (string)lua_tostring(L2, -1);
+		propertyList.push_back(getPropertyName);
+		name.erase(name.begin() + 11);
+	}
+	newAchievement = new CAchievements(getName, propertyList, false);
+	return newAchievement;
 }
 
-void CLuaScript::getAchievementPropertiesVariables(string name)
+CProperties* CLuaScript::getAchievementPropertiesVariables(string name)
 {
+	CProperties* newProperty;
 	string addName = "Name";
 	string addValue = "Value";
 	string addActive = "Active";
@@ -116,21 +132,24 @@ void CLuaScript::getAchievementPropertiesVariables(string name)
 	name += addName;
 	lua_getglobal(L2, name.c_str());
 	string getName = (string)lua_tostring(L2, -1);
-	name.erase(name.begin() + 6, name.end() - 4);
+	name.erase(name.begin() + 5);
 
 	name += addValue;
 	lua_getglobal(L2, name.c_str());
-	int getPosX = (int)lua_tonumber(L2, -1);
-	name.erase(name.begin() + 6, name.end() - 5);
+	int getValue = (int)lua_tonumber(L2, -1);
+	name.erase(name.begin() + 6);
 
 	name += addActive;
 	lua_getglobal(L2, name.c_str());
-	string getPosY = (string)lua_tostring(L2, -1);
-	name.erase(name.begin() + 6, name.end() - 6);
+	string getActive = (string)lua_tostring(L2, -1);
+	name.erase(name.begin() + 7);
 
 	name += addActValue;
 	lua_getglobal(L2, name.c_str());
 	int getActValue = (int)lua_tonumber(L2, -1);
+
+	newProperty = new CProperties(getName, getValue, getActive, getActValue, false);
+	return newProperty;
 }
 
 void CLuaScript::recordAchievementProgress(string name, string value, string changedValue)

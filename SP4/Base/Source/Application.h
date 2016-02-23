@@ -9,6 +9,8 @@
 #include "States\SplashState.h"
 #include "States\OptionsState.h"
 #include <string>
+#include "Achievements\Achievements.h"
+#include <sstream>
 
 class Application
 {
@@ -85,6 +87,13 @@ private:
 	// Game State Management
 	CGameStateManager* theGSM;
 
+	CAchievements* m_cAchievements;
+	vector<CAchievements*> m_cAchievementList;
+
+	vector<CProperties*> m_cPropertyList;
+	CProperties* m_cProperties;
+
+	CLuaScript* m_cLuaScript;
 };
 
 #endif
