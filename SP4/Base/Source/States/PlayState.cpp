@@ -108,9 +108,9 @@ void CPlayState::HandleEvents(CGameStateManager* theGSM, const double mouse_x, c
 	//	}
 	//} while (m_iUserChoice == -1);
 #endif
-	if (button_Left == true)
+	if (button_Left == 1)
 		scene->UpdateWeaponStatus(scene->WA_FIRE);
-	else if (button_Right == true)
+	else if (button_Right == 1)
 		scene->UpdateWeaponStatus(scene->WA_FIRE_SECONDARY);
 }
 
@@ -128,6 +128,11 @@ void CPlayState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 {
 	// Update the scene
 	scene->Update(m_dElapsedTime);
+
+	if (CScenePlay::GetIsQuitToMain() == true)
+	{
+		theGSM->ChangeState(CMenuState::Instance());
+	}
 }
 
 void CPlayState::Draw(CGameStateManager* theGSM)

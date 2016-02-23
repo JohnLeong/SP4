@@ -5,6 +5,7 @@ CPlayer::CPlayer()
 , action(PA_IDLE_DOWN)
 , m_NextDir(PD_NONE)
 , m_iCoins(0)
+, m_iKeys(0)
 , m_bHasReachedEndLevel(false)
 {
 
@@ -385,14 +386,25 @@ int CPlayer::GetCoins(void)
 	return m_iCoins;
 }
 
-void CPlayer::AddCoin(int iAmt)
+int CPlayer::GetKeys(void)
 {
-	this->m_iCoins += iAmt;
+	return m_iKeys;
 }
 
 void CPlayer::Reset(void)
 {
 	this->m_iCoins = 0;
+	this->m_iKeys = 0;
+}
+
+void CPlayer::AddKeys(int iAmt)
+{
+	this->m_iKeys += m_iKeys;
+}
+
+void CPlayer::AddCoin(int iAmt)
+{
+	this->m_iCoins += iAmt;
 }
 
 bool CPlayer::GetHasReachedEndLevel(void)

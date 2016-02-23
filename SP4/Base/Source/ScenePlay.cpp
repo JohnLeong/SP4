@@ -9,6 +9,7 @@
 #include "LoadTGA.h"
 
 #define MatchTimeLimit 15.f
+bool CScenePlay::m_bBacktoMainMenu = false;
 
 CScenePlay::CScenePlay(void)
 	: m_window_width(800)
@@ -34,10 +35,17 @@ void CScenePlay::Init()
 {
 	CSceneManager::Init();
 
+	//init the boolean for quit
+	SetISQuitToMain(false);
+
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		meshList[i] = NULL;
 	}
+
+	//vector of quit button pos
+	quit_button_vec.Set(161.0f, 77.8f, 0.0f);
+
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");//, 1000, 1000, 1000);
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -69,6 +77,25 @@ void CScenePlay::Init()
 	meshList[GEO_PLAYER] = MeshBuilder::GenerateSpriteAnimation2D("GEO_PLAYER", 4, 3);
 	meshList[GEO_PLAYER]->textureID = LoadTGA("Image//Entities//explorer.tga");
 
+	//Scroll background
+	meshList[GEO_SCROLL] = MeshBuilder::Generate2DMesh("scroll background", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 180.0f);
+	meshList[GEO_SCROLL]->textureID = LoadTGA("Image/INVENTORY//Scroll.tga");
+	
+	//Quit button
+	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMesh("quit button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
+	meshList[GEO_QUIT_BUTTON]->textureID = LoadTGA("Image/INVENTORY//Quit.tga");
+
+	//back cover
+	meshList[GEO_BACKCOVER] = MeshBuilder::Generate2DMesh("back cover", Color(0.9f, 0.9f, 0.9f), 0.0f, 0.0f, 100.0f, 180.0f);
+
+	//coin
+	meshList[GEO_COIN] = MeshBuilder::GenerateSpriteAnimation2D("coin", 1, 8);
+	meshList[GEO_COIN]->textureID = LoadTGA("Image//Entities//coin.tga");
+
+	//keys
+	meshList[GEO_KEYS] = MeshBuilder::GenerateSpriteAnimation2D("key", 1, 11);
+	meshList[GEO_KEYS]->textureID = LoadTGA("Image//Entities//key.tga");
+
 	Math::InitRNG();
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
@@ -81,7 +108,11 @@ void CScenePlay::Init()
 
 	bLightEnabled = true;
 
+	coins_sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_COIN]);
+	coins_sprite->m_anim = new Animation(0, 7, 0, 1.0f);
 
+	keys_sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_KEYS]);
+	keys_sprite->m_anim = new Animation(0, 10, 0, 1.0f);
 
 	m_cPlayer = new CPlayer();
 	m_cPlayer->Init(m_cLevel.GetTilemap(), 1, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]), &m_cLevel.m_cEntityIPosList);
@@ -144,6 +175,11 @@ void CScenePlay::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
+	if (Application::IsKeyPressed('1'))
+	{
+		cout << "boolean: " << GetIsQuitToMain() << endl;
+	}
+
 	if (m_cLevel.IsMovementReady())
 	{
 		if (IsKeyDownOnce('w'))
@@ -163,6 +199,12 @@ void CScenePlay::Update(double dt)
 	{
 		m_cLevel.UpdateMovement(static_cast<float>(dt), this->m_cPlayer);
 	}
+
+	//coins sprite update
+	coins_sprite->Update(dt);
+
+	//keys sprite update
+	keys_sprite->Update(dt);
 
 	//Update level
 	m_cLevel.Update(static_cast<float>(dt), this->m_cPlayer);
@@ -214,9 +256,11 @@ void CScenePlay::RenderGUI()
 		RenderTextOnScreen(meshList[GEO_TEXT], "DEAD", Color(0.f, 0.f, 0.f), 10.f, -160.f, 10.f);
 }
 
+/********************************************************************************
+Render the player
+********************************************************************************/
 void CScenePlay::RenderPlayer()
 {
-	// Render the player
 	modelStack.PushMatrix();
 	modelStack.Translate((static_cast<float>(m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetXOffset()), (static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetYOffset()), 0.f);
 	modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
@@ -225,6 +269,9 @@ void CScenePlay::RenderPlayer()
 	modelStack.PopMatrix();
 }
 
+/********************************************************************************
+Render the entities
+********************************************************************************/
 void CScenePlay::RenderEntities()
 {
 	for (std::vector<CEntityIPos*>::iterator entity = m_cLevel.m_cEntityIPosList.begin(); entity != m_cLevel.m_cEntityIPosList.end(); entity++)
@@ -251,9 +298,65 @@ void CScenePlay::RenderEntities()
 
 		modelStack.PopMatrix();
 	}
-	int test;
 }
 
+/********************************************************************************
+Set is quit to main
+********************************************************************************/
+void CScenePlay::SetISQuitToMain(bool b)
+{
+	CScenePlay::m_bBacktoMainMenu = b;
+}
+
+/********************************************************************************
+Get is quit to main
+********************************************************************************/
+bool CScenePlay::GetIsQuitToMain()
+{
+	return m_bBacktoMainMenu;
+}
+
+/********************************************************************************
+Render the inventory
+********************************************************************************/
+void CScenePlay::RenderInventory()
+{
+	//Render the scroll background and back cover
+	RenderMeshIn2D(meshList[GEO_BACKCOVER], false, 1, 1, 60, -90);
+	RenderMeshIn2D(meshList[GEO_SCROLL], false, 1, 1, 60, -90);
+
+	//Render the number of keys obtained
+	RenderMeshIn2D(meshList[GEO_KEYS], false, 25, 25, 80, -20);
+
+	//Render the number of coins obtained
+	RenderMeshIn2D(meshList[GEO_COIN], false, 25, 25, 80, -50);
+
+	ostringstream s_coins;
+	s_coins << m_cPlayer->GetCoins();
+	RenderTextOnScreen(meshList[GEO_TEXT], s_coins.str(), Color(0.0f, 0.0f, 0.0f), 30.f, 100.0f, -75.0f);
+
+	//on mouse hover quit button
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 11.0f, quit_button_vec.y + 5.42f)
+		|| CSceneManager::IsKeyDown('q'))
+	{
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.1f, 1.1f, 128.0f, 50.0f);
+		
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || CSceneManager::IsKeyDown('q'))
+		{
+			SetISQuitToMain(true);
+		}
+		
+	}
+	else
+	{
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1, 1, 130, 50);
+		SetISQuitToMain(false);
+	}
+}
+
+/********************************************************************************
+Render the tilemap
+********************************************************************************/
 void CScenePlay::RenderTilemap(void)
 {
 	for (int i = 0; i < m_cLevel.GetTilemap()->GetNumOfTiles_Width(); ++i)
@@ -287,6 +390,7 @@ void CScenePlay::Render()
 
 	RenderEntities();
 	RenderPlayer();
+	RenderInventory();
 
 	RenderGUI();
 #if _DEBUG

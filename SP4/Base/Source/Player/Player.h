@@ -56,6 +56,9 @@ public:
 	int GetCoins(void);
 	void AddCoin(int iAmt);
 
+	int GetKeys(void);
+	void AddKeys(int iAmt);
+
 	void Reset(void);
 
 	bool GetHasReachedEndLevel();
@@ -81,5 +84,7 @@ private:
 	Animation* m__animationList[NUM_PLAYER_ACTION]; 
 
 	int m_iCoins;
+	int m_iKeys;
+
 	//Mesh* mesh;
 };

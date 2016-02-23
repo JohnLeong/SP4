@@ -189,7 +189,7 @@ bool Application::GetKeyboardUpdate()
 	theGSM->HandleEvents('w', IsKeyPressed('W'));
 	theGSM->HandleEvents('s', IsKeyPressed('S'));
 	theGSM->HandleEvents('g', IsKeyPressed('G'));
-
+	theGSM->HandleEvents('q', IsKeyPressed('Q'));
 	if (IsKeyPressed('A'))
 	{
 		theGSM->HandleEvents('a');

@@ -170,6 +170,16 @@ void CEntityIPos::AddCoin(int iAmt)
 
 }
 
+int CEntityIPos::GetKeys(void)
+{
+	return -1;
+}
+
+void CEntityIPos::AddKeys(int iAmt)
+{
+
+}
+
 bool CEntityIPos::IsHoldingObj(void)
 {
 	return this->m_bHoldingObj;

@@ -53,6 +53,8 @@ public:
 	virtual int GetCoins(void);
 	virtual void AddCoin(int iAmt);
 
+	virtual int GetKeys(void);
+	virtual void AddKeys(int iAmt);
 	//For enemy
 	virtual bool IsHoldingObj(void);
 	virtual CEntityIPos* GetHoldingObj(void);

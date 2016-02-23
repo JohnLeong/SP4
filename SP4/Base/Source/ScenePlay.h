@@ -22,9 +22,13 @@ class CScenePlay : public CSceneManager
 		GEO_GRASS_DARKGREEN,
 		GEO_GRASS_LIGHTGREEN,
 		GEO_TEXT,
+		GEO_BACKCOVER,
 
 		//Tile overlay
 		GEO_OVERLAY_RED,
+
+		GEO_COIN,
+		GEO_KEYS,
 
 		//Tile geometry
 		GEO_TILE_FLOOR_STONE_01,
@@ -33,7 +37,8 @@ class CScenePlay : public CSceneManager
 		GEO_TILE_HOLE_STONE_01,
 		GEO_TILE_DOOR_RED,
 		GEO_PLAYER,
-
+		GEO_SCROLL,
+		GEO_QUIT_BUTTON,
 		NUM_GEOMETRY,
 	};
 
@@ -50,6 +55,12 @@ public:
  	virtual void UpdateAvatarStatus(const unsigned char key, const bool status = true);
 	// Update Weapon status
 	virtual void UpdateWeaponStatus(const unsigned char key);
+
+	//set the boolean for quit 
+	static void SetISQuitToMain(bool b);
+	//get the boolean for quit
+	static bool GetIsQuitToMain();
+
 	virtual void Render();
 	virtual void Exit();
 
@@ -60,9 +71,11 @@ public:
 	void RenderGUI();
 	void RenderPlayer();
 	void RenderEntities();
+	void RenderInventory();
 	void RenderTilemap(void);
 
 	bool m_bExitPlay;
+
 
 private:
 	//unsigned m_vertexArrayID;
@@ -82,6 +95,12 @@ private:
 
 	//Achievements
 	int m_iCurrentLevel;
+
+	static bool m_bBacktoMainMenu;
+	Vector3 quit_button_vec;
+
+	SpriteAnimation* coins_sprite;
+	SpriteAnimation* keys_sprite;
 };
 
 #endif
