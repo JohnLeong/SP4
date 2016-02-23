@@ -8,7 +8,7 @@
 #include "LoadTGA.h"
 #include <sstream>
 
-#define buttonYoffset 55.5
+#define buttonYoffset 55.5f
 CSceneMenu::CSceneMenu(void):
 isKeyBoard(false)
 {
@@ -38,7 +38,7 @@ void CSceneMenu::Init()
 	for (int i = 0; i < 4; i++) //left side of button
 	{
 		//0 = play 1 = instructions 2 = options 3 = exit
-		geo_pos[i].Set(61, 67 - (16 * i), 0);
+		geo_pos[i].Set(61.0f, 67.0f - (16.0f * i), 0.0f);
 		cout << geo_pos[i] << endl;
 	}
 
@@ -133,28 +133,28 @@ void CSceneMenu::Render()
 		cout << "current mouse y: " << Application::getMouseWorldY() << endl;
 		cout << "geo_pos.x: " << geo_pos[1].x << endl;
 		cout << "geo_pos.y: " << geo_pos[1].y << endl;
-		cout << "geo_pos.x R: " << geo_pos[1].x + 55.5 << endl;
-		cout << "geo_pos.y R: " << geo_pos[1].y + 8 << endl;
+		cout << "geo_pos.x R: " << geo_pos[1].x + 55.5f << endl;
+		cout << "geo_pos.y R: " << geo_pos[1].y + 8.0f << endl;
 
 	}
 	
 	//Update image on mouse hover
-	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonYoffset, geo_pos[0].y + 8)) // play button
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonYoffset, geo_pos[0].y + 8.0f)) // play button
 	{
 		Application::setChoiceVal(4);
 		isKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonYoffset, geo_pos[1].y + 8)) // instructions button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonYoffset, geo_pos[1].y + 8.0f)) // instructions button
 	{
 		Application::setChoiceVal(3);
 		isKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonYoffset, geo_pos[2].y + 8)) // options button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonYoffset, geo_pos[2].y + 8.0f)) // options button
 	{
 		Application::setChoiceVal(2);
 		isKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonYoffset, geo_pos[3].y + 8)) // exit button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonYoffset, geo_pos[3].y + 8.0f)) // exit button
 	{
 		Application::setChoiceVal(1);
 		isKeyBoard = false;

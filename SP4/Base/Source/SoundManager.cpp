@@ -10,7 +10,9 @@ CSoundManager::CSoundManager()
 , position(0)
 {
 	soundEngine = createIrrKlangDevice();
+	soundEngineBGM = createIrrKlangDevice();
 	currentSound = 0;
+	currentBGM = 0;
 
 	if (!soundEngine)
 	{
@@ -30,7 +32,9 @@ CSoundManager::CSoundManager(string soundFile)
 , position(0)
 {
 	soundEngine = createIrrKlangDevice();
-	currentSound = 0;
+	soundEngineBGM = createIrrKlangDevice();
+	currentSound = NULL;
+	currentBGM = NULL;
 
 	if (!soundEngine)
 	{
@@ -46,8 +50,12 @@ Destructor
 ********************************************************************************/
 CSoundManager::~CSoundManager()
 {
-	soundEngine->drop();
-	currentSound->drop();
+	if (soundEngine)
+		soundEngine->drop();
+	if (soundEngineBGM)
+		soundEngineBGM->drop();
+	if (currentSound)
+		currentSound->drop();
 }
 
 /********************************************************************************
@@ -65,7 +73,7 @@ void CSoundManager::playSound()
 	if (!currentSound)
 	{
 		cout << "Error: could not play file" << endl;
-		exit(0);
+		//exit(0);
 	}
 
 	while (!currentSound)
@@ -91,7 +99,7 @@ void CSoundManager::playSound(int milliseconds)
 	if (!currentSound)
 	{
 		cout << "Error: could not play file" << endl;
-		exit(0);
+		//exit(0);
 	}
 
 	_sleep(milliseconds);
@@ -112,7 +120,28 @@ void CSoundManager::playSound(string soundFile)
 	if (!currentSound)
 	{
 		cout << "Error: could not play file" << endl;
-		exit(0);
+		//exit(0);
+	}
+
+	while (!currentSound)
+		_sleep(100);
+
+	position = currentSound->getPlayPosition();
+}
+
+/********************************************************************************
+ play background sound function with file parameter
+********************************************************************************/
+void CSoundManager::playBackgroundSound(string soundFile)
+{
+	SetFileName(soundFile);
+
+	currentSound = soundEngineBGM->play2D(filename.c_str(), false, false, true);
+
+	if (!currentSound)
+	{
+		cout << "Error: could not play file" << endl;
+		//exit(0);
 	}
 
 	while (!currentSound)
@@ -133,7 +162,7 @@ void CSoundManager::playSound(string soundFile, int milliseconds)
 	if (!currentSound)
 	{
 		cout << "Error: could not play file" << endl;
-		exit(0);
+		//exit(0);
 	}
 
 	_sleep(milliseconds);
@@ -150,7 +179,7 @@ void CSoundManager::playSoundThreaded()
 	if (!currentSound)
 	{
 		cout << "Error: could not play file" << endl;
-		exit(0);
+		//exit(0);
 	}
 }
 
@@ -236,7 +265,17 @@ void CSoundManager::increaseVolume(int inc)
 	if (volume > 100)
 		volume = 100;
 
-	currentSound->setVolume(volume / 100.0f);
+	if (currentSound)
+	{
+		currentSound->setVolume(volume / 100.0f);
+		return;
+	}
+	else if (currentBGM)
+	{
+		currentBGM->setVolume(volume / 100.0f);
+		return;
+	}
+	
 }
 
 /********************************************************************************
@@ -249,7 +288,16 @@ void CSoundManager::decreaseVolume()
 	if (volume < 0)
 		volume = 0;
 
-	currentSound->setVolume(volume / 100.0f);
+	if (currentSound)
+	{
+		currentSound->setVolume(volume / 100.0f);
+		return;
+	}
+	else if (currentBGM)
+	{
+		currentBGM->setVolume(volume / 100.0f);
+		return;
+	}
 }
 
 /********************************************************************************

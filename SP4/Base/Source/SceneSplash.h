@@ -5,6 +5,7 @@
 #include "Mtx44.h"
 #include "Camera3.h"
 #include "Mesh.h"
+#include "Application.h"
 #include "MatrixStack.h"
 #include "Light.h"
 

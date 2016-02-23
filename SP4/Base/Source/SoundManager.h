@@ -29,6 +29,9 @@ public:
 	void playSound(string soundFile);
 	void playSound(string soundFile, int milliseconds);
 
+	//plays the entire specified background file (soundengineBGM)
+	void playBackgroundSound(string soundFile);
+
 	//Starts playing sound but program continues
 	void playSoundThreaded();
 
@@ -62,7 +65,9 @@ public:
 
 protected:
 	ISoundEngine* soundEngine;
+	ISoundEngine* soundEngineBGM;
 	ISound* currentSound;
+	ISound* currentBGM;
 	string filename;
 	int volume;
 	int position;

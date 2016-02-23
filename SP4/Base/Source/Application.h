@@ -8,6 +8,7 @@
 #include "States\MenuState.h"
 #include "States\SplashState.h"
 #include "States\OptionsState.h"
+#include "SoundManager.h"
 #include <string>
 #include "Achievements\Achievements.h"
 #include <sstream>
@@ -59,6 +60,8 @@ public:
 	//check for collision
 	static bool checkForcollision(float mouseX, float mouseY, float pos_buttonX, float pos_buttonY, float pos_buttonWidth, float pos_buttonHeight);
 
+	//Sound Manager
+	static CSoundManager Sound;
 private:
 	Application();
 	~Application();

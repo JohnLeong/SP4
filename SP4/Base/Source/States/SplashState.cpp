@@ -7,6 +7,7 @@ using namespace std;
 #include "gamestate.h"
 #include "menustate.h"
 
+
 CSplashState CSplashState::theMenuState;
 
 void CSplashState::Init()
@@ -17,6 +18,7 @@ void CSplashState::Init()
 
 	scene = new CSceneSplash(1280, 720);
 	scene->Init();
+
 }
 
 void CSplashState::Init(const int width, const int height)
@@ -27,6 +29,7 @@ void CSplashState::Init(const int width, const int height)
 
 	scene = new CSceneSplash(width, height);
 	scene->Init();
+	Application::Sound.playBackgroundSound("../irrKlang/media/SmokeWeedEveryday.mp3");
 }
 
 void CSplashState::Cleanup()

@@ -23,6 +23,7 @@ int Application::m_iPrevScoreBlue = 0, Application::m_iPrevScoreRed = 0;
 bool Application::m_bChangeRes = false, Application::m_bFullscreen = false;
 int Application::m_window_width = 1280; int Application::m_window_height = 720;
 int Application::choice = 0; float Application::mouseWorldX = 0; float Application::mouseWorldY = 0;
+CSoundManager Application::Sound;
 bool Application::m_bPauseDT = false;
 /********************************************************************************
  Define an error callback
@@ -145,8 +146,8 @@ bool Application::GetMouseUpdate()
 	camera_yaw = (float) mouse_diff_x * 0.0174555555555556f;// * 3.142f / 180.0f;
 	camera_pitch = mouse_diff_y * 0.0174555555555556f;// 3.142f / 180.0f );
 
-	mouseWorldX = Application::mouse_current_x * m_world_width / Application::getWindowWidth();
-	mouseWorldY = (Application::getWindowHeight() - Application::mouse_current_y) * m_world_height / Application::getWindowHeight();
+	mouseWorldX = static_cast<float>(Application::mouse_current_x * m_world_width / Application::getWindowWidth());
+	mouseWorldY = (static_cast<float>(Application::getWindowHeight() - Application::mouse_current_y) * m_world_height / Application::getWindowHeight());
 
 	// Do a wraparound if the mouse cursor has gone out of the deadzone
 	/*if ((mouse_current_x < m_window_deadzone) || (mouse_current_x > m_window_width-m_window_deadzone))

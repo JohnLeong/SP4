@@ -3,7 +3,6 @@
 
 #include "shader.hpp"
 #include "MeshBuilder.h"
-#include "Application.h"
 #include "Utility.h"
 #include "LoadTGA.h"
 #include <sstream>
@@ -26,7 +25,6 @@ void CSceneSplash::Init()
 {
 	CSceneManager::Init();
 	glClearColor(0.f, 0.f, 0.f, 0.0f);
-
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		meshList[i] = NULL;
