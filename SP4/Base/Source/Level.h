@@ -1,7 +1,14 @@
+#ifndef LEVEL_H
+#define LEVEL_H
+
 #include "Tilemap.h"
 #include "Entities\EnemyZombie.h"
+#include "Entities\EnemySuperRetardZombie.h"
 #include "Entities\Entity_Block_Movable.h"
 #include "Entities\Entity_Key_Red.h"
+#include "Entities\Entity_Key_Blue.h"
+#include "Entities\Entity_Key_Green.h"
+#include "Entities\Entity_Key_Yellow.h"
 #include "Entities\Entity_Fire.h"
 #include "Entities\Entity_Coin.h"
 #include "Player\Player.h"
@@ -49,7 +56,11 @@ public:
 	void SetPlayerPtr(CPlayer* cPlayer);
 
 	CEnemyZombie* GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t);
+	CEnemySuperRetardZombie* GenerateSuperRetardZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t);
 	CEntity_Key_Red* GenerateRedKeyEntity(int iXIndex, int iYIndex);
+	CEntity_Key_Blue* GenerateBlueKeyEntity(int iXIndex, int iYIndex);
+	CEntity_Key_Green* GenerateGreenKeyEntity(int iXIndex, int iYIndex);
+	CEntity_Key_Yellow* GenerateYellowKeyEntity(int iXIndex, int iYIndex);
 	CEntity_Coin* GenerateCoinEntity(int iXIndex, int iYIndex);
 
 private:
@@ -59,3 +70,5 @@ private:
 	bool m_bDoTileCheck;			//Check tiles player and entities are standing on
 	CPlayer* m_cPlayerPtr;
 };
+
+#endif

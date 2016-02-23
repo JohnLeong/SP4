@@ -1,3 +1,6 @@
+#ifndef NODE_H
+#define NODE_H
+
 // Structure For Basic Unit/Node In Map
 class Node
 {
@@ -9,3 +12,5 @@ public:
 	//                 h = Cost From Current To Goal Node
 	//				   f = Cost From Start To Goal (g+h) Node
 };
+
+#endif

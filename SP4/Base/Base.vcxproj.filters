@@ -208,6 +208,18 @@
     <ClCompile Include="Source\Entities\Entity_Coin.cpp">
       <Filter>Entities\GameplayEntities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Entities\EnemySuperRetardZombie.cpp">
+      <Filter>Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entities\Entity_Key_Blue.cpp">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entities\Entity_Key_Green.cpp">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entities\Entity_Key_Yellow.cpp">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Achievements\Achievements.cpp">
       <Filter>Achievements</Filter>
     </ClCompile>
@@ -358,6 +370,18 @@
       <Filter>Game State Management\Scenes\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entities\Entity_Coin.h">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\EnemySuperRetardZombie.h">
+      <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\Entity_Key_Blue.h">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\Entity_Key_Green.h">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\Entity_Key_Yellow.h">
       <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
     <ClInclude Include="Source\Achievements\Achievements.h">

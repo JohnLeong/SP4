@@ -90,6 +90,7 @@ void CScenePlay::Init()
 
 	/*To be removed*/
 	m_cLevel.GenerateZombieEntity(3, 3, CEnemy::HOLDING_KEY_RED);
+	m_cLevel.GenerateSuperRetardZombieEntity(5, 3, CEnemy::HOLDING_KEY_RED);
 	Mesh* temp_mesh;
 	//temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
 	//temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
@@ -108,6 +109,9 @@ void CScenePlay::Init()
 	CEntity_Key_Red* key = new CEntity_Key_Red(8, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
 	m_cLevel.m_cEntityIPosList.push_back(key);*/
 	m_cLevel.GenerateRedKeyEntity(8, 8);
+	m_cLevel.GenerateBlueKeyEntity(9, 8);
+	m_cLevel.GenerateGreenKeyEntity(10, 8);
+	m_cLevel.GenerateYellowKeyEntity(11, 8);
 	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("FIYAH", 2, 5);
 	temp_mesh->textureID = LoadTGA("Image//Entities//fire.tga");
 	CEntity_Fire* fire = new CEntity_Fire(9, 9, CEntity_Fire::STATE_01, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);

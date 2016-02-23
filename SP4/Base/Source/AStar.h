@@ -1,3 +1,6 @@
+#ifndef ASTAR_H
+#define ASTAR_H
+
 #include "Node.h"
 #include "Tilemap.h"
 #include <vector>
@@ -43,3 +46,5 @@ public:
 	PATH_DIR GetPathDir(Node *walker);
 	std::vector<CEntityIPos*>* entityList;
 };
+
+#endif

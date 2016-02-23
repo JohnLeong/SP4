@@ -291,11 +291,62 @@ CEnemyZombie* CLevel::GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOL
 	return zombie;
 }
 
+CEnemySuperRetardZombie* CLevel::GenerateSuperRetardZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t)
+{
+	CEnemySuperRetardZombie* zombie;
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
+	temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
+	switch (t)
+	{
+	case CEnemy::HOLDING_KEY_NONE:
+		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
+		break;
+	case CEnemy::HOLDING_KEY_RED:
+		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateRedKeyEntity(0, 0));
+		break;
+	case CEnemy::HOLDING_KEY_GREEN:
+		break;
+	case CEnemy::HOLDING_KEY_BLUE:
+		break;
+	default:
+		break;
+	}
+	m_cEntityIPosList.push_back(zombie);
+	return zombie;
+}
+
 CEntity_Key_Red* CLevel::GenerateRedKeyEntity(int iXIndex, int iYIndex)
 {
 	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("Key", 1, 11);
-	temp_mesh->textureID = LoadTGA("Image//Entities//key.tga");
+	temp_mesh->textureID = LoadTGA("Image//Entities//key_red.tga");
 	CEntity_Key_Red* key = new CEntity_Key_Red(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), this->m_cPlayerPtr, &m_cEntityIPosList);
+	m_cEntityIPosList.push_back(key);
+	return key;
+}
+
+CEntity_Key_Blue* CLevel::GenerateBlueKeyEntity(int iXIndex, int iYIndex)
+{
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("Key", 1, 11);
+	temp_mesh->textureID = LoadTGA("Image//Entities//key_blue.tga");
+	CEntity_Key_Blue* key = new CEntity_Key_Blue(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), this->m_cPlayerPtr, &m_cEntityIPosList);
+	m_cEntityIPosList.push_back(key);
+	return key;
+}
+
+CEntity_Key_Green* CLevel::GenerateGreenKeyEntity(int iXIndex, int iYIndex)
+{
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("Key", 1, 11);
+	temp_mesh->textureID = LoadTGA("Image//Entities//key_green.tga");
+	CEntity_Key_Green* key = new CEntity_Key_Green(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), this->m_cPlayerPtr, &m_cEntityIPosList);
+	m_cEntityIPosList.push_back(key);
+	return key;
+}
+
+CEntity_Key_Yellow* CLevel::GenerateYellowKeyEntity(int iXIndex, int iYIndex)
+{
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("Key", 1, 11);
+	temp_mesh->textureID = LoadTGA("Image//Entities//key_yellow.tga");
+	CEntity_Key_Yellow* key = new CEntity_Key_Yellow(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), this->m_cPlayerPtr, &m_cEntityIPosList);
 	m_cEntityIPosList.push_back(key);
 	return key;
 }

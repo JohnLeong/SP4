@@ -13,9 +13,13 @@
   <ItemGroup>
     <ClCompile Include="Source\Achievements\Achievements.cpp" />
     <ClCompile Include="Source\Achievements\Properties.cpp" />
+    <ClCompile Include="Source\Entities\EnemySuperRetardZombie.cpp" />
     <ClCompile Include="Source\Entities\Entity_Coin.cpp" />
     <ClCompile Include="Source\Entities\Entity_Fire.cpp" />
+    <ClCompile Include="Source\Entities\Entity_Key_Blue.cpp" />
+    <ClCompile Include="Source\Entities\Entity_Key_Green.cpp" />
     <ClCompile Include="Source\Entities\Entity_Key_Red.cpp" />
+    <ClCompile Include="Source\Entities\Entity_Key_Yellow.cpp" />
     <ClCompile Include="Source\SceneInstruction.cpp" />
     <ClCompile Include="Source\SoundManager.cpp" />
     <ClCompile Include="Source\Application.cpp" />
@@ -62,9 +66,13 @@
     <ClInclude Include="Source\Achievements\Achievements.h" />
     <ClInclude Include="Source\Achievements\Properties.h" />
     <ClInclude Include="Source\define.h" />
+    <ClInclude Include="Source\Entities\EnemySuperRetardZombie.h" />
     <ClInclude Include="Source\Entities\Entity_Coin.h" />
     <ClInclude Include="Source\Entities\Entity_Fire.h" />
+    <ClInclude Include="Source\Entities\Entity_Key_Blue.h" />
+    <ClInclude Include="Source\Entities\Entity_Key_Green.h" />
     <ClInclude Include="Source\Entities\Entity_Key_Red.h" />
+    <ClInclude Include="Source\Entities\Entity_Key_Yellow.h" />
     <ClInclude Include="Source\SceneInstruction.h" />
     <ClInclude Include="Source\SoundManager.h" />
     <ClInclude Include="Source\Application.h" />
