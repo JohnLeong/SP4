@@ -191,6 +191,12 @@ void CScenePlay::Update(double dt)
 
 	//Update camera position based on player position
 	camera.UpdatePosition(Vector3(static_cast<float>(m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset()), static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
+
+
+	if (m_cPlayer->GetHasReachedEndLevel() == true)
+	{
+		//End Level
+	}
 }
 
 /********************************************************************************

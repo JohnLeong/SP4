@@ -57,6 +57,8 @@ public:
 
 	void Reset(void);
 
+	bool GetHasReachedEndLevel();
+
 private:
 
 	bool myKeys[255];
@@ -65,6 +67,8 @@ private:
 	bool XYDirection;
 	bool offSetDirectionX;
 	bool offSetDirectionY;
+
+	bool m_bHasReachedEndLevel;
 
 	PlayerDirection direction;
 	PlayerDirection m_NextDir;

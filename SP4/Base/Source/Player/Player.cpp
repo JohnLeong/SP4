@@ -5,6 +5,7 @@ CPlayer::CPlayer()
 , action(PA_IDLE_DOWN)
 , m_NextDir(PD_NONE)
 , m_iCoins(0)
+, m_bHasReachedEndLevel(false)
 {
 
 }
@@ -234,6 +235,9 @@ void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
 	case CTiledata::COL_BLOCK:
 		std::cout << "ERMAHGAD COLLISION ERROR" << std::endl;
 		break;
+	case CTiledata::COL_ENDLEVEL:
+		m_bHasReachedEndLevel = true;
+		break;
 	default:
 		moving = false;
 		break;
@@ -251,7 +255,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionY)
 			{
-				this->m_fOffSetY += static_cast<float>(dt) * ENTITY_MOVE_SPEED;
+				this->m_fOffSetY += static_cast<float>(dt)* ENTITY_MOVE_SPEED;
 				if (this->m_fOffSetY > tile->GetTileSize())
 				{
 					this->m_fOffSetY = 0;
@@ -261,7 +265,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 			}
 			else
 			{
-				m_fOffSetY -= static_cast<float>(dt) * ENTITY_MOVE_SPEED;
+				m_fOffSetY -= static_cast<float>(dt)* ENTITY_MOVE_SPEED;
 				if (m_fOffSetY < -tile->GetTileSize())
 				{
 					m_fOffSetY = 0;
@@ -361,4 +365,9 @@ void CPlayer::AddCoin(int iAmt)
 void CPlayer::Reset(void)
 {
 	this->m_iCoins = 0;
+}
+
+bool CPlayer::GetHasReachedEndLevel(void)
+{
+	return m_bHasReachedEndLevel;
 }
