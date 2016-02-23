@@ -92,36 +92,18 @@ void CScenePlay::Init()
 
 	/*To be removed*/
 	m_cLevel.GenerateZombieEntity(3, 3, CEnemy::HOLDING_KEY_RED);
-	//m_cLevel.GenerateSuperRetardZombieEntity(5, 3, CEnemy::HOLDING_KEY_RED);
-	Mesh* temp_mesh;
-	//temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
-	//temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
-	//CEnemyZombie* enemy = new CEnemyZombie(3, 3, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
-	//m_cLevel.m_cEntityIPosList.push_back(enemy);
-	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("BOX", 1, 1);
-	temp_mesh->textureID = LoadTGA("Image//Entities//box.tga");
-	CEntity_Block_Movable* entity = new CEntity_Block_Movable(6, 6, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
-	m_cLevel.m_cEntityIPosList.push_back(entity);
-	entity = new CEntity_Block_Movable(6, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
-	m_cLevel.m_cEntityIPosList.push_back(entity);
-	entity = new CEntity_Block_Movable(3, 1, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
-	m_cLevel.m_cEntityIPosList.push_back(entity);
-	/*temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("KEEE", 1, 11);
-	temp_mesh->textureID = LoadTGA("Image//Entities//key.tga");
-	CEntity_Key_Red* key = new CEntity_Key_Red(8, 8, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), new Animation(0, 10, 0, 0.3f), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
-	m_cLevel.m_cEntityIPosList.push_back(key);*/
+	m_cLevel.GenerateMovableBlockEntity(6, 6);
+	m_cLevel.GenerateMovableBlockEntity(6, 8);
+	m_cLevel.GenerateMovableBlockEntity(3, 1);
 	m_cLevel.GenerateRedKeyEntity(8, 8);
 	m_cLevel.GenerateBlueKeyEntity(9, 8);
 	m_cLevel.GenerateGreenKeyEntity(10, 8);
 	m_cLevel.GenerateYellowKeyEntity(11, 8);
-	temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("FIYAH", 2, 5);
-	temp_mesh->textureID = LoadTGA("Image//Entities//fire.tga");
-	CEntity_Fire* fire = new CEntity_Fire(9, 9, CEntity_Fire::STATE_01, m_cLevel.GetTilemap(), dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayer, &m_cLevel.m_cEntityIPosList);
-	m_cLevel.m_cEntityIPosList.push_back(fire);
 	m_cLevel.GenerateCoinEntity(9, 10);
 	m_cLevel.GenerateCoinEntity(9, 11);
 	m_cLevel.GenerateCoinEntity(9, 12);
 	m_cLevel.GenerateCoinEntity(9, 13);
+	m_cLevel.GenerateFireEntity(9, 9, CEntity_Fire::STATE_01);
 
 	CProperties * test = new CProperties("Deaths", 0, CProperties::ACTIVE_GREATER, 1, false);
 	m_cPropertyList.push_back(test);
@@ -168,7 +150,7 @@ void CScenePlay::Update(double dt)
 
 	if (m_cLevel.IsMovementReady())
 	{
-		if (IsKeyDownOnce('w'))
+		if (IsKeyDown('w'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_UP);
 		else if (IsKeyDownOnce('s'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_DOWN);

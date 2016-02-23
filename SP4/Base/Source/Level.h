@@ -54,6 +54,7 @@ public:
 
 	void SetPlayerPtr(CPlayer* cPlayer);
 
+	//Generate entities
 	CEnemyZombie* GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t);
 	CEnemySuperRetardZombie* GenerateSuperRetardZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDINGKEY_TYPE t);
 	CEntity_Key_Red* GenerateRedKeyEntity(int iXIndex, int iYIndex);
@@ -61,6 +62,8 @@ public:
 	CEntity_Key_Green* GenerateGreenKeyEntity(int iXIndex, int iYIndex);
 	CEntity_Key_Yellow* GenerateYellowKeyEntity(int iXIndex, int iYIndex);
 	CEntity_Coin* GenerateCoinEntity(int iXIndex, int iYIndex);
+	CEntity_Fire* GenerateFireEntity(int iXIndex, int iYIndex, CEntity_Fire::FIRE_STATE);
+	CEntity_Block_Movable* GenerateMovableBlockEntity(int iXIndex, int iYIndex);
 
 private:
 	bool m_bDoMovements;

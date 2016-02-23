@@ -321,3 +321,24 @@ CEntity_Coin* CLevel::GenerateCoinEntity(int iXIndex, int iYIndex)
 	m_cEntityIPosList.push_back(coin);
 	return coin;
 }
+
+CEntity_Fire* CLevel::GenerateFireEntity(int iXIndex, int iYIndex, CEntity_Fire::FIRE_STATE cFireState)
+{
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("FIYAH", 2, 5);
+	temp_mesh->textureID = LoadTGA("Image//Entities//fire.tga");
+
+	CEntity_Fire* fire = new CEntity_Fire(iXIndex, iYIndex, cFireState, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
+	m_cEntityIPosList.push_back(fire);
+	return fire;
+}
+
+CEntity_Block_Movable* CLevel::GenerateMovableBlockEntity(int iXIndex, int iYIndex)
+{
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("Box", 1, 1);
+	temp_mesh->textureID = LoadTGA("Image//Entities//box.tga");
+
+	CEntity_Block_Movable* entity = new CEntity_Block_Movable(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
+	m_cEntityIPosList.push_back(entity);
+
+	return entity;
+}
