@@ -414,7 +414,6 @@ void CScenePlay::RenderInventory()
 		{
 			SetISQuitToMain(true);
 		}
-		
 	}
 	else
 	{
