@@ -77,6 +77,12 @@ void CScenePlay::Init()
 	meshList[GEO_TILE_HOLE_STONE_FILLED_01]->textureID = LoadTGA("Image//Tiles/TILE_HOLE_STONE_FILLED_01.tga");
 	meshList[GEO_TILE_DOOR_RED] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_DOOR_RED]->textureID = LoadTGA("Image//Tiles/TILE_DOOR_RED.tga");
+	meshList[GEO_TILE_DOOR_BLUE] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_DOOR_BLUE]->textureID = LoadTGA("Image//Tiles/TILE_DOOR_BLUE.tga");
+	meshList[GEO_TILE_DOOR_GREEN] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_DOOR_GREEN]->textureID = LoadTGA("Image//Tiles/TILE_DOOR_GREEN.tga");
+	meshList[GEO_TILE_DOOR_YELLOW] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_DOOR_YELLOW]->textureID = LoadTGA("Image//Tiles/TILE_DOOR_YELLOW.tga");
 	meshList[GEO_TILE_RUNE] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 5);
 	meshList[GEO_TILE_RUNE]->textureID = LoadTGA("Image//Tiles/TILE_RUNE.tga");
 	meshList[GEO_TILE_RUNE_USED] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
@@ -98,7 +104,7 @@ void CScenePlay::Init()
 	meshList[GEO_SCROLL]->textureID = LoadTGA("Image/INVENTORY//Scroll.tga");
 	
 	//Quit button
-	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMesh("quit button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
+	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMeshCenter("quit button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
 	meshList[GEO_QUIT_BUTTON]->textureID = LoadTGA("Image/INVENTORY//Quit.tga");
 
 	//back cover
@@ -194,6 +200,9 @@ void CScenePlay::InitLevel()
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_FILLED_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_HOLE_STONE_FILLED_01]), new Animation(0, 0, 1, 0.3f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_UP, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_DOOR_RED, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_RED]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_DOOR_BLUE, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_BLUE]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_DOOR_GREEN, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_GREEN]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_DOOR_YELLOW, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_YELLOW]), new Animation(0, 0, 1, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_RUNE, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_RUNE]), new Animation(0, 9, 0, 0.4f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_RUNE_USED, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_RUNE_USED]), new Animation(0, 0, 1, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_UP, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_UP]), new Animation(0, 0, 1, 1.f));
@@ -408,7 +417,7 @@ void CScenePlay::RenderInventory()
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 11.0f, quit_button_vec.y + 5.42f)
 		|| CSceneManager::IsKeyDown('q'))
 	{
-		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.1f, 1.1f, 128.0f, 50.0f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.1f, 1.1f, 140.0f, 55);
 		
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || CSceneManager::IsKeyDown('q'))
 		{
@@ -417,7 +426,7 @@ void CScenePlay::RenderInventory()
 	}
 	else
 	{
-		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1, 1, 130, 50);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.f, 1.f, 140.0f, 55);
 		SetISQuitToMain(false);
 	}
 }

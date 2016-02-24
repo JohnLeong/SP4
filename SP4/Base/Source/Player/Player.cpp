@@ -209,7 +209,7 @@ void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
 		moving = false;
 		break;
 	case CTiledata::COL_ICE:
-		if (cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).GetCollisionType() != CTiledata::COL_BLOCK)
+		if (cTilemap->AllowCollision(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)))
 		{
 			for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 			{

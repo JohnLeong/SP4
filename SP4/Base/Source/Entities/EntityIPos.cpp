@@ -155,7 +155,7 @@ bool CEntityIPos::DoCurrentTileCollision()
 		this->m_MoveDir = DIR_NONE;
 		return false;
 	case CTiledata::COL_ICE:
-		if (this->m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).GetCollisionType() != CTiledata::COL_BLOCK)
+		if (this->m_cTilemap->AllowCollision(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)))
 		{
 			for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 			{
