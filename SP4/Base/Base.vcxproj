@@ -11,8 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneLevelSelection.cpp" />
-    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.cpp" />
     <ClCompile Include="Source\Achievements\Achievements.cpp" />
     <ClCompile Include="Source\Achievements\Properties.cpp" />
     <ClCompile Include="Source\Entities\EnemySuperRetardZombie.cpp" />
@@ -23,6 +21,7 @@
     <ClCompile Include="Source\Entities\Entity_Key_Red.cpp" />
     <ClCompile Include="Source\Entities\Entity_Key_Yellow.cpp" />
     <ClCompile Include="Source\SceneInstruction.cpp" />
+    <ClCompile Include="Source\SceneLevelSelection.cpp" />
     <ClCompile Include="Source\SoundManager.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\AStar.cpp" />
@@ -43,6 +42,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Node.cpp" />
     <ClCompile Include="Source\States\InstructionState.cpp" />
+    <ClCompile Include="Source\States\LevelSelectionState.cpp" />
     <ClCompile Include="Source\Tiledata.cpp" />
     <ClCompile Include="Source\Tileinfo.cpp" />
     <ClCompile Include="Source\Tilemap.cpp" />

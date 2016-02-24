@@ -226,10 +226,10 @@
     <ClCompile Include="Source\Achievements\Properties.cpp">
       <Filter>Achievements</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneLevelSelection.cpp">
+    <ClCompile Include="Source\SceneLevelSelection.cpp">
       <Filter>Game State Management\Scenes\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.cpp">
+    <ClCompile Include="Source\States\LevelSelectionState.cpp">
       <Filter>Game State Management\States\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
