@@ -116,7 +116,9 @@ void CLevel::Update(const float dt, CPlayer* cPlayer)
 	if (m_bMovementReady)
 	{
 		if (CheckPlayerCollisions(cPlayer))
+		{
 			m_bDoMovements = true;
+		}
 	}
 
 	this->m_bMovementReady = true;
@@ -136,6 +138,18 @@ void CLevel::Update(const float dt, CPlayer* cPlayer)
 			this->m_bMovementReady = false;
 	}
 
+	if (m_bMovementReady)
+	{
+		//Reset tile tint
+		for (int i = 0; i < this->m_cTilemap->GetNumOfTiles_Height(); i++)
+		{
+			for (int k = 0; k < this->m_cTilemap->GetNumOfTiles_Width(); k++)
+			{
+				this->m_cTilemap->theScreenMap[k][i].SetTint(false);
+			}
+		}
+	}
+
 	if (this->m_bDoMovements)
 	{
 		UpdateMovement(dt, cPlayer);
@@ -148,14 +162,8 @@ void CLevel::Update(const float dt, CPlayer* cPlayer)
 
 void CLevel::UpdateMovement(const float dt, CPlayer* cPlayer)
 {
-	//Reset tile tint
-	for (int i = 0; i < this->m_cTilemap->GetNumOfTiles_Height(); i++)
-	{
-		for (int k = 0; k < this->m_cTilemap->GetNumOfTiles_Width(); k++)
-		{
-			this->m_cTilemap->theScreenMap[k][i].SetTint(false);
-		}
-	}
+
+
 	for (std::vector<CEntityIPos*>::iterator entity = m_cEntityIPosList.begin(); entity != m_cEntityIPosList.end(); entity++)
 	{
 		//Skip if entity is not alive

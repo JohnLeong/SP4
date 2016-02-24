@@ -46,6 +46,7 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir)
 		std::cout << "NULL Collision Direction" << std::endl;
 		break;
 	}
+
 	if (!this->m_cTilemap->AllowCollision(iIndexCheckX, iIndexCheckY))//->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() == CTiledata::COL_BLOCK)
 	{
 		if (this->m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() != CTiledata::COL_HOLE)
@@ -58,9 +59,11 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir)
 			return true;
 		}
 	}
-	for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
-		(*entity)->SetRecalculate(true);
+	//for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
+	//	(*entity)->SetRecalculate(true);
 	this->m_MoveDir = m_MoveDir;
+
+	this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 	return false;
 }
 

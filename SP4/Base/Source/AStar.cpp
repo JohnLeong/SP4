@@ -93,7 +93,8 @@ Node* AStar::GetSuccessor(Node *current, int i)
 			}
 			for (std::vector<CEntityIPos*>::iterator entity = (*this->entityList).begin(); entity != (*this->entityList).end(); entity++)
 			{
-				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y)
+				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y)// || 
+				//	static_cast<int>((*entity)->GetNextDirectionPos().x) == x && static_cast<int>((*entity)->GetNextDirectionPos().y) == y)
 				{
 					if ((*entity)->IsAlive() && !(*entity)->AllowEnemyMovement())
 						return n;

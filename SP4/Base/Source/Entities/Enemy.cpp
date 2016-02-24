@@ -62,12 +62,14 @@ bool CEnemy::DoCurrentTileCollision()
 		}
 		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 		{
-			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			if ((static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex()) && !(*entity)->AllowEnemyMovement()||
+				this->m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).IsTinted())
 			{
 				this->m_MoveDir = DIR_NONE;
 				return true;
 			}
 		}
+		this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 		return false;
 	case CTiledata::COL_WIND_DOWN:
 		this->m_MoveDir = DIR_DOWN;
@@ -78,12 +80,14 @@ bool CEnemy::DoCurrentTileCollision()
 		}
 		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 		{
-			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			if ((static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex()) && !(*entity)->AllowEnemyMovement() ||
+				this->m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).IsTinted())
 			{
 				this->m_MoveDir = DIR_NONE;
 				return true;
 			}
 		}
+		this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 		return false;
 	case CTiledata::COL_WIND_LEFT:
 		this->m_MoveDir = DIR_LEFT;
@@ -94,12 +98,14 @@ bool CEnemy::DoCurrentTileCollision()
 		}
 		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 		{
-			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			if ((static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex()) && !(*entity)->AllowEnemyMovement() ||
+				this->m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).IsTinted())
 			{
 				this->m_MoveDir = DIR_NONE;
 				return true;
 			}
 		}
+		this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 		return false;
 	case CTiledata::COL_WIND_RIGHT:
 		this->m_MoveDir = DIR_RIGHT;
@@ -110,12 +116,14 @@ bool CEnemy::DoCurrentTileCollision()
 		}
 		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 		{
-			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			if ((static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex()) && !(*entity)->AllowEnemyMovement() ||
+				this->m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).IsTinted())
 			{
 				this->m_MoveDir = DIR_NONE;
 				return true;
 			}
 		}
+		this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 		return false;
 	default:
 		this->m_MoveDir = DIR_NONE;
