@@ -6,6 +6,8 @@ using namespace std;
 #include "gamestate.h"
 #include "menustate.h"
 #include "OptionsState.h"
+#include "InstructionState.h"
+#include "LevelSelectionState.h"
 #include "../Application.h"
 
 CMenuState CMenuState::theMenuState;
@@ -99,10 +101,10 @@ void CMenuState::Update(CGameStateManager* theGSM)
 	
 	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 4
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 4)
-		theGSM->ChangeState(CPlayState::Instance());
+		theGSM->ChangeState(CLevelSelectionState::Instance());
 	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 3
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 3)
-		theGSM->ChangeState(CPlayState::Instance());
+		theGSM->ChangeState(CInstructionState::Instance());
 	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 2
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 2)
 		theGSM->ChangeState(COptionsState::Instance());
@@ -117,10 +119,10 @@ void CMenuState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 
 	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 4 
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 4)
-		theGSM->ChangeState(CPlayState::Instance());
+		theGSM->ChangeState(CLevelSelectionState::Instance());
 	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 3
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 3)
-		theGSM->ChangeState(CPlayState::Instance());
+		theGSM->ChangeState(CInstructionState::Instance());
 	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 2
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 2)
 		theGSM->ChangeState(COptionsState::Instance());

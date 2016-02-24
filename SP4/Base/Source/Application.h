@@ -9,6 +9,8 @@
 #include "States\SplashState.h"
 #include "States\OptionsState.h"
 #include "SoundManager.h"
+#include "States\InstructionState.h"
+#include "States\LevelSelectionState.h"
 #include <string>
 #include "Achievements\Achievements.h"
 #include <sstream>

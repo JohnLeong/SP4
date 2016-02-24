@@ -9,8 +9,6 @@
 #include <sstream>
 
 CSceneOptions::CSceneOptions(void)
-: m_window_width(800)
-, m_window_height(600)
 {
 }
 

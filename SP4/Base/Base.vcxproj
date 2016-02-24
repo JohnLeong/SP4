@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneLevelSelection.cpp" />
+    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.cpp" />
     <ClCompile Include="Source\Achievements\Achievements.cpp" />
     <ClCompile Include="Source\Achievements\Properties.cpp" />
     <ClCompile Include="Source\Entities\EnemySuperRetardZombie.cpp" />
@@ -62,7 +64,9 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneLevelSelection.h" />
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h" />
+    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.h" />
     <ClInclude Include="Source\Achievements\Achievements.h" />
     <ClInclude Include="Source\Achievements\Properties.h" />
     <ClInclude Include="Source\define.h" />

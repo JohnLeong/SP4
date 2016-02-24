@@ -7,8 +7,6 @@
 #include <sstream>
 
 CSceneManager::CSceneManager(void)
-	: m_window_width(800)
-	, m_window_height(600)
 {
 }
 
@@ -352,8 +350,9 @@ void CSceneManager::RenderMeshIn2D(Mesh *mesh, bool enableLight, float sizeX, fl
 	viewStack.LoadIdentity();
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
-	modelStack.Translate(x, y, 0);
 	modelStack.Scale(sizeX, sizeY, sizeX);
+	modelStack.Translate(x, y, 0);
+
 	if (rotate)
 		modelStack.Rotate(rotateAngle, 0, 0, 1);
 

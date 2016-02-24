@@ -226,6 +226,12 @@
     <ClCompile Include="Source\Achievements\Properties.cpp">
       <Filter>Achievements</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneLevelSelection.cpp">
+      <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -389,6 +395,12 @@
     </ClInclude>
     <ClInclude Include="Source\Achievements\Properties.h">
       <Filter>Achievements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneLevelSelection.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
