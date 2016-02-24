@@ -16,7 +16,6 @@ public:
 	virtual void UpdateMovement(const float dt);
 
 	virtual bool AllowEnemyMovement(void);
-
 };
 
 #endif

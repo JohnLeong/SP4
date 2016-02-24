@@ -28,7 +28,10 @@ class CScenePlay : public CSceneManager
 		GEO_OVERLAY_RED,
 
 		GEO_COIN,
-		GEO_KEYS,
+		GEO_KEYS_RED,
+		GEO_KEYS_BLUE,
+		GEO_KEYS_YELLOW,
+		GEO_KEYS_GREEN,
 
 		//Tile geometry
 		GEO_TILE_FLOOR_STONE_01,
@@ -39,6 +42,7 @@ class CScenePlay : public CSceneManager
 		GEO_PLAYER,
 		GEO_SCROLL,
 		GEO_QUIT_BUTTON,
+
 		NUM_GEOMETRY,
 	};
 
@@ -100,7 +104,12 @@ private:
 	Vector3 quit_button_vec;
 
 	SpriteAnimation* coins_sprite;
-	SpriteAnimation* keys_sprite;
+
+	//keys sprite animation
+	SpriteAnimation* keys_sprite_red;
+	SpriteAnimation* keys_sprite_green;
+	SpriteAnimation* keys_sprite_yellow;
+	SpriteAnimation* keys_sprite_blue;
 };
 
 #endif

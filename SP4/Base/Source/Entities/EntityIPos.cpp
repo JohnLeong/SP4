@@ -170,12 +170,31 @@ void CEntityIPos::AddCoin(int iAmt)
 
 }
 
-int CEntityIPos::GetKeys(void)
+//Get the number of red keys
+int CEntityIPos::GetKeys_Red(void)
 {
 	return -1;
 }
 
-void CEntityIPos::AddKeys(int iAmt)
+//Get the number of blue keys
+int CEntityIPos::GetKeys_Blue(void)
+{
+	return -1;
+}
+
+//Get the number of green keys
+int CEntityIPos::GetKeys_Green(void)
+{
+	return -1;
+}
+
+//Get the number of yyellow keys
+int CEntityIPos::GetKeys_Yellow(void)
+{
+	return -1;
+}
+
+void CEntityIPos::AddKeys(int iAmt, int type)
 {
 
 }

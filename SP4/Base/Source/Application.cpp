@@ -349,7 +349,7 @@ void Application::Init()
 	theGSM = new CGameStateManager();
 	theGSM->Init("DM2240 Assignment 1", m_window_width, m_window_height);
 	//theGSM->ChangeState( CSplashState::Instance() );
-	theGSM->ChangeState(CMenuState::Instance());
+	theGSM->ChangeState(CPlayState::Instance());
 }
 
 void Application::InitWindow(bool fullscreen)

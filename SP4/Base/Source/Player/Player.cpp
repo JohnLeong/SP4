@@ -5,7 +5,10 @@ CPlayer::CPlayer()
 , action(PA_IDLE_DOWN)
 , m_NextDir(PD_NONE)
 , m_iCoins(0)
-, m_iKeys(0)
+, m_iKeys_red(0)
+, m_iKeys_blue(0)
+, m_iKeys_green(0)
+, m_iKeys_yellow(0)
 , m_bHasReachedEndLevel(false)
 {
 
@@ -385,21 +388,62 @@ int CPlayer::GetCoins(void)
 {
 	return m_iCoins;
 }
-
-int CPlayer::GetKeys(void)
+//Get the number of red keys
+int CPlayer::GetKeys_Red(void)
 {
-	return m_iKeys;
+	return m_iKeys_red;
+}
+//Get the number of blue keys
+int CPlayer::GetKeys_Blue(void)
+{
+	return m_iKeys_blue;
+}
+//Get the number of green keys
+int CPlayer::GetKeys_Green(void)
+{
+	return m_iKeys_green;
+}
+//Get the number of yyellow keys
+int CPlayer::GetKeys_Yellow(void)
+{
+	return m_iKeys_yellow;
 }
 
 void CPlayer::Reset(void)
 {
 	this->m_iCoins = 0;
-	this->m_iKeys = 0;
+	this->m_iKeys_red = 0;
+	this->m_iKeys_blue = 0;
+	this->m_iKeys_yellow = 0;
+	this->m_iKeys_green = 0;
 }
 
-void CPlayer::AddKeys(int iAmt)
+void CPlayer::AddKeys(int iAmt, int type)
 {
-	this->m_iKeys += m_iKeys;
+	//0 = red keys, 1 = blue keys, 2 = green keys, 3 = yellow keys
+	switch (type) 
+	{
+	case 0:
+		//add to red keys
+		this->m_iKeys_red += iAmt;
+		break;
+
+	case 1:
+		//add to blue keys
+		this->m_iKeys_blue += iAmt;
+		break;
+
+	case 2:
+		//add to green keys
+		this->m_iKeys_green += iAmt;
+		break;
+
+	case 3:
+		//add to yellow keys
+		this->m_iKeys_yellow += iAmt;
+		break;
+	}
+
 }
 
 void CPlayer::AddCoin(int iAmt)

@@ -56,8 +56,12 @@ public:
 	int GetCoins(void);
 	void AddCoin(int iAmt);
 
-	int GetKeys(void);
-	void AddKeys(int iAmt);
+	int GetKeys_Red(void);
+	int GetKeys_Blue(void);
+	int GetKeys_Yellow(void);
+	int GetKeys_Green(void);
+
+	void AddKeys(int iAmt, int type);
 
 	void Reset(void);
 
@@ -84,7 +88,10 @@ private:
 	Animation* m__animationList[NUM_PLAYER_ACTION]; 
 
 	int m_iCoins;
-	int m_iKeys;
+	int m_iKeys_red;
+	int m_iKeys_blue;
+	int m_iKeys_green;
+	int m_iKeys_yellow;
 
 	//Mesh* mesh;
 };

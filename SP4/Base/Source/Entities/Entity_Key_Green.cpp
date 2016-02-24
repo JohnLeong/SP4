@@ -23,6 +23,7 @@ CEntity_Key_Green::~CEntity_Key_Green()
 bool CEntity_Key_Green::DoColDir(MOVE_DIR m_MoveDir)
 {
 	this->m_bAlive = false;
+	m_cPlayerPtr->AddKeys(1, 2);
 	return false;
 }
 
