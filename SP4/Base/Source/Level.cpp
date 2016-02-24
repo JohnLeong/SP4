@@ -8,6 +8,7 @@ CLevel::CLevel(void)
 , m_bMovementReady(true)
 , m_bDoTileCheck(false)
 {
+	m_cTilemap = new CTilemap();
 }
 
 CLevel::~CLevel(void)
@@ -25,19 +26,9 @@ CTilemap* CLevel::GetTilemap(void)
 	return m_cTilemap;
 }
 
-bool CLevel::InitTilemap(int iNumTileX, int iNumTileY, float fTileSize)
-{
-	/*if (m_cTilemap)
-		delete m_cTilemap;*/
-
-	m_cTilemap = new CTilemap();
-	m_cTilemap->Init(iNumTileX, iNumTileY, fTileSize);
-
-	return true;
-}
-
 bool CLevel::LoadTilemap(std::string mapname)
 {
+	mapname = "LevelMap//" + mapname + ".csv";
 	return(m_cTilemap->LoadMap(mapname));
 }
 
@@ -51,57 +42,147 @@ int CLevel::GetPlayerStartPosY()
 	return playerStartPosY;
 }
 
+string IntConvertToString(int changeNumber, string entityName)
+{
+	ostringstream convertor;
+	convertor << changeNumber;
+	entityName.append(convertor.str());
+
+	return entityName;
+}
+
+int GetXFromLua(CLuaScript* m_cLuascript, string getEntity)
+{
+	int posX = 0;
+	string addPosX = "PosX";
+	string combination = getEntity + addPosX;
+	posX = m_cLuascript->getIntVariable(combination);
+	return posX;
+}
+
+int GetYFromLua(CLuaScript* m_cLuascript, string getEntity)
+{
+	int posY = 0;
+	string addPosY = "PosY";
+	string combination = getEntity + addPosY;
+	posY = m_cLuascript->getIntVariable(combination);
+	return posY;
+}
+
 bool CLevel::InitLua(std::string levelName)
 {
-	string addPosX = "PosX";
-	string addPosY = "PosY";
 	string addHold = "Hold";
 
 	m_cLuascript = new CLuaScript(levelName);
+	m_cTilemap->Init(m_cLuascript->getIntVariable("tileMapWidth"), m_cLuascript->getIntVariable("tileMapHeight"), TILE_SIZE);
+
 	m_cPlayerPtr->SetXIndex(m_cLuascript->getIntVariable("playerPosX"));
 	m_cPlayerPtr->SetYIndex(m_cLuascript->getIntVariable("playerPosY"));
 	maxNumberOfZombies = m_cLuascript->getIntVariable("maxNumOfZombies");
+	maxNumberOfRetardZombies = m_cLuascript->getIntVariable("maxNumOfRetardZombies");
+	maxNumberOfBlocks = m_cLuascript->getIntVariable("maxNumOfBlocks");
+	maxNumberOfCoins = m_cLuascript->getIntVariable("maxNumOfCoins");
+	//maxNumberOfSlowFire = m_cLuascript->getIntVariable("maxNumOfSlowFire");
 
 	for (int i = 0; i < maxNumberOfZombies; i++)
 	{
-		int currentZombie = i + 1;
-		ostringstream convertor;
 		string getZombie = "zombie";
-		convertor << currentZombie;
-		getZombie.append(convertor.str());
+		getZombie = IntConvertToString(i + 1, getZombie);
 
-		getZombie += addPosX;
-		enemyStartPosX = m_cLuascript->getIntVariable(getZombie);
-		getZombie.erase(getZombie.begin() + 7, getZombie.end());
-
-		getZombie += addPosY;
-		enemyStartPosY = m_cLuascript->getIntVariable(getZombie);
-		getZombie.erase(getZombie.begin() + 7, getZombie.end());
+		posX = GetXFromLua(m_cLuascript, getZombie);
+		posY = GetYFromLua(m_cLuascript, getZombie);
 
 		getZombie += addHold;
 		enemyHoldItem = m_cLuascript->getIntVariable(getZombie);
 
 		if (enemyHoldItem == 1)
 		{
-			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_COIN);
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_COIN);
 		}
 		else if (enemyHoldItem == 2)
 		{
-			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_KEY_BLUE);
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_KEY_BLUE);
 		}
 		else if (enemyHoldItem == 3)
 		{
-			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_KEY_GREEN);
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_KEY_GREEN);
 		}
 		else if (enemyHoldItem == 4)
 		{
-			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_KEY_RED);
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_KEY_RED);
 		}
 		else if (enemyHoldItem == 0)
 		{
-			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_NONE);
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_NONE);
 		}
 	}
+
+	for (int i = 0; i < maxNumberOfRetardZombies; i++)
+	{
+		string getRetardZombie = "retardZombie";
+		IntConvertToString(i + 1, getRetardZombie);
+
+		posX = GetXFromLua(m_cLuascript, getRetardZombie);
+		posY = GetYFromLua(m_cLuascript, getRetardZombie);
+
+		getRetardZombie += addHold;
+		enemyHoldItem = m_cLuascript->getIntVariable(getRetardZombie);
+
+		if (enemyHoldItem == 1)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_COIN);
+		}
+		else if (enemyHoldItem == 2)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_KEY_BLUE);
+		}
+		else if (enemyHoldItem == 3)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_KEY_GREEN);
+		}
+		else if (enemyHoldItem == 4)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_KEY_RED);
+		}
+		else if (enemyHoldItem == 0)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_NONE);
+		}
+	}
+
+	for (int i = 0; i < maxNumberOfBlocks; i++)
+	{
+		string getBlock = "block";
+		getBlock = IntConvertToString(i + 1, getBlock);
+
+		posX = GetXFromLua(m_cLuascript, getBlock);
+		posY = GetYFromLua(m_cLuascript, getBlock);
+
+		GenerateMovableBlockEntity(posX, posY);
+	}
+
+	for (int i = 0; i < maxNumberOfCoins; i++)
+	{
+		string getCoin = "coin";
+		getCoin = IntConvertToString(i + 1, getCoin);
+
+		posX = GetXFromLua(m_cLuascript, getCoin);
+		posY = GetYFromLua(m_cLuascript, getCoin);
+
+		GenerateCoinEntity(posX, posY);
+	}
+
+	//for (int i = 0; i < maxNumberOfSlowFire; i++)
+	//{
+	//	string getSlowFire = "coin";
+	//	getSlowFire = IntConvertToString(i + 1, getSlowFire);
+
+	//	posX = GetXFromLua(m_cLuascript, getSlowFire);
+	//	posY = GetYFromLua(m_cLuascript, getSlowFire);
+
+	//	GenerateFireEntity(posX, posY, CEntity_Fire::STATE_01);
+	//}
+
 	delete m_cLuascript;
 	return true;
 }

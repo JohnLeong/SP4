@@ -48,7 +48,6 @@ bool CTilemap::LoadFile(const string mapName)
 {
 	int theLineCounter = 0;
 	int theMaxNumOfColumns = 0;
-
 	ifstream file(mapName.c_str());
 	if(file.is_open())
 	{

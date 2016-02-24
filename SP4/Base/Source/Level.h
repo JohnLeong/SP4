@@ -29,7 +29,6 @@ public:
 	~CLevel(void);
 
 	CTilemap* GetTilemap(void);
-	bool InitTilemap(int iNumTileX, int iNumTileY, float fTileSize);
 	bool LoadTilemap(std::string mapname);
 	bool InitLua(std::string levelName);
 
@@ -67,10 +66,11 @@ public:
 
 private:
 	bool m_bDoMovements;
-	int playerStartPosX, playerStartPosY, enemyStartPosX, enemyStartPosY, enemyHoldItem, maxNumberOfZombies;
+	int playerStartPosX, playerStartPosY, posX, posY, enemyHoldItem, maxNumberOfZombies, maxNumberOfRetardZombies, maxNumberOfBlocks, maxNumberOfCoins;
 	bool m_bMovementReady;		//Controller for next player movement
 	bool m_bDoTileCheck;			//Check tiles player and entities are standing on
 	CPlayer* m_cPlayerPtr;
+
 };
 
 #endif
