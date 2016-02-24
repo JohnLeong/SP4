@@ -511,3 +511,112 @@ bool CPlayer::GetHasReachedEndLevel(void)
 {
 	return m_bHasReachedEndLevel;
 }
+
+void CPlayer::UseItem(ITEM_SLOT item)
+{
+	switch (item)
+	{
+	case CPlayer::SLOT_01:
+		if (m_iKeys_green > 0)
+		{
+			if (m_cTilemap->GetTile(m_iXIndex, m_iYIndex + 1).GetCollisionType() == CTiledata::COL_LOCK_GREEN)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex][m_iYIndex + 1].ChangeIdState();
+				--m_iKeys_green;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex, m_iYIndex - 1).GetCollisionType() == CTiledata::COL_LOCK_GREEN)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex][m_iYIndex - 1].ChangeIdState();
+				--m_iKeys_green;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex + 1, m_iYIndex).GetCollisionType() == CTiledata::COL_LOCK_GREEN)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex + 1][m_iYIndex].ChangeIdState();
+				--m_iKeys_green;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex - 1, m_iYIndex).GetCollisionType() == CTiledata::COL_LOCK_GREEN)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex - 1][m_iYIndex].ChangeIdState();
+				--m_iKeys_green;
+			}
+		}
+		break;
+	case CPlayer::SLOT_02:
+		if (m_iKeys_yellow > 0)
+		{
+			if (m_cTilemap->GetTile(m_iXIndex, m_iYIndex + 1).GetCollisionType() == CTiledata::COL_LOCK_YELLOW)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex][m_iYIndex + 1].ChangeIdState();
+				--m_iKeys_yellow;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex, m_iYIndex - 1).GetCollisionType() == CTiledata::COL_LOCK_YELLOW)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex][m_iYIndex - 1].ChangeIdState();
+				--m_iKeys_yellow;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex + 1, m_iYIndex).GetCollisionType() == CTiledata::COL_LOCK_YELLOW)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex + 1][m_iYIndex].ChangeIdState();
+				--m_iKeys_yellow;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex - 1, m_iYIndex).GetCollisionType() == CTiledata::COL_LOCK_YELLOW)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex - 1][m_iYIndex].ChangeIdState();
+				--m_iKeys_yellow;
+			}
+		}
+		break;
+	case CPlayer::SLOT_03:
+		if (m_iKeys_blue > 0)
+		{
+			if (m_cTilemap->GetTile(m_iXIndex, m_iYIndex + 1).GetCollisionType() == CTiledata::COL_LOCK_BLUE)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex][m_iYIndex + 1].ChangeIdState();
+				--m_iKeys_blue;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex, m_iYIndex - 1).GetCollisionType() == CTiledata::COL_LOCK_BLUE)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex][m_iYIndex - 1].ChangeIdState();
+				--m_iKeys_blue;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex + 1, m_iYIndex).GetCollisionType() == CTiledata::COL_LOCK_BLUE)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex + 1][m_iYIndex].ChangeIdState();
+				--m_iKeys_blue;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex - 1, m_iYIndex).GetCollisionType() == CTiledata::COL_LOCK_BLUE)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex - 1][m_iYIndex].ChangeIdState();
+				--m_iKeys_blue;
+			}
+		}
+		break;
+	case CPlayer::SLOT_04:
+		if (m_iKeys_red > 0)
+		{
+			if (m_cTilemap->GetTile(m_iXIndex, m_iYIndex + 1).GetCollisionType() == CTiledata::COL_LOCK_RED)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex][m_iYIndex + 1].ChangeIdState();
+				--m_iKeys_red;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex, m_iYIndex - 1).GetCollisionType() == CTiledata::COL_LOCK_RED)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex][m_iYIndex - 1].ChangeIdState();
+				--m_iKeys_red;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex + 1, m_iYIndex).GetCollisionType() == CTiledata::COL_LOCK_RED)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex + 1][m_iYIndex].ChangeIdState();
+				--m_iKeys_red;
+			}
+			else if (m_cTilemap->GetTile(m_iXIndex - 1, m_iYIndex).GetCollisionType() == CTiledata::COL_LOCK_RED)
+			{
+				m_cTilemap->theScreenMap[m_iXIndex - 1][m_iYIndex].ChangeIdState();
+				--m_iKeys_red;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+}

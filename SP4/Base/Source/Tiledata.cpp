@@ -62,6 +62,13 @@ void CTiledata::ChangeIdState(void)
 		this->m_iTileId = TILE_RUNE_USED;
 		this->m_iCollisionType = COL_VOID;
 		break;
+	case TILE_DOOR_GREEN:
+	case TILE_DOOR_BLUE:
+	case TILE_DOOR_YELLOW:
+	case TILE_DOOR_RED:
+		this->m_iTileId = TILE_FLOOR_STONE_01;
+		this->m_iCollisionType = COL_VOID;
+		break;
 	default:
 		break;
 	}

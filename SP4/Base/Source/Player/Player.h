@@ -31,6 +31,14 @@ public:
 		NUM_PLAYER_ACTION,
 	};
 
+	enum ITEM_SLOT
+	{
+		SLOT_01,
+		SLOT_02,
+		SLOT_03,
+		SLOT_04,
+	};
+
 	void Init(CTilemap* cTilemap, int pos_x, int pos_y, SpriteAnimation* mesh, std::vector<CEntityIPos*>* cEntityList);		// Initialise this class instance
 
 	// Update Movements
@@ -66,6 +74,8 @@ public:
 	void Reset(void);
 
 	bool GetHasReachedEndLevel();
+
+	void UseItem(ITEM_SLOT);
 
 private:
 

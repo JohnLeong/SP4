@@ -27,6 +27,7 @@ public:
 		TILE_WIND_RIGHT,		//Pushes player to the right
 		TILE_RUNE,				//Kills enemies on touch
 		TILE_RUNE_USED,
+		TILE_STAIRCASE,
 		NUM_TILE
 	};
 	//Collision check based on COLLISION_TYPE
@@ -43,11 +44,11 @@ public:
 		COL_WIND_LEFT,
 		COL_WIND_RIGHT,
 		COL_RUNE,
-COL_LOCK_RED,
+		COL_LOCK_RED,
 		COL_LOCK_BLUE,
 		COL_LOCK_GREEN,
 		COL_LOCK_YELLOW,
-COL_ENDLEVEL,
+		COL_ENDLEVEL,
 		NUM_COL
 	};
 

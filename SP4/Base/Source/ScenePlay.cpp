@@ -166,7 +166,7 @@ void CScenePlay::Init()
 	/*To be removed*/
 	//m_cLevel.GenerateRedKeyEntity(8, 8);
 	//m_cLevel.GenerateBlueKeyEntity(9, 8);
-	//m_cLevel.GenerateGreenKeyEntity(10, 8);
+	m_cLevel.GenerateGreenKeyEntity(2, 4);
 	//m_cLevel.GenerateYellowKeyEntity(11, 8);
 	/*m_cLevel.GenerateCoinEntity(9, 10);
 	m_cLevel.GenerateCoinEntity(9, 11);
@@ -240,7 +240,7 @@ void CScenePlay::Update(double dt)
 			m_cPlayer->SetNextDirection(CPlayer::PD_LEFT);
 	}
 	if (IsKeyDownOnce('1'))
-		std::cout << "1";
+		m_cPlayer->UseItem(CPlayer::SLOT_01);
 
 
 	//Update player

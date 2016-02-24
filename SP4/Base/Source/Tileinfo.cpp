@@ -31,6 +31,8 @@ CTiledata::COLLISION_TYPE GetCollisionTypeFromId(CTiledata::TILE_ID id)
 		return CTiledata::COL_LOCK_GREEN;
 	case CTiledata::TILE_DOOR_YELLOW:
 		return CTiledata::COL_LOCK_YELLOW;
+	case CTiledata::TILE_STAIRCASE:
+		return CTiledata::COL_ENDLEVEL;
 	default:
 		return CTiledata::COL_VOID;
 		break;
