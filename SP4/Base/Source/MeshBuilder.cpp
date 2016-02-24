@@ -788,25 +788,25 @@ Mesh* MeshBuilder::Generate2DMeshCenter(const std::string &meshName, Color color
 	std::vector<GLuint> index_buffer_data;
 
 	// Vertex #1
-	v.pos.Set((width * -0.5f) + pos_x, (height * -0.5f) + pos_y, 0);
+	v.pos.Set(width * (-0.5f + pos_x), height * (-0.5f + pos_y), 0);
 	v.color = color;
 	v.normal.Set(0, 0, 1);
 	v.texCoord.Set(0, 0);
 	vertex_buffer_data.push_back(v);
 	// Vertex #2
-	v.pos.Set((width * 0.5f) + pos_x, (height * -0.5f) + pos_y, 0);
+	v.pos.Set(width * (0.5f + pos_x), height * (-0.5f + pos_y), 0);
 	v.color = color;
 	v.normal.Set(0, 0, 1);
 	v.texCoord.Set(1.0f, 0);
 	vertex_buffer_data.push_back(v);
 	// Vertex #3
-	v.pos.Set((width * 0.5f) + pos_x, (height * 0.5f) + pos_y, 0);
+	v.pos.Set(width * (0.5f + pos_x), height * (0.5f + pos_y), 0);
 	v.color = color;
 	v.normal.Set(0, 0, 1);
 	v.texCoord.Set(1.0f, 1.0f);
 	vertex_buffer_data.push_back(v);
 	// Vertex #4
-	v.pos.Set((width * -0.5f) + pos_x, (height * 0.5f) + pos_y, 0);
+	v.pos.Set(width * (-0.5f + pos_x), height * (0.5f + pos_y), 0);
 	v.color = color;
 	v.normal.Set(0, 0, 1);
 	v.texCoord.Set(0, 1.0f);
