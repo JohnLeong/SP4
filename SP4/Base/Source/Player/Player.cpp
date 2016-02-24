@@ -250,18 +250,74 @@ void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
 		break;
 	case CTiledata::COL_WIND_UP:
 		moving = false;
+		m_NextDir = PD_UP;
+		if (!m_cTilemap->AllowCollision(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)))
+			break;
+		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
+		{
+			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			{
+				if ((*entity)->DoColDir(CEntityIPos::DIR_UP))
+					moving = false;
+				else
+					MoveUpDown(true, cTilemap);
+				return;
+			}
+		}
 		MoveUpDown(true, cTilemap);
 		break;
 	case CTiledata::COL_WIND_DOWN:
 		moving = false;
+		m_NextDir = PD_DOWN;
+		if (!m_cTilemap->AllowCollision(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)))
+			break;
+		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
+		{
+			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			{
+				if ((*entity)->DoColDir(CEntityIPos::DIR_DOWN))
+					moving = false;
+				else
+					MoveUpDown(false, cTilemap);
+				return;
+			}
+		}
 		MoveUpDown(false, cTilemap);
 		break;
 	case CTiledata::COL_WIND_LEFT:
 		moving = false;
+		m_NextDir = PD_LEFT;
+		if (!m_cTilemap->AllowCollision(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)))
+			break;
+		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
+		{
+			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			{
+				if ((*entity)->DoColDir(CEntityIPos::DIR_LEFT))
+					moving = false;
+				else
+					MoveLeftRight(false, cTilemap);
+				return;
+			}
+		}
 		MoveLeftRight(false, cTilemap);
 		break;
 	case CTiledata::COL_WIND_RIGHT:
 		moving = false;
+		m_NextDir = PD_RIGHT;
+		if (!m_cTilemap->AllowCollision(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)))
+			break;
+		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
+		{
+			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			{
+				if ((*entity)->DoColDir(CEntityIPos::DIR_RIGHT))
+					moving = false;
+				else
+					MoveLeftRight(true, cTilemap);
+				return;
+			}
+		}
 		MoveLeftRight(true, cTilemap);
 		break;
 	case CTiledata::COL_BLOCK:

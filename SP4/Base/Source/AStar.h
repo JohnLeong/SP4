@@ -19,6 +19,7 @@ public:
 		DIR_LEFT,
 		DIR_RIGHT,
 		DIR_NONE,
+		DIR_BLOCKED,
 	};
 	AStar(CTilemap* Tilemap);		// Constructor For Initialising Start And Goal x,y Nodes
 	~AStar(void);
@@ -45,6 +46,7 @@ public:
 	CTilemap* m_cTilemap;
 	PATH_DIR GetPathDir(Node *walker);
 	std::vector<CEntityIPos*>* entityList;
+	bool m_bBlocked;
 };
 
 #endif

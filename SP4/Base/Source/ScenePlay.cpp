@@ -43,6 +43,8 @@ void CScenePlay::Init()
 		meshList[i] = NULL;
 	}
 
+	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+
 	//vector of quit button pos
 	quit_button_vec.Set(161.0f, 77.8f, 0.0f);
 
@@ -65,14 +67,28 @@ void CScenePlay::Init()
 	//Load Tile textures
 	meshList[GEO_TILE_FLOOR_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_FLOOR_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_FLOOR_STONE_01.tga");
-	meshList[GEO_TILE_FLOOR_ICE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 2);
+	meshList[GEO_TILE_FLOOR_ICE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 7);
 	meshList[GEO_TILE_FLOOR_ICE_01]->textureID = LoadTGA("Image//Tiles/TILE_FLOOR_ICE_01.tga");
 	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 2);
 	meshList[GEO_TILE_WALL_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_WALL_STONE_01.tga");
 	meshList[GEO_TILE_HOLE_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_HOLE_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_HOLE_STONE_01.tga");
+	meshList[GEO_TILE_HOLE_STONE_FILLED_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_HOLE_STONE_FILLED_01]->textureID = LoadTGA("Image//Tiles/TILE_HOLE_STONE_FILLED_01.tga");
 	meshList[GEO_TILE_DOOR_RED] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_DOOR_RED]->textureID = LoadTGA("Image//Tiles/TILE_DOOR_RED.tga");
+	meshList[GEO_TILE_RUNE] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 5);
+	meshList[GEO_TILE_RUNE]->textureID = LoadTGA("Image//Tiles/TILE_RUNE.tga");
+	meshList[GEO_TILE_RUNE_USED] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_RUNE_USED]->textureID = LoadTGA("Image//Tiles/TILE_RUNE_USED.tga");
+	meshList[GEO_TILE_FORCE_UP] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_FORCE_UP]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_UP.tga");
+	meshList[GEO_TILE_FORCE_DOWN] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_FORCE_DOWN]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_DOWN.tga");
+	meshList[GEO_TILE_FORCE_LEFT ] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_FORCE_LEFT]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_LEFT.tga");
+	meshList[GEO_TILE_FORCE_RIGHT] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_FORCE_RIGHT]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_RIGHT.tga");
 
 	meshList[GEO_PLAYER] = MeshBuilder::GenerateSpriteAnimation2D("GEO_PLAYER", 4, 3);
 	meshList[GEO_PLAYER]->textureID = LoadTGA("Image//Entities//explorer.tga");
@@ -137,42 +153,53 @@ void CScenePlay::Init()
 
 
 	m_cPlayer = new CPlayer();
-	m_cPlayer->Init(m_cLevel.GetTilemap(), 2, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]), &m_cLevel.m_cEntityIPosList);
-	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	//Init level after player
 	InitLevel();
 
+	m_cPlayer->Init(m_cLevel.GetTilemap(), 1, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]), &m_cLevel.m_cEntityIPosList);
+
 	/*To be removed*/
+	
 	m_cLevel.GenerateMovableBlockEntity(6, 6);
 	m_cLevel.GenerateMovableBlockEntity(6, 8);
 	m_cLevel.GenerateMovableBlockEntity(3, 3);
-	m_cLevel.GenerateRedKeyEntity(8, 8);
-	m_cLevel.GenerateBlueKeyEntity(9, 8);
-	m_cLevel.GenerateGreenKeyEntity(10, 8);
-	m_cLevel.GenerateYellowKeyEntity(11, 8);
+	//m_cLevel.GenerateRedKeyEntity(8, 8);
+	//m_cLevel.GenerateBlueKeyEntity(9, 8);
+	//m_cLevel.GenerateGreenKeyEntity(10, 8);
+	//m_cLevel.GenerateYellowKeyEntity(11, 8);
 	m_cLevel.GenerateCoinEntity(9, 10);
 	m_cLevel.GenerateCoinEntity(9, 11);
 	m_cLevel.GenerateCoinEntity(9, 12);
 	m_cLevel.GenerateCoinEntity(9, 13);
 	m_cLevel.GenerateFireEntity(9, 9, CEntity_Fire::STATE_01);
-	//m_cLevel.GenerateZombieEntity(3, 6, CEnemy::HOLDING_COIN);
+	//m_cLevel.GenerateZombieEntity(2, 2, CEnemy::HOLDING_COIN);
 	//m_cLevel.GenerateZombieEntity(5, 6, CEnemy::HOLDING_KEY_GREEN);
+
+
 	/*To be removed*/
 }
 
 void CScenePlay::InitLevel()
 {
 	m_cLevel.SetPlayerPtr(this->m_cPlayer);
+
+
 	//Init level tilemap
 	m_cLevel.InitTilemap(14, 18, TILE_SIZE);
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_STONE_01]), new Animation(0, 0, 1, 0.5f));
-	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_ICE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 3, 0, 0.5f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_ICE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 13, 0, 0.5f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WALL_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_HOLE_STONE_01]), new Animation(0, 0, 1, 0.3f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_FILLED_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_HOLE_STONE_FILLED_01]), new Animation(0, 0, 1, 0.3f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_UP, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_DOOR_RED, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_RED]), new Animation(0, 0, 1, 1.f));
-	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_RUNE_USED, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_RED]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_RUNE, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_RUNE]), new Animation(0, 9, 0, 0.4f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_RUNE_USED, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_RUNE_USED]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_UP, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_UP]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_DOWN, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_DOWN]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_LEFT, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_LEFT]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_RIGHT, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_RIGHT]), new Animation(0, 0, 1, 1.f));
 	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 	m_cLevel.LoadTilemap("LevelMap//MapDesign.csv");
 
@@ -181,6 +208,7 @@ void CScenePlay::InitLevel()
 	string getLevel = "Level";
 	convertor << m_iCurrentLevel;
 	getLevel.append(convertor.str());
+
 	m_cLevel.InitLua(getLevel);
 }
 

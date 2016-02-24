@@ -1,4 +1,5 @@
 #include "EnemySuperRetardZombie.h"
+#include "../Application.h"
 
 CEnemySuperRetardZombie::CEnemySuperRetardZombie()
 : m_bMovementToggle(false)
@@ -90,6 +91,9 @@ void CEnemySuperRetardZombie::UpdateMovement(const float dt)
 	if (this->m_iXIndex == m_cPlayerPtr->GetXIndex() && this->m_iYIndex == m_cPlayerPtr->GetYIndex())
 		return;
 
+	if (this->m_iXIndex == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().x) && this->m_iYIndex == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().y))
+		return;
+
 	m_cAStar->Init(static_cast<int>(this->GetNextDirectionPos().x), static_cast<int>(this->GetNextDirectionPos().y), m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
 
 	switch (m_cAStar->Search())
@@ -122,6 +126,7 @@ void CEnemySuperRetardZombie::UpdateMovement(const float dt)
 	}
 
 	m_cAStar->Reset();
+	Application::m_bPauseDT = true;
 }
 
 bool CEnemySuperRetardZombie::DeathOnEntry(void)

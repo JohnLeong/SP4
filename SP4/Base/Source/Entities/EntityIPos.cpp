@@ -7,6 +7,7 @@ CEntityIPos::CEntityIPos()
 , m_MoveDir(DIR_NONE)
 , m_AnimDir(DIR_IDLE_DOWN)
 , m_bHoldingObj(false)
+, m_bRecalculate(true)
 {
 }
 
@@ -136,6 +137,7 @@ void CEntityIPos::Update(const float dt)
 		this->m_fOffSetX += dt * ENTITY_MOVE_SPEED;
 		break;
 	default:
+		DoCurrentTileCollision();
 		break;
 	}
 }
@@ -147,7 +149,31 @@ void CEntityIPos::UpdateMovement(const float dt)
 
 bool CEntityIPos::DoCurrentTileCollision()
 {
-	return false;
+	switch (this->m_cTilemap->GetTile(this->m_iXIndex, this->m_iYIndex).GetCollisionType())
+	{
+	case CTiledata::COL_VOID:
+		this->m_MoveDir = DIR_NONE;
+		return false;
+	case CTiledata::COL_ICE:
+		if (this->m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).GetCollisionType() != CTiledata::COL_BLOCK)
+		{
+			for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
+			{
+				if ((*entity) == this)
+					continue;
+				if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+				{
+					this->m_MoveDir = DIR_NONE;
+					return false;
+				}
+			}
+			return true;
+		}
+		this->m_MoveDir = DIR_NONE;
+		return false;
+	default:
+		return false;
+	}
 }
 
 bool CEntityIPos::AllowEnemyMovement(void)
@@ -207,4 +233,9 @@ bool CEntityIPos::IsHoldingObj(void)
 CEntityIPos* CEntityIPos::GetHoldingObj(void)
 {
 	return this->m_cObjPtr;
+}
+
+void CEntityIPos::SetRecalculate(bool b)
+{
+	this->m_bRecalculate = b;
 }

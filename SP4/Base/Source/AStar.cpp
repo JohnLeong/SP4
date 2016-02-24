@@ -30,10 +30,12 @@ void AStar::Init(int sx, int sy, int gx, int gy, std::vector<CEntityIPos*>* enti
 	start->x = sx; start->y = sy; goal->x = gx; goal->y = gy;		// Set Start and Goal x-y Values
 	start->h = Compute_h(start);
 	start->f = start->g + start->h;				// Show Initialised x,y,f values
+	m_bBlocked = false;
 }
 
 void AStar::Reset(void)
 {
+	m_bBlocked = false;
 	delete start;
 	delete goal;
 
@@ -80,13 +82,21 @@ Node* AStar::GetSuccessor(Node *current, int i)
 	{
 		if (m_cTilemap->AllowCollision(x, y))// && !m_cTilemap->GetTile(x, y).IsTinted())
 		{// If Grid Element Contains Empty Space
-			if (m_cTilemap->GetTile(x, y).IsTinted() && x != goal->x && y != goal->y)
-				return n;
+			//If space is occupied and is not goal
+			if (m_cTilemap->GetTile(x, y).IsTinted())//&& x != goal->x && y != goal->y)
+			{
+				if ((x == start->x && y + 1 == start->y) || (x == start->x && y - 1 == start->y) || (x - 1 == start->x && y == start->y) || (x + 1 == start->x && y == start->y))
+				{
+					//m_bBlocked = true;
+					return n;
+				}
+			}
 			for (std::vector<CEntityIPos*>::iterator entity = (*this->entityList).begin(); entity != (*this->entityList).end(); entity++)
 			{
-				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y && (*entity)->IsAlive() && !(*entity)->AllowEnemyMovement())
+				if ((*entity)->GetXIndex() == x && (*entity)->GetYIndex() == y)
 				{
-					return n;
+					if ((*entity)->IsAlive() && !(*entity)->AllowEnemyMovement())
+						return n;
 				}
 			}
 			n = new Node;									// Create A Node Object
@@ -159,6 +169,8 @@ Node* AStar::getFromCloseList(Node* succ)
 // Search For Best Path ( Minimum Cost )
 AStar::PATH_DIR AStar::Search()
 {
+	/*if ((goal->x == start->x && goal->y + 1 == start->y) || (goal->x == start->x && goal->y - 1 == start->y) || (goal->x - 1 == start->x && goal->y == start->y) || (goal->x + 1 == start->x && goal->y == start->y))
+		return DIR_BLOCKED;*/
 	if (start->x < 0 || start->x >= m_cTilemap->GetNumOfTiles_Width() || start->y < 0 || start->y > m_cTilemap->GetNumOfTiles_Height() ||
 		goal->x < 0 || goal->x >= m_cTilemap->GetNumOfTiles_Width() || goal->y < 0 || goal->y > m_cTilemap->GetNumOfTiles_Height())
 	{
@@ -290,7 +302,10 @@ AStar::PATH_DIR AStar::GetPathDir(Node *walker)
 		return DIR_UP;
 	if (walker->y > start->y)
 		return DIR_DOWN;
-	return DIR_NONE;
+	if (m_bBlocked)
+		return DIR_BLOCKED;
+	else
+		return DIR_NONE;
 }
 
 // Add To Open List, Show Its Content

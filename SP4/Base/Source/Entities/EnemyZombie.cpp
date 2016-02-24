@@ -83,6 +83,8 @@ void CEnemyZombie::Update(const float dt)
 
 void CEnemyZombie::UpdateMovement(const float dt)
 {
+	/*if (!m_bRecalculate)
+		return;*/
 	if (this->m_iXIndex == m_cPlayerPtr->GetXIndex() && this->m_iYIndex == m_cPlayerPtr->GetYIndex())
 		return;
 
@@ -114,6 +116,10 @@ void CEnemyZombie::UpdateMovement(const float dt)
 		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_NONE:
+		this->m_NextDir = CEntityIPos::DIR_NONE;
+		this->m_bRecalculate = false;
+		break;
+	case AStar::DIR_BLOCKED:
 		this->m_NextDir = CEntityIPos::DIR_NONE;
 		break;
 	default:

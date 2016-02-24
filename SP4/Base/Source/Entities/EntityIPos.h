@@ -62,6 +62,7 @@ public:
 	//For enemy
 	virtual bool IsHoldingObj(void);
 	virtual CEntityIPos* GetHoldingObj(void);
+	virtual void SetRecalculate(bool b);
 
 protected:
 	int m_iXIndex;			//X Index
@@ -77,6 +78,7 @@ protected:
 	CEntityIPos* m_cObjPtr;							//Pointer to object this entity is holding
 	std::vector<CEntityIPos*>* m_cEntityList;		//Pointer to list of entities
 	bool m_bHoldingObj;
+	bool m_bRecalculate;
 };
 
 #endif

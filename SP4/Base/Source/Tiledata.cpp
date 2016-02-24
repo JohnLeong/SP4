@@ -55,7 +55,7 @@ void CTiledata::ChangeIdState(void)
 	switch (this->m_iTileId)
 	{
 	case TILE_HOLE_STONE_01:
-		this->m_iTileId = TILE_FLOOR_STONE_01;
+		this->m_iTileId = TILE_HOLE_STONE_FILLED_01;
 		this->m_iCollisionType = COL_VOID;
 		break;
 	case TILE_RUNE:

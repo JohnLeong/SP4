@@ -4,6 +4,7 @@
 #include "../Tilemap.h"
 #include "EntityIPos.h"
 
+
 class CEnemy : public CEntityIPos
 {
 public:

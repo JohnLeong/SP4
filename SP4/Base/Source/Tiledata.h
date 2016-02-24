@@ -9,13 +9,18 @@ public:
 		TILE_NULL = 0,		//For error handling
 		TILE_VOID,
 		TILE_WALL_STONE_01,
+		TILE_WALL_STONE_02,
+		TILE_WALL_STONE_03,
 		TILE_FLOOR_STONE_01,
+		TILE_FLOOR_STONE_02,
+		TILE_FLOOR_STONE_03,
 		TILE_FLOOR_ICE_01,
 		TILE_DOOR_RED,
 		TILE_DOOR_BLUE,
 		TILE_DOOR_GREEN,
 		TILE_DOOR_YELLOW,		//Can only be opened with yellow key
 		TILE_HOLE_STONE_01,
+		TILE_HOLE_STONE_FILLED_01,
 		TILE_WIND_UP,			//Pushes player up
 		TILE_WIND_DOWN,			//Pushes player down
 		TILE_WIND_LEFT,			//Pushes player to the left

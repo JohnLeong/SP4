@@ -38,7 +38,15 @@ class CScenePlay : public CSceneManager
 		GEO_TILE_FLOOR_ICE_01,
 		GEO_TILE_WALL_STONE_01,
 		GEO_TILE_HOLE_STONE_01,
+		GEO_TILE_HOLE_STONE_FILLED_01,
 		GEO_TILE_DOOR_RED,
+		GEO_TILE_RUNE,
+		GEO_TILE_RUNE_USED,
+		GEO_TILE_FORCE_UP,
+		GEO_TILE_FORCE_DOWN,
+		GEO_TILE_FORCE_LEFT,
+		GEO_TILE_FORCE_RIGHT,
+
 		GEO_PLAYER,
 		GEO_SCROLL,
 		GEO_QUIT_BUTTON,
@@ -104,12 +112,12 @@ private:
 	Vector3 quit_button_vec;
 
 	SpriteAnimation* coins_sprite;
-	SpriteAnimation* keys_sprite_blue;
-	SpriteAnimation* keys_sprite_yellow;
-	SpriteAnimation* keys_sprite_green;
-	SpriteAnimation* keys_sprite_red;
-	     //keys sprite animation
 
+	//keys sprite animation
+	SpriteAnimation* keys_sprite_red;
+	SpriteAnimation* keys_sprite_green;
+	SpriteAnimation* keys_sprite_yellow;
+	SpriteAnimation* keys_sprite_blue;
 };
 
 #endif
