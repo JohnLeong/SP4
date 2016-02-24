@@ -109,7 +109,7 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 		}
 		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 		{
-			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex() && (*entity)->IsAlive())
 			{
 				this->m_MoveDir = DIR_NONE;
 				return true;
@@ -131,7 +131,7 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 		}
 		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 		{
-			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex() && (*entity)->IsAlive())
 			{
 				this->m_MoveDir = DIR_NONE;
 				return true;
@@ -153,7 +153,7 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 		}
 		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 		{
-			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex() && (*entity)->IsAlive())
 			{
 				this->m_MoveDir = DIR_NONE;
 				return true;
@@ -175,7 +175,7 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 		}
 		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 		{
-			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+			if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex() && (*entity)->IsAlive())
 			{
 				this->m_MoveDir = DIR_NONE;
 				return true;

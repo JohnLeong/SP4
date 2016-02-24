@@ -74,16 +74,16 @@ void CEntity_Fire::UpdateMovement(const float dt)
 	switch (this->m_cFire_State)
 	{
 	case STATE_01:
-		this->m_cFire_State = STATE_02;
-		this->m_cSprite->m_anim = m_animationList[STATE_02];
+		this->m_cFire_State = STATE_03;
+		this->m_cSprite->m_anim = m_animationList[STATE_03];
 		break;
 	case STATE_02:
 		this->m_cFire_State = STATE_03;
 		this->m_cSprite->m_anim = m_animationList[STATE_03];
 		break;
 	case STATE_03:
-		this->m_cFire_State = STATE_04;
-		this->m_cSprite->m_anim = m_animationList[STATE_04];
+		this->m_cFire_State = STATE_05;
+		this->m_cSprite->m_anim = m_animationList[STATE_05];
 		break;
 	case STATE_04:
 		this->m_cFire_State = STATE_05;

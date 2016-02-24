@@ -157,51 +157,51 @@ void CSceneManager::Init()
 
 void CSceneManager::Update(double dt)
 {
-	if(Application::IsKeyPressed('1'))
+	if(Application::IsKeyPressed(VK_F1))
 		glEnable(GL_CULL_FACE);
-	if(Application::IsKeyPressed('2'))
+	if (Application::IsKeyPressed(VK_F2))
 		glDisable(GL_CULL_FACE);
-	if(Application::IsKeyPressed('3'))
+	if (Application::IsKeyPressed(VK_F3))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	if(Application::IsKeyPressed('4'))
+	if (Application::IsKeyPressed(VK_F4))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	
-	if(Application::IsKeyPressed('5'))
-	{
-		lights[0].type = Light::LIGHT_POINT;
-		glUniform1i(m_parameters[U_LIGHT0_TYPE], lights[0].type);
-	}
-	else if(Application::IsKeyPressed('6'))
-	{
-		lights[0].type = Light::LIGHT_DIRECTIONAL;
-		glUniform1i(m_parameters[U_LIGHT0_TYPE], lights[0].type);
-	}
-	else if(Application::IsKeyPressed('7'))
-	{
-		lights[0].type = Light::LIGHT_SPOT;
-		glUniform1i(m_parameters[U_LIGHT0_TYPE], lights[0].type);
-	}
-	else if(Application::IsKeyPressed('8'))
-	{
-		bLightEnabled = true;
-	}
-	else if(Application::IsKeyPressed('9'))
-	{
-		bLightEnabled = false;
-	}
+	//if(Application::IsKeyPressed('5'))
+	//{
+	//	lights[0].type = Light::LIGHT_POINT;
+	//	glUniform1i(m_parameters[U_LIGHT0_TYPE], lights[0].type);
+	//}
+	//else if(Application::IsKeyPressed('6'))
+	//{
+	//	lights[0].type = Light::LIGHT_DIRECTIONAL;
+	//	glUniform1i(m_parameters[U_LIGHT0_TYPE], lights[0].type);
+	//}
+	//else if(Application::IsKeyPressed('7'))
+	//{
+	//	lights[0].type = Light::LIGHT_SPOT;
+	//	glUniform1i(m_parameters[U_LIGHT0_TYPE], lights[0].type);
+	//}
+	//else if(Application::IsKeyPressed('8'))
+	//{
+	//	bLightEnabled = true;
+	//}
+	//else if(Application::IsKeyPressed('9'))
+	//{
+	//	bLightEnabled = false;
+	//}
 
-	if(Application::IsKeyPressed('I'))
-		lights[0].position.z -= (float)(10.f * dt);
-	if(Application::IsKeyPressed('K'))
-		lights[0].position.z += (float)(10.f * dt);
-	if(Application::IsKeyPressed('J'))
-		lights[0].position.x -= (float)(10.f * dt);
-	if(Application::IsKeyPressed('L'))
-		lights[0].position.x += (float)(10.f * dt);
-	if(Application::IsKeyPressed('O'))
-		lights[0].position.y -= (float)(10.f * dt);
-	if(Application::IsKeyPressed('P'))
-		lights[0].position.y += (float)(10.f * dt);
+	//if(Application::IsKeyPressed('I'))
+	//	lights[0].position.z -= (float)(10.f * dt);
+	//if(Application::IsKeyPressed('K'))
+	//	lights[0].position.z += (float)(10.f * dt);
+	//if(Application::IsKeyPressed('J'))
+	//	lights[0].position.x -= (float)(10.f * dt);
+	//if(Application::IsKeyPressed('L'))
+	//	lights[0].position.x += (float)(10.f * dt);
+	//if(Application::IsKeyPressed('O'))
+	//	lights[0].position.y -= (float)(10.f * dt);
+	//if(Application::IsKeyPressed('P'))
+	//	lights[0].position.y += (float)(10.f * dt);
 
 
 	fps = (float)(1.f / dt);
@@ -502,7 +502,7 @@ void CSceneManager::Render2D()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	Mtx44 perspective;
 	//perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
-	perspective.SetToOrtho(-160, 160, -90, 90, -1000, 1000);
+	perspective.SetToOrtho(-320, 320, -180, 180, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
 
 	// Camera matrix

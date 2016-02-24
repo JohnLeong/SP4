@@ -380,6 +380,9 @@ CEnemyZombie* CLevel::GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOL
 	case CEnemy::HOLDING_KEY_BLUE:
 		zombie = new CEnemyZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateBlueKeyEntity(0, 0));
 		break;
+	case CEnemy::HOLDING_KEY_YELLOW:
+		zombie = new CEnemyZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateYellowKeyEntity(0, 0));
+		break;
 	case CEnemy::HOLDING_COIN:
 		zombie = new CEnemyZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateCoinEntity(0, 0));
 		break;
@@ -410,6 +413,9 @@ CEnemySuperRetardZombie* CLevel::GenerateSuperRetardZombieEntity(int iXIndex, in
 	case CEnemy::HOLDING_KEY_BLUE:
 		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateBlueKeyEntity(0, 0));
 		break; 
+	case CEnemy::HOLDING_KEY_YELLOW:
+		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateYellowKeyEntity(0, 0));
+		break;
 	case CEnemy::HOLDING_COIN:
 		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateCoinEntity(0, 0));
 		break;
@@ -471,6 +477,16 @@ CEntity_Fire* CLevel::GenerateFireEntity(int iXIndex, int iYIndex, CEntity_Fire:
 	temp_mesh->textureID = LoadTGA("Image//Entities//fire.tga");
 
 	CEntity_Fire* fire = new CEntity_Fire(iXIndex, iYIndex, cFireState, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
+	m_cEntityIPosList.push_back(fire);
+	return fire;
+}
+
+CEntity_DemonFire* CLevel::GenerateDemonFireEntity(int iXIndex, int iYIndex, CEntity_DemonFire::FIRE_STATE cFireState)
+{
+	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("FIYAH", 2, 5);
+	temp_mesh->textureID = LoadTGA("Image//Entities//demonfire.tga");
+
+	CEntity_DemonFire* fire = new CEntity_DemonFire(iXIndex, iYIndex, cFireState, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
 	m_cEntityIPosList.push_back(fire);
 	return fire;
 }

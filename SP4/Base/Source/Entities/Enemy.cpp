@@ -51,7 +51,8 @@ bool CEnemy::DoCurrentTileCollision()
 		{
 			this->m_cObjPtr->SetAlive(true);
 			this->m_cObjPtr->SetPos(this->m_iXIndex, this->m_iYIndex);
-			if (this->m_cObjPtr->GetXIndex() == m_cPlayerPtr->GetXIndex() && this->m_cObjPtr->GetYIndex() == m_cPlayerPtr->GetYIndex())
+			if (this->m_cObjPtr->GetXIndex() == m_cPlayerPtr->GetXIndex() && this->m_cObjPtr->GetYIndex() == m_cPlayerPtr->GetYIndex() || 
+				this->m_cObjPtr->GetXIndex() == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().x) && this->m_cObjPtr->GetYIndex() == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().y))
 				this->m_cObjPtr->DoColDir(CEntityIPos::DIR_NONE);
 		}
 		return false;

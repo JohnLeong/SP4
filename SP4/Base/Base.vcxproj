@@ -15,6 +15,7 @@
     <ClCompile Include="Source\Achievements\Properties.cpp" />
     <ClCompile Include="Source\Entities\EnemySuperRetardZombie.cpp" />
     <ClCompile Include="Source\Entities\Entity_Coin.cpp" />
+    <ClCompile Include="Source\Entities\Entity_DemonFire.cpp" />
     <ClCompile Include="Source\Entities\Entity_Fire.cpp" />
     <ClCompile Include="Source\Entities\Entity_Key_Blue.cpp" />
     <ClCompile Include="Source\Entities\Entity_Key_Green.cpp" />
@@ -72,6 +73,7 @@
     <ClInclude Include="Source\define.h" />
     <ClInclude Include="Source\Entities\EnemySuperRetardZombie.h" />
     <ClInclude Include="Source\Entities\Entity_Coin.h" />
+    <ClInclude Include="Source\Entities\Entity_DemonFire.h" />
     <ClInclude Include="Source\Entities\Entity_Fire.h" />
     <ClInclude Include="Source\Entities\Entity_Key_Blue.h" />
     <ClInclude Include="Source\Entities\Entity_Key_Green.h" />

@@ -186,82 +186,21 @@ bool Application::GetMouseUpdate()
 bool Application::GetKeyboardUpdate()
 {
 	theGSM->HandleEvents(VK_RETURN, IsKeyPressed(VK_RETURN));
-	theGSM->HandleEvents('w', IsKeyPressed('W'));
-	theGSM->HandleEvents('s', IsKeyPressed('S'));
+
 	theGSM->HandleEvents('g', IsKeyPressed('G'));
 	theGSM->HandleEvents('q', IsKeyPressed('Q'));
-	if (IsKeyPressed('A'))
-	{
-		theGSM->HandleEvents('a');
-	}
-	else
-	{
-		theGSM->HandleEvents('a', false);
-	}
-	if (IsKeyPressed('D'))
-	{
-		theGSM->HandleEvents('d');
-	}
-	else
-	{
-		theGSM->HandleEvents('d', false);
-	}
-	// Jump
-	if (IsKeyPressed(32))
-	{
-		theGSM->HandleEvents(32);
-	}
-	// Rotate camera
-	if (IsKeyPressed(VK_LEFT))
-	{
-		theGSM->HandleEvents(VK_LEFT);
-	}
-	else
-	{
-		theGSM->HandleEvents(VK_LEFT, false);
-	}
-	if (IsKeyPressed(VK_RIGHT))
-	{
-		theGSM->HandleEvents(VK_RIGHT);
-	}
-	else
-	{
-		theGSM->HandleEvents(VK_RIGHT, false);
-	}
-	if (IsKeyPressed(VK_UP))
-	{
-		theGSM->HandleEvents(VK_UP);
-	}
-	else
-	{
-		theGSM->HandleEvents(VK_UP, false);
-	}
-	if (IsKeyPressed(VK_DOWN))
-	{
-		theGSM->HandleEvents(VK_DOWN);
-	}
-	else
-	{
-		theGSM->HandleEvents(VK_DOWN, false);
-	}
-
-	static bool fKey = false;
-	if (IsKeyPressed('F') && !fKey)
-	{
-		theGSM->HandleEvents('F');
-		fKey = true;
-	}
-	else if (!IsKeyPressed('F') && fKey)
-	{
-		fKey = false;
-	}
-
-	if (IsKeyPressed('C'))
-		theGSM->HandleEvents('C', true);
-	if (IsKeyPressed('R'))
-		theGSM->HandleEvents('R', true);
-	if (IsKeyPressed('B'))
-		theGSM->HandleEvents('B', true);
+	theGSM->HandleEvents('w', IsKeyPressed('W'));
+	theGSM->HandleEvents('s', IsKeyPressed('S'));
+	theGSM->HandleEvents('a', IsKeyPressed('A'));
+	theGSM->HandleEvents('d', IsKeyPressed('D'));
+	theGSM->HandleEvents('1', IsKeyPressed('1'));
+	theGSM->HandleEvents('2', IsKeyPressed('2'));
+	theGSM->HandleEvents('3', IsKeyPressed('3'));
+	theGSM->HandleEvents('4', IsKeyPressed('4'));
+	theGSM->HandleEvents(VK_LEFT, IsKeyPressed(VK_LEFT));
+	theGSM->HandleEvents(VK_RIGHT, IsKeyPressed(VK_RIGHT));
+	theGSM->HandleEvents(VK_UP, IsKeyPressed(VK_UP));
+	theGSM->HandleEvents(VK_DOWN, IsKeyPressed(VK_DOWN));
 	return true;
 }
 
@@ -350,8 +289,8 @@ void Application::Init()
 	theGSM = new CGameStateManager();
 	theGSM->Init("DM2240 Assignment 1", m_window_width, m_window_height);
 	//theGSM->ChangeState( CSplashState::Instance() );
-	theGSM->ChangeState(CLevelSelectionState::Instance());
-	//theGSM->ChangeState(CPlayState::Instance());
+	//theGSM->ChangeState(CLevelSelectionState::Instance());
+	theGSM->ChangeState(CPlayState::Instance());
 }
 
 void Application::InitWindow(bool fullscreen)

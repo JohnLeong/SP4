@@ -232,6 +232,9 @@
     <ClCompile Include="Source\States\LevelSelectionState.cpp">
       <Filter>Game State Management\States\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Entities\Entity_DemonFire.cpp">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -401,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.h">
       <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\Entity_DemonFire.h">
+      <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

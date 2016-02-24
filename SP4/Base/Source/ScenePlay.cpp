@@ -222,11 +222,12 @@ void CScenePlay::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
-	if (Application::IsKeyPressed('1'))
+	if (Application::IsKeyPressed('Q'))
 	{
 		cout << "boolean: " << GetIsQuitToMain() << endl;
 	}
 
+	//Player control
 	if (m_cLevel.IsMovementReady())
 	{
 		if (IsKeyDownOnce('w'))
@@ -238,14 +239,12 @@ void CScenePlay::Update(double dt)
 		else if (IsKeyDownOnce('a'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_LEFT);
 	}
+	if (IsKeyDownOnce('1'))
+		std::cout << "1";
+
 
 	//Update player
 	m_cPlayer->Update(dt, m_cLevel.GetTilemap());
-
-	if (IsKeyDownOnce('g'))
-	{
-		m_cLevel.UpdateMovement(static_cast<float>(dt), this->m_cPlayer);
-	}
 
 	//coins sprite update
 	coins_sprite->Update(dt);
@@ -300,10 +299,10 @@ void CScenePlay::RenderGUI()
 	// Render the crosshair
 	//RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
 
-	if (m_cPlayer->IsAlive())
+	/*if (m_cPlayer->IsAlive())
 		RenderTextOnScreen(meshList[GEO_TEXT], "ALIVE", Color(0.f, 0.f, 0.f), 10.f, -160.f, 10.f);
 	else
-		RenderTextOnScreen(meshList[GEO_TEXT], "DEAD", Color(0.f, 0.f, 0.f), 10.f, -160.f, 10.f);
+		RenderTextOnScreen(meshList[GEO_TEXT], "DEAD", Color(0.f, 0.f, 0.f), 10.f, -160.f, 10.f);*/
 }
 
 /********************************************************************************
@@ -463,7 +462,7 @@ void CScenePlay::Render()
 
 	RenderGUI();
 #if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "ScenePlay", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
+	//RenderTextOnScreen(meshList[GEO_TEXT], "ScenePlay", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 #endif
 }
 

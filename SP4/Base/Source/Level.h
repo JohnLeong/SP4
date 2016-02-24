@@ -10,6 +10,7 @@
 #include "Entities\Entity_Key_Green.h"
 #include "Entities\Entity_Key_Yellow.h"
 #include "Entities\Entity_Fire.h"
+#include "Entities\Entity_DemonFire.h"
 #include "Entities\Entity_Coin.h"
 #include "Player\Player.h"
 #include <string>
@@ -19,12 +20,7 @@
 class CLevel
 {
 public:
-	enum ENTITY_TO_CREATE
-	{
-		ENTITY_KEY_RED,
-		ENTITY_KEY_BLUE,
-		ENTITY_KEY_GREEN,
-	};
+
 	CLevel(void);
 	~CLevel(void);
 
@@ -56,12 +52,15 @@ public:
 	//Generate entities
 	CEnemyZombie* GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t);
 	CEnemySuperRetardZombie* GenerateSuperRetardZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t);
+
 	CEntity_Key_Red* GenerateRedKeyEntity(int iXIndex, int iYIndex);
 	CEntity_Key_Blue* GenerateBlueKeyEntity(int iXIndex, int iYIndex);
 	CEntity_Key_Green* GenerateGreenKeyEntity(int iXIndex, int iYIndex);
 	CEntity_Key_Yellow* GenerateYellowKeyEntity(int iXIndex, int iYIndex);
+
 	CEntity_Coin* GenerateCoinEntity(int iXIndex, int iYIndex);
 	CEntity_Fire* GenerateFireEntity(int iXIndex, int iYIndex, CEntity_Fire::FIRE_STATE);
+	CEntity_DemonFire* GenerateDemonFireEntity(int iXIndex, int iYIndex, CEntity_DemonFire::FIRE_STATE);
 	CEntity_Block_Movable* GenerateMovableBlockEntity(int iXIndex, int iYIndex);
 
 private:

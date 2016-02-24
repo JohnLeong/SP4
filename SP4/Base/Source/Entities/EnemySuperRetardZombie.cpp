@@ -95,7 +95,7 @@ void CEnemySuperRetardZombie::UpdateMovement(const float dt)
 	if (this->m_iXIndex == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().x) && this->m_iYIndex == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().y))
 		return;
 
-	m_cAStar->Init(static_cast<int>(this->GetNextDirectionPos().x), static_cast<int>(this->GetNextDirectionPos().y), m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
+	m_cAStar->Init(m_iXIndex, m_iYIndex, m_cPlayerPtr->GetXIndex(), m_cPlayerPtr->GetYIndex(), this->m_cEntityList);
 
 	switch (m_cAStar->Search())
 	{
@@ -120,6 +120,10 @@ void CEnemySuperRetardZombie::UpdateMovement(const float dt)
 		this->m_AnimDir = this->m_NextDir;
 		break;
 	case AStar::DIR_NONE:
+		this->m_NextDir = CEntityIPos::DIR_NONE;
+		this->m_bRecalculate = false;
+		break;
+	case AStar::DIR_BLOCKED:
 		this->m_NextDir = CEntityIPos::DIR_NONE;
 		break;
 	default:
