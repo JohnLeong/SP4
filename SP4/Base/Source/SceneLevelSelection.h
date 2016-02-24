@@ -31,6 +31,15 @@ class  CSceneLevelSelection : public CSceneManager
 		GEO_LEVEL3_BUTTON,
 		GEO_LEVEL4_BUTTON,
 
+		//level overview images
+		GEO_LEVEL_OVERVIEW,
+
+		//backdrops
+		GEO_DESCRIPTION_BACKDROP,
+
+		//start button
+		GEO_START_BUTTON,
+
 		NUM_GEOMETRY,
 	};
 
@@ -52,7 +61,6 @@ public:
 	static void SetISQuitToMain(bool b);
 	//get the boolean for quit
 	static bool GetIsQuitToMain();
-
 protected:
 	Mesh* meshList[NUM_GEOMETRY];
 
@@ -62,8 +70,14 @@ protected:
 
 	static bool m_bBacktoMainMenu;
 
+	//check if the keyboard is currently active
+	bool isKeyBoard;
+
 	//virutally create vector positions for the buttons
 	Vector3 button_vec[5];
+	Vector3 quit_button_vec;
+	Vector3 start_button_vec;
+
 };
 
 #endif

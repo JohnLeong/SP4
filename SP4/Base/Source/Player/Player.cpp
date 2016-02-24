@@ -366,7 +366,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionX)
 			{
-				m_fOffSetX += dt * ENTITY_MOVE_SPEED;
+				m_fOffSetX += static_cast<float>(dt) * ENTITY_MOVE_SPEED;
 				if (m_fOffSetX > tile->GetTileSize())
 				{
 					m_fOffSetX = 0;
@@ -376,7 +376,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 			}
 			else
 			{
-				m_fOffSetX -= dt * ENTITY_MOVE_SPEED;
+				m_fOffSetX -= static_cast<float>(dt)* ENTITY_MOVE_SPEED;
 				if (m_fOffSetX < -tile->GetTileSize())
 				{
 					m_fOffSetX = 0;

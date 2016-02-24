@@ -114,6 +114,10 @@ void CLevelSelectionState::Update(CGameStateManager* theGSM, const double m_dEla
 	{
 		theGSM->ChangeState(CMenuState::Instance());
 	}
+
+	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
+		theGSM->ChangeState(CPlayState::Instance());
 }
 
 void CLevelSelectionState::Draw(CGameStateManager* theGSM)

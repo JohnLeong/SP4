@@ -8,7 +8,9 @@
 #include "LoadTGA.h"
 #include <sstream>
 
-#define buttonYoffset 55.5f
+#define buttonXoffset 55.5f
+#define buttonYoffset 8.0f
+
 CSceneMenu::CSceneMenu(void):
 isKeyBoard(false)
 {
@@ -93,6 +95,28 @@ void CSceneMenu::Update(double dt)
 {
 	CSceneManager::Update(dt);
 	
+	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
+	{
+
+		Application::setChoiceVal(Application::getChoiceVal() + 1);
+		//1 = play, 2 = instructions, 3 = options, 4 = exit
+		if (Application::getChoiceVal() > 4)
+			Application::setChoiceVal(1);
+
+		isKeyBoard = true;
+		//cout << "choice: " << getChoiceVal() << endl;
+	}
+	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
+	{
+		Application::setChoiceVal(Application::getChoiceVal() - 1);
+		//1 = play, 2 = instructions, 3 = options, 4 = exit
+		if (Application::getChoiceVal()  < 1)
+			Application::setChoiceVal(4);
+
+		isKeyBoard = true;
+		//cout << "choice: " << getChoiceVal() << endl;
+	}
+
 	float fDelta = (float)dt;
 }
 
@@ -139,22 +163,22 @@ void CSceneMenu::Render()
 	}
 	
 	//Update image on mouse hover
-	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonYoffset, geo_pos[0].y + 8.0f)) // play button
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonXoffset, geo_pos[0].y + buttonYoffset)) // play button
 	{
 		Application::setChoiceVal(4);
 		isKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonYoffset, geo_pos[1].y + 8.0f)) // instructions button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonXoffset, geo_pos[1].y + buttonYoffset)) // instructions button
 	{
 		Application::setChoiceVal(3);
 		isKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonYoffset, geo_pos[2].y + 8.0f)) // options button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonXoffset, geo_pos[2].y + buttonYoffset)) // options button
 	{
 		Application::setChoiceVal(2);
 		isKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonYoffset, geo_pos[3].y + 8.0f)) // exit button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonXoffset, geo_pos[3].y + buttonYoffset)) // exit button
 	{
 		Application::setChoiceVal(1);
 		isKeyBoard = false;
@@ -165,27 +189,7 @@ void CSceneMenu::Render()
 			Application::setChoiceVal(0);
 	}
 
-	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
-	{
-
-		Application::setChoiceVal(Application::getChoiceVal()+1);
-		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal() > 4)
-			Application::setChoiceVal(1);
-
-		isKeyBoard = true;
-		//cout << "choice: " << getChoiceVal() << endl;
-	}
-	else if(CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
-	{
-		Application::setChoiceVal(Application::getChoiceVal() - 1);
-		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal()  < 1)
-			Application::setChoiceVal(4);
-
-		isKeyBoard = true;
-		//cout << "choice: " << getChoiceVal() << endl;
-	}
+	
 
 	switch (Application::getChoiceVal())
 	{

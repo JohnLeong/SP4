@@ -352,7 +352,6 @@ void CSceneManager::RenderMeshIn2D(Mesh *mesh, bool enableLight, float sizeX, fl
 	modelStack.LoadIdentity();
 	modelStack.Translate(x, y, 0);
 	modelStack.Scale(sizeX, sizeY, sizeX);
-
 	if (rotate)
 		modelStack.Rotate(rotateAngle, 0, 0, 1);
 
