@@ -43,7 +43,7 @@ public:
 	std::vector<CEntityIPos*> m_cEntityIPosList;
 	//Main tile map
 	CTilemap* m_cTilemap;
-	CLuaScript* m_cluascript;
+	CLuaScript* m_cLuascript;
 
 	void SetDoMovements(bool bDoMovements);
 	bool CheckPlayerCollisions(CPlayer* cPlayer);
@@ -67,7 +67,7 @@ public:
 
 private:
 	bool m_bDoMovements;
-	int playerStartPosX, playerStartPosY, maxNumberOfEnemies;
+	int playerStartPosX, playerStartPosY, enemyStartPosX, enemyStartPosY, enemyHoldItem, maxNumberOfZombies;
 	bool m_bMovementReady;		//Controller for next player movement
 	bool m_bDoTileCheck;			//Check tiles player and entities are standing on
 	CPlayer* m_cPlayerPtr;

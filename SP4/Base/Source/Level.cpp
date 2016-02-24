@@ -47,19 +47,56 @@ int CLevel::GetPlayerStartPosY()
 
 bool CLevel::InitLua(std::string levelName)
 {
-	m_cluascript = new CLuaScript(levelName);
-	playerStartPosX = m_cluascript->getIntVariable("playerPosX ");
-	playerStartPosY = m_cluascript->getIntVariable("playerPosY ");
-	maxNumberOfEnemies = m_cluascript->getIntVariable("maxNumOfEnemies");
-	for (int i = 0; i < maxNumberOfEnemies; i++)
+	string addPosX = "PosX";
+	string addPosY = "PosY";
+	string addHold = "Hold";
+
+	m_cLuascript = new CLuaScript(levelName);
+	m_cPlayerPtr->SetXIndex(m_cLuascript->getIntVariable("playerPosX"));
+	m_cPlayerPtr->SetYIndex(m_cLuascript->getIntVariable("playerPosY"));
+	maxNumberOfZombies = m_cLuascript->getIntVariable("maxNumOfZombies");
+
+	for (int i = 0; i < maxNumberOfZombies; i++)
 	{
-		int currentEnemy = i + 1;
+		int currentZombie = i + 1;
 		ostringstream convertor;
-		string getEnemy = "enemy";
-		convertor << currentEnemy;
-		getEnemy.append(convertor.str());
-		m_cluascript->getNsetEnemyVariables(getEnemy);
+		string getZombie = "zombie";
+		convertor << currentZombie;
+		getZombie.append(convertor.str());
+
+		getZombie += addPosX;
+		enemyStartPosX = m_cLuascript->getIntVariable(getZombie);
+		getZombie.erase(getZombie.begin() + 7, getZombie.end());
+
+		getZombie += addPosY;
+		enemyStartPosY = m_cLuascript->getIntVariable(getZombie);
+		getZombie.erase(getZombie.begin() + 7, getZombie.end());
+
+		getZombie += addHold;
+		enemyHoldItem = m_cLuascript->getIntVariable(getZombie);
+
+		if (enemyHoldItem == 1)
+		{
+			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_COIN);
+		}
+		else if (enemyHoldItem == 2)
+		{
+			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_KEY_BLUE);
+		}
+		else if (enemyHoldItem == 3)
+		{
+			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_KEY_GREEN);
+		}
+		else if (enemyHoldItem == 4)
+		{
+			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_KEY_RED);
+		}
+		else if (enemyHoldItem == 0)
+		{
+			GenerateZombieEntity(enemyStartPosX, enemyStartPosY, CEnemy::HOLDING_NONE);
+		}
 	}
+	delete m_cLuascript;
 	return true;
 }
 

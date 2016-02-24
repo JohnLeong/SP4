@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-//#include "Entities\EnemyZombie.h"
+#include "Entities\EnemyZombie.h"
 #include "Achievements\Achievements.h"
 
 
@@ -26,7 +26,7 @@ public:
 	bool getBoolVariable(string name);
 	float getFloatVariable(string name);
 
-	void getNsetEnemyVariables(string name);
+	CEnemyZombie* getNsetZombieVariables(string name);
 
 	CAchievements* getAchievementVariables(string name);
 	CProperties* getAchievementPropertiesVariables(string name);

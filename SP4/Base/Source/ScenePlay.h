@@ -104,12 +104,12 @@ private:
 	Vector3 quit_button_vec;
 
 	SpriteAnimation* coins_sprite;
-
-	//keys sprite animation
-	SpriteAnimation* keys_sprite_red;
-	SpriteAnimation* keys_sprite_green;
-	SpriteAnimation* keys_sprite_yellow;
 	SpriteAnimation* keys_sprite_blue;
+	SpriteAnimation* keys_sprite_yellow;
+	SpriteAnimation* keys_sprite_green;
+	SpriteAnimation* keys_sprite_red;
+	     //keys sprite animation
+
 };
 
 #endif

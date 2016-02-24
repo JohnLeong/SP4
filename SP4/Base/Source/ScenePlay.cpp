@@ -137,14 +137,13 @@ void CScenePlay::Init()
 
 
 	m_cPlayer = new CPlayer();
-	m_cPlayer->Init(m_cLevel.GetTilemap(), 1, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]), &m_cLevel.m_cEntityIPosList);
+	m_cPlayer->Init(m_cLevel.GetTilemap(), 2, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]), &m_cLevel.m_cEntityIPosList);
 	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	//Init level after player
 	InitLevel();
 
 	/*To be removed*/
-	
 	m_cLevel.GenerateMovableBlockEntity(6, 6);
 	m_cLevel.GenerateMovableBlockEntity(6, 8);
 	m_cLevel.GenerateMovableBlockEntity(3, 3);
@@ -157,24 +156,14 @@ void CScenePlay::Init()
 	m_cLevel.GenerateCoinEntity(9, 12);
 	m_cLevel.GenerateCoinEntity(9, 13);
 	m_cLevel.GenerateFireEntity(9, 9, CEntity_Fire::STATE_01);
-	m_cLevel.GenerateZombieEntity(3, 6, CEnemy::HOLDING_COIN);
-	m_cLevel.GenerateZombieEntity(5, 6, CEnemy::HOLDING_KEY_GREEN);
-
-
+	//m_cLevel.GenerateZombieEntity(3, 6, CEnemy::HOLDING_COIN);
+	//m_cLevel.GenerateZombieEntity(5, 6, CEnemy::HOLDING_KEY_GREEN);
 	/*To be removed*/
 }
 
 void CScenePlay::InitLevel()
 {
 	m_cLevel.SetPlayerPtr(this->m_cPlayer);
-	// Init Level entities
-	ostringstream convertor;
-	string getLevel = "Level";
-	convertor << m_iCurrentLevel;
-	getLevel.append(convertor.str());
-
-	m_cLevel.InitLua(getLevel);
-
 	//Init level tilemap
 	m_cLevel.InitTilemap(14, 18, TILE_SIZE);
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_STONE_01]), new Animation(0, 0, 1, 0.5f));
@@ -186,6 +175,13 @@ void CScenePlay::InitLevel()
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_RUNE_USED, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_RED]), new Animation(0, 0, 1, 1.f));
 	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 	m_cLevel.LoadTilemap("LevelMap//MapDesign.csv");
+
+	// Init Level entities
+	ostringstream convertor;
+	string getLevel = "Level";
+	convertor << m_iCurrentLevel;
+	getLevel.append(convertor.str());
+	m_cLevel.InitLua(getLevel);
 }
 
 void CScenePlay::InitAchievements()

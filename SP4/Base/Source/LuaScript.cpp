@@ -6,7 +6,7 @@ CLuaScript::CLuaScript(string path)
 	int s = 0;
 	string filepath;
 
-	filepath = "LuaScript//" + path + ".lua";
+	filepath = "LuaScripts//" + path + ".lua";
 
 	luaL_openlibs(L2);
 	if (luaL_loadfile(L2, filepath.c_str()) || lua_pcall(L2, 0, 0, 0))
@@ -65,31 +65,22 @@ float CLuaScript::getFloatVariable(string name)
 	return value;
 }
 
-void CLuaScript::getNsetEnemyVariables(string name)
-{
-	string addName = "Name";
-	string addPosX = "PosX";
-	string addPosY = "PosY";
-
-	name += addName;
-	lua_getglobal(L2, name.c_str());
-	string getName = (string)lua_tostring(L2, -1);
-	name.erase(name.begin() + 6, name.end() - 4);
-
-	name += addPosX;
-	lua_getglobal(L2, name.c_str());
-	int getPosX = (int)lua_tonumber(L2, -1);
-	name.erase(name.begin() + 6, name.end() - 4);
-
-	name += addPosY;
-	lua_getglobal(L2, name.c_str());
-	int getPosY = (int)lua_tonumber(L2, -1);
-
-	/*if (getName == "zombie")
-	{
-	CEnemyZombie* zombie = new CEnemyZombie(getPosX, getPosY, m_cLevel->GetTilemap());
-	}*/
-}
+//CEnemyZombie* CLuaScript::getNsetZombieVariables(string name)
+//{
+//	string addPosX = "PosX";
+//	string addPosY = "PosY";
+//
+//	name += addPosX;
+//	lua_getglobal(L2, name.c_str());
+//	int getPosX = (int)lua_tonumber(L2, -1);
+//	name.erase(name.begin() + 7, name.end() - 4);
+//
+//	name += addPosY;
+//	lua_getglobal(L2, name.c_str());
+//	int getPosY = (int)lua_tonumber(L2, -1);
+//
+//	//CEnemyZombie* zombie = new CEnemyZombie(getPosX, getPosY, );
+//}
 
 
 CAchievements* CLuaScript::getAchievementVariables(string name)
