@@ -20,7 +20,8 @@ CEnemySuperRetardZombie::CEnemySuperRetardZombie(int iXIndex, int YIndex, CTilem
 	m_cAStar = new AStar(cTilemap);
 	this->m_cSprite = cSprite;
 	this->m_cObjPtr = cKeyPtr;
-	this->m_cObjPtr->SetAlive(false);
+	if (cKeyPtr != NULL)
+		this->m_cObjPtr->SetAlive(false);
 	this->m_bHoldingObj = true;
 	InitAnimation();
 }

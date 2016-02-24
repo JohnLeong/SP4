@@ -12,6 +12,12 @@ CLevel::CLevel(void)
 
 CLevel::~CLevel(void)
 {
+	while (m_cEntityIPosList.size() > 0)
+	{
+		CEntityIPos* entity = m_cEntityIPosList.back();
+		delete entity;
+		m_cEntityIPosList.pop_back();
+	}
 }
 
 CTilemap* CLevel::GetTilemap(void)
