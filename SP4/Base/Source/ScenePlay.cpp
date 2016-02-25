@@ -21,7 +21,7 @@ CScenePlay::CScenePlay(void)
 
 CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 	:m_bExitPlay(false)
-	, m_iCurrentLevel(1)
+	, m_iCurrentLevel(3)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;

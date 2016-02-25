@@ -56,7 +56,7 @@ void CEntity_Fire::AddAnimation(Animation* cAnim, FIRE_STATE state)
 
 bool CEntity_Fire::DoColDir(MOVE_DIR m_MoveDir)
 {
-	if (m_cFire_State == STATE_04)	//State will be 05 when player moves to this tile
+	if (m_cFire_State == STATE_03)	//State will be 05 when player moves to this tile
 		m_cPlayerPtr->SetAlive(false);
 	return false;
 }
