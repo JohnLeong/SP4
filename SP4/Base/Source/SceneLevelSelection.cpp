@@ -98,6 +98,10 @@ void CSceneLevelSelection::Init()
 	meshList[GEO_LEVEL_OVERVIEW] = MeshBuilder::Generate2DMeshCenter("level overview", Color(1, 1, 1), 0.0f, 0.0f, 170.0f, 95.0f);
 	meshList[GEO_LEVEL_OVERVIEW]->textureID = LoadTGA("Image/LEVELS//level1_overview.tga"); //default load lv 1
 
+	//Backgrounds
+	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 45.5f, 30.5f);
+	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
+
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
@@ -239,7 +243,8 @@ void CSceneLevelSelection::Render()
 	ss << fps;
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 10.f, -180.f, -90.f);
 #endif
-
+	//Render backgrounds
+	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 	
 	//on mouse hover quit button
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 16.0f, quit_button_vec.y + 7.5f)

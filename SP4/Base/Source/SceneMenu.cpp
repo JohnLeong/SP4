@@ -33,7 +33,7 @@ void CSceneMenu::Init()
 	}
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/Anonymous.tga");
+	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/8BitWonder.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 
 	//create virtual positions for the buttons
@@ -75,7 +75,7 @@ void CSceneMenu::Init()
 	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
 	meshList[GEO_TEMPLE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 0.8f, 0.8f);
 	meshList[GEO_TEMPLE]->textureID = LoadTGA("Image//Background/temple.tga");
-	meshList[GEO_GROUND] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, -0.33f, 1.5f, 0.2f);
+	meshList[GEO_GROUND] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, -1.63f, 1.5f, 0.2f);
 	meshList[GEO_GROUND]->textureID = LoadTGA("Image//Background/ground.tga");
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
@@ -141,9 +141,7 @@ void CSceneMenu::UpdateKeyboardStatus(const unsigned char key)
 void CSceneMenu::Render()
 {
 	CSceneManager::Render();
-#if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "SceneMenu", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
-#endif
+
 	glDisable(GL_DEPTH_TEST);
 
 	//Render backgrounds
@@ -228,7 +226,9 @@ void CSceneMenu::Render()
 		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, -50.0f, -52.5f);
 		break;
 	}
-
+#if _DEBUG
+	RenderTextOnScreen(meshList[GEO_TEXT], "SceneMenu", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
+#endif
 
 }
 

@@ -40,6 +40,9 @@ class  CSceneLevelSelection : public CSceneManager
 		//start button
 		GEO_START_BUTTON,
 
+		//Backgrounds
+		GEO_BACKGROUND_BASE,
+
 		NUM_GEOMETRY,
 	};
 

@@ -34,6 +34,8 @@ public:
 	void Update(const float dt, CPlayer* cPlayer);
 	void UpdateMovement(const float dt, CPlayer* cPlayer);
 
+	void Reset(void);
+
 	//List of entities
 	std::vector<CEntityIPos*> m_cEntityIPosList;
 	//Main tile map
@@ -48,6 +50,8 @@ public:
 	void SetMovementReady(bool b);
 
 	void SetPlayerPtr(CPlayer* cPlayer);
+
+	int GetNumberOfMoves(void);
 
 	//Generate entities
 	CEnemyZombie* GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t);
@@ -69,7 +73,7 @@ private:
 	bool m_bMovementReady;		//Controller for next player movement
 	bool m_bDoTileCheck;			//Check tiles player and entities are standing on
 	CPlayer* m_cPlayerPtr;
-
+	int m_iPlayerMoves;			//Total amount of moves the player has taken
 };
 
 #endif

@@ -32,7 +32,7 @@ void CSceneSplash::Init()
 	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("splash", Color(1, 0.f, 1), 80.f);
 	meshList[GEO_QUAD]->textureID = LoadTGA("Image//splash.tga");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/anonymous.tga");
+	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/8BitWonder.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
@@ -83,10 +83,10 @@ void CSceneSplash::Render()
 #if _DEBUG
 	RenderTextOnScreen(meshList[GEO_TEXT], "SceneSplash", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 
-	std::ostringstream ss;
-	ss.precision(5);
-	ss << fps;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
+	//std::ostringstream ss;
+	//ss.precision(5);
+	//ss << fps;
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
 #endif
 }
 

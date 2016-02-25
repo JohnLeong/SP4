@@ -324,6 +324,7 @@ void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
 		std::cout << "ERMAHGAD COLLISION ERROR" << std::endl;
 		break;
 	case CTiledata::COL_ENDLEVEL:
+		moving = false;
 		m_bHasReachedEndLevel = true;
 		break;
 	default:

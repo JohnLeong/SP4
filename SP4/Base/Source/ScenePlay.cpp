@@ -95,6 +95,8 @@ void CScenePlay::Init()
 	meshList[GEO_TILE_FORCE_LEFT]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_LEFT.tga");
 	meshList[GEO_TILE_FORCE_RIGHT] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_FORCE_RIGHT]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_RIGHT.tga");
+	meshList[GEO_TILE_STAIRCASE] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_STAIRCASE]->textureID = LoadTGA("Image//Tiles/TILE_STAIRCASE.tga");
 
 	meshList[GEO_PLAYER] = MeshBuilder::GenerateSpriteAnimation2D("GEO_PLAYER", 4, 3);
 	meshList[GEO_PLAYER]->textureID = LoadTGA("Image//Entities//explorer.tga");
@@ -206,6 +208,7 @@ void CScenePlay::InitLevel()
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_DOWN, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_DOWN]), new Animation(0, 0, 1, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_LEFT, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_LEFT]), new Animation(0, 0, 1, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_RIGHT, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_RIGHT]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_STAIRCASE, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_STAIRCASE]), new Animation(0, 0, 1, 1.f));
 	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 
 	m_cLevel.LoadTilemap(getLevel);
@@ -228,7 +231,7 @@ void CScenePlay::Update(double dt)
 	}
 
 	//Player control
-	if (m_cLevel.IsMovementReady())
+	if (m_cLevel.IsMovementReady() && !m_cPlayer->GetHasReachedEndLevel())
 	{
 		if (IsKeyDownOnce('w'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_UP);
@@ -296,6 +299,8 @@ void CScenePlay::UpdateWeaponStatus(const unsigned char key)
  ********************************************************************************/
 void CScenePlay::RenderGUI()
 {
+	if (m_cPlayer->GetHasReachedEndLevel())
+		RenderTextOnScreen(meshList[GEO_TEXT], "YOU WIN!", Color(1.f, 1.f, 1.f), 20.f, -100.f, 0.f);
 	// Render the crosshair
 	//RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
 
@@ -403,6 +408,10 @@ void CScenePlay::RenderInventory()
 	ostringstream s_keys_yellow;
 	s_keys_yellow << m_cPlayer->GetKeys_Yellow();
 	RenderTextOnScreen(meshList[GEO_TEXT], ":" + s_keys_yellow.str(), Color(0.0f, 0.0f, 0.0f), 7.0f, 135.0f, -18.0f);
+
+	ostringstream s_player_moves;
+	s_player_moves << m_cLevel.GetNumberOfMoves();
+	RenderTextOnScreen(meshList[GEO_TEXT], "Moves:" + s_player_moves.str(), Color(0.0f, 0.0f, 0.0f), 7.0f, 72.0f, 55.0f);
 
 	//on mouse hover quit button
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 11.0f, quit_button_vec.y + 5.42f)

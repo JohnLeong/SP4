@@ -7,6 +7,7 @@ CLevel::CLevel(void)
 : m_bDoMovements(false)
 , m_bMovementReady(true)
 , m_bDoTileCheck(false)
+, m_iPlayerMoves(0)
 {
 	m_cTilemap = new CTilemap();
 }
@@ -270,6 +271,7 @@ void CLevel::Update(const float dt, CPlayer* cPlayer)
 		if (CheckPlayerCollisions(cPlayer))
 		{
 			m_bDoMovements = true;
+			++m_iPlayerMoves;
 		}
 	}
 
@@ -432,6 +434,11 @@ void CLevel::SetPlayerPtr(CPlayer* cPlayer)
 	this->m_cPlayerPtr = cPlayer;
 }
 
+int CLevel::GetNumberOfMoves(void)
+{
+	return m_iPlayerMoves;
+}
+
 CEnemyZombie* CLevel::GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t)
 {
 	CEnemyZombie* zombie;
@@ -571,4 +578,9 @@ CEntity_Block_Movable* CLevel::GenerateMovableBlockEntity(int iXIndex, int iYInd
 	m_cEntityIPosList.push_back(entity);
 
 	return entity;
+}
+
+void CLevel::Reset(void)
+{
+	m_iPlayerMoves = 0;
 }

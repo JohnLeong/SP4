@@ -65,7 +65,6 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\SceneLevelSelection.h" />
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h" />
     <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.h" />
     <ClInclude Include="Source\Achievements\Achievements.h" />
@@ -80,6 +79,7 @@
     <ClInclude Include="Source\Entities\Entity_Key_Red.h" />
     <ClInclude Include="Source\Entities\Entity_Key_Yellow.h" />
     <ClInclude Include="Source\SceneInstruction.h" />
+    <ClInclude Include="Source\SceneLevelSelection.h" />
     <ClInclude Include="Source\SoundManager.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\AStar.h" />
