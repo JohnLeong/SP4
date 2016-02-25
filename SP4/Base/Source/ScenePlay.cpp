@@ -21,7 +21,7 @@ CScenePlay::CScenePlay(void)
 
 CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 	:m_bExitPlay(false)
-	, m_iCurrentLevel(3)
+	, m_iCurrentLevel(1)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -231,7 +231,7 @@ void CScenePlay::Update(double dt)
 	}
 
 	//Player control
-	if (m_cLevel.IsMovementReady() && !m_cPlayer->GetHasReachedEndLevel())
+	if (m_cLevel.IsMovementReady() && !m_cPlayer->GetHasReachedEndLevel() && m_cPlayer->IsAlive())
 	{
 		if (IsKeyDownOnce('w'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_UP);
@@ -244,6 +244,12 @@ void CScenePlay::Update(double dt)
 	}
 	if (IsKeyDownOnce('1'))
 		m_cPlayer->UseItem(CPlayer::SLOT_01);
+	if (IsKeyDownOnce('2'))
+		m_cPlayer->UseItem(CPlayer::SLOT_02);
+	if (IsKeyDownOnce('3'))
+		m_cPlayer->UseItem(CPlayer::SLOT_03);
+	if (IsKeyDownOnce('4'))
+		m_cPlayer->UseItem(CPlayer::SLOT_04);
 
 
 	//Update player
@@ -301,6 +307,8 @@ void CScenePlay::RenderGUI()
 {
 	if (m_cPlayer->GetHasReachedEndLevel())
 		RenderTextOnScreen(meshList[GEO_TEXT], "YOU WIN!", Color(1.f, 1.f, 1.f), 20.f, -100.f, 0.f);
+	if (!m_cPlayer->IsAlive())
+		RenderTextOnScreen(meshList[GEO_TEXT], "U DED", Color(1.f, 1.f, 1.f), 20.f, -100.f, 0.f);
 	// Render the crosshair
 	//RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
 

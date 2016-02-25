@@ -196,7 +196,7 @@ void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
 {
 	for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 	{
-		if ((*entity)->GetXIndex() == this->m_iXIndex && (*entity)->GetYIndex() == this->m_iYIndex && (*entity)->DeathOnEntry())
+		if ((*entity)->GetXIndex() == this->m_iXIndex && (*entity)->GetYIndex() == this->m_iYIndex && (*entity)->DeathOnEntry() && (*entity)->IsAlive())
 		{
 			moving = false;
 			this->SetAlive(false);

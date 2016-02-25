@@ -235,14 +235,6 @@ void CSceneLevelSelection::Render()
 {
 	CSceneManager::Render();
 
-#if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "SceneLevelSelection", Color(1.f, 1.f, 1.f), 10.f, -160.f, 80.f);
-
-	std::ostringstream ss;
-	ss.precision(5);
-	ss << fps;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 10.f, -180.f, -90.f);
-#endif
 	//Render backgrounds
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 	
@@ -356,6 +348,14 @@ void CSceneLevelSelection::Render()
 		break;
 	}
 
+#if _DEBUG
+	RenderTextOnScreen(meshList[GEO_TEXT], "SceneLevelSelection", Color(1.f, 1.f, 1.f), 10.f, -160.f, 80.f);
+
+	//std::ostringstream ss;
+	//ss.precision(5);
+	//ss << fps;
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 10.f, -180.f, -90.f);
+#endif
 }
 
 /********************************************************************************
