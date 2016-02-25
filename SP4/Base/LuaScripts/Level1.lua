@@ -8,6 +8,12 @@ maxNumOfZombies = 0
 maxNumOfRetardZombies = 0
 maxNumOfBlocks = 2
 maxNumOfCoins = 1
+maxNumOfFire = 0
+maxNumOfDemonFire = 0
+maxNumOfRedKeys = 0
+maxNumOfBlueKeys = 0
+maxNumOfGreenKeys = 0
+maxNumOfYellowKeys = 0
 
 zombie1PosX = 3
 zombie1PosY = 6

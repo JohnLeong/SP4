@@ -78,13 +78,9 @@ bool CLevel::InitLua(std::string levelName)
 
 	m_cPlayerPtr->SetXIndex(m_cLuascript->getIntVariable("playerPosX"));
 	m_cPlayerPtr->SetYIndex(m_cLuascript->getIntVariable("playerPosY"));
-	maxNumberOfZombies = m_cLuascript->getIntVariable("maxNumOfZombies");
-	maxNumberOfRetardZombies = m_cLuascript->getIntVariable("maxNumOfRetardZombies");
-	maxNumberOfBlocks = m_cLuascript->getIntVariable("maxNumOfBlocks");
-	maxNumberOfCoins = m_cLuascript->getIntVariable("maxNumOfCoins");
-	//maxNumberOfSlowFire = m_cLuascript->getIntVariable("maxNumOfSlowFire");
 
-	for (int i = 0; i < maxNumberOfZombies; i++)
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfZombies");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
 	{
 		string getZombie = "zombie";
 		getZombie = IntConvertToString(i + 1, getZombie);
@@ -117,10 +113,11 @@ bool CLevel::InitLua(std::string levelName)
 		}
 	}
 
-	for (int i = 0; i < maxNumberOfRetardZombies; i++)
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfRetardZombies");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
 	{
 		string getRetardZombie = "retardZombie";
-		IntConvertToString(i + 1, getRetardZombie);
+		getRetardZombie = IntConvertToString(i + 1, getRetardZombie);
 
 		posX = GetXFromLua(m_cLuascript, getRetardZombie);
 		posY = GetYFromLua(m_cLuascript, getRetardZombie);
@@ -150,7 +147,8 @@ bool CLevel::InitLua(std::string levelName)
 		}
 	}
 
-	for (int i = 0; i < maxNumberOfBlocks; i++)
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfBlocks");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
 	{
 		string getBlock = "block";
 		getBlock = IntConvertToString(i + 1, getBlock);
@@ -161,7 +159,8 @@ bool CLevel::InitLua(std::string levelName)
 		GenerateMovableBlockEntity(posX, posY);
 	}
 
-	for (int i = 0; i < maxNumberOfCoins; i++)
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfCoins");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
 	{
 		string getCoin = "coin";
 		getCoin = IntConvertToString(i + 1, getCoin);
@@ -170,6 +169,78 @@ bool CLevel::InitLua(std::string levelName)
 		posY = GetYFromLua(m_cLuascript, getCoin);
 
 		GenerateCoinEntity(posX, posY);
+	}
+
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfFire");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
+	{
+		string getFire = "fire";
+		getFire = IntConvertToString(i + 1, getFire);
+
+		posX = GetXFromLua(m_cLuascript, getFire);
+		posY = GetYFromLua(m_cLuascript, getFire);
+
+		GenerateFireEntity(posX, posY, CEntity_Fire::STATE_01);
+	}
+
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfDemonFire");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
+	{
+		string getDemonFire = "demonFire";
+		getDemonFire = IntConvertToString(i + 1, getDemonFire);
+
+		posX = GetXFromLua(m_cLuascript, getDemonFire);
+		posY = GetYFromLua(m_cLuascript, getDemonFire);
+
+		GenerateDemonFireEntity(posX, posY, CEntity_DemonFire::STATE_01);
+	}
+
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfRedKeys");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
+	{
+		string getRedKey = "redKey";
+		getRedKey = IntConvertToString(i + 1, getRedKey);
+
+		posX = GetXFromLua(m_cLuascript, getRedKey);
+		posY = GetYFromLua(m_cLuascript, getRedKey);
+
+		GenerateRedKeyEntity(posX, posY);
+	}
+
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfBlueKeys");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
+	{
+		string getBlueKey = "blueKey";
+		getBlueKey = IntConvertToString(i + 1, getBlueKey);
+
+		posX = GetXFromLua(m_cLuascript, getBlueKey);
+		posY = GetYFromLua(m_cLuascript, getBlueKey);
+
+		GenerateBlueKeyEntity(posX, posY);
+	}
+
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfGreenKeys");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
+	{
+		string getGreenKey = "greenKey";
+		getGreenKey = IntConvertToString(i + 1, getGreenKey);
+
+		posX = GetXFromLua(m_cLuascript, getGreenKey);
+		posY = GetYFromLua(m_cLuascript, getGreenKey);
+
+		GenerateGreenKeyEntity(posX, posY);
+	}
+
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfYellowKeys");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
+	{
+		string getYellowKey = "yellowKey";
+		getYellowKey = IntConvertToString(i + 1, getYellowKey);
+
+		posX = GetXFromLua(m_cLuascript, getYellowKey);
+		posY = GetYFromLua(m_cLuascript, getYellowKey);
+
+		GenerateYellowKeyEntity(posX, posY);
 	}
 
 	//for (int i = 0; i < maxNumberOfSlowFire; i++)

@@ -15,13 +15,13 @@ CScenePlay::CScenePlay(void)
 	: m_window_width(800)
 	, m_window_height(600)
 	, m_bExitPlay(false)
-	, m_iCurrentLevel(1)
+	, m_iCurrentLevel(3)
 {
 }
 
 CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 	:m_bExitPlay(false)
-	, m_iCurrentLevel(1)
+	, m_iCurrentLevel(3)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -166,7 +166,7 @@ void CScenePlay::Init()
 	/*To be removed*/
 	//m_cLevel.GenerateRedKeyEntity(8, 8);
 	//m_cLevel.GenerateBlueKeyEntity(9, 8);
-	m_cLevel.GenerateGreenKeyEntity(2, 4);
+	//m_cLevel.GenerateGreenKeyEntity(2, 4);
 	//m_cLevel.GenerateYellowKeyEntity(11, 8);
 	/*m_cLevel.GenerateCoinEntity(9, 10);
 	m_cLevel.GenerateCoinEntity(9, 11);
