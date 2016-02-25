@@ -12,6 +12,7 @@
 #define buttonYoffset 12.0f
 
 bool CSceneLevelSelection::m_bBacktoMainMenu = false;
+bool CSceneLevelSelection::m_bisColWithStartButton = false;
 
 CSceneLevelSelection::CSceneLevelSelection(void)
 : m_window_width(800)
@@ -130,7 +131,7 @@ void CSceneLevelSelection::Update(double dt)
 		if (Application::getChoiceVal()  < 1)
 			Application::setChoiceVal(4);
 
-		isKeyBoard = true;
+		m_bisKeyBoard = true;
 	}
 	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
 	{
@@ -140,7 +141,7 @@ void CSceneLevelSelection::Update(double dt)
 		if (Application::getChoiceVal() > 4)
 			Application::setChoiceVal(1);
 
-		isKeyBoard = true;
+		m_bisKeyBoard = true;
 	}
 
 	//on mouse hover level buttons
@@ -149,28 +150,28 @@ void CSceneLevelSelection::Update(double dt)
 	{
 		//level 1 button
 		Application::setChoiceVal(1);
-		isKeyBoard = false;
+		m_bisKeyBoard = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[1].x, button_vec[1].y, button_vec[1].x + buttonXoffset, button_vec[1].y + buttonYoffset)
 		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 	{
 		//level 2 button
 		Application::setChoiceVal(2);
-		isKeyBoard = false;
+		m_bisKeyBoard = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[2].x, button_vec[2].y, button_vec[2].x + buttonXoffset, button_vec[2].y + buttonYoffset)
 		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 	{
 		//level 3 button
 		Application::setChoiceVal(3);
-		isKeyBoard = false;
+		m_bisKeyBoard = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[3].x, button_vec[3].y, button_vec[3].x + buttonXoffset, button_vec[3].y + buttonYoffset)
 		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 	{
 		//level 4 button
 		Application::setChoiceVal(4);
-		isKeyBoard = false;
+		m_bisKeyBoard = false;
 	}
 
 	float fDelta = (float)dt;
@@ -205,6 +206,22 @@ Get is quit to main
 bool CSceneLevelSelection::GetIsQuitToMain()
 {
 	return m_bBacktoMainMenu;
+}
+
+/********************************************************************************
+set the boolean to check if mouse is in col with start button
+********************************************************************************/
+bool CSceneLevelSelection::GetisColWithStartButton()
+{
+	return m_bisColWithStartButton;
+}
+
+/********************************************************************************
+set the boolean to check if mouse is in col with start button
+********************************************************************************/
+void CSceneLevelSelection::SetisColWithStartButton(bool b)
+{
+	CSceneLevelSelection::m_bisColWithStartButton = b;
 }
 
 /********************************************************************************
@@ -250,7 +267,7 @@ void CSceneLevelSelection::Render()
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) )
 		{
-			//SetISQuitToMain(true);
+			SetisColWithStartButton(true);
 		}
 
 	}

@@ -61,6 +61,12 @@ public:
 	static void SetISQuitToMain(bool b);
 	//get the boolean for quit
 	static bool GetIsQuitToMain();
+
+	//set the boolean to check if mouse is in col with start button
+	static void SetisColWithStartButton(bool b);
+	//set the boolean to check if mouse is in col with start button
+	static bool GetisColWithStartButton();
+
 protected:
 	Mesh* meshList[NUM_GEOMETRY];
 
@@ -68,11 +74,15 @@ protected:
 	int m_window_width;
 	int m_window_height;
 
+	//for going backc to the main menu
 	static bool m_bBacktoMainMenu;
 
 	//check if the keyboard is currently active
-	bool isKeyBoard;
+	bool m_bisKeyBoard;
 
+	//boolean for mouse in collision with start button
+	static bool m_bisColWithStartButton;
+	
 	//virutally create vector positions for the buttons
 	Vector3 button_vec[5];
 	Vector3 quit_button_vec;
