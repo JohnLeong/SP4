@@ -40,6 +40,20 @@ bool CEnemy::DoCurrentTileCollision()
 {
 	if (CEntityIPos::DoCurrentTileCollision())
 		return true;
+	for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
+	{
+		if ((*entity) == this)
+			continue;
+		if ((*entity)->GetXIndex() == this->m_iXIndex && (*entity)->GetYIndex() == this->m_iYIndex && (*entity)->IsAlive())
+		{
+			if ((*entity)->DeathOnEntry())
+			{
+				this->m_bAlive = false;
+				this->m_MoveDir = DIR_NONE;
+				return false;
+			}
+		}
+	}
 	switch (this->m_cTilemap->GetTile(this->m_iXIndex, this->m_iYIndex).GetCollisionType())
 	{
 	case CTiledata::COL_HOLE:
