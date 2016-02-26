@@ -73,6 +73,6 @@ void CProperties::ChangeValue(int changeNumber)
 
 	m_cLuaScript = new CLuaScript("AchievementProperties");
 	m_cLuaScript->recordAchievementPropertiesProgress(mName, getValue, getChangedValue);
-
+	delete m_cLuaScript;
 	mValue += changeNumber;
 }

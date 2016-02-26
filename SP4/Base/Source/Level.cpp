@@ -73,7 +73,7 @@ int GetYFromLua(CLuaScript* m_cLuascript, string getEntity)
 bool CLevel::InitLua(std::string levelName)
 {
 	string addHold = "Hold";
-
+	string addStage = "Stage";
 	m_cLuascript = new CLuaScript(levelName);
 	m_cTilemap->Init(m_cLuascript->getIntVariable("tileMapWidth"), m_cLuascript->getIntVariable("tileMapHeight"), TILE_SIZE);
 
@@ -113,7 +113,29 @@ bool CLevel::InitLua(std::string levelName)
 		posX = GetXFromLua(m_cLuascript, getFire);
 		posY = GetYFromLua(m_cLuascript, getFire);
 
-		GenerateFireEntity(posX, posY, CEntity_Fire::STATE_01);
+		getFire += addStage;
+		initialStage = m_cLuascript->getIntVariable(getFire);
+
+		if (initialStage == 1)
+		{
+			GenerateFireEntity(posX, posY, CEntity_Fire::STATE_01);
+		}
+		else if (initialStage == 2)
+		{
+			GenerateFireEntity(posX, posY, CEntity_Fire::STATE_02);
+		}
+		else if (initialStage == 3)
+		{
+			GenerateFireEntity(posX, posY, CEntity_Fire::STATE_03);
+		}
+		else if (initialStage == 4)
+		{
+			GenerateFireEntity(posX, posY, CEntity_Fire::STATE_04);
+		}
+		else if (initialStage == 5)
+		{
+			GenerateFireEntity(posX, posY, CEntity_Fire::STATE_05);
+		}
 	}
 
 	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfDemonFire");
@@ -125,7 +147,18 @@ bool CLevel::InitLua(std::string levelName)
 		posX = GetXFromLua(m_cLuascript, getDemonFire);
 		posY = GetYFromLua(m_cLuascript, getDemonFire);
 
-		GenerateDemonFireEntity(posX, posY, CEntity_DemonFire::STATE_01);
+		getDemonFire += addStage;
+		initialStage = m_cLuascript->getIntVariable(getDemonFire);
+
+
+		if (initialStage == 1)
+		{
+			GenerateDemonFireEntity(posX, posY, CEntity_DemonFire::STATE_01);
+		}
+		else if (initialStage == 2)
+		{
+			GenerateDemonFireEntity(posX, posY, CEntity_DemonFire::STATE_02);
+		}
 	}
 
 	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfRedKeys");
@@ -243,16 +276,6 @@ bool CLevel::InitLua(std::string levelName)
 			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_NONE);
 		}
 	}
-	//for (int i = 0; i < maxNumberOfSlowFire; i++)
-	//{
-	//	string getSlowFire = "coin";
-	//	getSlowFire = IntConvertToString(i + 1, getSlowFire);
-
-	//	posX = GetXFromLua(m_cLuascript, getSlowFire);
-	//	posY = GetYFromLua(m_cLuascript, getSlowFire);
-
-	//	GenerateFireEntity(posX, posY, CEntity_Fire::STATE_01);
-	//}
 
 	delete m_cLuascript;
 	return true;
@@ -489,7 +512,7 @@ CEnemySuperRetardZombie* CLevel::GenerateSuperRetardZombieEntity(int iXIndex, in
 		break;
 	case CEnemy::HOLDING_KEY_BLUE:
 		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateBlueKeyEntity(0, 0));
-		break; 
+		break;
 	case CEnemy::HOLDING_KEY_YELLOW:
 		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateYellowKeyEntity(0, 0));
 		break;

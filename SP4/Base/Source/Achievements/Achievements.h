@@ -11,12 +11,12 @@ class CProperties;
 class CAchievements
 {
 public:
-	CAchievements(string theName, vector<string> theRelatedProps, bool mUnlocked);
+	CAchievements(string theName, vector<CProperties*> theRelatedProps, bool mUnlocked);
 	~CAchievements(void);
-	void Update(vector<CProperties*> propertyList);								// Update
+	void Update();								// Update
 
 private:
 	string mName; // achievement name
-	vector<string> mProps;
+	vector<CProperties*> mProps;
 	bool mUnlocked;
 };

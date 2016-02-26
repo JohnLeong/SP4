@@ -1,6 +1,6 @@
 #include "Achievements.h"
 #include "Properties.h"
-CAchievements::CAchievements(string theName, vector<string> theRelatedProps, bool mUnlocked)
+CAchievements::CAchievements(string theName, vector<CProperties*> theRelatedProps, bool mUnlocked)
 {
 	mName = theName;
 	mProps = theRelatedProps;
@@ -12,13 +12,13 @@ CAchievements::~CAchievements(void)
 {
 }
 
-void CAchievements::Update(vector<CProperties*> propertyList)
+void CAchievements::Update()
 {
 	if (mUnlocked == false)
 	{
-		for (unsigned int i = 0; i < propertyList.size(); i++)
+		for (unsigned int i = 0; i < mProps.size(); i++)
 		{
-			if (propertyList[i]->GetClearActivation() == false)
+			if (mProps[i]->GetClearActivation() == false)
 			{
 				break;
 			}

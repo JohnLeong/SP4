@@ -69,7 +69,7 @@ public:
 
 private:
 	bool m_bDoMovements;
-	int playerStartPosX, playerStartPosY, posX, posY, enemyHoldItem, maxNumberOfCurrentEntity;
+	int playerStartPosX, playerStartPosY, posX, posY, enemyHoldItem, maxNumberOfCurrentEntity, initialStage;
 	bool m_bMovementReady;		//Controller for next player movement
 	bool m_bDoTileCheck;			//Check tiles player and entities are standing on
 	CPlayer* m_cPlayerPtr;

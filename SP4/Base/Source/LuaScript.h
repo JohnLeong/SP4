@@ -15,8 +15,9 @@ extern "C" {
 class CLuaScript
 {
 private:
-	lua_State *L2 = lua_open();;
-
+	lua_State *L2 = lua_open();
+	lua_State *A = lua_open();
+	lua_State *AP = lua_open();
 public:
 	CLuaScript(string path);
 	~CLuaScript();
@@ -28,7 +29,7 @@ public:
 
 	CEnemyZombie* getNsetZombieVariables(string name);
 
-	CAchievements* getAchievementVariables(string name);
+	CAchievements* getAchievementVariables(string name, vector<CProperties*>  checkList);
 	CProperties* getAchievementPropertiesVariables(string name);
 
 	void recordAchievementProgress(string name, string value, string changedValue);

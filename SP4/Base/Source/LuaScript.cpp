@@ -22,8 +22,17 @@ CLuaScript::~CLuaScript()
 	lua_close(L2);
 }
 
+void checkStack(lua_State* L, int check)
+{
+	if (!lua_checkstack(L, 1))
+	{
+		lua_remove(L, 1);
+	}
+}
+
 string CLuaScript::getStringVariable(string name)
 {
+	checkStack(L2, 1);
 	lua_getglobal(L2, name.c_str());
 	if (!lua_isstring(L2, -1))
 	{
@@ -35,6 +44,7 @@ string CLuaScript::getStringVariable(string name)
 
 int CLuaScript::getIntVariable(string name)
 {
+	checkStack(L2, 1);
 	lua_getglobal(L2, name.c_str());
 	if (!lua_isnumber(L2, -1))
 	{
@@ -46,6 +56,8 @@ int CLuaScript::getIntVariable(string name)
 
 bool CLuaScript::getBoolVariable(string name)
 {
+	checkStack(L2, 1);
+	lua_checkstack(L2, 1);
 	lua_getglobal(L2, name.c_str());
 	if (!lua_isboolean(L2, -1))
 	{
@@ -57,6 +69,8 @@ bool CLuaScript::getBoolVariable(string name)
 
 float CLuaScript::getFloatVariable(string name)
 {
+	checkStack(L2, 1);
+	lua_checkstack(L2, 1);
 	lua_getglobal(L2, name.c_str());
 	if (!lua_isboolean(L2, -1))
 	{
@@ -84,10 +98,11 @@ float CLuaScript::getFloatVariable(string name)
 //}
 
 
-CAchievements* CLuaScript::getAchievementVariables(string name)
+CAchievements* CLuaScript::getAchievementVariables(string name, vector<CProperties*> checkList)
 {
+	checkStack(L2, 1);
 	CAchievements* newAchievement;
-	vector<string> propertyList;
+	vector<CProperties*> propertyList;
 	string addName = "Name";
 	string addProperties = "Properties";
 
@@ -106,8 +121,13 @@ CAchievements* CLuaScript::getAchievementVariables(string name)
 		name = converter.str();
 		lua_getglobal(L2, name.c_str());
 		string getPropertyName = (string)lua_tostring(L2, -1);
-		propertyList.push_back(getPropertyName);
-		name.erase(name.begin() + 11);
+		for (int i = 0; i < checkList.size(); i++)
+		{
+			if (checkList[i]->GetName() == getPropertyName)
+			{
+				propertyList.push_back(checkList[i]);
+			}
+		}
 	}
 	newAchievement = new CAchievements(getName, propertyList, false);
 	return newAchievement;
@@ -115,6 +135,7 @@ CAchievements* CLuaScript::getAchievementVariables(string name)
 
 CProperties* CLuaScript::getAchievementPropertiesVariables(string name)
 {
+	checkStack(L2, 1);
 	CProperties* newProperty;
 	string addName = "Name";
 	string addValue = "Value";

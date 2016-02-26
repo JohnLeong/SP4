@@ -281,10 +281,11 @@ void Application::Init()
 		string changedInt = "";
 		converter << i;
 		changedInt = converter.str();
-		CAchievements* testTest = m_cLuaScript->getAchievementVariables(changedInt);
+		CAchievements* testTest = m_cLuaScript->getAchievementVariables(changedInt, m_cPropertyList);
 		m_cAchievementList.push_back(testTest);
 	}
 	delete m_cLuaScript;
+
 	// Initialise the GSM
 	theGSM = new CGameStateManager();
 	theGSM->Init("DM2240 Assignment 1", m_window_width, m_window_height);
