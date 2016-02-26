@@ -29,7 +29,6 @@ void CSplashState::Init(const int width, const int height)
 
 	scene = new CSceneSplash(width, height);
 	scene->Init();
-	Application::Sound.playBackgroundSound("../irrKlang/media/mainMenuBGM.mp3");
 }
 
 void CSplashState::Cleanup()

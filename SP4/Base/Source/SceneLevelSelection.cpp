@@ -135,16 +135,18 @@ void CSceneLevelSelection::Update(double dt)
 		if (Application::getChoiceVal()  < 1)
 			Application::setChoiceVal(4);
 
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 		m_bisKeyBoard = true;
 	}
 	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
-	{
+	{	
 		Application::setChoiceVal(Application::getChoiceVal() + 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
 
 		if (Application::getChoiceVal() > 4)
 			Application::setChoiceVal(1);
 
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 		m_bisKeyBoard = true;
 	}
 
@@ -154,6 +156,8 @@ void CSceneLevelSelection::Update(double dt)
 	{
 		//level 1 button
 		Application::setChoiceVal(1);
+
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 		m_bisKeyBoard = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[1].x, button_vec[1].y, button_vec[1].x + buttonXoffset, button_vec[1].y + buttonYoffset)
@@ -161,6 +165,8 @@ void CSceneLevelSelection::Update(double dt)
 	{
 		//level 2 button
 		Application::setChoiceVal(2);
+
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 		m_bisKeyBoard = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[2].x, button_vec[2].y, button_vec[2].x + buttonXoffset, button_vec[2].y + buttonYoffset)
@@ -168,6 +174,8 @@ void CSceneLevelSelection::Update(double dt)
 	{
 		//level 3 button
 		Application::setChoiceVal(3);
+
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 		m_bisKeyBoard = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[3].x, button_vec[3].y, button_vec[3].x + buttonXoffset, button_vec[3].y + buttonYoffset)
@@ -175,6 +183,8 @@ void CSceneLevelSelection::Update(double dt)
 	{
 		//level 4 button
 		Application::setChoiceVal(4);
+
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 		m_bisKeyBoard = false;
 	}
 

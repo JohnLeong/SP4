@@ -26,6 +26,9 @@ void CSceneOptions::Init()
 {
 	CSceneManager::Init();
 
+	//plays the backgruond music
+	Application::Sound.playBackgroundSound("../irrKlang/media/SmokeWeedEveryday.mp3");
+
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		meshList[i] = NULL;

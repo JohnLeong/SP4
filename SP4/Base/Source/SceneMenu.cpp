@@ -6,13 +6,17 @@
 #include "Application.h"
 #include "Utility.h"
 #include "LoadTGA.h"
+
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 #define buttonXoffset 55.5f
 #define buttonYoffset 8.0f
 
-CSceneMenu::CSceneMenu(void):
-isKeyBoard(false)
+CSceneMenu::CSceneMenu(void)
+: isKeyBoard(false)
+, isSelectSoundPlaying(false)
 {
 }
 
@@ -23,6 +27,9 @@ CSceneMenu::~CSceneMenu(void)
 void CSceneMenu::Init()
 {
 	CSceneManager::Init();
+
+	//Play the main menu background sound
+	Application::Sound.playBackgroundSound("../irrKlang/media/mainmenu_BGM.mp3");
 
 	//init the choice
 	Application::setChoiceVal(4);
@@ -105,6 +112,13 @@ void CSceneMenu::Update(double dt)
 		if (Application::getChoiceVal() > 4)
 			Application::setChoiceVal(1);
 
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+
 		isKeyBoard = true;
 		//cout << "choice: " << getChoiceVal() << endl;
 	}
@@ -114,6 +128,13 @@ void CSceneMenu::Update(double dt)
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
 		if (Application::getChoiceVal()  < 1)
 			Application::setChoiceVal(4);
+
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
 
 		isKeyBoard = true;
 		//cout << "choice: " << getChoiceVal() << endl;
@@ -167,27 +188,60 @@ void CSceneMenu::Render()
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonXoffset, geo_pos[0].y + buttonYoffset)) // play button
 	{
 		Application::setChoiceVal(4);
+
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+
 		isKeyBoard = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonXoffset, geo_pos[1].y + buttonYoffset)) // instructions button
 	{
 		Application::setChoiceVal(3);
+
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+
 		isKeyBoard = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonXoffset, geo_pos[2].y + buttonYoffset)) // options button
 	{
 		Application::setChoiceVal(2);
+		
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+
 		isKeyBoard = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonXoffset, geo_pos[3].y + buttonYoffset)) // exit button
 	{
 		Application::setChoiceVal(1);
+
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
 		isKeyBoard = false;
 	}
 	else
 	{
 		if (!isKeyBoard)
 			Application::setChoiceVal(0);
+
+		isSelectSoundPlaying = false;
 	}
 
 	

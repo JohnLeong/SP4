@@ -66,6 +66,7 @@ private:
 	float m_fShakeOffsetY;
 
 	bool m_bDoShake;
+	bool m_bplaySplashSoundback;
 };
 
 #endif

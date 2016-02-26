@@ -24,7 +24,10 @@ CSceneSplash::~CSceneSplash(void)
 void CSceneSplash::Init()
 {
 	CSceneManager::Init();
-	glClearColor(1.f, 1.f, 1.f, 0.0f);
+
+	//Application::Sound.SetFileName("");
+
+	glClearColor(0.f, 0.f, 0.f, 0.0f);
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		meshList[i] = NULL;
@@ -69,6 +72,7 @@ void CSceneSplash::Init()
 	m_fShakeOffsetX = 0.f;
 	m_fShakeOffsetY = 0.f;
 	m_bDoShake = false;
+	m_bplaySplashSoundback = false;
 }
 
 void CSceneSplash::Update(double dt)
@@ -101,6 +105,9 @@ void CSceneSplash::Update(double dt)
 
 		if (m_fScreenCol <= 0.f)
 		{
+			//start the splash sound front
+			Application::Sound.playSound("../irrKlang/media/startup_sound_front.mp3");
+
 			m_fScreenCol = 0.f;
 			cAnimState = ANIM_1;
 		}
@@ -148,6 +155,14 @@ void CSceneSplash::Update(double dt)
 		if (m_bDoShake)
 			break;
 		m_fBeamScaleX += fDelta * 20;
+
+		//start the splash sound front
+		if (m_bplaySplashSoundback == false)
+		{
+			m_bplaySplashSoundback = true;
+			Application::Sound.playSound("../irrKlang/media/startup_sound_back.wav");
+		}
+
 		if (m_fBeamScaleX >= 2.5f)
 		{
 			m_fBeamScaleX = 2.5f;
