@@ -77,6 +77,8 @@ void CSceneMenu::Init()
 	meshList[GEO_TEMPLE]->textureID = LoadTGA("Image//Background/temple.tga");
 	meshList[GEO_GROUND] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, -1.63f, 1.5f, 0.2f);
 	meshList[GEO_GROUND]->textureID = LoadTGA("Image//Background/ground.tga");
+	meshList[GEO_STAR] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.f, 0.05f, 0.05f);
+	meshList[GEO_STAR]->textureID = LoadTGA("Image//Background/star.tga");
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -147,6 +149,7 @@ void CSceneMenu::Render()
 	//Render backgrounds
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 	RenderMesh(meshList[GEO_GROUND], false);
+	RenderMesh(meshList[GEO_STAR], false);
 	//RenderMesh(meshList[GEO_TEMPLE], false);
 
 	if (Application::IsKeyPressed('1'))

@@ -15,6 +15,11 @@ class CSceneSplash : public CSceneManager
 	{
 		GEO_QUAD,
 		GEO_TEXT,
+		GEO_GRADIENT,
+		GEO_BEAM,
+		GEO_CHAR_1, 
+		GEO_CHAR_2,
+		GEO_CHAR_3,
 		NUM_GEOMETRY,
 	};
 
@@ -36,6 +41,31 @@ public:
 protected:
 	Mesh* meshList[NUM_GEOMETRY];
 
+private:
+	enum ANIM_STATE
+	{
+		ANIM_0,
+		ANIM_1,
+		ANIM_2,
+		ANIM_3,
+		ANIM_4,
+		ANIM_5,
+	};
+	ANIM_STATE cAnimState;
+	float m_fScreenCol;
+
+	float m_fLogoTranslateY;
+	float m_fLogo1PosY;
+	float m_fLogo2PosY;
+	float m_fLogo3PosY;
+	float m_fBeamScaleX;
+
+	float m_fShakeRadius;
+	float m_fShakeAngle;
+	float m_fShakeOffsetX;
+	float m_fShakeOffsetY;
+
+	bool m_bDoShake;
 };
 
 #endif

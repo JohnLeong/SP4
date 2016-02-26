@@ -1,4 +1,6 @@
 #include "EntityIPos.h"
+#include <math.h>
+#include "MyMath.h"
 
 
 CEntityIPos::CEntityIPos()
@@ -8,7 +10,10 @@ CEntityIPos::CEntityIPos()
 , m_AnimDir(DIR_IDLE_DOWN)
 , m_bHoldingObj(false)
 , m_bRecalculate(true)
+, m_fDeathOffSetX(DEATH_ANIM_START_OFFSET_X)
+, m_fDeathOffSetY(0.f)
 {
+	m_bDeathDir = Math::RandIntMinMax(0, 1);
 }
 
 
@@ -57,6 +62,28 @@ float CEntityIPos::GetYOffset(void)
 	return m_fOffSetY;
 }
 
+float CEntityIPos::GetRenderPosX(void)
+{
+	if (m_bAlive)
+		return ((static_cast<float>(this->m_iXIndex) * m_cTilemap->GetTileSize()) + m_fOffSetX);
+	else
+	{
+		if (m_bDeathDir)
+			return ((static_cast<float>(this->m_iXIndex) * m_cTilemap->GetTileSize()) + m_fOffSetX + m_fDeathOffSetX - DEATH_ANIM_START_OFFSET_X);
+		else
+			return ((static_cast<float>(this->m_iXIndex) * m_cTilemap->GetTileSize()) + m_fOffSetX - (m_fDeathOffSetX - DEATH_ANIM_START_OFFSET_X));
+	}
+		
+}
+
+float CEntityIPos::GetRenderPosY(void)
+{
+	if (m_bAlive)
+		return ((static_cast<float>(this->m_iYIndex) * -m_cTilemap->GetTileSize()) + m_fOffSetY);
+	else
+		return ((static_cast<float>(this->m_iYIndex) * -m_cTilemap->GetTileSize()) + m_fOffSetY - m_fDeathOffSetY);
+}
+
 Vector3 CEntityIPos::GetNextDirectionPos(void)
 {
 	switch (m_MoveDir)
@@ -89,6 +116,16 @@ Update
 ********************************************************************************/
 void CEntityIPos::Update(const float dt)
 {
+	if (!m_bAlive)
+	{
+		m_fDeathOffSetX += dt * DEATH_ANIM_SPEED_X;
+		//m_fDeathOffSetY = (0.04 * (m_fDeathOffSetX * m_fDeathOffSetX)) + (0.03 * m_fDeathOffSetX) + 1;
+		m_fDeathOffSetY = (((m_fDeathOffSetX * m_fDeathOffSetX) - (2 * m_fDeathOffSetX) - 3) * 0.1) - DEATH_ANIM_OFFSET_Y;
+		//m_fDeathOffSetY = Math::RadianToDegree(sin(cos(m_fDeathOffSetX)));
+		if (m_fDeathOffSetY > DEATH_ANIM_CUTOFF_Y)
+			m_bActive = false;
+		return;
+	}
 	switch (this->m_MoveDir)
 	{
 	case DIR_UP:
@@ -159,7 +196,7 @@ bool CEntityIPos::DoCurrentTileCollision()
 		{
 			for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 			{
-				if ((*entity) == this)
+				if ((*entity) == this || !(*entity)->IsActive())
 					continue;
 				if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
 				{
@@ -167,6 +204,7 @@ bool CEntityIPos::DoCurrentTileCollision()
 					return false;
 				}
 			}
+			m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 			return true;
 		}
 		this->m_MoveDir = DIR_NONE;

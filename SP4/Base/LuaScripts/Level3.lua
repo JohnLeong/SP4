@@ -7,7 +7,7 @@ playerPosY = 5
 maxNumOfZombies = 1
 maxNumOfRetardZombies = 1
 maxNumOfBlocks = 2
-maxNumOfCoins = 0
+maxNumOfCoins = 4
 maxNumOfFire = 1
 maxNumOfDemonFire = 1
 maxNumOfRedKeys = 1
@@ -46,3 +46,15 @@ block1PosY = 8
 
 block2PosX = 8
 block2PosY = 2
+
+coin1PosX = 6
+coin1PosY = 8
+
+coin2PosX = 7
+coin2PosY = 7
+
+coin3PosX = 8
+coin3PosY = 7
+
+coin4PosX = 9
+coin4PosY = 7

@@ -5,6 +5,10 @@
 #include "Application.h"
 #include "Utility.h"
 #include <sstream>
+#include <fstream>
+#include <istream>
+
+using std::getline;
 
 CSceneManager::CSceneManager(void)
 {
@@ -88,10 +92,10 @@ void CSceneManager::Init()
 	// Use our shader
 	glUseProgram(m_programID);
 
-	lights[0].type = Light::LIGHT_DIRECTIONAL;
-	lights[0].position.Set(0, 20, 0);
+	lights[0].type = Light::LIGHT_POINT;
+	lights[0].position.Set(50, -50, -10);
 	lights[0].color.Set(1, 1, 1);
-	lights[0].power = 1;
+	lights[0].power = 10;
 	lights[0].kC = 1.f;
 	lights[0].kL = 0.01f;
 	lights[0].kQ = 0.001f;
@@ -153,6 +157,25 @@ void CSceneManager::Init()
 		myKeys[i] = false;
 		myKeysActive[i] = false;
 	}
+
+	//File reading
+	int count = 0;
+	std::string data = " ";
+
+	std::ifstream inFile;
+	inFile.open("FontInfo//test.txt");
+	if (inFile.good())
+	{
+		while (getline(inFile, data))
+		{
+			if (count >= 255)
+				break;
+			m_iTextWidth[count] = std::stoi(data);
+			count++;
+		}
+		inFile.close();
+	}
+	std::cout << m_iTextWidth[1] << std::endl;
 }
 
 void CSceneManager::Update(double dt)
@@ -319,13 +342,17 @@ void CSceneManager::RenderTextOnScreen(Mesh* mesh, std::string text, Color color
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, mesh->textureID);
 				glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+
+				float temp = 0;
+				float widthDivide = 100;
 				for(unsigned i = 0; i < text.length(); ++i)
 				{
 					Mtx44 characterSpacing;
-					characterSpacing.SetToTranslation( (i*1.0f) + 0.5f, 0.5f, 0); //1.0f is the spacing of each character, you may change this value
+					//characterSpacing.SetToTranslation( (i*1.0f) + 0.5f, 0.5f, 0); //1.0f is the spacing of each character, you may change this value
+					characterSpacing.SetToTranslation((temp * 1.5f) + 0.5f, 0.5f, 0);
 					Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
 					glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-	
+					temp += m_iTextWidth[text[i]] / widthDivide;
 					mesh->Render((unsigned)text[i] * 6, 6);
 				}
 				glBindTexture(GL_TEXTURE_2D, 0);
@@ -341,6 +368,7 @@ void CSceneManager::RenderTextOnScreen(Mesh* mesh, std::string text, Color color
  ********************************************************************************/
 void CSceneManager::RenderMeshIn2D(Mesh *mesh, bool enableLight, float sizeX, float sizeY, float x , float y, bool rotate)
 {
+	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
 	ortho.SetToOrtho(-160, 160, -90, 90, -10, 10);
 	//ortho.SetToOrtho(-80, 80, -60, 60, -10, 10);
@@ -514,6 +542,7 @@ void CSceneManager::Render2D()
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
 	glDisable(GL_DEPTH_TEST);
+	RenderLights();
 }
 
 /********************************************************************************

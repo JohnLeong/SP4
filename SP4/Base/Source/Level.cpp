@@ -80,74 +80,6 @@ bool CLevel::InitLua(std::string levelName)
 	m_cPlayerPtr->SetXIndex(m_cLuascript->getIntVariable("playerPosX"));
 	m_cPlayerPtr->SetYIndex(m_cLuascript->getIntVariable("playerPosY"));
 
-	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfZombies");
-	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
-	{
-		string getZombie = "zombie";
-		getZombie = IntConvertToString(i + 1, getZombie);
-
-		posX = GetXFromLua(m_cLuascript, getZombie);
-		posY = GetYFromLua(m_cLuascript, getZombie);
-
-		getZombie += addHold;
-		enemyHoldItem = m_cLuascript->getIntVariable(getZombie);
-
-		if (enemyHoldItem == 1)
-		{
-			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_COIN);
-		}
-		else if (enemyHoldItem == 2)
-		{
-			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_KEY_BLUE);
-		}
-		else if (enemyHoldItem == 3)
-		{
-			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_KEY_GREEN);
-		}
-		else if (enemyHoldItem == 4)
-		{
-			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_KEY_RED);
-		}
-		else if (enemyHoldItem == 0)
-		{
-			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_NONE);
-		}
-	}
-
-	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfRetardZombies");
-	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
-	{
-		string getRetardZombie = "retardZombie";
-		getRetardZombie = IntConvertToString(i + 1, getRetardZombie);
-
-		posX = GetXFromLua(m_cLuascript, getRetardZombie);
-		posY = GetYFromLua(m_cLuascript, getRetardZombie);
-
-		getRetardZombie += addHold;
-		enemyHoldItem = m_cLuascript->getIntVariable(getRetardZombie);
-
-		if (enemyHoldItem == 1)
-		{
-			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_COIN);
-		}
-		else if (enemyHoldItem == 2)
-		{
-			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_KEY_BLUE);
-		}
-		else if (enemyHoldItem == 3)
-		{
-			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_KEY_GREEN);
-		}
-		else if (enemyHoldItem == 4)
-		{
-			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_KEY_RED);
-		}
-		else if (enemyHoldItem == 0)
-		{
-			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_NONE);
-		}
-	}
-
 	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfBlocks");
 	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
 	{
@@ -244,6 +176,73 @@ bool CLevel::InitLua(std::string levelName)
 		GenerateYellowKeyEntity(posX, posY);
 	}
 
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfZombies");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
+	{
+		string getZombie = "zombie";
+		getZombie = IntConvertToString(i + 1, getZombie);
+
+		posX = GetXFromLua(m_cLuascript, getZombie);
+		posY = GetYFromLua(m_cLuascript, getZombie);
+
+		getZombie += addHold;
+		enemyHoldItem = m_cLuascript->getIntVariable(getZombie);
+
+		if (enemyHoldItem == 1)
+		{
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_COIN);
+		}
+		else if (enemyHoldItem == 2)
+		{
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_KEY_BLUE);
+		}
+		else if (enemyHoldItem == 3)
+		{
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_KEY_GREEN);
+		}
+		else if (enemyHoldItem == 4)
+		{
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_KEY_RED);
+		}
+		else if (enemyHoldItem == 0)
+		{
+			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_NONE);
+		}
+	}
+
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfRetardZombies");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
+	{
+		string getRetardZombie = "retardZombie";
+		getRetardZombie = IntConvertToString(i + 1, getRetardZombie);
+
+		posX = GetXFromLua(m_cLuascript, getRetardZombie);
+		posY = GetYFromLua(m_cLuascript, getRetardZombie);
+
+		getRetardZombie += addHold;
+		enemyHoldItem = m_cLuascript->getIntVariable(getRetardZombie);
+
+		if (enemyHoldItem == 1)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_COIN);
+		}
+		else if (enemyHoldItem == 2)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_KEY_BLUE);
+		}
+		else if (enemyHoldItem == 3)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_KEY_GREEN);
+		}
+		else if (enemyHoldItem == 4)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_KEY_RED);
+		}
+		else if (enemyHoldItem == 0)
+		{
+			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_NONE);
+		}
+	}
 	//for (int i = 0; i < maxNumberOfSlowFire; i++)
 	//{
 	//	string getSlowFire = "coin";
@@ -285,7 +284,7 @@ void CLevel::Update(const float dt, CPlayer* cPlayer)
 	for (std::vector<CEntityIPos*>::iterator entity = m_cEntityIPosList.begin(); entity != m_cEntityIPosList.end(); entity++)
 	{
 		//Skip if entity is not alive
-		if (!(*entity)->IsAlive())
+		if (!(*entity)->IsActive())
 			continue;
 		(*entity)->Update(dt);
 		if ((*entity)->IsMoving())
@@ -583,4 +582,10 @@ CEntity_Block_Movable* CLevel::GenerateMovableBlockEntity(int iXIndex, int iYInd
 void CLevel::Reset(void)
 {
 	m_iPlayerMoves = 0;
+	while (m_cEntityIPosList.size() > 0)
+	{
+		CEntityIPos* entity = m_cEntityIPosList.back();
+		delete entity;
+		m_cEntityIPosList.pop_back();
+	}
 }

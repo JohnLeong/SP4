@@ -21,7 +21,7 @@ CEnemySuperRetardZombie::CEnemySuperRetardZombie(int iXIndex, int YIndex, CTilem
 	this->m_cSprite = cSprite;
 	this->m_cObjPtr = cKeyPtr;
 	if (cKeyPtr != NULL)
-		this->m_cObjPtr->SetAlive(false);
+		this->m_cObjPtr->SetActive(false);
 	this->m_bHoldingObj = true;
 	InitAnimation();
 }

@@ -20,6 +20,8 @@ Update
 void CEnemy::Update(const float dt)
 {
 	CEntityIPos::Update(dt);
+	if (!m_bAlive)
+		return;
 
 	if (this->m_iXIndex == this->m_cPlayerPtr->GetXIndex() && this->m_iYIndex == this->m_cPlayerPtr->GetYIndex())
 		m_cPlayerPtr->SetAlive(false);
@@ -49,7 +51,7 @@ bool CEnemy::DoCurrentTileCollision()
 		this->m_cTilemap->theScreenMap[this->m_iXIndex][this->m_iYIndex].ChangeIdState();	//Change tile to normal tile
 		if (this->m_cObjPtr != NULL)
 		{
-			this->m_cObjPtr->SetAlive(true);
+			this->m_cObjPtr->SetActive(true);
 			this->m_cObjPtr->SetPos(this->m_iXIndex, this->m_iYIndex);
 			if (this->m_cObjPtr->GetXIndex() == m_cPlayerPtr->GetXIndex() && this->m_cObjPtr->GetYIndex() == m_cPlayerPtr->GetYIndex() || 
 				this->m_cObjPtr->GetXIndex() == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().x) && this->m_cObjPtr->GetYIndex() == static_cast<int>(m_cPlayerPtr->GetNextDirectionPos().y))

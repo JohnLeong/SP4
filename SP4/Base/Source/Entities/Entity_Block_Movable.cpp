@@ -89,6 +89,7 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 		return false;
 	case CTiledata::COL_HOLE:
 		this->m_MoveDir = DIR_NONE;
+		this->m_bActive = false;
 		this->m_bAlive = false;
 		this->m_cTilemap->theScreenMap[this->m_iXIndex][this->m_iYIndex].ChangeIdState();
 		for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)

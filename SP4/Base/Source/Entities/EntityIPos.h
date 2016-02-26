@@ -37,6 +37,9 @@ public:
 	virtual float GetXOffset(void);
 	virtual float GetYOffset(void);
 
+	virtual float GetRenderPosX(void);
+	virtual float GetRenderPosY(void);
+
 	virtual Vector3 GetNextDirectionPos(void);
 
 	virtual bool IsMoving(void);
@@ -71,6 +74,9 @@ protected:
 	float m_fOffSetX;		//Render offset for translation in X axis
 	float m_fOffSetY;		//Render offset for translation in Y axis
 
+	float m_fDeathOffSetX;
+	float m_fDeathOffSetY;
+
 	MOVE_DIR m_MoveDir;		//Current movement direction of entity
 	MOVE_DIR m_AnimDir;
 
@@ -79,6 +85,7 @@ protected:
 	std::vector<CEntityIPos*>* m_cEntityList;		//Pointer to list of entities
 	bool m_bHoldingObj;
 	bool m_bRecalculate;
+	bool m_bDeathDir;
 };
 
 #endif

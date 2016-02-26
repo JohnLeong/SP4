@@ -29,6 +29,11 @@ CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 
 CScenePlay::~CScenePlay(void)
 {
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
+	{
+		if (meshList[i])
+			delete meshList[i];
+	}
 }
 
 void CScenePlay::Init()
@@ -253,7 +258,8 @@ void CScenePlay::Update(double dt)
 
 
 	//Update player
-	m_cPlayer->Update(dt, m_cLevel.GetTilemap());
+	if (m_cPlayer->IsActive())
+		m_cPlayer->Update(dt, m_cLevel.GetTilemap());
 
 	//coins sprite update
 	coins_sprite->Update(dt);
@@ -324,10 +330,9 @@ Render the player
 void CScenePlay::RenderPlayer()
 {
 	modelStack.PushMatrix();
-	modelStack.Translate((static_cast<float>(m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetXOffset()), (static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize()) + m_cPlayer->GetYOffset()), 0.f);
+	modelStack.Translate(m_cPlayer->GetRenderPosX(), m_cPlayer->GetRenderPosY(), 0.f);
 	modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
 	RenderMesh(meshList[GEO_PLAYER], false);
-	//m_cPlayer->GetSpriteAnimation()->Render();
 	modelStack.PopMatrix();
 }
 
@@ -338,12 +343,10 @@ void CScenePlay::RenderEntities()
 {
 	for (std::vector<CEntityIPos*>::iterator entity = m_cLevel.m_cEntityIPosList.begin(); entity != m_cLevel.m_cEntityIPosList.end(); entity++)
 	{
-		if (!(*entity)->IsAlive())
+		if (!(*entity)->IsActive())
 			continue;
 		modelStack.PushMatrix();
-		modelStack.Translate((static_cast<float>((*entity)->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize())) + (*entity)->GetXOffset()
-			, (static_cast<float>((*entity)->GetYIndex()* -m_cLevel.GetTilemap()->GetTileSize())) + (*entity)->GetYOffset()
-			, 0.f);
+		modelStack.Translate((*entity)->GetRenderPosX(), (*entity)->GetRenderPosY(), 0.f);
 		modelStack.PushMatrix();
 		modelStack.Scale(TILE_SIZE, TILE_SIZE, 1.f);
 		if ((*entity)->GetSprite() == NULL)
@@ -351,7 +354,7 @@ void CScenePlay::RenderEntities()
 		else
 			RenderMesh((*entity)->GetSprite(), false);
 		modelStack.PopMatrix();
-		if ((*entity)->IsHoldingObj())
+		if ((*entity)->IsHoldingObj() && (*entity)->IsAlive())
 		{
 			modelStack.Translate(0.f, KEY_HUD_OFFSET, 0.f);
 			modelStack.Scale(KEY_HUD_SIZE, KEY_HUD_SIZE, 1.f);

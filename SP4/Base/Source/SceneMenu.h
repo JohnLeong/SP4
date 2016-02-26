@@ -33,6 +33,7 @@ class CSceneMenu : public CSceneManager
 		GEO_BACKGROUND_BASE,
 		GEO_TEMPLE,
 		GEO_GROUND,
+		GEO_STAR,
 
 		NUM_GEOMETRY,
 	};

@@ -120,6 +120,9 @@ protected:
 
 	float fps;
 
+	//Spacing for individual character
+	int m_iTextWidth[256];
+
 	//Keys
 	bool myKeys[NUMKEYS];			//Current state of keys
 	bool myKeysActive[NUMKEYS];		//Previous state of keys

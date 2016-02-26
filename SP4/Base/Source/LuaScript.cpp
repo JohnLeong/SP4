@@ -13,6 +13,7 @@ CLuaScript::CLuaScript(string path)
 	{
 		printf("error: %s", lua_tostring(L2, -1));
 	}
+	
 }
 
 

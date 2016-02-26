@@ -5,6 +5,7 @@ CEntity::CEntity()
 : m_bAlive(true)
 , m_iCurrent_health(0)
 , m_iMax_health(0)
+, m_bActive(true)
 {
 	m_cSprite = NULL;
 }
@@ -30,6 +31,11 @@ void CEntity::SetAlive(bool b)
 	this->m_bAlive = b;
 }
 
+void CEntity::SetActive(bool b)
+{
+	this->m_bActive = b;
+}
+
 void CEntity::DeductHealth(int h)
 {
 	this->m_iCurrent_health -= h;
@@ -48,6 +54,11 @@ int CEntity::GetMaxHealth(void)
 bool CEntity::IsAlive(void)
 {
 	return m_bAlive;
+}
+
+bool CEntity::IsActive(void)
+{
+	return m_bActive;
 }
 
 void CEntity::SetSprite(SpriteAnimation* sa)

@@ -40,7 +40,7 @@ bool CEntity_Coin::DoColDir(MOVE_DIR m_MoveDir)
 
 void CEntity_Coin::Update(const float dt)
 {
-	//CEntityIPos::Update(dt);
+	CEntityIPos::Update(dt);
 
 	this->m_cSprite->Update(static_cast<double>(dt));
 }

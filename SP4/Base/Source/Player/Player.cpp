@@ -338,6 +338,15 @@ Update
 ********************************************************************************/
 void CPlayer::Update(double dt, CTilemap* tile)
 {
+	if (!m_bAlive)
+	{
+		m_fDeathOffSetX += dt * 80;
+		m_fDeathOffSetY = (((m_fDeathOffSetX * m_fDeathOffSetX) - (2 * m_fDeathOffSetX) - 3) * 0.1) - 67;
+
+		if (m_fDeathOffSetY > 300)
+			m_bActive = false;
+		return;
+	}
 	if (moving == true)
 	{
 		if (XYDirection)
