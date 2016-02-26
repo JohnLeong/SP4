@@ -174,7 +174,7 @@ void CEntityIPos::Update(const float dt)
 		this->m_fOffSetX += dt * ENTITY_MOVE_SPEED;
 		break;
 	default:
-		DoCurrentTileCollision();
+		//DoCurrentTileCollision();
 		break;
 	}
 }

@@ -69,7 +69,7 @@ void CSceneSplash::Init()
 	m_fBeamScaleX = 0.00001f;
 	cAnimState = ANIM_0;
 	m_fShakeRadius = 20.f;
-	m_fShakeAngle = rand() % 360;
+	m_fShakeAngle = static_cast<float>(rand() % 360);
 	m_fShakeOffsetX = 0.f;
 	m_fShakeOffsetY = 0.f;
 	m_bDoShake = false;
@@ -85,7 +85,7 @@ void CSceneSplash::Update(double dt)
 	if (m_bDoShake)
 	{
 		m_fShakeRadius *= 0.9f;
-		m_fShakeAngle = rand() % 360;
+		m_fShakeAngle = static_cast<float>(rand() % 360);
 		m_fShakeOffsetX = sin(m_fShakeAngle) * m_fShakeRadius;
 		m_fShakeOffsetY = cos(m_fShakeAngle) * m_fShakeRadius;
 		if (m_fShakeRadius < 2.f)

@@ -57,22 +57,22 @@ void CPlayer::Init(CTilemap* cTilemap, int playerPos_x, int playerPos_y, SpriteA
 
 	//Walk South
 	_a = new Animation();
-	_a->Set(0, 2, 0, 0.8f);
+	_a->Set(0, 2, 0, 0.15f);
 	AddAnimation(_a, PA_WALK_DOWN);
 
 	//Walk East
 	_a = new Animation();
-	_a->Set(3, 5, 0, 0.4f);
+	_a->Set(3, 5, 0, 0.15f);
 	AddAnimation(_a, PA_WALK_UP);
 
 	//Walk East
 	_a = new Animation();
-	_a->Set(6, 8, 0, 0.4f);
+	_a->Set(6, 8, 0, 0.15f);
 	AddAnimation(_a, PA_WALK_RIGHT);
 
 	//Walk North
 	_a = new Animation();
-	_a->Set(9, 11, 0, 0.4f);
+	_a->Set(9, 11, 0, 0.15f);
 	AddAnimation(_a, PA_WALK_LEFT);
 
 	sprites = sprite;
@@ -340,7 +340,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 {
 	if (!m_bAlive)
 	{
-		m_fDeathOffSetX += dt * 80;
+		m_fDeathOffSetX += dt * 80.f;
 		m_fDeathOffSetY = (((m_fDeathOffSetX * m_fDeathOffSetX) - (2 * m_fDeathOffSetX) - 3) * 0.1) - 67;
 
 		if (m_fDeathOffSetY > 300)

@@ -237,13 +237,13 @@ void CScenePlay::Update(double dt)
 	//Player control
 	if (m_cLevel.IsMovementReady() && !m_cPlayer->GetHasReachedEndLevel() && m_cPlayer->IsAlive())
 	{
-		if (IsKeyDownOnce('w'))
+		if (IsKeyDown('w'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_UP);
-		else if (IsKeyDownOnce('s'))
+		else if (IsKeyDown('s'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_DOWN);
-		else if (IsKeyDownOnce('d'))
+		else if (IsKeyDown('d'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_RIGHT);
-		else if (IsKeyDownOnce('a'))
+		else if (IsKeyDown('a'))
 			m_cPlayer->SetNextDirection(CPlayer::PD_LEFT);
 	}
 	if (IsKeyDownOnce('1'))
