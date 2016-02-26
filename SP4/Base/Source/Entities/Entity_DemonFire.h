@@ -21,6 +21,7 @@ public:
 	void AddAnimation(Animation* cAnim, FIRE_STATE state);
 
 	virtual bool DoColDir(MOVE_DIR m_MoveDir);
+	virtual bool DeathOnEntry(void);
 
 	virtual void Update(const float dt);			// Update
 	virtual void UpdateMovement(const float dt);

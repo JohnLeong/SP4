@@ -205,7 +205,7 @@ void CSceneSplash::Render()
 
 
 #if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "SceneSplash", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
+	//RenderTextOnScreen(meshList[GEO_TEXT], "SceneSplash", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 
 	//std::ostringstream ss;
 	//ss.precision(5);

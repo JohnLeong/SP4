@@ -46,7 +46,8 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir)
 		std::cout << "NULL Collision Direction" << std::endl;
 		break;
 	}
-
+	if (m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).IsTinted())
+		return true;
 	if (!this->m_cTilemap->AllowCollision(iIndexCheckX, iIndexCheckY))//->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() == CTiledata::COL_BLOCK)
 	{
 		if (this->m_cTilemap->GetTile(iIndexCheckX, iIndexCheckY).GetCollisionType() != CTiledata::COL_HOLE)
@@ -97,6 +98,11 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 		return false;
 	case CTiledata::COL_WIND_UP:
 		this->m_MoveDir = DIR_UP;
+		if (m_cTilemap->GetTile(static_cast<int>(this->GetNextDirectionPos().x), static_cast<int>(this->GetNextDirectionPos().y)).IsTinted())
+		{
+			this->m_MoveDir = DIR_NONE;
+			return true;
+		}
 		if (static_cast<int>(this->m_cPlayerPtr->GetNextDirectionPos().x) == static_cast<int>(this->GetNextDirectionPos().x)
 			&& static_cast<int>(this->m_cPlayerPtr->GetNextDirectionPos().y) == static_cast<int>(this->GetNextDirectionPos().y))
 		{
@@ -116,9 +122,15 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 				return true;
 			}
 		}
+		this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 		return false;
 	case CTiledata::COL_WIND_DOWN:
 		this->m_MoveDir = DIR_DOWN;
+		if (m_cTilemap->GetTile(static_cast<int>(this->GetNextDirectionPos().x), static_cast<int>(this->GetNextDirectionPos().y)).IsTinted())
+		{
+			this->m_MoveDir = DIR_NONE;
+			return true;
+		}
 		if (static_cast<int>(this->m_cPlayerPtr->GetNextDirectionPos().x) == static_cast<int>(this->GetNextDirectionPos().x)
 			&& static_cast<int>(this->m_cPlayerPtr->GetNextDirectionPos().y) == static_cast<int>(this->GetNextDirectionPos().y))
 		{
@@ -138,9 +150,15 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 				return true;
 			}
 		}
+		this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 		return false;
 	case CTiledata::COL_WIND_LEFT:
 		this->m_MoveDir = DIR_LEFT;
+		if (m_cTilemap->GetTile(static_cast<int>(this->GetNextDirectionPos().x), static_cast<int>(this->GetNextDirectionPos().y)).IsTinted())
+		{
+			this->m_MoveDir = DIR_NONE;
+			return true;
+		}
 		if (static_cast<int>(this->m_cPlayerPtr->GetNextDirectionPos().x) == static_cast<int>(this->GetNextDirectionPos().x)
 			&& static_cast<int>(this->m_cPlayerPtr->GetNextDirectionPos().y) == static_cast<int>(this->GetNextDirectionPos().y))
 		{
@@ -160,9 +178,15 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 				return true;
 			}
 		}
+		this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 		return false;
 	case CTiledata::COL_WIND_RIGHT:
 		this->m_MoveDir = DIR_RIGHT;
+		if (m_cTilemap->GetTile(static_cast<int>(this->GetNextDirectionPos().x), static_cast<int>(this->GetNextDirectionPos().y)).IsTinted())
+		{
+			this->m_MoveDir = DIR_NONE;
+			return true;
+		}
 		if (static_cast<int>(this->m_cPlayerPtr->GetNextDirectionPos().x) == static_cast<int>(this->GetNextDirectionPos().x)
 			&& static_cast<int>(this->m_cPlayerPtr->GetNextDirectionPos().y) == static_cast<int>(this->GetNextDirectionPos().y))
 		{
@@ -182,6 +206,7 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 				return true;
 			}
 		}
+		this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 		return false;
 	default:
 		return false;

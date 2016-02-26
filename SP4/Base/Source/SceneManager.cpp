@@ -163,7 +163,7 @@ void CSceneManager::Init()
 	std::string data = " ";
 
 	std::ifstream inFile;
-	inFile.open("FontInfo//test.txt");
+	inFile.open("FontInfo//8BitWonderFontInfo.txt");
 	if (inFile.good())
 	{
 		while (getline(inFile, data))
@@ -349,7 +349,7 @@ void CSceneManager::RenderTextOnScreen(Mesh* mesh, std::string text, Color color
 				{
 					Mtx44 characterSpacing;
 					//characterSpacing.SetToTranslation( (i*1.0f) + 0.5f, 0.5f, 0); //1.0f is the spacing of each character, you may change this value
-					characterSpacing.SetToTranslation((temp * 1.5f) + 0.5f, 0.5f, 0);
+					characterSpacing.SetToTranslation((temp * 0.7f) + 0.5f, 0.5f, 0);
 					Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
 					glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 					temp += m_iTextWidth[text[i]] / widthDivide;

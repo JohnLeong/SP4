@@ -196,7 +196,7 @@ bool CEntityIPos::DoCurrentTileCollision()
 		{
 			for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
 			{
-				if ((*entity) == this || !(*entity)->IsActive())
+				if ((*entity) == this || !(*entity)->IsAlive())
 					continue;
 				if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
 				{

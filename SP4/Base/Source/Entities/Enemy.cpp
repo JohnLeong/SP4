@@ -32,7 +32,7 @@ void CEnemy::Update(const float dt)
 
 bool CEnemy::DoColDir(MOVE_DIR m_MoveDir)
 {
-	m_cPlayerPtr->SetAlive(false);
+	//m_cPlayerPtr->SetAlive(false);
 	return false;
 }
 
