@@ -187,6 +187,7 @@ bool Application::GetKeyboardUpdate()
 {
 	theGSM->HandleEvents(VK_RETURN, IsKeyPressed(VK_RETURN));
 
+	theGSM->HandleEvents('p', IsKeyPressed('P'));
 	theGSM->HandleEvents('g', IsKeyPressed('G'));
 	theGSM->HandleEvents('q', IsKeyPressed('Q'));
 	theGSM->HandleEvents('w', IsKeyPressed('W'));

@@ -21,7 +21,7 @@ CScenePlay::CScenePlay(void)
 
 CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 	:m_bExitPlay(false)
-	, m_iCurrentLevel(3)
+	, m_iCurrentLevel(5)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -34,6 +34,8 @@ CScenePlay::~CScenePlay(void)
 		if (meshList[i])
 			delete meshList[i];
 	}
+	if (m_cPlayer)
+		delete m_cPlayer;
 }
 
 void CScenePlay::Init()
@@ -49,6 +51,7 @@ void CScenePlay::Init()
 	}
 
 	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	srand(static_cast<unsigned>(time(NULL)));
 
 	//vector of quit button pos
 	quit_button_vec.Set(161.0f, 77.8f, 0.0f);
@@ -228,7 +231,8 @@ void CScenePlay::InitAchievements()
 void CScenePlay::Update(double dt)
 {
 	CSceneManager::Update(dt);
-
+	if (IsKeyDownOnce('p'))
+		std::cout << "Player Index: X:" << m_cPlayer->GetXIndex() << " Y:" << m_cPlayer->GetYIndex() << std::endl;
 	if (Application::IsKeyPressed('Q'))
 	{
 		cout << "boolean: " << GetIsQuitToMain() << endl;
@@ -273,8 +277,11 @@ void CScenePlay::Update(double dt)
 	m_cLevel.Update(static_cast<float>(dt), this->m_cPlayer);
 
 	//Update camera position based on player position
+	m_fShakeAngle = static_cast<float>(rand() % 360);
+	m_fShakeOffsetX = sin(m_fShakeAngle) * 5;
+	m_fShakeOffsetY = cos(m_fShakeAngle) * 5;
+	//camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f + m_fShakeOffsetX, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()) + m_fShakeOffsetY, 0.f));
 	camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
-
 	if (m_cPlayer->GetHasReachedEndLevel() == true)
 	{
 		//End Level
@@ -480,6 +487,7 @@ void CScenePlay::Render()
 	RenderInventory();
 
 	RenderGUI();
+
 #if _DEBUG
 	//RenderTextOnScreen(meshList[GEO_TEXT], "ScenePlay", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 #endif

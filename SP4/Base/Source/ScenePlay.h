@@ -122,6 +122,10 @@ private:
 	SpriteAnimation* keys_sprite_green;
 	SpriteAnimation* keys_sprite_yellow;
 	SpriteAnimation* keys_sprite_blue;
+
+	float m_fShakeAngle;
+	float m_fShakeOffsetX;
+	float m_fShakeOffsetY;
 };
 
 #endif

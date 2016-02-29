@@ -21,6 +21,8 @@
     <ClCompile Include="Source\Entities\Entity_Key_Green.cpp" />
     <ClCompile Include="Source\Entities\Entity_Key_Red.cpp" />
     <ClCompile Include="Source\Entities\Entity_Key_Yellow.cpp" />
+    <ClCompile Include="Source\PhysicsObject.cpp" />
+    <ClCompile Include="Source\PhysicsObjectManager.cpp" />
     <ClCompile Include="Source\SceneInstruction.cpp" />
     <ClCompile Include="Source\SceneLevelSelection.cpp" />
     <ClCompile Include="Source\SoundManager.cpp" />
@@ -78,6 +80,8 @@
     <ClInclude Include="Source\Entities\Entity_Key_Green.h" />
     <ClInclude Include="Source\Entities\Entity_Key_Red.h" />
     <ClInclude Include="Source\Entities\Entity_Key_Yellow.h" />
+    <ClInclude Include="Source\PhysicsObject.h" />
+    <ClInclude Include="Source\PhysicsObjectManager.h" />
     <ClInclude Include="Source\SceneInstruction.h" />
     <ClInclude Include="Source\SceneLevelSelection.h" />
     <ClInclude Include="Source\SoundManager.h" />

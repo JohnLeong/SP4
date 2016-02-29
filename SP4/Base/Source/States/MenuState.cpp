@@ -117,7 +117,29 @@ void CMenuState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 {
 	scene->Update(m_dElapsedTime);
 
-	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
+if (((CSceneMenu*)scene)->m_bChangeState)
+	{
+		std::cout << "CHANGE";
+		switch (((CSceneMenu*)scene)->m_iNextState)
+		{
+		case CSceneMenu::NEXT_LEVEL_SELECT:
+			theGSM->ChangeState(CLevelSelectionState::Instance());
+			break;
+		case CSceneMenu::NEXT_INSTRUCTIONS:
+			theGSM->ChangeState(CInstructionState::Instance());
+			break;
+		case CSceneMenu::NEXT_OPTIONS:
+			theGSM->ChangeState(COptionsState::Instance());
+			break;
+		case CSceneMenu::NEXT_EXIT:
+			exit(0);	//CHANGE!!!
+			break;
+		default:
+			break;
+		}
+	}
+
+	/*if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1 
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
 		theGSM->ChangeState(CLevelSelectionState::Instance());
 	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 2
@@ -128,7 +150,7 @@ void CMenuState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 		theGSM->ChangeState(COptionsState::Instance());
 	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 4
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 4)
-		Application::AppisRunning = false;
+		exit(0);*/
 }
 
 void CMenuState::Draw(CGameStateManager* theGSM) 

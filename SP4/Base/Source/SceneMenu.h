@@ -7,7 +7,7 @@
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
-
+#include "PhysicsObjectManager.h"
 
 class CSceneMenu : public CSceneManager
 {
@@ -48,9 +48,23 @@ public:
 	virtual void UpdateCameraStatus(const unsigned char key, const bool status = true);
 	// Update Keyboard status
 	virtual void UpdateKeyboardStatus(const unsigned char key);
-	virtual void Render();
-	virtual void Exit();
+	virtual void Render(void);
+	virtual void Exit(void);
 
+	void UpdateAnimations(double dt);
+
+	enum NEXT_STATE
+	{
+		NEXT_NONE,
+		NEXT_LEVEL_SELECT,
+		NEXT_INSTRUCTIONS,
+		NEXT_OPTIONS,
+		NEXT_EXIT,
+		NEXT_PLAY,
+	};
+
+	bool m_bChangeState;
+	NEXT_STATE m_iNextState;
 protected:
 	Mesh* meshList[NUM_GEOMETRY];
 
@@ -61,6 +75,12 @@ protected:
 	bool isSelectSoundPlaying;
 	//virutally create vector positions for the buttons
 	Vector3 geo_pos[4];
+
+	float m_fLeftAnimOffset;
+	float m_fBotAnimOffset;
+	bool m_bBotAnimOffsetYDir;
+
+	CPhysicsObjectManager m_cObjectManager;
 
 };
 

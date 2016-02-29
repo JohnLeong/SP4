@@ -19,6 +19,8 @@
 CSceneMenu::CSceneMenu(void)
 : isKeyBoard(false)
 , isSelectSoundPlaying(false)
+, m_bBotAnimOffsetYDir(true)
+, m_bChangeState(false)
 {
 }
 
@@ -81,7 +83,7 @@ void CSceneMenu::Init()
 	//Backgrounds
 	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.5f, 0.85f);
 	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
-	meshList[GEO_TEMPLE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 0.8f, 0.8f);
+	meshList[GEO_TEMPLE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, -0.1f, 0.8f, 0.8f);
 	meshList[GEO_TEMPLE]->textureID = LoadTGA("Image//Background/temple.tga");
 	meshList[GEO_GROUND] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, -1.63f, 1.5f, 0.2f);
 	meshList[GEO_GROUND]->textureID = LoadTGA("Image//Background/ground.tga");
@@ -99,12 +101,21 @@ void CSceneMenu::Init()
 	rotateAngle = 0;
 
 	bLightEnabled = true;
+
+	m_fBotAnimOffset = -1.f;
+	m_fLeftAnimOffset = -210.f;
+
+	Math::InitRNG();
 }
 
 void CSceneMenu::Update(double dt)
 {
 	CSceneManager::Update(dt);
-	
+
+	m_cObjectManager.Update(dt);
+
+	UpdateAnimations(dt);
+		
 	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
 	{
 
@@ -141,6 +152,121 @@ void CSceneMenu::Update(double dt)
 	}
 
 	float fDelta = (float)dt;
+
+	//Update image on mouse hover
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonXoffset, geo_pos[0].y + buttonYoffset)) // play button
+	{
+		Application::setChoiceVal(1);
+
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		{
+			m_bBotAnimOffsetYDir = false;
+			m_iNextState = NEXT_LEVEL_SELECT;
+		}
+
+		isKeyBoard = false;
+	}
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonXoffset, geo_pos[1].y + buttonYoffset)) // instructions button
+	{
+		Application::setChoiceVal(2);
+
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		{
+			m_bBotAnimOffsetYDir = false;
+			m_iNextState = NEXT_INSTRUCTIONS;
+		}
+		isKeyBoard = false;
+	}
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonXoffset, geo_pos[2].y + buttonYoffset)) // options button
+	{
+		Application::setChoiceVal(3);
+		
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		{
+			m_bBotAnimOffsetYDir = false;
+			m_iNextState = NEXT_OPTIONS;
+		}
+		isKeyBoard = false;
+	}
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonXoffset, geo_pos[3].y + buttonYoffset)) // exit button
+	{
+		Application::setChoiceVal(4);
+
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		{
+			m_bBotAnimOffsetYDir = false;
+			m_iNextState = NEXT_EXIT;
+		}
+		isKeyBoard = false;
+	}
+	else
+	{
+		if (!isKeyBoard)
+			Application::setChoiceVal(0);
+
+		isSelectSoundPlaying = false;
+	}
+}
+
+void CSceneMenu::UpdateAnimations(double dt)
+{
+	if (m_bBotAnimOffsetYDir)
+	{
+		if (m_fLeftAnimOffset < 0.f)
+		{
+			m_fLeftAnimOffset += (-m_fLeftAnimOffset * 0.1f) + (dt * 10);
+			if (m_fLeftAnimOffset > 0.f)
+				m_fLeftAnimOffset = 0.f;
+		}
+		if (m_fBotAnimOffset < 0.f)
+		{
+			m_fBotAnimOffset += (-m_fBotAnimOffset * 0.05f) + (dt * 0.5);
+			if (m_fBotAnimOffset > 0.f)
+				m_fBotAnimOffset = 0.f;
+		}
+	}
+	else
+	{
+		if (m_fLeftAnimOffset > -210.f)
+		{
+			m_fLeftAnimOffset -= (-m_fLeftAnimOffset * 0.5f) + (dt * 15);
+			if (m_fLeftAnimOffset < -210.f)
+				m_fLeftAnimOffset = -210.f;
+		}
+		if (m_fBotAnimOffset > -1.f)
+		{
+			m_fBotAnimOffset -= (-m_fBotAnimOffset * 0.08f) + (dt * 0.5);
+			if (m_fBotAnimOffset < -1.f)
+			{
+				m_fBotAnimOffset = -1.f;
+				m_bChangeState = true;
+			}
+		}
+	}
 }
 
 /********************************************************************************
@@ -169,119 +295,79 @@ void CSceneMenu::Render()
 
 	//Render backgrounds
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
+	modelStack.PushMatrix();
+	modelStack.Translate(0, m_fBotAnimOffset, 0);
+
+	for (std::vector<CPhysicsObject *>::iterator it = m_cObjectManager.m_ObjectList.begin(); it != m_cObjectManager.m_ObjectList.end(); ++it)
+	{
+		if (!(*it)->m_bActive)
+			continue;
+		modelStack.PushMatrix();
+		modelStack.Translate((*it)->m_fPosX, (*it)->m_fPosY, 0);
+		RenderMesh(meshList[GEO_STAR], false);
+		modelStack.PopMatrix();
+	}
+
+	RenderMesh(meshList[GEO_TEMPLE], false);
 	RenderMesh(meshList[GEO_GROUND], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0.7f, 0.4f, 0);
 	RenderMesh(meshList[GEO_STAR], false);
-	//RenderMesh(meshList[GEO_TEMPLE], false);
+	modelStack.PopMatrix();
+
 
 	if (Application::IsKeyPressed('1'))
 	{
 		cout << "current mouse x: " << Application::getMouseWorldX() << endl;
 		cout << "current mouse y: " << Application::getMouseWorldY() << endl;
-		cout << "choice: " << Application::getChoiceVal() << endl;
-		//cout << "geo_pos.x: " << geo_pos[1].x << endl;
-		//cout << "geo_pos.y: " << geo_pos[1].y << endl;
-		//cout << "geo_pos.x R: " << geo_pos[1].x + 55.5f << endl;
-		//cout << "geo_pos.y R: " << geo_pos[1].y + 8.0f << endl;
+		cout << "geo_pos.x: " << geo_pos[1].x << endl;
+		cout << "geo_pos.y: " << geo_pos[1].y << endl;
+		cout << "geo_pos.x R: " << geo_pos[1].x + 55.5f << endl;
+		cout << "geo_pos.y R: " << geo_pos[1].y + 8.0f << endl;
 
 	}
 	
-	//Update image on mouse hover
-	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonXoffset, geo_pos[0].y + buttonYoffset)) // play button
-	{
-		Application::setChoiceVal(1);
 
-		//play select sound if false
-		if (isSelectSoundPlaying == false)
-		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-			isSelectSoundPlaying = true;
-		}
-
-		isKeyBoard = false;
-	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonXoffset, geo_pos[1].y + buttonYoffset)) // instructions button
-	{
-		Application::setChoiceVal(2);
-
-		//play select sound if false
-		if (isSelectSoundPlaying == false)
-		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-			isSelectSoundPlaying = true;
-		}
-
-		isKeyBoard = false;
-	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonXoffset, geo_pos[2].y + buttonYoffset)) // options button
-	{
-		Application::setChoiceVal(3);
-		
-		//play select sound if false
-		if (isSelectSoundPlaying == false)
-		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-			isSelectSoundPlaying = true;
-		}
-
-		isKeyBoard = false;
-	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonXoffset, geo_pos[3].y + buttonYoffset)) // exit button
-	{
-		Application::setChoiceVal(4);
-
-		//play select sound if false
-		if (isSelectSoundPlaying == false)
-		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-			isSelectSoundPlaying = true;
-		}
-		isKeyBoard = false;
-	}
-	else
-	{
-		if (!isKeyBoard)
-			Application::setChoiceVal(0);
-
-		isSelectSoundPlaying = false;
-	}
 
 	
 
 	switch (Application::getChoiceVal())
 	{
 	case 1: //play button highlighted
-		RenderMeshIn2D(meshList[GEO_PLAY_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_PLAY_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f+ m_fLeftAnimOffset, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -52.5f);
 
 		break;
 	case 2: //instructions button highlighted
-		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f+ m_fLeftAnimOffset, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -52.5f);
 
 		break;
 	case 3: //options button highlighted
-		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f+ m_fLeftAnimOffset, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -52.5f);
 
 		break;
 	case 4: //exit button highlighted
-		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f+ m_fLeftAnimOffset, -52.5f);
 
 		break;
 	default: //default, no option chosen
-		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -52.5f);
 		break;
 	}
 #if _DEBUG

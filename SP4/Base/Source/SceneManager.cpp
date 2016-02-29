@@ -529,7 +529,7 @@ void CSceneManager::Render2D()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	Mtx44 perspective;
 	//perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
-	perspective.SetToOrtho(-160, 160, -90, 90, -1000, 1000);
+	perspective.SetToOrtho(-320, 320, -180, 180, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
 
 	// Camera matrix

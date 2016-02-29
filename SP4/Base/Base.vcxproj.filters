@@ -77,6 +77,9 @@
     <Filter Include="Achievements">
       <UniqueIdentifier>{76f13743-f0d0-4152-a8e5-2aa10615aa1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PhysicsObjects">
+      <UniqueIdentifier>{2f3267dd-9230-4488-b2ca-d0a342a46cf6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\SceneManager.cpp">
@@ -234,6 +237,12 @@
     </ClCompile>
     <ClCompile Include="Source\Entities\Entity_DemonFire.cpp">
       <Filter>Entities\GameplayEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PhysicsObject.cpp">
+      <Filter>PhysicsObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PhysicsObjectManager.cpp">
+      <Filter>PhysicsObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +416,12 @@
     </ClInclude>
     <ClInclude Include="Source\SceneLevelSelection.h">
       <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PhysicsObject.h">
+      <Filter>PhysicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PhysicsObjectManager.h">
+      <Filter>PhysicsObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
