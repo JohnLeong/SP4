@@ -60,6 +60,8 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
+	void UpdateAnimations(double dt);
+
 	//set the boolean for quit 
 	static void SetISQuitToMain(bool b);
 	//get the boolean for quit
@@ -70,6 +72,18 @@ public:
 	//set the boolean to check if mouse is in col with start button
 	static bool GetisColWithStartButton();
 
+	enum NEXT_STATE
+	{
+		NEXT_NONE,
+		NEXT_LEVEL_SELECT,
+		NEXT_INSTRUCTIONS,
+		NEXT_OPTIONS,
+		NEXT_EXIT,
+		NEXT_PLAY,
+	};
+
+	bool m_bChangeState;
+	NEXT_STATE m_iNextState;
 protected:
 	Mesh* meshList[NUM_GEOMETRY];
 
@@ -94,6 +108,9 @@ protected:
 	Vector3 quit_button_vec;
 	Vector3 start_button_vec;
 
+	float m_fLeftAnimOffset;
+	float m_fBotAnimOffset;
+	bool m_bAnimOffsetDir;
 };
 
 #endif

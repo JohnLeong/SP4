@@ -604,6 +604,9 @@ CEntity_Block_Movable* CLevel::GenerateMovableBlockEntity(int iXIndex, int iYInd
 
 void CLevel::Reset(void)
 {
+	m_bDoMovements = false;
+	m_bMovementReady = true;
+	m_bDoTileCheck = false;
 	m_iPlayerMoves = 0;
 	while (m_cEntityIPosList.size() > 0)
 	{

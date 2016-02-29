@@ -278,10 +278,10 @@ void CScenePlay::Update(double dt)
 
 	//Update camera position based on player position
 	m_fShakeAngle = static_cast<float>(rand() % 360);
-	m_fShakeOffsetX = sin(m_fShakeAngle) * 5;
-	m_fShakeOffsetY = cos(m_fShakeAngle) * 5;
-	//camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f + m_fShakeOffsetX, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()) + m_fShakeOffsetY, 0.f));
-	camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
+	m_fShakeOffsetX = sin(m_fShakeAngle) * 50;
+	m_fShakeOffsetY = cos(m_fShakeAngle) * 50;
+	camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f + m_fShakeOffsetX, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()) + m_fShakeOffsetY, 0.f));
+	//camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
 	if (m_cPlayer->GetHasReachedEndLevel() == true)
 	{
 		//End Level

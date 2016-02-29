@@ -78,7 +78,7 @@ protected:
 
 	float m_fLeftAnimOffset;
 	float m_fBotAnimOffset;
-	bool m_bBotAnimOffsetYDir;
+	bool m_bAnimOffsetDir;
 
 	CPhysicsObjectManager m_cObjectManager;
 

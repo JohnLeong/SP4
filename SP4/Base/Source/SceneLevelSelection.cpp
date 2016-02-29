@@ -19,12 +19,16 @@ bool CSceneLevelSelection::m_bisColWithStartButton = false;
 CSceneLevelSelection::CSceneLevelSelection(void)
 : m_window_width(800)
 , m_window_height(600)
+, m_bAnimOffsetDir(true)
+, m_bChangeState(false)
 , isSelectSoundPlaying(false)
 {
 }
 
 CSceneLevelSelection::CSceneLevelSelection(const int m_window_width, const int m_window_height)
-: isSelectSoundPlaying(false)
+: m_bAnimOffsetDir(true)
+, m_bChangeState(false)
+, isSelectSoundPlaying(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -112,12 +116,17 @@ void CSceneLevelSelection::Init()
 	//perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
 
-	bLightEnabled = true;
+	m_fBotAnimOffset = -210.f;
+	m_fLeftAnimOffset = -210.f;
+
+	bLightEnabled = false;
 }
 
 void CSceneLevelSelection::Update(double dt)
 {
 	CSceneManager::Update(dt);
+
+	UpdateAnimations(dt);
 
 	//for debugging
 	if (Application::IsKeyPressed('1'))
@@ -239,6 +248,43 @@ void CSceneLevelSelection::Update(double dt)
 
 }
 
+void CSceneLevelSelection::UpdateAnimations(double dt)
+{
+	if (m_bAnimOffsetDir)
+	{
+		if (m_fLeftAnimOffset < 0.f)
+		{
+			m_fLeftAnimOffset += (-m_fLeftAnimOffset * 0.1f) + (dt * 10);
+			if (m_fLeftAnimOffset > 0.f)
+				m_fLeftAnimOffset = 0.f;
+		}
+		if (m_fBotAnimOffset < 0.f)
+		{
+			m_fBotAnimOffset += (-m_fBotAnimOffset * 0.08f) + (dt * 10);
+			if (m_fBotAnimOffset > 0.f)
+				m_fBotAnimOffset = 0.f;
+		}
+	}
+	else
+	{
+		if (m_fLeftAnimOffset > -210.f)
+		{
+			m_fLeftAnimOffset -= (-m_fLeftAnimOffset * 0.5f) + (dt * 15);
+			if (m_fLeftAnimOffset < -210.f)
+				m_fLeftAnimOffset = -210.f;
+		}
+		if (m_fBotAnimOffset > -1.f)
+		{
+			m_fBotAnimOffset -= (-m_fBotAnimOffset * 0.08f) + (dt * 15);
+			if (m_fBotAnimOffset < -1.f)
+			{
+				m_fBotAnimOffset = -1.f;
+				//m_bChangeState = true;
+			}
+		}
+	}
+}
+
 /********************************************************************************
 Update Camera position
 ********************************************************************************/
@@ -299,7 +345,7 @@ void CSceneLevelSelection::Render()
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 16.0f, quit_button_vec.y + 7.5f)
 		|| CSceneManager::IsKeyDown('q'))
 	{
-		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.25f, 1.25f, 100.0f, -70.0f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.25f, 1.25f, 100.0f, -70.0f + m_fBotAnimOffset);
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || CSceneManager::IsKeyDown('q'))
 		{
@@ -314,7 +360,7 @@ void CSceneLevelSelection::Render()
 	}
 	else 
 	{
-		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.0f, 1.0f, 100.0f, -70.0f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.0f, 1.0f, 100.0f, -70.0f + m_fBotAnimOffset);
 		SetISQuitToMain(false);
 
 		if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), start_button_vec.x, start_button_vec.y, start_button_vec.x + 16.6f, start_button_vec.y + 7.5f))
@@ -325,7 +371,7 @@ void CSceneLevelSelection::Render()
 	//on mouse hover start button 
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), start_button_vec.x, start_button_vec.y, start_button_vec.x + 16.6f, start_button_vec.y + 7.5f))
 	{
-		RenderMeshIn2D(meshList[GEO_START_BUTTON], false, 1.25f, 1.25f, -20.0f, -70.0f);
+		RenderMeshIn2D(meshList[GEO_START_BUTTON], false, 1.25f, 1.25f, -20.0f, -70.0f + m_fBotAnimOffset);
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) )
 		{
@@ -341,7 +387,7 @@ void CSceneLevelSelection::Render()
 	}
 	else 
 	{
-		RenderMeshIn2D(meshList[GEO_START_BUTTON], false, 1.0f, 1.0f, -20.0f, -70.0f);
+		RenderMeshIn2D(meshList[GEO_START_BUTTON], false, 1.0f, 1.0f, -20.0f, -70.0f + m_fBotAnimOffset);
 
 		if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 16.0f, quit_button_vec.y + 7.5f))
 			isSelectSoundPlaying = false;
@@ -349,7 +395,7 @@ void CSceneLevelSelection::Render()
 
 
 	//Render the description box
-	RenderMeshIn2D(meshList[GEO_DESCRIPTION_BACKDROP], false, 1.25f, 1.25f, 40.0f, -55.0f);
+	RenderMeshIn2D(meshList[GEO_DESCRIPTION_BACKDROP], false, 1.25f, 1.25f, 40.0f, -55.0f + m_fBotAnimOffset);
 
 	//print the text
 	if (Application::getChoiceVal() == 1)
@@ -358,7 +404,7 @@ void CSceneLevelSelection::Render()
 		std::ostringstream dialogue;
 		dialogue << "Description:" << endl;
 		dialogue << "That temple awaits..";
-		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f);
+		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f + m_fBotAnimOffset);
 	}
 	else if (Application::getChoiceVal() == 2)
 	{
@@ -387,39 +433,39 @@ void CSceneLevelSelection::Render()
 	switch (Application::getChoiceVal())
 	{
 	case 1: //level 1 button highlighted
-		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f, 45.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f, 15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f, -15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f, -45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, 45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -45.0f);
 
 		//level 1 overview image
-		RenderMeshIn2D(meshList[GEO_LEVEL_OVERVIEW], false, 1.0f, 1.0f, 40.0f, 30.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL_OVERVIEW], false, 1.0f, 1.0f, 40.0f, 30.0f + m_fBotAnimOffset);
 		break;
 	case 2: //level 2 button highlighted
-		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f, 45.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f, 15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f, -15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f, -45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, 15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -45.0f);
 
 		break;
 	case 3: //level 3 button highlighted
-		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f, 45.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f, 15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f, -15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f, -45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -45.0f);
 
 		break;
 	case 4: //level 4 button highlighted
-		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f, 45.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f, 15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f, -15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f, -45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -45.0f);
 		break;
 	default: //default, no option chosen
-		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f, 45.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f, 15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f, -15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f, -45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -45.0f);
 		break;
 	}
 

@@ -19,7 +19,7 @@
 CSceneMenu::CSceneMenu(void)
 : isKeyBoard(false)
 , isSelectSoundPlaying(false)
-, m_bBotAnimOffsetYDir(true)
+, m_bAnimOffsetDir(true)
 , m_bChangeState(false)
 {
 }
@@ -166,7 +166,7 @@ void CSceneMenu::Update(double dt)
 		}
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 		{
-			m_bBotAnimOffsetYDir = false;
+			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_LEVEL_SELECT;
 		}
 
@@ -184,7 +184,7 @@ void CSceneMenu::Update(double dt)
 		}
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 		{
-			m_bBotAnimOffsetYDir = false;
+			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_INSTRUCTIONS;
 		}
 		isKeyBoard = false;
@@ -201,7 +201,7 @@ void CSceneMenu::Update(double dt)
 		}
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 		{
-			m_bBotAnimOffsetYDir = false;
+			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_OPTIONS;
 		}
 		isKeyBoard = false;
@@ -218,7 +218,7 @@ void CSceneMenu::Update(double dt)
 		}
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 		{
-			m_bBotAnimOffsetYDir = false;
+			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_EXIT;
 		}
 		isKeyBoard = false;
@@ -234,7 +234,7 @@ void CSceneMenu::Update(double dt)
 
 void CSceneMenu::UpdateAnimations(double dt)
 {
-	if (m_bBotAnimOffsetYDir)
+	if (m_bAnimOffsetDir)
 	{
 		if (m_fLeftAnimOffset < 0.f)
 		{
