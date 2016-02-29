@@ -1,5 +1,9 @@
 #include "Achievements.h"
 #include "Properties.h"
+
+string CAchievements::propertyName[CAchievements::NUM_Properties] = { "Name", "TotalProperties", "Properties", "Completed" };
+
+
 CAchievements::CAchievements(string theName, vector<CProperties*> theRelatedProps, bool mUnlocked)
 {
 	mName = theName;
@@ -25,10 +29,11 @@ void CAchievements::Update()
 			}
 			else
 			{
+				cout << "YOU DIED" << endl;
 				mUnlocked = true;	
 				CLuaScript* m_cLuaScript;
-				m_cLuaScript = new CLuaScript("Achievements", "A");
-				m_cLuaScript->recordAchievementProgress(mName);
+				m_cLuaScript = new CLuaScript("Achievements");
+				m_cLuaScript->saveAchievementValues();
 				delete m_cLuaScript;
 			}
 		}
@@ -38,4 +43,15 @@ void CAchievements::Update()
 vector<CProperties*> CAchievements::GetProps()
 {
 	return mProps;
+}
+
+void CAchievements::Save(fstream& file, int id)
+{
+	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
+	file << propertyName[TotalProperties] << id << " = " << mProps.size() << "\n";
+	for (int i = 0; i < mProps.size(); i++)
+	{
+		file << propertyName[Properties] << id << "_" << i + 1 << " = " << "\"" << mProps[i]->GetName()  << "\"" << "\n";
+	}
+	file << propertyName[Completed] << id << " = " << mUnlocked << "\n";
 }

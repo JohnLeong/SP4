@@ -7,6 +7,7 @@
 #include <sstream>
 #include "MeshBuilder.h"
 #include "LoadTGA.h"
+#include "Achievements\Properties.h"
 
 #define MatchTimeLimit 15.f
 bool CScenePlay::m_bBacktoMainMenu = false;
@@ -219,13 +220,6 @@ void CScenePlay::InitLevel()
 	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 
 	m_cLevel.LoadTilemap(getLevel);
-
-
-}
-
-void CScenePlay::InitAchievements()
-{
-
 }
 
 void CScenePlay::Update(double dt)
@@ -237,7 +231,16 @@ void CScenePlay::Update(double dt)
 	{
 		cout << "boolean: " << GetIsQuitToMain() << endl;
 	}
-
+	if (!m_cPlayer->IsAlive())
+	{
+		for (int i = 0; i < Application::m_cPropertyList.size(); i++)
+		{
+			if (Application::m_cPropertyList[i]->GetName() == "Name1")
+			{
+				Application::m_cPropertyList[i]->ChangeValue(1);
+			}
+		}
+	}
 	//Player control
 	if (m_cLevel.IsMovementReady() && !m_cPlayer->GetHasReachedEndLevel() && m_cPlayer->IsAlive())
 	{

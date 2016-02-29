@@ -1,35 +1,17 @@
 #include "LuaScript.h"
 #include "Achievements\Properties.h"
+#include "Application.h"
 
-CLuaScript::CLuaScript(string path, string lua_State)
+CLuaScript::CLuaScript(string path)
 {
 	int s = 0;
 	string filepath;
 
 	filepath = "LuaScripts//" + path + ".lua";
-	if (lua_State == "A")
+	luaL_openlibs(L2);
+	if (luaL_loadfile(L2, filepath.c_str()) || lua_pcall(L2, 0, 0, 0))
 	{
-		luaL_openlibs(A);
-		if (luaL_loadfile(A, filepath.c_str()) || lua_pcall(A, 0, 0, 0))
-		{
-			printf("error: %s", lua_tostring(A, -1));
-		}
-	}
-	else if (lua_State == "AP")
-	{
-		luaL_openlibs(AP);
-		if (luaL_loadfile(AP, filepath.c_str()) || lua_pcall(AP, 0, 0, 0))
-		{
-			printf("error: %s", lua_tostring(AP, -1));
-		}
-	}
-	else
-	{
-		luaL_openlibs(L2);
-		if (luaL_loadfile(L2, filepath.c_str()) || lua_pcall(L2, 0, 0, 0))
-		{
-			printf("error: %s", lua_tostring(L2, -1));
-		}
+		printf("error: %s", lua_tostring(L2, -1));
 	}
 }
 
@@ -49,25 +31,25 @@ void checkStack(lua_State* L, int check)
 
 string CLuaScript::getStringVariable(string name)
 {
-	checkStack(L2, 1);
 	lua_getglobal(L2, name.c_str());
 	if (!lua_isstring(L2, -1))
 	{
 		return "NULL";
 	}
 	string variableStr = (string)lua_tostring(L2, -1);
+	lua_remove(L2, -1);
 	return variableStr;
 }
 
 int CLuaScript::getIntVariable(string name)
 {
-	checkStack(L2, 1);
 	lua_getglobal(L2, name.c_str());
 	if (!lua_isnumber(L2, -1))
 	{
 		return -1;
 	}
 	int value = (int)lua_tonumber(L2, -1);
+	lua_remove(L2, -1);
 	return value;
 }
 
@@ -81,6 +63,7 @@ bool CLuaScript::getBoolVariable(string name)
 		return -1;
 	}
 	bool value = (bool)lua_toboolean(L2, -1);
+	lua_remove(L2, -1);
 	return value;
 }
 
@@ -94,6 +77,7 @@ float CLuaScript::getFloatVariable(string name)
 		return -1.f;
 	}
 	float value = (float)lua_toboolean(L2, -1);
+	lua_remove(L2, -1);
 	return value;
 }
 
@@ -104,24 +88,29 @@ CAchievements* CLuaScript::getAchievementVariables(string name, vector<CProperti
 	string addName = "Name";
 	string addTotalProperties = "TotalProperties";
 	string addProperties = "Properties";
+	string addExtraProp = "_";
 	string addBool = "Bool";
 
-	name += addName;
-	lua_getglobal(A, name.c_str());
-	string getName = (string)lua_tostring(A, -1);
-	name.erase(name.begin() + 1, name.end());
+	name = addName + name;
+	lua_getglobal(L2, name.c_str());
+	string getName = (string)lua_tostring(L2, -1);
+	lua_remove(L2, -1);
+	name.erase(name.begin(), name.end() - 1);
 
-	name += addTotalProperties;
-	lua_getglobal(A, name.c_str());
-	int totalAchievementProperties = (int)lua_tonumber(A, -1);
-	name.erase(name.begin() + 1, name.end() - 10);
+	name = addTotalProperties + name;
+	lua_getglobal(L2, name.c_str());
+	int totalAchievementProperties = (int)lua_tonumber(L2, -1);
+	lua_remove(L2, -1);
+	name.erase(name.begin(), name.end() - 11);
 	for (int i = 1; i < totalAchievementProperties + 1; i++)
-	{
+	{	
+		name = name + addExtraProp;
 		ostringstream converter;
-		converter << i;
-		name += converter.str();
-		lua_getglobal(A, name.c_str());
-		string getPropertyName = (string)lua_tostring(A, -1);
+		converter << i;	
+		name = name + converter.str();
+		lua_getglobal(L2, name.c_str());
+		string getPropertyName = (string)lua_tostring(L2, -1);
+		lua_remove(L2, -1);
 		for (int i = 0; i < checkList.size(); i++)
 		{
 			if (checkList[i]->GetName() == getPropertyName)
@@ -129,13 +118,13 @@ CAchievements* CLuaScript::getAchievementVariables(string name, vector<CProperti
 				propertyList.push_back(checkList[i]);
 			}
 		}
-		name.erase(name.begin() + 11);
+		name.erase(name.begin() + 11 ,name.end());
 	}
-
-	name.erase(name.begin() + 1, name.end());
-	name += addBool;
-	lua_getglobal(A, name.c_str());
-	bool getBool = (bool)lua_toboolean(A, -1);
+	name.erase(name.begin(), name.end() - 1);
+	name = addBool + name;
+	lua_getglobal(L2, name.c_str());
+	bool getBool = (bool)lua_toboolean(L2, -1);
+	lua_remove(L2, -1);
 
 	newAchievement = new CAchievements(getName, propertyList, getBool);
 	return newAchievement;
@@ -150,75 +139,67 @@ CProperties* CLuaScript::getAchievementPropertiesVariables(string name)
 	string addActValue = "ActValue";
 	string addBool = "Bool";
 
-	name += addName;
-	lua_getglobal(AP, name.c_str());
-	string getName = (string)lua_tostring(AP, -1);
-	name.erase(name.begin() + 1, name.end());
+	name = addName + name;
+	lua_getglobal(L2, name.c_str());
+	string getName = (string)lua_tostring(L2, -1);
+	lua_remove(L2, -1);
+	name.erase(name.begin(), name.end() - 1);
 
-	name += addValue;
-	lua_getglobal(AP, name.c_str());
-	int getValue = (int)lua_tonumber(AP, -1);
-	name.erase(name.begin() + 1, name.end());
+	name = addValue + name;
+	lua_getglobal(L2, name.c_str());
+	int getValue = (int)lua_tonumber(L2, -1);
+	lua_remove(L2, -1);
+	name.erase(name.begin(), name.end() - 1);
 
-	name += addActive;
-	lua_getglobal(AP, name.c_str());
-	string getActive = (string)lua_tostring(AP, -1);
-	name.erase(name.begin() + 1, name.end());
+	name = addActive + name;
+	lua_getglobal(L2, name.c_str());
+	string getActive = (string)lua_tostring(L2, -1);
+	lua_remove(L2, -1);
+	name.erase(name.begin(), name.end() - 1);
 
-	name += addActValue;
-	lua_getglobal(AP, name.c_str());
-	int getActValue = (int)lua_tonumber(AP, -1);
-	name.erase(name.begin() + 1, name.end());
+	name = addActValue + name;
+	lua_getglobal(L2, name.c_str());
+	int getActValue = (int)lua_tonumber(L2, -1);
+	lua_remove(L2, -1);
+	name.erase(name.begin(), name.end() - 1);
 
-	name += addBool;
-	lua_getglobal(AP, name.c_str());
-	bool getBool = (bool)lua_toboolean(AP, -1);
+	name = addBool + name;
+	lua_getglobal(L2, name.c_str());
+	bool getBool = (bool)lua_toboolean(L2, -1);
+	lua_remove(L2, -1);
 	
 	newProperty = new CProperties(getName, getValue, getActive, getActValue, getBool);
 	return newProperty;
 }
 
-void CLuaScript::recordAchievementProgress(string name)
+void CLuaScript::saveAchievementValues()
 {
-	ostringstream convertor;
-	string changeBool = "Bool";
-	string value = "FALSE";
-	string changedValue = "TRUE";
+	fstream file;
+	file.open("LuaScripts//Achievements.lua", std::ofstream::out, std::ostream::trunc);
+	file << "TotalAchievements = " << Application::m_cAchievementList.size() << "\n\n";
 
-	name.erase(name.begin() + 1, name.end());
-	name = name + changeBool + " = FALSE";
-	const char * Search = name.c_str();
-	const char * ChoseReplacement = value.c_str();
-	const char * Replacment = changedValue.c_str();
-	luaL_gsub(L2, Search, ChoseReplacement, Replacment);
+	for (int i = 0; i < Application::m_cAchievementList.size(); i++)
+	{
+		int counter = i + 1;
+		Application::m_cAchievementList[i]->Save(file,counter);
+	}
+
+	file.close();
 }
 
-
-void CLuaScript::recordAchievementPropertiesProgressValue(string name, string value, string changedValue)
+void CLuaScript::saveAchievementPropertiesValues()
 {
-	string changeValue = "Value";
-	name.erase(name.begin() + 1, name.end());
-	name = name + changeValue + " = " + value;
-	const char * Search = name.c_str();
-	const char * ChoseReplacement = value.c_str();
-	const char * Replacment = changedValue.c_str();
+	fstream file;
+	file.open("LuaScripts//AchievementProperties.lua", std::ofstream::out, std::ostream::trunc);
+	file << "TotalProperties  = " << Application::m_cPropertyList.size() << "\n\n";
 
-	luaL_gsub(L2, Search, ChoseReplacement, Replacment);
-}
+	for (int i = 0; i < Application::m_cPropertyList.size(); i++)
+	{
+		int counter = i + 1;
+		Application::m_cPropertyList[i]->Save(file, counter);
+	}
 
-void CLuaScript::recordAchievementPropertiesProgressBool(string name)
-{
-	ostringstream convertor;
-	string changeBool = "Bool";
-	string value = "FALSE";
-	string changedValue = "TRUE";
-
-	name.erase(name.begin() + 1, name.end());
-	name = name + changeBool + " = FALSE";
-	const char * Search = name.c_str();
-	const char * ChoseReplacement = value.c_str();
-	const char * Replacment = changedValue.c_str();
-	luaL_gsub(L2, Search, ChoseReplacement, Replacment);
+	file.close();
 }
 
 int CLuaScript::luaAdd(int x, int y)

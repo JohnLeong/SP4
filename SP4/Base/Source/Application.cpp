@@ -24,6 +24,9 @@ bool Application::m_bChangeRes = false, Application::m_bFullscreen = false;
 int Application::m_window_width = 1280; int Application::m_window_height = 720;
 int Application::choice = 0; float Application::mouseWorldX = 0; float Application::mouseWorldY = 0;
 CSoundManager Application::Sound; bool Application::AppisRunning = true;
+CSoundManager Application::Sound;
+vector<CAchievements*>  Application::m_cAchievementList;
+vector<CProperties*>  Application::m_cPropertyList;
 bool Application::m_bPauseDT = false;
 /********************************************************************************
  Define an error callback
@@ -259,7 +262,7 @@ void Application::Init()
 
 	InitWindow(false);
 
-	m_cLuaScript = new CLuaScript("AchievementProperties", "AP");
+	m_cLuaScript = new CLuaScript("AchievementProperties");
 	int totalProperties = 0;
 	totalProperties = m_cLuaScript->getIntVariable("TotalProperties");
 	for (int i = 1; i < totalProperties + 1; i++)
@@ -273,7 +276,7 @@ void Application::Init()
 	}
 	delete m_cLuaScript;
 
-	m_cLuaScript = new CLuaScript("Achievements", "A");
+	m_cLuaScript = new CLuaScript("Achievements");
 	int totalAchievements = 0;
 	totalAchievements = m_cLuaScript->getIntVariable("TotalAchievements");
 	for (int i = 1; i < totalProperties + 1; i++)
@@ -387,6 +390,15 @@ void Application::Run()
 			}
 			else
 				theGSM->Update(m_dElapsedTime);
+
+			for (int i = 0; i < Application::m_cPropertyList.size(); i++)
+			{
+				Application::m_cPropertyList[i]->Update();
+			}
+			for (int i = 0; i < Application::m_cAchievementList.size(); i++)
+			{
+				Application::m_cAchievementList[i]->Update();
+			}
 
 			m_dAccumulatedTime_ThreadOne = 0.0;
 		}

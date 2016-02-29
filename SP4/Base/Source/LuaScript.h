@@ -2,8 +2,9 @@
 #include <string>
 #include "Entities\EnemyZombie.h"
 #include "Achievements\Achievements.h"
+#include <fstream>
 
-
+using std::fstream;
 using std::string;
 
 extern "C" {
@@ -16,10 +17,9 @@ class CLuaScript
 {
 private:
 	lua_State *L2 = lua_open();
-	lua_State *A = lua_open();
-	lua_State *AP = lua_open();
+
 public:
-	CLuaScript(string path, string lua_State);
+	CLuaScript(string path);
 	~CLuaScript();
 
 	string getStringVariable(string name);
@@ -32,9 +32,8 @@ public:
 	CAchievements* getAchievementVariables(string name, vector<CProperties*>  checkList);
 	CProperties* getAchievementPropertiesVariables(string name);
 
-	void recordAchievementProgress(string name);
-	void recordAchievementPropertiesProgressValue(string name, string value, string changedValue);
-	void recordAchievementPropertiesProgressBool(string name);
+	void saveAchievementValues();
+	void saveAchievementPropertiesValues();
 
 	int luaAdd(int x, int y);
 	int luaMinus(int x, int y);

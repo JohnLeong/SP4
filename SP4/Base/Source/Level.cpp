@@ -74,7 +74,7 @@ bool CLevel::InitLua(std::string levelName)
 {
 	string addHold = "Hold";
 	string addStage = "Stage";
-	m_cLuascript = new CLuaScript(levelName, "");
+	m_cLuascript = new CLuaScript(levelName);
 	m_cTilemap->Init(m_cLuascript->getIntVariable("tileMapWidth"), m_cLuascript->getIntVariable("tileMapHeight"), TILE_SIZE);
 
 	m_cPlayerPtr->SetXIndex(m_cLuascript->getIntVariable("playerPosX"));

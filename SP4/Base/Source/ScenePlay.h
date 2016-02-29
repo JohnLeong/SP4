@@ -81,7 +81,6 @@ public:
 	virtual void Exit();
 
 	void InitLevel();
-	void InitAchievements();
 
 	// Render the main components of this scene
 	void RenderGUI();

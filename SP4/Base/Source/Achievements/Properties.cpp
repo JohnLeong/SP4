@@ -1,5 +1,7 @@
 #include "Properties.h"
 
+string CProperties::propertyName[CProperties::NUM_Properties] = { "Name", "Value", "Active", "ActivationValue", "Completed" };
+
 CProperties::CProperties(string theName, int theInitialValue, string theActivation, int theActivationValue, bool clearActivation)
 {
 	mName = theName;
@@ -21,7 +23,7 @@ void CProperties::Update()
 		if (mValue > mActivationValue)
 		{
 			mClearActive = true;
-			m_cLuaScript->recordAchievementPropertiesProgressBool(mName);
+			m_cLuaScript->saveAchievementPropertiesValues();
 		}
 	}
 	else if (mActive == "ACTIVE_LESSER")
@@ -29,7 +31,7 @@ void CProperties::Update()
 		if (mValue < mActivationValue)
 		{
 			mClearActive = true;
-			m_cLuaScript->recordAchievementPropertiesProgressBool(mName);
+			m_cLuaScript->saveAchievementPropertiesValues();
 		}
 	}
 	else if (mActive == "ACTIVE_EQUAL")
@@ -37,7 +39,7 @@ void CProperties::Update()
 		if (mValue == mActivationValue)
 		{
 			mClearActive = true;
-			m_cLuaScript->recordAchievementPropertiesProgressBool(mName);
+			m_cLuaScript->saveAchievementPropertiesValues();
 		}
 	}
 	else
@@ -79,8 +81,17 @@ void CProperties::ChangeValue(int changeNumber)
 	convertor << mChangedValue;
 	getChangedValue.append(convertor.str());
 
-	m_cLuaScript = new CLuaScript("AchievementProperties", "AP");
-	m_cLuaScript->recordAchievementPropertiesProgressValue(mName, getValue, getChangedValue);
+	m_cLuaScript = new CLuaScript("AchievementProperties");
+	m_cLuaScript->saveAchievementPropertiesValues();
 	delete m_cLuaScript;
 	mValue += changeNumber;
+}
+
+void CProperties::Save(fstream& file, int id)
+{
+	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
+	file << propertyName[Value] << id << " = " << mValue << "\n";
+	file << propertyName[Active] << id << " = " << "\"" << mActive << "\"" << "\n";
+	file << propertyName[ActivationValue] << id << " = " << mActivationValue << "\n";
+	file << propertyName[Completed] << id << " = " << mClearActive << "\n";
 }

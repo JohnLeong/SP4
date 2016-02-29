@@ -1,4 +1,7 @@
-1Name = 1Name
-1Value = 0
-1Active = ACTIVE_GREATER
-1ActValue = 1
+TotalProperties  = 1
+
+Name1 = "Name1"
+Value1 = 837
+Active1 = "ACTIVE_EQUAL"
+ActivationValue1 = 1
+Completed1 = 1

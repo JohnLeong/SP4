@@ -13,6 +13,7 @@
 #include "States\LevelSelectionState.h"
 #include <string>
 #include "Achievements\Achievements.h"
+#include "Achievements\Properties.h"
 #include <sstream>
 
 class Application
@@ -67,6 +68,10 @@ public:
 
 	//Boolean to close app if ran
 	static bool AppisRunning;
+
+	static vector<CAchievements*> m_cAchievementList;
+	static vector<CProperties*> m_cPropertyList;
+
 private:
 	Application();
 	~Application();
@@ -97,13 +102,8 @@ private:
 
 	// Game State Management
 	CGameStateManager* theGSM;
-
 	CAchievements* m_cAchievements;
-	vector<CAchievements*> m_cAchievementList;
-
-	vector<CProperties*> m_cPropertyList;
 	CProperties* m_cProperties;
-
 	CLuaScript* m_cLuaScript;
 };
 
