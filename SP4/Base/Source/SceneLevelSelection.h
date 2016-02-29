@@ -101,8 +101,9 @@ protected:
 	static bool m_bisColWithStartButton;
 	
 	//check if selectSound is currently acftive
-	bool isSelectSoundPlaying;
-
+	bool isSelectSoundPlayingkeyboard;
+	bool isSelectSoundPlayingStartQuit;
+	
 	//virutally create vector positions for the buttons
 	Vector3 button_vec[5];
 	Vector3 quit_button_vec;

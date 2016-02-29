@@ -21,14 +21,16 @@ CSceneLevelSelection::CSceneLevelSelection(void)
 , m_window_height(600)
 , m_bAnimOffsetDir(true)
 , m_bChangeState(false)
-, isSelectSoundPlaying(false)
+, isSelectSoundPlayingkeyboard(false)
+, isSelectSoundPlayingStartQuit(false)
 {
 }
 
 CSceneLevelSelection::CSceneLevelSelection(const int m_window_width, const int m_window_height)
 : m_bAnimOffsetDir(true)
 , m_bChangeState(false)
-, isSelectSoundPlaying(false)
+, isSelectSoundPlayingkeyboard(false)
+, isSelectSoundPlayingStartQuit(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -169,17 +171,17 @@ void CSceneLevelSelection::Update(double dt)
 	{
 		//reset the sound effect boolean on mouse up
 		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
-			isSelectSoundPlaying = false;
+			isSelectSoundPlayingkeyboard = false;
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 		{
 			//level 1 button
 			Application::setChoiceVal(1);
 
-			if (isSelectSoundPlaying == false)
+			if (isSelectSoundPlayingkeyboard == false)
 			{
 				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-				isSelectSoundPlaying = true;
+				isSelectSoundPlayingkeyboard = true;
 			}
 		}
 		m_bisKeyBoard = false;
@@ -188,17 +190,17 @@ void CSceneLevelSelection::Update(double dt)
 	{
 		//reset the sound effect boolean on mouse up
 		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
-			isSelectSoundPlaying = false;
+			isSelectSoundPlayingkeyboard = false;
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 		{
 			//level 2 button
 			Application::setChoiceVal(2);
 
-			if (isSelectSoundPlaying == false)
+			if (isSelectSoundPlayingkeyboard == false)
 			{
 				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-				isSelectSoundPlaying = true;
+				isSelectSoundPlayingkeyboard = true;
 			}
 		}
 
@@ -208,17 +210,17 @@ void CSceneLevelSelection::Update(double dt)
 	{
 		//reset the sound effect boolean on mouse up
 		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
-			isSelectSoundPlaying = false;
+			isSelectSoundPlayingkeyboard = false;
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 		{
 			//level 3 button
 			Application::setChoiceVal(3);
 
-			if (isSelectSoundPlaying == false)
+			if (isSelectSoundPlayingkeyboard == false)
 			{
 				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-				isSelectSoundPlaying = true;
+				isSelectSoundPlayingkeyboard = true;
 			}
 		}
 
@@ -228,17 +230,17 @@ void CSceneLevelSelection::Update(double dt)
 	{
 		//reset the sound effect boolean on mouse up
 		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
-			isSelectSoundPlaying = false;
+			isSelectSoundPlayingkeyboard = false;
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 		{
 			//level 4 button
 			Application::setChoiceVal(4);
 
-			if (isSelectSoundPlaying == false)
+			if (isSelectSoundPlayingkeyboard == false)
 			{
 				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-				isSelectSoundPlaying = true;
+				isSelectSoundPlayingkeyboard = true;
 			}
 		}
 		m_bisKeyBoard = false;
@@ -352,10 +354,10 @@ void CSceneLevelSelection::Render()
 			SetISQuitToMain(true);
 		}
 
-		if (isSelectSoundPlaying == false)
+		if (isSelectSoundPlayingStartQuit == false)
 		{
 			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-			isSelectSoundPlaying = true;
+			isSelectSoundPlayingStartQuit = true;
 		}
 	}
 	else 
@@ -364,7 +366,7 @@ void CSceneLevelSelection::Render()
 		SetISQuitToMain(false);
 
 		if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), start_button_vec.x, start_button_vec.y, start_button_vec.x + 16.6f, start_button_vec.y + 7.5f))
-			isSelectSoundPlaying = false;
+			isSelectSoundPlayingStartQuit = false;
 	}
 
 	
@@ -378,10 +380,10 @@ void CSceneLevelSelection::Render()
 			SetisColWithStartButton(true);
 		}
 
-		if (isSelectSoundPlaying == false)
+		if (isSelectSoundPlayingStartQuit == false)
 		{
 			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-			isSelectSoundPlaying = true;
+			isSelectSoundPlayingStartQuit = true;
 		}
 
 	}
@@ -390,7 +392,7 @@ void CSceneLevelSelection::Render()
 		RenderMeshIn2D(meshList[GEO_START_BUTTON], false, 1.0f, 1.0f, -20.0f, -70.0f + m_fBotAnimOffset);
 
 		if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 16.0f, quit_button_vec.y + 7.5f))
-			isSelectSoundPlaying = false;
+			isSelectSoundPlayingStartQuit = false;
 	}
 
 

@@ -8,11 +8,18 @@
 #include "LoadTGA.h"
 #include <sstream>
 
+#define buttonXoffset 38.0f
+#define buttonYoffset 11.5f
+
 CSceneOptions::CSceneOptions(void)
+: isSelectSoundPlaying(false)
+, m_bisKeyBoard(false)
 {
 }
 
 CSceneOptions::CSceneOptions(const int m_window_width, const int m_window_height)
+: isSelectSoundPlaying(false)
+, m_bisKeyBoard(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -26,8 +33,8 @@ void CSceneOptions::Init()
 {
 	CSceneManager::Init();
 
-	//plays the backgruond music
-	Application::Sound.playBackgroundSound("../irrKlang/media/SmokeWeedEveryday.mp3");
+	//create virtual positions for the buttons (back)
+	geo_pos.Set(70.0f, 15.0f, 0.0f);
 
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
@@ -68,11 +75,25 @@ void CSceneOptions::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
-	//if (CSceneMenu::checkForcollision(worldX, worldY, geo_pos[3].x, geo_pos[3].y, geo_pos[3].x, geo_pos[3].y + 8)) // exit button
-	//{
-	//	setChoiceVal(1);
-	//	isKeyBoard = false;
-	//}
+	//Update image on mouse hover
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)) // back button
+	{
+		Application::setChoiceVal(1);
+
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+
+	}
+	else
+	{
+		Application::setChoiceVal(0);
+
+		isSelectSoundPlaying = false;
+	}
+
 	float fDelta = (float)dt;
 
 }
@@ -107,6 +128,16 @@ void CSceneOptions::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
 #endif
 
+	switch (Application::getChoiceVal())
+	{
+	case 1:
+		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1, 1, 0.0f, -52.5f);
+		break;
+
+	default:
+		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f);
+		break;
+	}
 
 }
 

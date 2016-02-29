@@ -33,8 +33,8 @@ void CSceneInstruction::Init()
 {
 	CSceneManager::Init();
 
-	//reset choice back to 0 (default)
-	/*setChoiceVal(0);*/
+	//init the choice
+	Application::setChoiceVal(0);
 
 	//create virtual positions for the buttons (back)
 	geo_pos.Set(70.0f,15.0f, 0.0f);
@@ -80,10 +80,10 @@ void CSceneInstruction::Update(double dt)
 
 	if (Application::IsKeyPressed('1'))
 	{
-		cout << "current mouse x: " << Application::getMouseWorldX() << endl;
-		cout << "current mouse y: " << Application::getMouseWorldY() << endl;
+		//cout << "current mouse x: " << Application::getMouseWorldX() << endl;
+		//cout << "current mouse y: " << Application::getMouseWorldY() << endl;
 
-		//cout << "choice: " << Application::getChoiceVal() << endl;
+		cout << "choice: " << Application::getChoiceVal() << endl;
 	}
 
 	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
@@ -91,9 +91,10 @@ void CSceneInstruction::Update(double dt)
 
 		Application::setChoiceVal(Application::getChoiceVal() - 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal() < 1)
-			Application::setChoiceVal(4);
+		if (Application::getChoiceVal() < 0)
+			Application::setChoiceVal(1);
 
+		cout << "choice: " << Application::getChoiceVal() << endl;
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
 		{
@@ -108,8 +109,8 @@ void CSceneInstruction::Update(double dt)
 	{
 		Application::setChoiceVal(Application::getChoiceVal() + 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal()  > 4)
-			Application::setChoiceVal(1);
+		if (Application::getChoiceVal()  > 1)
+			Application::setChoiceVal(0);
 
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
@@ -125,10 +126,19 @@ void CSceneInstruction::Update(double dt)
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)) // back button
 	{
 		Application::setChoiceVal(1);
+
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+
 	}
 	else
 	{
 		Application::setChoiceVal(0);
+
+		isSelectSoundPlaying = false;
 	}
 
 	float fDelta = (float)dt;
@@ -168,7 +178,7 @@ void CSceneInstruction::Render()
 	switch (Application::getChoiceVal())
 	{
 	case 1:
-		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1, 1, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1.15f, 1.15f, 0.0f, -52.5f);
 		break;
 
 	default:

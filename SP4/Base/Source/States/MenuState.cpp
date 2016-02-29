@@ -132,7 +132,7 @@ if (((CSceneMenu*)scene)->m_bChangeState)
 			theGSM->ChangeState(COptionsState::Instance());
 			break;
 		case CSceneMenu::NEXT_EXIT:
-			exit(0);	//CHANGE!!!
+			Application::AppisRunning = false;
 			break;
 		default:
 			break;
@@ -141,7 +141,9 @@ if (((CSceneMenu*)scene)->m_bChangeState)
 
 	/*if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1 
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
+	{
 		theGSM->ChangeState(CLevelSelectionState::Instance());
+	}
 	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 2
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 2)
 		theGSM->ChangeState(CInstructionState::Instance());

@@ -149,6 +149,7 @@ void CSceneMenu::Update(double dt)
 		}
 
 		isKeyBoard = true;
+
 	}
 
 	float fDelta = (float)dt;
