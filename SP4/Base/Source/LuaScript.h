@@ -19,7 +19,7 @@ private:
 	lua_State *A = lua_open();
 	lua_State *AP = lua_open();
 public:
-	CLuaScript(string path);
+	CLuaScript(string path, string lua_State);
 	~CLuaScript();
 
 	string getStringVariable(string name);
@@ -32,8 +32,9 @@ public:
 	CAchievements* getAchievementVariables(string name, vector<CProperties*>  checkList);
 	CProperties* getAchievementPropertiesVariables(string name);
 
-	void recordAchievementProgress(string name, string value, string changedValue);
-	void recordAchievementPropertiesProgress(string name, string value, string changedValue);
+	void recordAchievementProgress(string name);
+	void recordAchievementPropertiesProgressValue(string name, string value, string changedValue);
+	void recordAchievementPropertiesProgressBool(string name);
 
 	int luaAdd(int x, int y);
 	int luaMinus(int x, int y);

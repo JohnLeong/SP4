@@ -258,7 +258,7 @@ void Application::Init()
 
 	InitWindow(false);
 
-	m_cLuaScript = new CLuaScript("AchievementProperties");
+	m_cLuaScript = new CLuaScript("AchievementProperties", "AP");
 	int totalProperties = 0;
 	totalProperties = m_cLuaScript->getIntVariable("TotalProperties");
 	for (int i = 1; i < totalProperties + 1; i++)
@@ -272,7 +272,7 @@ void Application::Init()
 	}
 	delete m_cLuaScript;
 
-	m_cLuaScript = new CLuaScript("Achievements");
+	m_cLuaScript = new CLuaScript("Achievements", "A");
 	int totalAchievements = 0;
 	totalAchievements = m_cLuaScript->getIntVariable("TotalAchievements");
 	for (int i = 1; i < totalProperties + 1; i++)

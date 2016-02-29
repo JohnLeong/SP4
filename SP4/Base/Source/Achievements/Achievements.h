@@ -14,9 +14,10 @@ public:
 	CAchievements(string theName, vector<CProperties*> theRelatedProps, bool mUnlocked);
 	~CAchievements(void);
 	void Update();								// Update
-
+	vector<CProperties*> GetProps();
 private:
 	string mName; // achievement name
 	vector<CProperties*> mProps;
 	bool mUnlocked;
+
 };

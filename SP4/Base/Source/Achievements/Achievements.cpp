@@ -10,6 +10,7 @@ CAchievements::CAchievements(string theName, vector<CProperties*> theRelatedProp
 
 CAchievements::~CAchievements(void)
 {
+
 }
 
 void CAchievements::Update()
@@ -24,8 +25,17 @@ void CAchievements::Update()
 			}
 			else
 			{
-				mUnlocked = true;
+				mUnlocked = true;	
+				CLuaScript* m_cLuaScript;
+				m_cLuaScript = new CLuaScript("Achievements", "A");
+				m_cLuaScript->recordAchievementProgress(mName);
+				delete m_cLuaScript;
 			}
 		}
 	}
+}
+
+vector<CProperties*> CAchievements::GetProps()
+{
+	return mProps;
 }

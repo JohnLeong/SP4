@@ -1,19 +1,36 @@
 #include "LuaScript.h"
 #include "Achievements\Properties.h"
 
-CLuaScript::CLuaScript(string path)
+CLuaScript::CLuaScript(string path, string lua_State)
 {
 	int s = 0;
 	string filepath;
 
 	filepath = "LuaScripts//" + path + ".lua";
-
-	luaL_openlibs(L2);
-	if (luaL_loadfile(L2, filepath.c_str()) || lua_pcall(L2, 0, 0, 0))
+	if (lua_State == "A")
 	{
-		printf("error: %s", lua_tostring(L2, -1));
+		luaL_openlibs(A);
+		if (luaL_loadfile(A, filepath.c_str()) || lua_pcall(A, 0, 0, 0))
+		{
+			printf("error: %s", lua_tostring(A, -1));
+		}
 	}
-	
+	else if (lua_State == "AP")
+	{
+		luaL_openlibs(AP);
+		if (luaL_loadfile(AP, filepath.c_str()) || lua_pcall(AP, 0, 0, 0))
+		{
+			printf("error: %s", lua_tostring(AP, -1));
+		}
+	}
+	else
+	{
+		luaL_openlibs(L2);
+		if (luaL_loadfile(L2, filepath.c_str()) || lua_pcall(L2, 0, 0, 0))
+		{
+			printf("error: %s", lua_tostring(L2, -1));
+		}
+	}
 }
 
 
@@ -80,47 +97,31 @@ float CLuaScript::getFloatVariable(string name)
 	return value;
 }
 
-//CEnemyZombie* CLuaScript::getNsetZombieVariables(string name)
-//{
-//	string addPosX = "PosX";
-//	string addPosY = "PosY";
-//
-//	name += addPosX;
-//	lua_getglobal(L2, name.c_str());
-//	int getPosX = (int)lua_tonumber(L2, -1);
-//	name.erase(name.begin() + 7, name.end() - 4);
-//
-//	name += addPosY;
-//	lua_getglobal(L2, name.c_str());
-//	int getPosY = (int)lua_tonumber(L2, -1);
-//
-//	//CEnemyZombie* zombie = new CEnemyZombie(getPosX, getPosY, );
-//}
-
-
 CAchievements* CLuaScript::getAchievementVariables(string name, vector<CProperties*> checkList)
 {
-	checkStack(L2, 1);
 	CAchievements* newAchievement;
 	vector<CProperties*> propertyList;
 	string addName = "Name";
+	string addTotalProperties = "TotalProperties";
 	string addProperties = "Properties";
+	string addBool = "Bool";
 
 	name += addName;
-	lua_getglobal(L2, name.c_str());
-	string getName = (string)lua_tostring(L2, -1);
-	name.erase(name.begin() + 1);
+	lua_getglobal(A, name.c_str());
+	string getName = (string)lua_tostring(A, -1);
+	name.erase(name.begin() + 1, name.end());
 
-	name += addProperties;
-
-	int totalAchievementProperties = 0;
+	name += addTotalProperties;
+	lua_getglobal(A, name.c_str());
+	int totalAchievementProperties = (int)lua_tonumber(A, -1);
+	name.erase(name.begin() + 1, name.end() - 10);
 	for (int i = 1; i < totalAchievementProperties + 1; i++)
 	{
 		ostringstream converter;
 		converter << i;
-		name = converter.str();
-		lua_getglobal(L2, name.c_str());
-		string getPropertyName = (string)lua_tostring(L2, -1);
+		name += converter.str();
+		lua_getglobal(A, name.c_str());
+		string getPropertyName = (string)lua_tostring(A, -1);
 		for (int i = 0; i < checkList.size(); i++)
 		{
 			if (checkList[i]->GetName() == getPropertyName)
@@ -128,46 +129,76 @@ CAchievements* CLuaScript::getAchievementVariables(string name, vector<CProperti
 				propertyList.push_back(checkList[i]);
 			}
 		}
+		name.erase(name.begin() + 11);
 	}
-	newAchievement = new CAchievements(getName, propertyList, false);
+
+	name.erase(name.begin() + 1, name.end());
+	name += addBool;
+	lua_getglobal(A, name.c_str());
+	bool getBool = (bool)lua_toboolean(A, -1);
+
+	newAchievement = new CAchievements(getName, propertyList, getBool);
 	return newAchievement;
 }
 
 CProperties* CLuaScript::getAchievementPropertiesVariables(string name)
 {
-	checkStack(L2, 1);
 	CProperties* newProperty;
 	string addName = "Name";
 	string addValue = "Value";
 	string addActive = "Active";
 	string addActValue = "ActValue";
+	string addBool = "Bool";
 
 	name += addName;
-	lua_getglobal(L2, name.c_str());
-	string getName = (string)lua_tostring(L2, -1);
-	name.erase(name.begin() + 5);
+	lua_getglobal(AP, name.c_str());
+	string getName = (string)lua_tostring(AP, -1);
+	name.erase(name.begin() + 1, name.end());
 
 	name += addValue;
-	lua_getglobal(L2, name.c_str());
-	int getValue = (int)lua_tonumber(L2, -1);
-	name.erase(name.begin() + 6);
+	lua_getglobal(AP, name.c_str());
+	int getValue = (int)lua_tonumber(AP, -1);
+	name.erase(name.begin() + 1, name.end());
 
 	name += addActive;
-	lua_getglobal(L2, name.c_str());
-	string getActive = (string)lua_tostring(L2, -1);
-	name.erase(name.begin() + 7);
+	lua_getglobal(AP, name.c_str());
+	string getActive = (string)lua_tostring(AP, -1);
+	name.erase(name.begin() + 1, name.end());
 
 	name += addActValue;
-	lua_getglobal(L2, name.c_str());
-	int getActValue = (int)lua_tonumber(L2, -1);
+	lua_getglobal(AP, name.c_str());
+	int getActValue = (int)lua_tonumber(AP, -1);
+	name.erase(name.begin() + 1, name.end());
 
-	newProperty = new CProperties(getName, getValue, getActive, getActValue, false);
+	name += addBool;
+	lua_getglobal(AP, name.c_str());
+	bool getBool = (bool)lua_toboolean(AP, -1);
+	
+	newProperty = new CProperties(getName, getValue, getActive, getActValue, getBool);
 	return newProperty;
 }
 
-void CLuaScript::recordAchievementProgress(string name, string value, string changedValue)
+void CLuaScript::recordAchievementProgress(string name)
 {
-	name = name + " = " + value;
+	ostringstream convertor;
+	string changeBool = "Bool";
+	string value = "FALSE";
+	string changedValue = "TRUE";
+
+	name.erase(name.begin() + 1, name.end());
+	name = name + changeBool + " = FALSE";
+	const char * Search = name.c_str();
+	const char * ChoseReplacement = value.c_str();
+	const char * Replacment = changedValue.c_str();
+	luaL_gsub(L2, Search, ChoseReplacement, Replacment);
+}
+
+
+void CLuaScript::recordAchievementPropertiesProgressValue(string name, string value, string changedValue)
+{
+	string changeValue = "Value";
+	name.erase(name.begin() + 1, name.end());
+	name = name + changeValue + " = " + value;
 	const char * Search = name.c_str();
 	const char * ChoseReplacement = value.c_str();
 	const char * Replacment = changedValue.c_str();
@@ -175,14 +206,18 @@ void CLuaScript::recordAchievementProgress(string name, string value, string cha
 	luaL_gsub(L2, Search, ChoseReplacement, Replacment);
 }
 
-
-void CLuaScript::recordAchievementPropertiesProgress(string name, string value, string changedValue)
+void CLuaScript::recordAchievementPropertiesProgressBool(string name)
 {
-	name = name + " = " + value;
+	ostringstream convertor;
+	string changeBool = "Bool";
+	string value = "FALSE";
+	string changedValue = "TRUE";
+
+	name.erase(name.begin() + 1, name.end());
+	name = name + changeBool + " = FALSE";
 	const char * Search = name.c_str();
 	const char * ChoseReplacement = value.c_str();
 	const char * Replacment = changedValue.c_str();
-
 	luaL_gsub(L2, Search, ChoseReplacement, Replacment);
 }
 

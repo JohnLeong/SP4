@@ -19,17 +19,26 @@ void CProperties::Update()
 	if (mActive == "ACTIVE_GREATER")
 	{
 		if (mValue > mActivationValue)
+		{
 			mClearActive = true;
+			m_cLuaScript->recordAchievementPropertiesProgressBool(mName);
+		}
 	}
 	else if (mActive == "ACTIVE_LESSER")
 	{
 		if (mValue < mActivationValue)
+		{
 			mClearActive = true;
+			m_cLuaScript->recordAchievementPropertiesProgressBool(mName);
+		}
 	}
 	else if (mActive == "ACTIVE_EQUAL")
 	{
 		if (mValue == mActivationValue)
+		{
 			mClearActive = true;
+			m_cLuaScript->recordAchievementPropertiesProgressBool(mName);
+		}
 	}
 	else
 	{
@@ -66,13 +75,12 @@ void CProperties::ChangeValue(int changeNumber)
 	convertor << mValue;
 	getValue.append(convertor.str());
 
-	ostringstream convertor2;
 	string getChangedValue = "";
-	convertor2 << mChangedValue;
-	getChangedValue.append(convertor2.str());
+	convertor << mChangedValue;
+	getChangedValue.append(convertor.str());
 
-	m_cLuaScript = new CLuaScript("AchievementProperties");
-	m_cLuaScript->recordAchievementPropertiesProgress(mName, getValue, getChangedValue);
+	m_cLuaScript = new CLuaScript("AchievementProperties", "AP");
+	m_cLuaScript->recordAchievementPropertiesProgressValue(mName, getValue, getChangedValue);
 	delete m_cLuaScript;
 	mValue += changeNumber;
 }
