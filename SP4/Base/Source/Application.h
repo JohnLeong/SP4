@@ -64,6 +64,9 @@ public:
 
 	//Sound Manager
 	static CSoundManager Sound;
+
+	//Boolean to close app if ran
+	static bool AppisRunning;
 private:
 	Application();
 	~Application();

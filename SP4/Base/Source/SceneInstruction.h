@@ -49,6 +49,12 @@ protected:
 	int m_window_width;
 	int m_window_height;
 
+	//check if the keyboard is currently active
+	bool m_bisKeyBoard;
+
+	//check if selectSound is currently acftive
+	bool isSelectSoundPlaying;
+
 	//virutally create vector positions for the buttons
 	Vector3 geo_pos;
 };

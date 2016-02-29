@@ -56,6 +56,8 @@ CSoundManager::~CSoundManager()
 		soundEngineBGM->drop();
 	if (currentSound)
 		currentSound->drop();
+
+		
 }
 
 /********************************************************************************
@@ -75,9 +77,6 @@ void CSoundManager::playSound()
 		cout << "Error: could not play file" << endl;
 		//exit(0);
 	}
-
-	while (!currentSound)
-		_sleep(100);
 
 	position = currentSound->getPlayPosition();
 
@@ -127,8 +126,6 @@ void CSoundManager::playSound(string soundFile)
 	{
 		currentSound = soundEngine->play2D(filename.c_str(), false, false, true);
 	}
-
-	position = currentSound->getPlayPosition();
 }
 
 /********************************************************************************
@@ -211,6 +208,14 @@ void CSoundManager::resume()
 
 	if (position != -1)
 		currentSound->setPlayPosition(position);
+}
+
+/********************************************************************************
+Stop all currently playing sound
+********************************************************************************/
+void CSoundManager::Stop()
+{
+	soundEngine->stopAllSounds();
 }
 
 /********************************************************************************

@@ -86,6 +86,9 @@ protected:
 	//boolean for mouse in collision with start button
 	static bool m_bisColWithStartButton;
 	
+	//check if selectSound is currently acftive
+	bool isSelectSoundPlaying;
+
 	//virutally create vector positions for the buttons
 	Vector3 button_vec[5];
 	Vector3 quit_button_vec;

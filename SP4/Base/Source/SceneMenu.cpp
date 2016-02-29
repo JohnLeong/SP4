@@ -11,8 +11,10 @@
 #include <chrono>
 #include <thread>
 
-#define buttonXoffset 55.5f
-#define buttonYoffset 8.0f
+#define buttonXoffset 38.8f
+#define buttonYoffset 12.0f
+
+#define buttonSizeOffset 1.15f
 
 CSceneMenu::CSceneMenu(void)
 : isKeyBoard(false)
@@ -47,34 +49,33 @@ void CSceneMenu::Init()
 	for (int i = 0; i < 4; i++) //left side of button
 	{
 		//0 = play 1 = instructions 2 = options 3 = exit
-		geo_pos[i].Set(61.0f, 67.0f - (16.0f * i), 0.0f);
-		cout << geo_pos[i] << endl;
+		geo_pos[i].Set(69.0f, 61.0f - (15.0f * i), 0.0f);
 	}
 
 	//play button
-	meshList[GEO_PLAY] = MeshBuilder::Generate2DMesh("play button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_PLAY] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_PLAY]->textureID = LoadTGA("Image/MENU//play_button.tga");
 	//instructions button
-	meshList[GEO_INSTRUCTIONS] = MeshBuilder::Generate2DMesh("play button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_INSTRUCTIONS] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_INSTRUCTIONS]->textureID = LoadTGA("Image/MENU//instructions_button.tga");
 	//options button
-	meshList[GEO_OPTIONS] = MeshBuilder::Generate2DMesh("play button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_OPTIONS] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_OPTIONS]->textureID = LoadTGA("Image/MENU//options_button.tga");
 	//exit button
-	meshList[GEO_EXIT] = MeshBuilder::Generate2DMesh("play button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_EXIT] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_EXIT]->textureID = LoadTGA("Image/MENU//exit_button.tga");
 
 	//play button highlighted
-	meshList[GEO_PLAY_H] = MeshBuilder::Generate2DMesh("play button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_PLAY_H] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_PLAY_H]->textureID = LoadTGA("Image/MENU//h_play_button.tga");
 	//instructions button highlighted
-	meshList[GEO_INSTRUCTIONS_H] = MeshBuilder::Generate2DMesh("play button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_INSTRUCTIONS_H] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_INSTRUCTIONS_H]->textureID = LoadTGA("Image/MENU//h_instructions_button.tga");
 	//options button highlighted
-	meshList[GEO_OPTIONS_H] = MeshBuilder::Generate2DMesh("play button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_OPTIONS_H] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_OPTIONS_H]->textureID = LoadTGA("Image/MENU//h_options_button.tga");
 	//exit button highlighted
-	meshList[GEO_EXIT_H] = MeshBuilder::Generate2DMesh("play button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_EXIT_H] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_EXIT_H]->textureID = LoadTGA("Image/MENU//h_exit_button.tga");
 
 	//Backgrounds
@@ -107,10 +108,10 @@ void CSceneMenu::Update(double dt)
 	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
 	{
 
-		Application::setChoiceVal(Application::getChoiceVal() + 1);
+		Application::setChoiceVal(Application::getChoiceVal() - 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal() > 4)
-			Application::setChoiceVal(1);
+		if (Application::getChoiceVal() < 1)
+			Application::setChoiceVal(4);
 
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
@@ -124,10 +125,10 @@ void CSceneMenu::Update(double dt)
 	}
 	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
 	{
-		Application::setChoiceVal(Application::getChoiceVal() - 1);
+		Application::setChoiceVal(Application::getChoiceVal() + 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal()  < 1)
-			Application::setChoiceVal(4);
+		if (Application::getChoiceVal()  > 4)
+			Application::setChoiceVal(1);
 
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
@@ -137,7 +138,6 @@ void CSceneMenu::Update(double dt)
 		}
 
 		isKeyBoard = true;
-		//cout << "choice: " << getChoiceVal() << endl;
 	}
 
 	float fDelta = (float)dt;
@@ -177,17 +177,18 @@ void CSceneMenu::Render()
 	{
 		cout << "current mouse x: " << Application::getMouseWorldX() << endl;
 		cout << "current mouse y: " << Application::getMouseWorldY() << endl;
-		cout << "geo_pos.x: " << geo_pos[1].x << endl;
-		cout << "geo_pos.y: " << geo_pos[1].y << endl;
-		cout << "geo_pos.x R: " << geo_pos[1].x + 55.5f << endl;
-		cout << "geo_pos.y R: " << geo_pos[1].y + 8.0f << endl;
+		cout << "choice: " << Application::getChoiceVal() << endl;
+		//cout << "geo_pos.x: " << geo_pos[1].x << endl;
+		//cout << "geo_pos.y: " << geo_pos[1].y << endl;
+		//cout << "geo_pos.x R: " << geo_pos[1].x + 55.5f << endl;
+		//cout << "geo_pos.y R: " << geo_pos[1].y + 8.0f << endl;
 
 	}
 	
 	//Update image on mouse hover
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonXoffset, geo_pos[0].y + buttonYoffset)) // play button
 	{
-		Application::setChoiceVal(4);
+		Application::setChoiceVal(1);
 
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
@@ -200,7 +201,7 @@ void CSceneMenu::Render()
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonXoffset, geo_pos[1].y + buttonYoffset)) // instructions button
 	{
-		Application::setChoiceVal(3);
+		Application::setChoiceVal(2);
 
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
@@ -213,7 +214,7 @@ void CSceneMenu::Render()
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonXoffset, geo_pos[2].y + buttonYoffset)) // options button
 	{
-		Application::setChoiceVal(2);
+		Application::setChoiceVal(3);
 		
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
@@ -226,7 +227,7 @@ void CSceneMenu::Render()
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonXoffset, geo_pos[3].y + buttonYoffset)) // exit button
 	{
-		Application::setChoiceVal(1);
+		Application::setChoiceVal(4);
 
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
@@ -248,39 +249,39 @@ void CSceneMenu::Render()
 
 	switch (Application::getChoiceVal())
 	{
-	case 4: //play button highlighted
-		RenderMeshIn2D(meshList[GEO_PLAY_H], false, 1, 1, -50.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, -50.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, -50.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, -50.0f, -52.5f);
+	case 1: //play button highlighted
+		RenderMeshIn2D(meshList[GEO_PLAY_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f, -52.5f);
 
 		break;
-	case 3: //instructions button highlighted
-		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, -50.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS_H], false, 1, 1, -50.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, -50.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, -50.0f, -52.5f);
+	case 2: //instructions button highlighted
+		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f, -52.5f);
 
 		break;
-	case 2: //options button highlighted
-		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, -50.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, -50.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS_H], false, 1, 1, -50.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, -50.0f, -52.5f);
+	case 3: //options button highlighted
+		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f, -52.5f);
 
 		break;
-	case 1: //exit button highlighted
-		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, -50.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, -50.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, -50.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT_H], false, 1, 1, -50.0f, -52.5f);
+	case 4: //exit button highlighted
+		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f, -52.5f);
 
 		break;
 	default: //default, no option chosen
-		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, -50.0f, 30.0f);
-		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, -50.0f, 2.5f);
-		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, -50.0f, -25.0f);
-		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, -50.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f, -52.5f);
 		break;
 	}
 #if _DEBUG

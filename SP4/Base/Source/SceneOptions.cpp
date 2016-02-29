@@ -48,11 +48,11 @@ void CSceneOptions::Init()
 	meshList[GEO_QUAD]->textureID = LoadTGA("Image//GUI/blank_tile.tga");
 
 	//back button
-	meshList[GEO_BACK] = MeshBuilder::Generate2DMesh("back button", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_BACK] = MeshBuilder::Generate2DMeshCenter("back button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_BACK]->textureID = LoadTGA("Image/MENU//back_button.tga");
 
 	//back button highlighted
-	meshList[GEO_BACK_H] = MeshBuilder::Generate2DMesh("back button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 15.0f);
+	meshList[GEO_BACK_H] = MeshBuilder::Generate2DMeshCenter("back button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_BACK_H]->textureID = LoadTGA("Image/MENU//back_button.tga");
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
@@ -107,11 +107,7 @@ void CSceneOptions::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
 #endif
 
-	//render the buttons
-	//switch ()
-	//{
 
-	//}
 }
 
 /********************************************************************************

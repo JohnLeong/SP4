@@ -11,16 +11,20 @@
 #define buttonXoffset 42.3f
 #define buttonYoffset 12.0f
 
+#define buttonSizeOffset 1.15f
+
 bool CSceneLevelSelection::m_bBacktoMainMenu = false;
 bool CSceneLevelSelection::m_bisColWithStartButton = false;
 
 CSceneLevelSelection::CSceneLevelSelection(void)
 : m_window_width(800)
 , m_window_height(600)
+, isSelectSoundPlaying(false)
 {
 }
 
 CSceneLevelSelection::CSceneLevelSelection(const int m_window_width, const int m_window_height)
+: isSelectSoundPlaying(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -139,7 +143,7 @@ void CSceneLevelSelection::Update(double dt)
 		m_bisKeyBoard = true;
 	}
 	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
-	{	
+	{
 		Application::setChoiceVal(Application::getChoiceVal() + 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
 
@@ -147,44 +151,87 @@ void CSceneLevelSelection::Update(double dt)
 			Application::setChoiceVal(1);
 
 		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+
 		m_bisKeyBoard = true;
 	}
 
 	//on mouse hover level buttons
-	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[0].x, button_vec[0].y, button_vec[0].x + buttonXoffset, button_vec[0].y + buttonYoffset)
-		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[0].x, button_vec[0].y, button_vec[0].x + buttonXoffset, button_vec[0].y + buttonYoffset) )
 	{
-		//level 1 button
-		Application::setChoiceVal(1);
+		//reset the sound effect boolean on mouse up
+		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+			isSelectSoundPlaying = false;
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		{
+			//level 1 button
+			Application::setChoiceVal(1);
+
+			if (isSelectSoundPlaying == false)
+			{
+				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+				isSelectSoundPlaying = true;
+			}
+		}
 		m_bisKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[1].x, button_vec[1].y, button_vec[1].x + buttonXoffset, button_vec[1].y + buttonYoffset)
-		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[1].x, button_vec[1].y, button_vec[1].x + buttonXoffset, button_vec[1].y + buttonYoffset))
 	{
-		//level 2 button
-		Application::setChoiceVal(2);
+		//reset the sound effect boolean on mouse up
+		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+			isSelectSoundPlaying = false;
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		{
+			//level 2 button
+			Application::setChoiceVal(2);
+
+			if (isSelectSoundPlaying == false)
+			{
+				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+				isSelectSoundPlaying = true;
+			}
+		}
+
 		m_bisKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[2].x, button_vec[2].y, button_vec[2].x + buttonXoffset, button_vec[2].y + buttonYoffset)
-		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[2].x, button_vec[2].y, button_vec[2].x + buttonXoffset, button_vec[2].y + buttonYoffset))
 	{
-		//level 3 button
-		Application::setChoiceVal(3);
+		//reset the sound effect boolean on mouse up
+		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+			isSelectSoundPlaying = false;
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		{
+			//level 3 button
+			Application::setChoiceVal(3);
+
+			if (isSelectSoundPlaying == false)
+			{
+				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+				isSelectSoundPlaying = true;
+			}
+		}
+
 		m_bisKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[3].x, button_vec[3].y, button_vec[3].x + buttonXoffset, button_vec[3].y + buttonYoffset)
-		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), button_vec[3].x, button_vec[3].y, button_vec[3].x + buttonXoffset, button_vec[3].y + buttonYoffset))
 	{
-		//level 4 button
-		Application::setChoiceVal(4);
+		//reset the sound effect boolean on mouse up
+		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+			isSelectSoundPlaying = false;
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		{
+			//level 4 button
+			Application::setChoiceVal(4);
+
+			if (isSelectSoundPlaying == false)
+			{
+				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+				isSelectSoundPlaying = true;
+			}
+		}
 		m_bisKeyBoard = false;
 	}
 
@@ -259,11 +306,19 @@ void CSceneLevelSelection::Render()
 			SetISQuitToMain(true);
 		}
 
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
 	}
-	else
+	else 
 	{
 		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.0f, 1.0f, 100.0f, -70.0f);
 		SetISQuitToMain(false);
+
+		if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), start_button_vec.x, start_button_vec.y, start_button_vec.x + 16.6f, start_button_vec.y + 7.5f))
+			isSelectSoundPlaying = false;
 	}
 
 	
@@ -277,11 +332,19 @@ void CSceneLevelSelection::Render()
 			SetisColWithStartButton(true);
 		}
 
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+
 	}
-	else
+	else 
 	{
 		RenderMeshIn2D(meshList[GEO_START_BUTTON], false, 1.0f, 1.0f, -20.0f, -70.0f);
-		//SetISQuitToMain(false);
+
+		if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 16.0f, quit_button_vec.y + 7.5f))
+			isSelectSoundPlaying = false;
 	}
 
 
@@ -320,10 +383,11 @@ void CSceneLevelSelection::Render()
 	}
 
 
+
 	switch (Application::getChoiceVal())
 	{
 	case 1: //level 1 button highlighted
-		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.25f, 1.25f, -111.5f, 45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f, 45.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f, 15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f, -15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f, -45.0f);
@@ -333,7 +397,7 @@ void CSceneLevelSelection::Render()
 		break;
 	case 2: //level 2 button highlighted
 		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f, 45.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.25f, 1.25f, -111.5f, 15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f, 15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f, -15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f, -45.0f);
 
@@ -341,7 +405,7 @@ void CSceneLevelSelection::Render()
 	case 3: //level 3 button highlighted
 		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f, 45.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f, 15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.25f, 1.25f, -111.5f, -15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f, -15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f, -45.0f);
 
 		break;
@@ -349,7 +413,8 @@ void CSceneLevelSelection::Render()
 		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f, 45.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f, 15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f, -15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.25f, 1.25f, -111.5f, -45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f, -45.0f);
+		break;
 	default: //default, no option chosen
 		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f, 45.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f, 15.0f);

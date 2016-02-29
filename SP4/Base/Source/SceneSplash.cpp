@@ -19,6 +19,7 @@ CSceneSplash::CSceneSplash(const int m_window_width, const int m_window_height)
 
 CSceneSplash::~CSceneSplash(void)
 {
+	//Application::Sound.Stop();
 }
 
 void CSceneSplash::Init()
@@ -205,9 +206,9 @@ void CSceneSplash::Render()
 	RenderMeshIn2D(meshList[GEO_BEAM], false, m_fBeamScaleX, 1.f, 0.f, -25.f);
 	if (m_bDoShake)
 	{
-		RenderMeshIn2D(meshList[GEO_CHAR_1], false, 1.f, 1.f, -25.f + m_fShakeOffsetX * 0.1, m_fLogo1PosY + m_fShakeOffsetY * 0.11);
-		RenderMeshIn2D(meshList[GEO_CHAR_2], false, 1.f, 1.f, -5.f - m_fShakeOffsetX * 0.09, m_fLogo2PosY - m_fShakeOffsetY * 0.1);
-		RenderMeshIn2D(meshList[GEO_CHAR_3], false, 1.f, 1.f, 25.f + m_fShakeOffsetX * 0.11, m_fLogo3PosY - m_fShakeOffsetY * 0.09);
+		RenderMeshIn2D(meshList[GEO_CHAR_1], false, 1.f, 1.f, -25.f + m_fShakeOffsetX * 0.1f, m_fLogo1PosY + m_fShakeOffsetY * 0.11f);
+		RenderMeshIn2D(meshList[GEO_CHAR_2], false, 1.f, 1.f, -5.f - m_fShakeOffsetX * 0.09f, m_fLogo2PosY - m_fShakeOffsetY * 0.1f);
+		RenderMeshIn2D(meshList[GEO_CHAR_3], false, 1.f, 1.f, 25.f + m_fShakeOffsetX * 0.11f, m_fLogo3PosY - m_fShakeOffsetY * 0.09f);
 	}
 	else
 	{

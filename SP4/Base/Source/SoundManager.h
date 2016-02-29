@@ -43,6 +43,9 @@ public:
 	//Resume
 	void resume();
 
+	//Stop
+	void Stop();
+
 	//Set sound file to be played
 	void SetFileName(string soundFile);
 	//Get sound file to be played
@@ -61,7 +64,6 @@ public:
 
 	//Get current volume
 	int GetCurrentVolume();
-
 
 protected:
 	ISoundEngine* soundEngine;
