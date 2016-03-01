@@ -15,6 +15,7 @@
 #include "Achievements\Achievements.h"
 #include "Achievements\Properties.h"
 #include <sstream>
+#include "Player\Profile.h"
 
 class Application
 {
@@ -73,6 +74,7 @@ public:
 	static int m_window_width;
 	static int m_window_height;
 
+	static vector<CProfile*> m_cProfileList;
 	static vector<CAchievements*> m_cAchievementList;
 	static vector<CProperties*> m_cPropertyList;
 private:

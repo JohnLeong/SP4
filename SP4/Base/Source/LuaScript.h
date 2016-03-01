@@ -3,6 +3,7 @@
 #include "Entities\EnemyZombie.h"
 #include "Achievements\Achievements.h"
 #include <fstream>
+#include "Player\Profile.h"
 
 using std::fstream;
 using std::string;
@@ -17,7 +18,6 @@ class CLuaScript
 {
 private:
 	lua_State *L2 = lua_open();
-
 public:
 	CLuaScript(string path);
 	~CLuaScript();
@@ -31,6 +31,8 @@ public:
 
 	CAchievements* getAchievementVariables(string name);
 	CProperties* getAchievementPropertiesVariables(string name);
+
+	CProfile* getProfileVariables();
 
 	void saveAchievementValues();
 	void saveAchievementPropertiesValues();

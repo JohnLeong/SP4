@@ -92,7 +92,6 @@ public:
 	virtual void Exit();
 
 	void InitLevel();
-
 	// Render the main components of this scene
 	void RenderGUI(void);
 	void RenderWin(void);

@@ -244,8 +244,13 @@
     <ClCompile Include="Source\PhysicsObjectManager.cpp">
       <Filter>PhysicsObjects</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
     <ClCompile Include="Source\Entities\Entity_TextBox.cpp">
       <Filter>Entities\GameplayEntities</Filter>
+=======
+    <ClCompile Include="Source\Player\Profile.cpp">
+      <Filter>Player</Filter>
+>>>>>>> Stashed changes
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -423,11 +428,16 @@
     <ClInclude Include="Source\PhysicsObjectManager.h">
       <Filter>PhysicsObjects</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="Source\Entities\Entity_TextBox.h">
       <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
     <ClInclude Include="Source\States\GameState.h">
       <Filter>Game State Management\States\Header Files</Filter>
+=======
+    <ClInclude Include="Source\Player\Profile.h">
+      <Filter>Player</Filter>
+>>>>>>> Stashed changes
     </ClInclude>
   </ItemGroup>
 </Project>

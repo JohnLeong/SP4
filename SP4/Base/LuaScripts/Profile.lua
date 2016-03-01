@@ -1,0 +1,2 @@
+Name = ""
+HighestLevelUnlocked = 1

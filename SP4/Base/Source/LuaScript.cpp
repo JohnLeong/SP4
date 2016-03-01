@@ -15,7 +15,6 @@ CLuaScript::CLuaScript(string path)
 	}
 }
 
-
 CLuaScript::~CLuaScript()
 {
 	lua_close(L2);
@@ -79,6 +78,25 @@ float CLuaScript::getFloatVariable(string name)
 	float value = (float)lua_toboolean(L2, -1);
 	lua_remove(L2, -1);
 	return value;
+}
+
+CProfile* CLuaScript::getProfileVariables()
+{
+	CProfile* getProfile;
+
+	string name = "Name";
+	string highestLevelUnlocked = "HighestLevelUnlocked";
+
+	lua_getglobal(L2, name.c_str());
+	string getName = (string)lua_tostring(L2, -1);
+	lua_remove(L2, -1);
+
+	lua_getglobal(L2, highestLevelUnlocked.c_str());
+	int getHighestLevelUnlocked = (int)lua_tonumber(L2, -1);
+	lua_remove(L2, -1);
+
+	getProfile = new CProfile(getName, getHighestLevelUnlocked);
+	return getProfile;
 }
 
 CAchievements* CLuaScript::getAchievementVariables(string name)

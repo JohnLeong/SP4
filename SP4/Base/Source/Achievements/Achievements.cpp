@@ -1,7 +1,7 @@
 #include "Achievements.h"
 #include "Properties.h"
 
-string CAchievements::propertyName[CAchievements::NUM_Properties] = { "Name", "Title","TotalProperties", "Properties", "Completed", "ShowedOnce" };
+string CAchievements::propertyName[CAchievements::NUM_Properties] = { "Name", "Title", "TotalProperties", "Properties", "Completed", "ShowedOnce" };
 
 
 CAchievements::CAchievements(string theName, string theTitle, vector<string> theRelatedProps, bool mUnlocked, bool mAppearedOnce, bool mShowedOnce)
@@ -16,28 +16,30 @@ CAchievements::CAchievements(string theName, string theTitle, vector<string> the
 
 CAchievements::~CAchievements(void)
 {
-
 }
 
 void CAchievements::Update(vector<CProperties*> checkList, double dt)
 {
 	if (mUnlocked == false)
 	{
-		for (unsigned int i = 0; i < checkList.size(); i++)
+		for (int j = 0; j < mProps.size(); j++)
 		{
-			if (checkList[i]->GetName() == mProps[i])
+			for (unsigned int i = 0; i < checkList.size(); i++)
 			{
-				if (checkList[i]->GetClearActivation() == false)
+				if (checkList[i]->GetName() == mProps[j])
 				{
-					break;
-				}
-				else
-				{
-					mUnlocked = true;
-					CLuaScript* m_cLuaScript;
-					m_cLuaScript = new CLuaScript("Achievements");
-					m_cLuaScript->saveAchievementValues();
-					delete m_cLuaScript;
+					if (checkList[i]->GetClearActivation() == false)
+					{
+						break;
+					}
+					else
+					{
+						mUnlocked = true;
+						CLuaScript* m_cLuaScript;
+						m_cLuaScript = new CLuaScript("Achievements");
+						m_cLuaScript->saveAchievementValues();
+						delete m_cLuaScript;
+					}
 				}
 			}
 		}
