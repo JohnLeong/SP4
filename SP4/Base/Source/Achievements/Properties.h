@@ -16,6 +16,7 @@ public:
 	enum saveProperties
 	{
 		Name,
+		Title,
 		Value,
 		Active,
 		ActivationValue,
@@ -23,11 +24,12 @@ public:
 		NUM_Properties
 	};
 	
-	CProperties(string theName, int theInitialValue, string theActivation, int theActivationValue, bool clearActivation);
+	CProperties(string theName, string theTitle, int theInitialValue, string theActivation, int theActivationValue, bool clearActivation);
 	~CProperties(void);
 
 	void Update();								// Update
 	string GetName();
+	string GetTitle();
 	void SetValue(int theValue);
 	int GetValue();
 	bool GetClearActivation();
@@ -37,6 +39,7 @@ public:
 	static string propertyName[NUM_Properties];
 private:
 	string mName;
+	string mTitle;
 	int mActivationValue;
 	int mValue;
 	string mActive;

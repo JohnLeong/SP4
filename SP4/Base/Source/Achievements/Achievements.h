@@ -15,22 +15,26 @@ public:
 	enum saveProperties
 	{
 		Name,
+		Title,
 		TotalProperties,
 		Properties,
 		Completed,
+		ShowOnce,
 		NUM_Properties
 	};
 
-	CAchievements(string theName, vector<CProperties*> theRelatedProps, bool mUnlocked);
+	CAchievements(string theName, string theTitle, vector<string> theRelatedProps, bool mUnlocked, bool mAppearedOnce, bool mShowedOnce);
 	~CAchievements(void);
-	void Update();								// Update
-	vector<CProperties*> GetProps();
+	void Update(vector<CProperties*> checkList, double dt);								// Update
+	vector<string> GetProps();
 	void Save(fstream& file, int id);
 
 	static string propertyName[NUM_Properties];
-private:
-	string mName; // achievement name
-	vector<CProperties*> mProps;
-	bool mUnlocked;
 
+	string GetTitle();
+
+private:
+	string mName, mTitle;
+	vector<string> mProps;
+	bool mUnlocked, mAppearedOnce, mShowedOnce;
 };

@@ -105,6 +105,7 @@ private:
 	CAchievements* m_cAchievements;
 	CProperties* m_cProperties;
 	CLuaScript* m_cLuaScript;
+	CScenePlay* m_cScenePlay;
 };
 
 #endif

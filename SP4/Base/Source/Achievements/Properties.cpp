@@ -1,10 +1,11 @@
 #include "Properties.h"
 
-string CProperties::propertyName[CProperties::NUM_Properties] = { "Name", "Value", "Active", "ActivationValue", "Completed" };
+string CProperties::propertyName[CProperties::NUM_Properties] = { "Name", "Title", "Value", "Active", "ActivationValue", "Completed" };
 
-CProperties::CProperties(string theName, int theInitialValue, string theActivation, int theActivationValue, bool clearActivation)
+CProperties::CProperties(string theName, string theTitle, int theInitialValue, string theActivation, int theActivationValue, bool clearActivation)
 {
 	mName = theName;
+	mTitle = theTitle;
 	mValue = theInitialValue;
 	mActive = theActivation;
 	mActivationValue = theActivationValue;
@@ -53,6 +54,11 @@ string CProperties::GetName()
 	return mName;
 }
 
+string CProperties::GetTitle()
+{
+	return mTitle;
+}
+
 void CProperties::SetValue(int theValue)
 {
 	mValue = theValue;
@@ -90,6 +96,7 @@ void CProperties::ChangeValue(int changeNumber)
 void CProperties::Save(fstream& file, int id)
 {
 	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
+	file << propertyName[Title] << id << " = " << "\"" << mTitle << "\"" << "\n";
 	file << propertyName[Value] << id << " = " << mValue << "\n";
 	file << propertyName[Active] << id << " = " << "\"" << mActive << "\"" << "\n";
 	file << propertyName[ActivationValue] << id << " = " << mActivationValue << "\n";

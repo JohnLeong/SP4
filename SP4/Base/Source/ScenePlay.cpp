@@ -16,13 +16,13 @@ CScenePlay::CScenePlay(void)
 	: m_window_width(800)
 	, m_window_height(600)
 	, m_bExitPlay(false)
-	, m_iCurrentLevel(3)
+	, m_iCurrentLevel(1)
 {
 }
 
 CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 	:m_bExitPlay(false)
-	, m_iCurrentLevel(5)
+	, m_iCurrentLevel(1)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -140,6 +140,10 @@ void CScenePlay::Init()
 	meshList[GEO_KEYS_YELLOW] = MeshBuilder::GenerateSpriteAnimation2D("yellow key", 1, 11);
 	meshList[GEO_KEYS_YELLOW]->textureID = LoadTGA("Image//Entities//key_yellow.tga");
 
+	//achievement box
+	meshList[GEO_ACHIEVEMENT_BOX] = MeshBuilder::GenerateQuad("Achievement Box", Color(1, 1, 1), 1.f);
+	//meshList[GEO_ACHIEVEMENT_BOX]->textureID = LoadTGA("Image//grass_darkgreen.tga");
+
 	Math::InitRNG();
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
@@ -173,20 +177,7 @@ void CScenePlay::Init()
 	//Init level after player
 	InitLevel();
 
-	/*To be removed*/
-	//m_cLevel.GenerateRedKeyEntity(8, 8);
-	//m_cLevel.GenerateBlueKeyEntity(9, 8);
-	//m_cLevel.GenerateGreenKeyEntity(2, 4);
-	//m_cLevel.GenerateYellowKeyEntity(11, 8);
-	/*m_cLevel.GenerateCoinEntity(9, 10);
-	m_cLevel.GenerateCoinEntity(9, 11);
-	m_cLevel.GenerateCoinEntity(9, 12);
-	m_cLevel.GenerateCoinEntity(9, 13);
-	m_cLevel.GenerateFireEntity(9, 9, CEntity_Fire::STATE_01);*/
-	//m_cLevel.GenerateZombieEntity(2, 2, CEnemy::HOLDING_COIN);
-	//m_cLevel.GenerateZombieEntity(5, 6, CEnemy::HOLDING_KEY_GREEN);
-
-	/*To be removed*/
+	m_died = false;
 }
 
 void CScenePlay::InitLevel()
@@ -231,13 +222,14 @@ void CScenePlay::Update(double dt)
 	{
 		cout << "boolean: " << GetIsQuitToMain() << endl;
 	}
-	if (!m_cPlayer->IsAlive())
+	if (!m_cPlayer->IsAlive() && m_died == false)
 	{
 		for (int i = 0; i < Application::m_cPropertyList.size(); i++)
 		{
-			if (Application::m_cPropertyList[i]->GetName() == "Name1")
+			if (Application::m_cPropertyList[i]->GetTitle() == "Death")
 			{
 				Application::m_cPropertyList[i]->ChangeValue(1);
+				m_died = true;
 			}
 		}
 	}
@@ -283,8 +275,8 @@ void CScenePlay::Update(double dt)
 	m_fShakeAngle = static_cast<float>(rand() % 360);
 	m_fShakeOffsetX = sin(m_fShakeAngle) * 50;
 	m_fShakeOffsetY = cos(m_fShakeAngle) * 50;
-	camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f + m_fShakeOffsetX, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()) + m_fShakeOffsetY, 0.f));
-	//camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
+	//camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f + m_fShakeOffsetX, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()) + m_fShakeOffsetY, 0.f));
+	camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
 	if (m_cPlayer->GetHasReachedEndLevel() == true)
 	{
 		//End Level
@@ -372,6 +364,14 @@ void CScenePlay::RenderEntities()
 
 		modelStack.PopMatrix();
 	}
+}
+
+/********************************************************************************
+Render the achievements
+********************************************************************************/
+void CScenePlay::RenderAchievement(CAchievements* achievement)
+{
+	//RenderMesh(meshList[GEO_ACHIEVEMENT_BOX], false);
 }
 
 /********************************************************************************

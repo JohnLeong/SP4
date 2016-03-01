@@ -1,14 +1,16 @@
 #include "Achievements.h"
 #include "Properties.h"
 
-string CAchievements::propertyName[CAchievements::NUM_Properties] = { "Name", "TotalProperties", "Properties", "Completed" };
+string CAchievements::propertyName[CAchievements::NUM_Properties] = { "Name", "Title","TotalProperties", "Properties", "Completed", "ShowedOnce" };
 
 
-CAchievements::CAchievements(string theName, vector<CProperties*> theRelatedProps, bool mUnlocked)
+CAchievements::CAchievements(string theName, string theTitle, vector<string> theRelatedProps, bool mUnlocked, bool mAppearedOnce, bool mShowedOnce)
 {
 	mName = theName;
+	mTitle = theTitle;
 	mProps = theRelatedProps;
 	this->mUnlocked = mUnlocked;
+	this->mShowedOnce = mShowedOnce;
 }
 
 
@@ -17,20 +19,46 @@ CAchievements::~CAchievements(void)
 
 }
 
-void CAchievements::Update()
+void CAchievements::Update(vector<CProperties*> checkList, double dt)
 {
 	if (mUnlocked == false)
 	{
-		for (unsigned int i = 0; i < mProps.size(); i++)
+		for (unsigned int i = 0; i < checkList.size(); i++)
 		{
-			if (mProps[i]->GetClearActivation() == false)
+			if (checkList[i]->GetName() == mProps[i])
 			{
-				break;
+				if (checkList[i]->GetClearActivation() == false)
+				{
+					break;
+				}
+				else
+				{
+					mUnlocked = true;
+					CLuaScript* m_cLuaScript;
+					m_cLuaScript = new CLuaScript("Achievements");
+					m_cLuaScript->saveAchievementValues();
+					delete m_cLuaScript;
+				}
 			}
-			else
+		}
+	}
+	if (mUnlocked == true && mShowedOnce == false)
+	{
+		if (mAppearedOnce == false)
+		{
+			/* Show Box*/
+			if (dt > 10) //When the box appears completely finished
 			{
-				cout << "YOU DIED" << endl;
-				mUnlocked = true;	
+				mAppearedOnce == true;
+				dt = 0;
+			}
+		}
+		else
+		{
+			/* Hide Box*/
+			if (dt > 10) //When the box hides finished
+			{
+				mShowedOnce == true;
 				CLuaScript* m_cLuaScript;
 				m_cLuaScript = new CLuaScript("Achievements");
 				m_cLuaScript->saveAchievementValues();
@@ -40,7 +68,7 @@ void CAchievements::Update()
 	}
 }
 
-vector<CProperties*> CAchievements::GetProps()
+vector<string> CAchievements::GetProps()
 {
 	return mProps;
 }
@@ -48,10 +76,13 @@ vector<CProperties*> CAchievements::GetProps()
 void CAchievements::Save(fstream& file, int id)
 {
 	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
+	file << propertyName[Title] << id << " = " << "\"" << mTitle << "\"" << "\n";
 	file << propertyName[TotalProperties] << id << " = " << mProps.size() << "\n";
 	for (int i = 0; i < mProps.size(); i++)
 	{
-		file << propertyName[Properties] << id << "_" << i + 1 << " = " << "\"" << mProps[i]->GetName()  << "\"" << "\n";
+		file << propertyName[Properties] << id << "_" << i + 1 << " = " << "\"" << mProps[i] << "\"" << "\n";
 	}
 	file << propertyName[Completed] << id << " = " << mUnlocked << "\n";
+	file << propertyName[Completed] << id << " = " << mUnlocked << "\n";
+	file << propertyName[ShowOnce] << id << " = " << mShowedOnce << "\n";
 }

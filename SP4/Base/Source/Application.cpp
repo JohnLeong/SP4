@@ -23,8 +23,9 @@ int Application::m_iPrevScoreBlue = 0, Application::m_iPrevScoreRed = 0;
 bool Application::m_bChangeRes = false, Application::m_bFullscreen = false;
 int Application::m_window_width = 1280; int Application::m_window_height = 720;
 int Application::choice = 0; float Application::mouseWorldX = 0; float Application::mouseWorldY = 0;
-CSoundManager Application::Sound; bool Application::AppisRunning = true;
-CSoundManager Application::Sound;
+CSoundManager Application::Sound; 
+bool Application::AppisRunning = true;
+//CSoundManager Application::Sound;
 vector<CAchievements*>  Application::m_cAchievementList;
 vector<CProperties*>  Application::m_cPropertyList;
 bool Application::m_bPauseDT = false;
@@ -285,7 +286,7 @@ void Application::Init()
 		string changedInt = "";
 		converter << i;
 		changedInt = converter.str();
-		CAchievements* testTest = m_cLuaScript->getAchievementVariables(changedInt, m_cPropertyList);
+		CAchievements* testTest = m_cLuaScript->getAchievementVariables(changedInt);
 		m_cAchievementList.push_back(testTest);
 	}
 	delete m_cLuaScript;
@@ -329,7 +330,6 @@ void Application::InitWindow(bool fullscreen)
 	//Sets the key callback
 	//glfwSetKeyCallback(m_window, key_callback);
 	glfwSetWindowSizeCallback(m_window, resize_callback);
-
 	glewExperimental = true; // Needed for core profile
 	//Initialize GLEW
 	GLenum err = glewInit();
@@ -397,7 +397,7 @@ void Application::Run()
 			}
 			for (int i = 0; i < Application::m_cAchievementList.size(); i++)
 			{
-				Application::m_cAchievementList[i]->Update();
+				Application::m_cAchievementList[i]->Update(m_cPropertyList, m_dElapsedTime);
 			}
 
 			m_dAccumulatedTime_ThreadOne = 0.0;

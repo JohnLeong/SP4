@@ -4,7 +4,7 @@ tileMapHeight = 10
 playerPosX = 5
 playerPosY = 1
 
-maxNumOfZombies = 1
+maxNumOfZombies = 0
 maxNumOfRetardZombies = 0
 maxNumOfBlocks = 2
 maxNumOfCoins = 1
@@ -14,14 +14,6 @@ maxNumOfRedKeys = 0
 maxNumOfBlueKeys = 0
 maxNumOfGreenKeys = 0
 maxNumOfYellowKeys = 0
-
-zombie1PosX = 4
-zombie1PosY = 1
-zombie1Hold = 2
-
-zombie2PosX = 5
-zombie2PosY = 6
-zombie2Hold = 1
 
 block1PosX = 5
 block1PosY = 4

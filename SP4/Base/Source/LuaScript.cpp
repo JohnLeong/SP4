@@ -81,19 +81,27 @@ float CLuaScript::getFloatVariable(string name)
 	return value;
 }
 
-CAchievements* CLuaScript::getAchievementVariables(string name, vector<CProperties*> checkList)
+CAchievements* CLuaScript::getAchievementVariables(string name)
 {
 	CAchievements* newAchievement;
-	vector<CProperties*> propertyList;
+	vector<string> propertyList;
 	string addName = "Name";
+	string addTitle = "Title";
 	string addTotalProperties = "TotalProperties";
 	string addProperties = "Properties";
 	string addExtraProp = "_";
 	string addBool = "Bool";
+	string addShowedOnce = "ShowOnce";
 
 	name = addName + name;
 	lua_getglobal(L2, name.c_str());
 	string getName = (string)lua_tostring(L2, -1);
+	lua_remove(L2, -1);
+	name.erase(name.begin(), name.end() - 1);
+
+	name = addTitle + name;
+	lua_getglobal(L2, name.c_str());
+	string getTitle = (string)lua_tostring(L2, -1);
 	lua_remove(L2, -1);
 	name.erase(name.begin(), name.end() - 1);
 
@@ -102,6 +110,7 @@ CAchievements* CLuaScript::getAchievementVariables(string name, vector<CProperti
 	int totalAchievementProperties = (int)lua_tonumber(L2, -1);
 	lua_remove(L2, -1);
 	name.erase(name.begin(), name.end() - 11);
+
 	for (int i = 1; i < totalAchievementProperties + 1; i++)
 	{	
 		name = name + addExtraProp;
@@ -111,22 +120,23 @@ CAchievements* CLuaScript::getAchievementVariables(string name, vector<CProperti
 		lua_getglobal(L2, name.c_str());
 		string getPropertyName = (string)lua_tostring(L2, -1);
 		lua_remove(L2, -1);
-		for (int i = 0; i < checkList.size(); i++)
-		{
-			if (checkList[i]->GetName() == getPropertyName)
-			{
-				propertyList.push_back(checkList[i]);
-			}
-		}
+		propertyList.push_back(getPropertyName);
 		name.erase(name.begin() + 11 ,name.end());
 	}
+
 	name.erase(name.begin(), name.end() - 1);
 	name = addBool + name;
 	lua_getglobal(L2, name.c_str());
-	bool getBool = (bool)lua_toboolean(L2, -1);
+	bool getUnlocked = (bool)lua_toboolean(L2, -1);
 	lua_remove(L2, -1);
 
-	newAchievement = new CAchievements(getName, propertyList, getBool);
+	name.erase(name.begin(), name.end() - 1);
+	name = addShowedOnce + name;
+	lua_getglobal(L2, name.c_str());
+	bool getShowedOnce = (bool)lua_toboolean(L2, -1);
+	lua_remove(L2, -1);
+
+	newAchievement = new CAchievements(getName, getTitle, propertyList, getUnlocked, false,getShowedOnce);
 	return newAchievement;
 }
 
@@ -134,6 +144,7 @@ CProperties* CLuaScript::getAchievementPropertiesVariables(string name)
 {
 	CProperties* newProperty;
 	string addName = "Name";
+	string addTitle = "Title";
 	string addValue = "Value";
 	string addActive = "Active";
 	string addActValue = "ActValue";
@@ -142,6 +153,12 @@ CProperties* CLuaScript::getAchievementPropertiesVariables(string name)
 	name = addName + name;
 	lua_getglobal(L2, name.c_str());
 	string getName = (string)lua_tostring(L2, -1);
+	lua_remove(L2, -1);
+	name.erase(name.begin(), name.end() - 1);
+
+	name = addTitle + name;
+	lua_getglobal(L2, name.c_str());
+	string getTitle = (string)lua_tostring(L2, -1);
 	lua_remove(L2, -1);
 	name.erase(name.begin(), name.end() - 1);
 
@@ -168,7 +185,7 @@ CProperties* CLuaScript::getAchievementPropertiesVariables(string name)
 	bool getBool = (bool)lua_toboolean(L2, -1);
 	lua_remove(L2, -1);
 	
-	newProperty = new CProperties(getName, getValue, getActive, getActValue, getBool);
+	newProperty = new CProperties(getName, getTitle,getValue, getActive, getActValue, getBool);
 	return newProperty;
 }
 

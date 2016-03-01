@@ -29,7 +29,7 @@ public:
 
 	CEnemyZombie* getNsetZombieVariables(string name);
 
-	CAchievements* getAchievementVariables(string name, vector<CProperties*>  checkList);
+	CAchievements* getAchievementVariables(string name);
 	CProperties* getAchievementPropertiesVariables(string name);
 
 	void saveAchievementValues();

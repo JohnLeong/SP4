@@ -55,6 +55,8 @@ class CScenePlay : public CSceneManager
 		GEO_SCROLL,
 		GEO_QUIT_BUTTON,
 
+		GEO_ACHIEVEMENT_BOX,
+
 		NUM_GEOMETRY,
 	};
 
@@ -91,6 +93,7 @@ public:
 
 	bool m_bExitPlay;
 
+	void RenderAchievement(CAchievements* achievement);
 
 private:
 	//unsigned m_vertexArrayID;
@@ -125,6 +128,8 @@ private:
 	float m_fShakeAngle;
 	float m_fShakeOffsetX;
 	float m_fShakeOffsetY;
+
+	bool m_died;
 };
 
 #endif
