@@ -407,7 +407,7 @@ void CSceneManager::RenderTextOnScreen(Mesh* mesh, std::string text, Color color
 			modelStack.PopMatrix();
 		viewStack.PopMatrix();
 	projectionStack.PopMatrix();
-	glEnable(GL_DEPTH_TEST);
+
 }
 
 /********************************************************************************

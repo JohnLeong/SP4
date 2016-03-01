@@ -14,12 +14,14 @@
 CSceneOptions::CSceneOptions(void)
 : isSelectSoundPlaying(false)
 , m_bisKeyBoard(false)
+, m_volControl(0)
 {
 }
 
 CSceneOptions::CSceneOptions(const int m_window_width, const int m_window_height)
 : isSelectSoundPlaying(false)
 , m_bisKeyBoard(false)
+, m_volControl(0)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -60,13 +62,37 @@ void CSceneOptions::Init()
 
 	//back button highlighted
 	meshList[GEO_BACK_H] = MeshBuilder::Generate2DMeshCenter("back button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
-	meshList[GEO_BACK_H]->textureID = LoadTGA("Image/MENU//back_button.tga");
+	meshList[GEO_BACK_H]->textureID = LoadTGA("Image/MENU//h_back_button.tga");
+
+	//background base
+	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.5f, 0.85f);
+	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
+
+	//background image
+	meshList[GEO_BACKGROUND_IMAGE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.0f, 0.85f);
+	meshList[GEO_BACKGROUND_IMAGE]->textureID = LoadTGA("Image//Background/background_image_options.tga");
+
+	//mute image
+	meshList[GEO_MUTE_IMAGE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.3f, 0.3f, 0.3f);
+	meshList[GEO_MUTE_IMAGE]->textureID = LoadTGA("Image//MENU/tiki_mute.tga");
+
+	//unmute image
+	meshList[GEO_VOL_HIGH] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.3f, 0.3f, 0.3f);
+	meshList[GEO_VOL_HIGH]->textureID = LoadTGA("Image//MENU/tiki_vol_high.tga");
+
+	meshList[GEO_VOL_MID] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.3f, 0.3f, 0.3f);
+	meshList[GEO_VOL_MID]->textureID = LoadTGA("Image//MENU/tiki_vol_mid.tga");
+
+	meshList[GEO_VOL_LOW] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.3f, 0.3f, 0.3f);
+	meshList[GEO_VOL_LOW]->textureID = LoadTGA("Image//MENU/tiki_vol_low.tga");
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 	//perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
+
+	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	bLightEnabled = true;
 }
@@ -75,10 +101,81 @@ void CSceneOptions::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
+	//for debugging
+	if (Application::IsKeyPressed('1'))
+	{
+		//cout << "boolean: " << GetIsQuitToMain() << endl;
+		//cout << "current mouse x: " << Application::getMouseWorldX() << endl;
+		//cout << "current mouse y: " << Application::getMouseWorldY() << endl;
+		//cout << "current mouse x: " << Application::mouse_current_x << endl;
+		//cout << "current mouse y: " << Application::mouse_current_y << endl;
+		cout << "vol: " << Application::Sound.GetCurrentVolume() << endl;
+	}
+
+	//adjust the volume control
+	if (CSceneManager::IsKeyDownOnce('a') && Application::Sound.GetCurrentVolume() > 0)
+	{
+		Application::Sound.decreaseVolume();
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+	}
+	else if (CSceneManager::IsKeyDownOnce('d') && Application::Sound.GetCurrentVolume() < 100 )
+	{
+		Application::Sound.increaseVolume();
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+	}
+
+	if (Application::Sound.GetCurrentVolume() > 0 && Application::Sound.GetCurrentVolume()  <= 30)
+	{
+		m_ivolControl = VOL_LOW;
+		
+	}
+	else if (Application::Sound.GetCurrentVolume() > 30 && Application::Sound.GetCurrentVolume() <= 60)
+	{
+		m_ivolControl = VOL_MID;
+	}
+	else if (Application::Sound.GetCurrentVolume() > 61 && Application::Sound.GetCurrentVolume() <= 100)
+	{
+		m_ivolControl = VOL_HIGH;
+	}
+	else
+	{
+		Application::Sound.pause();
+		m_ivolControl = VOL_MUTE;
+	}
+
+	//button control
+	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
+	{
+
+		Application::setChoiceVal(Application::getChoiceVal() - 1);
+		//1 = play, 2 = instructions, 3 = options, 4 = exit
+		if (Application::getChoiceVal() < 0)
+			Application::setChoiceVal(1);
+
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+
+
+		m_bisKeyBoard = true;
+	}
+	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
+	{
+		Application::setChoiceVal(Application::getChoiceVal() + 1);
+		//1 = play, 2 = instructions, 3 = options, 4 = exit
+		if (Application::getChoiceVal() > 1)
+			Application::setChoiceVal(0);
+
+
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+
+
+		m_bisKeyBoard = true;
+	}
+
 	//Update image on mouse hover
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)) // back button
 	{
 		Application::setChoiceVal(1);
+		m_bisKeyBoard = false;
 
 		if (isSelectSoundPlaying == false)
 		{
@@ -87,7 +184,8 @@ void CSceneOptions::Update(double dt)
 		}
 
 	}
-	else
+	else if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)
+		&& !m_bisKeyBoard)
 	{
 		Application::setChoiceVal(0);
 
@@ -119,6 +217,9 @@ void CSceneOptions::Render()
 {
 	CSceneManager::Render();
 
+
+	glDisable(GL_DEPTH_TEST);
+
 #if _DEBUG
 	RenderTextOnScreen(meshList[GEO_TEXT], "SceneOptions", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 
@@ -128,10 +229,39 @@ void CSceneOptions::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
 #endif
 
+
+	//Render the background
+	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
+
+	//Render the tiki image
+	RenderMesh(meshList[GEO_BACKGROUND_IMAGE], false);
+
+	//Render the volume button according to the current volume set
+	switch (m_ivolControl)
+	{
+	case VOL_HIGH:
+		//render the high vol button
+		RenderMesh(meshList[GEO_VOL_HIGH], false);
+		break;
+	case VOL_MID:
+		//render the mid vol button
+		RenderMesh(meshList[GEO_VOL_MID], false);
+		break;
+	case VOL_LOW:
+		//render the low vol button
+		RenderMesh(meshList[GEO_VOL_LOW], false);
+		break;
+	case VOL_MUTE:
+		//render the mute button
+		RenderMesh(meshList[GEO_MUTE_IMAGE], false);
+		break;
+	}
+
+	//render the back button
 	switch (Application::getChoiceVal())
 	{
 	case 1:
-		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1, 1, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1.15f, 1.15f, 0.0f, -52.5f);
 		break;
 
 	default:

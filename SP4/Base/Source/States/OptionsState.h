@@ -28,6 +28,9 @@ public:
 protected:
 	COptionsState() { }
 
+	//check if confirmsound is currently active
+	bool isConfirmsoundPlaying;
+
 private:
 	static COptionsState theOptionsState;
 

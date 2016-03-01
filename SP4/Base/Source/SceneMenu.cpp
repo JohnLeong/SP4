@@ -19,6 +19,7 @@
 CSceneMenu::CSceneMenu(void)
 : isKeyBoard(false)
 , isSelectSoundPlaying(false)
+, isConfirmsoundPlaying(false)
 , m_bAnimOffsetDir(true)
 , m_bChangeState(false)
 {
@@ -34,6 +35,7 @@ void CSceneMenu::Init()
 
 	//Play the main menu background sound
 	Application::Sound.playBackgroundSound("../irrKlang/media/mainmenu_BGM.mp3");
+	Application::Sound.setVolume(50);
 
 	//init the choice
 	Application::setChoiceVal(4);
@@ -180,7 +182,8 @@ void CSceneMenu::Update(double dt)
 	float fDelta = (float)dt;
 
 	//Update image on mouse hover
-	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonXoffset, geo_pos[0].y + buttonYoffset)) // play button
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, geo_pos[0].x + buttonXoffset, geo_pos[0].y + buttonYoffset)
+		|| Application::IsKeyPressed(VK_RETURN)) // play button
 	{
 		Application::setChoiceVal(1);
 
@@ -190,15 +193,22 @@ void CSceneMenu::Update(double dt)
 			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
-		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
 		{
 			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_LEVEL_SELECT;
+			if (isConfirmsoundPlaying == false)
+			{
+				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				isConfirmsoundPlaying = true;
+			}
+			
 		}
 
 		isKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonXoffset, geo_pos[1].y + buttonYoffset)) // instructions button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, geo_pos[1].x + buttonXoffset, geo_pos[1].y + buttonYoffset)
+		|| Application::IsKeyPressed(VK_RETURN)) // instructions button
 	{
 		Application::setChoiceVal(2);
 
@@ -208,14 +218,21 @@ void CSceneMenu::Update(double dt)
 			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
-		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
 		{
 			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_INSTRUCTIONS;
+
+			if (isConfirmsoundPlaying == false)
+			{
+				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				isConfirmsoundPlaying = true;
+			}
 		}
 		isKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonXoffset, geo_pos[2].y + buttonYoffset)) // options button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, geo_pos[2].x + buttonXoffset, geo_pos[2].y + buttonYoffset)
+		|| Application::IsKeyPressed(VK_RETURN)) // options button
 	{
 		Application::setChoiceVal(3);
 		
@@ -225,14 +242,21 @@ void CSceneMenu::Update(double dt)
 			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
-		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
 		{
 			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_OPTIONS;
+
+			if (isConfirmsoundPlaying == false)
+			{
+				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				isConfirmsoundPlaying = true;
+			}
 		}
 		isKeyBoard = false;
 	}
-	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonXoffset, geo_pos[3].y + buttonYoffset)) // exit button
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[3].x, geo_pos[3].y, geo_pos[3].x + buttonXoffset, geo_pos[3].y + buttonYoffset) 
+		|| Application::IsKeyPressed(VK_RETURN)) // exit button
 	{
 		Application::setChoiceVal(4);
 
@@ -242,10 +266,16 @@ void CSceneMenu::Update(double dt)
 			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
-		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
 		{
 			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_EXIT;
+
+			if (isConfirmsoundPlaying == false)
+			{
+				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				isConfirmsoundPlaying = true;
+			}
 		}
 		isKeyBoard = false;
 	}

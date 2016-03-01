@@ -94,30 +94,21 @@ void CSceneInstruction::Update(double dt)
 		if (Application::getChoiceVal() < 0)
 			Application::setChoiceVal(1);
 
-		cout << "choice: " << Application::getChoiceVal() << endl;
-		//play select sound if false
-		if (isSelectSoundPlaying == false)
-		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-			isSelectSoundPlaying = true;
-		}
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+
 
 		m_bisKeyBoard = true;
-		//cout << "choice: " << getChoiceVal() << endl;
 	}
 	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
 	{
 		Application::setChoiceVal(Application::getChoiceVal() + 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal()  > 1)
+		if (Application::getChoiceVal() > 1)
 			Application::setChoiceVal(0);
 
-		//play select sound if false
-		if (isSelectSoundPlaying == false)
-		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-			isSelectSoundPlaying = true;
-		}
+
+		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+
 
 		m_bisKeyBoard = true;
 	}
@@ -126,6 +117,7 @@ void CSceneInstruction::Update(double dt)
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)) // back button
 	{
 		Application::setChoiceVal(1);
+		m_bisKeyBoard = false;
 
 		if (isSelectSoundPlaying == false)
 		{
@@ -134,7 +126,8 @@ void CSceneInstruction::Update(double dt)
 		}
 
 	}
-	else
+	else if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)
+		&& !m_bisKeyBoard)
 	{
 		Application::setChoiceVal(0);
 

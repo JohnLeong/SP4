@@ -132,17 +132,6 @@ void CSceneLevelSelection::Update(double dt)
 
 	UpdateAnimations(dt);
 
-	//for debugging
-	if (Application::IsKeyPressed('1'))
-	{
-		//cout << "boolean: " << GetIsQuitToMain() << endl;
-		cout << "current mouse x: " << Application::getMouseWorldX() << endl;
-		cout << "current mouse y: " << Application::getMouseWorldY() << endl;
-		//cout << "current mouse x: " << Application::mouse_current_x << endl;
-		//cout << "current mouse y: " << Application::mouse_current_y << endl;
-		//cout << "choice: " << Application::getChoiceVal() << endl;
-	}
-
 	//keyboard controls
 	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
 	{

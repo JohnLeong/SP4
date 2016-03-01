@@ -144,9 +144,6 @@ void CScenePlay::Init()
 	meshList[GEO_NEXT_BUTTON] = MeshBuilder::Generate2DMeshCenter("next button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
 	meshList[GEO_NEXT_BUTTON]->textureID = LoadTGA("Image/GUI//button_next.tga");
 
-	//back cover
-	meshList[GEO_BACKCOVER] = MeshBuilder::Generate2DMesh("back cover", Color(0.9f, 0.9f, 0.9f), 0.0f, 0.0f, 100.0f, 180.0f);
-
 	//coin
 	meshList[GEO_COIN] = MeshBuilder::GenerateSpriteAnimation2D("coin", 1, 8);
 	meshList[GEO_COIN]->textureID = LoadTGA("Image//Entities//coin.tga");
@@ -517,8 +514,7 @@ Render the inventory
 void CScenePlay::RenderInventory()
 {
 	//Render the scroll background and back cover
-	RenderMeshIn2D(meshList[GEO_BACKCOVER], false, 1, 1, 60, -90);
-	RenderMeshIn2D(meshList[GEO_SCROLL], false, 1, 1, 60, -90);
+	RenderMeshIn2D(meshList[GEO_SCROLL], false, 1, 1, 65, -90);
 
 	//Render the number of keys obtained
 	RenderMeshIn2D(meshList[GEO_KEYS_BLUE], false, 25, 25, 80, -30);

@@ -22,7 +22,6 @@ class CScenePlay : public CSceneManager
 		GEO_GRASS_DARKGREEN,
 		GEO_GRASS_LIGHTGREEN,
 		GEO_TEXT,
-		GEO_BACKCOVER,
 
 		//Tile overlay
 		GEO_OVERLAY_RED,

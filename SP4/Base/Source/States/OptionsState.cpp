@@ -25,7 +25,7 @@ void COptionsState::Init(const int width, const int height)
 #if _DEBUG
 	cout << "COptionsState::Init" << endl;
 #endif
-
+	isConfirmsoundPlaying = false;
 	scene = new CSceneOptions(width, height);
 	scene->Init();
 }
@@ -109,6 +109,19 @@ void COptionsState::Update(CGameStateManager* theGSM)
 void COptionsState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 {
 	scene->Update(m_dElapsedTime);
+
+	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
+	{
+		if (isConfirmsoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+			isConfirmsoundPlaying = true;
+		}
+
+		theGSM->ChangeState(CMenuState::Instance());
+	}
+
 }
 
 void COptionsState::Draw(CGameStateManager* theGSM) 

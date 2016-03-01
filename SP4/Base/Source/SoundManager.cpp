@@ -195,8 +195,9 @@ Pause all currently playing sound
 ********************************************************************************/
 void CSoundManager::pause()
 {
-	position = currentSound->getPlayPosition();
+	//position = currentSound->getPlayPosition();
 	soundEngine->setAllSoundsPaused();
+	soundEngineBGM->setAllSoundsPaused();
 }
 
 /********************************************************************************
@@ -205,9 +206,7 @@ Resume all currently playing sound
 void CSoundManager::resume()
 {
 	currentSound = soundEngine->play2D(filename.c_str(), false, false, true);
-
-	if (position != -1)
-		currentSound->setPlayPosition(position);
+	currentBGM = soundEngineBGM->play2D(filename.c_str(), false, false, true);
 }
 
 /********************************************************************************
@@ -216,6 +215,7 @@ Stop all currently playing sound
 void CSoundManager::Stop()
 {
 	soundEngine->stopAllSounds();
+	soundEngineBGM->stopAllSounds();
 }
 
 /********************************************************************************
@@ -259,7 +259,17 @@ void CSoundManager::increaseVolume()
 	if (volume > 100)
 		volume = 100;
 
-	currentSound->setVolume(volume / 100.0f);
+	//currentSound->setVolume(volume / 100.0f);
+	if (currentSound)
+	{
+		currentSound->setVolume(volume / 100.0f);
+		return;
+	}
+	else if (currentBGM)
+	{
+		currentBGM->setVolume(volume / 100.0f);
+		return;
+	}
 }
 
 /********************************************************************************

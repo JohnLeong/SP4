@@ -71,8 +71,11 @@ protected:
 	//check if the keyboard is currently active
 	bool isKeyBoard;
 
-	//check if selectSound is currently acftive
+	//check if selectSound is currently active
 	bool isSelectSoundPlaying;
+	//check if confirmsound is currently active
+	bool isConfirmsoundPlaying;
+
 	//virutally create vector positions for the buttons
 	Vector3 geo_pos[4];
 
