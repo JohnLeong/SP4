@@ -21,6 +21,7 @@
     <ClCompile Include="Source\Entities\Entity_Key_Green.cpp" />
     <ClCompile Include="Source\Entities\Entity_Key_Red.cpp" />
     <ClCompile Include="Source\Entities\Entity_Key_Yellow.cpp" />
+    <ClCompile Include="Source\Entities\Entity_TextBox.cpp" />
     <ClCompile Include="Source\PhysicsObject.cpp" />
     <ClCompile Include="Source\PhysicsObjectManager.cpp" />
     <ClCompile Include="Source\SceneInstruction.cpp" />
@@ -80,6 +81,7 @@
     <ClInclude Include="Source\Entities\Entity_Key_Green.h" />
     <ClInclude Include="Source\Entities\Entity_Key_Red.h" />
     <ClInclude Include="Source\Entities\Entity_Key_Yellow.h" />
+    <ClInclude Include="Source\Entities\Entity_TextBox.h" />
     <ClInclude Include="Source\PhysicsObject.h" />
     <ClInclude Include="Source\PhysicsObjectManager.h" />
     <ClInclude Include="Source\SceneInstruction.h" />
@@ -96,7 +98,6 @@
     <ClInclude Include="Source\Entities\EntityVPos.h" />
     <ClInclude Include="Source\Entities\Entity_Block_Movable.h" />
     <ClInclude Include="Source\Entities\Entity_Hazard_Moving.h" />
-    <ClInclude Include="Source\GameState.h" />
     <ClInclude Include="Source\Graphics\SpriteAnimation.h" />
     <ClInclude Include="Source\Level.h" />
     <ClInclude Include="Source\Light.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="Source\LoadTGA.h" />
     <ClInclude Include="Source\LuaScript.h" />
     <ClInclude Include="Source\Node.h" />
+    <ClInclude Include="Source\States\GameState.h" />
     <ClInclude Include="Source\Tiledata.h" />
     <ClInclude Include="Source\Tileinfo.h" />
     <ClInclude Include="Source\Tilemap.h" />

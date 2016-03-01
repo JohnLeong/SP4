@@ -18,6 +18,7 @@ class CPlayState : public CGameState
 public:
 	void Init();
 	void Init(const int width, const int height);
+	virtual void InitHoldData(int width,int height, int i, bool b);
 	void Cleanup();
 
 	void Pause();

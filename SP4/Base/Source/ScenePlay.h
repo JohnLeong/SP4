@@ -26,6 +26,12 @@ class CScenePlay : public CSceneManager
 
 		//Tile overlay
 		GEO_OVERLAY_RED,
+		GEO_QUESTION_MARK,
+
+		GEO_TEXTBOX,
+
+		GEO_STAR,
+		GEO_STAROUTLINE,
 
 		GEO_COIN,
 		GEO_KEYS_RED,
@@ -54,6 +60,8 @@ class CScenePlay : public CSceneManager
 		GEO_PLAYER,
 		GEO_SCROLL,
 		GEO_QUIT_BUTTON,
+		GEO_RESTART_BUTTON,
+		GEO_NEXT_BUTTON,
 
 		GEO_ACHIEVEMENT_BOX,
 
@@ -63,6 +71,7 @@ class CScenePlay : public CSceneManager
 public:
 	CScenePlay(void);
 	CScenePlay(const int m_window_width, const int m_window_height);
+	CScenePlay(const int m_window_width, const int m_window_height, int iLevel, bool bPanic);
 	~CScenePlay(void);
 
 	virtual void Init();
@@ -85,10 +94,13 @@ public:
 	void InitLevel();
 
 	// Render the main components of this scene
-	void RenderGUI();
-	void RenderPlayer();
-	void RenderEntities();
-	void RenderInventory();
+	void RenderGUI(void);
+	void RenderWin(void);
+	void RenderLose(void);
+	void RenderPlayer(void);
+	void RenderEntities(void);
+	void RenderTextBox(void);
+	void RenderInventory(void);
 	void RenderTilemap(void);
 
 	bool m_bExitPlay;
@@ -128,6 +140,10 @@ private:
 	float m_fShakeAngle;
 	float m_fShakeOffsetX;
 	float m_fShakeOffsetY;
+
+	//Win & lose
+	bool m_bShowWin;
+	bool m_bShowLose;
 
 	bool m_died;
 };

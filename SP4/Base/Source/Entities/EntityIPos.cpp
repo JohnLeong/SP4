@@ -133,7 +133,7 @@ void CEntityIPos::Update(const float dt)
 		{
 			this->m_fOffSetY = 0;
 			--this->m_iYIndex;
-			if (DoCurrentTileCollision())
+			if (!DoCurrentTileCollision())
 				m_AnimDir = DIR_IDLE_UP;
 			break;
 		}
@@ -144,7 +144,7 @@ void CEntityIPos::Update(const float dt)
 		{
 			this->m_fOffSetY = 0;
 			++this->m_iYIndex;
-			if (DoCurrentTileCollision())
+			if (!DoCurrentTileCollision())
 				m_AnimDir = DIR_IDLE_DOWN;
 			break;
 		}
@@ -155,7 +155,7 @@ void CEntityIPos::Update(const float dt)
 		{
 			this->m_fOffSetX = 0;
 			--this->m_iXIndex;
-			if (DoCurrentTileCollision())
+			if (!DoCurrentTileCollision())
 				m_AnimDir = DIR_IDLE_LEFT;
 			break;
 		}
@@ -166,7 +166,7 @@ void CEntityIPos::Update(const float dt)
 		{
 			this->m_fOffSetX = 0;
 			++this->m_iXIndex;
-			if (DoCurrentTileCollision())
+			if (!DoCurrentTileCollision())
 				m_AnimDir = DIR_IDLE_RIGHT;
 			break;
 		}

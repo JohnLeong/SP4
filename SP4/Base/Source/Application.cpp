@@ -29,6 +29,7 @@ bool Application::AppisRunning = true;
 vector<CAchievements*>  Application::m_cAchievementList;
 vector<CProperties*>  Application::m_cPropertyList;
 bool Application::m_bPauseDT = false;
+int Application::CurrentLevel = 1;
 /********************************************************************************
  Define an error callback
  ********************************************************************************/
@@ -52,6 +53,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
  ********************************************************************************/
 void resize_callback(GLFWwindow* window, int w, int h)
 {
+	//std::cout << "W " << w << " H " << h << std::endl;
+	Application::m_window_height = h;
+	Application::m_window_width = w;
 	glViewport(0, 0, w, h);
 }
 
@@ -190,7 +194,9 @@ bool Application::GetMouseUpdate()
 bool Application::GetKeyboardUpdate()
 {
 	theGSM->HandleEvents(VK_RETURN, IsKeyPressed(VK_RETURN));
-
+	
+	theGSM->HandleEvents('n', IsKeyPressed('N'));
+	theGSM->HandleEvents('r', IsKeyPressed('R'));
 	theGSM->HandleEvents('p', IsKeyPressed('P'));
 	theGSM->HandleEvents('g', IsKeyPressed('G'));
 	theGSM->HandleEvents('q', IsKeyPressed('Q'));
@@ -294,9 +300,9 @@ void Application::Init()
 	// Initialise the GSM
 	theGSM = new CGameStateManager();
 	theGSM->Init("DM2240 Assignment 1", m_window_width, m_window_height);
-	//theGSM->ChangeState( CSplashState::Instance() );
+	theGSM->ChangeState( CSplashState::Instance() );
 	//theGSM->ChangeState(CLevelSelectionState::Instance());
-	theGSM->ChangeState(CMenuState::Instance());
+	//theGSM->ChangeState(CMenuState::Instance());
 }
 
 void Application::InitWindow(bool fullscreen)

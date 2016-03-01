@@ -115,6 +115,31 @@ void CSceneMenu::Update(double dt)
 	m_cObjectManager.Update(dt);
 
 	UpdateAnimations(dt);
+
+	if (IsKeyDownOnce(VK_RETURN))
+	{
+		switch (Application::getChoiceVal())
+		{
+		case 1:
+			m_bAnimOffsetDir = false;
+			m_iNextState = NEXT_LEVEL_SELECT;
+			break;
+		case 2:
+			m_bAnimOffsetDir = false;
+			m_iNextState = NEXT_INSTRUCTIONS;
+			break;
+		case 3:
+			m_bAnimOffsetDir = false;
+			m_iNextState = NEXT_OPTIONS;
+			break;
+		case 4:
+			m_bAnimOffsetDir = false;
+			m_iNextState = NEXT_EXIT;
+			break;
+		default:
+			break;
+		}
+	}
 		
 	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
 	{
@@ -235,17 +260,18 @@ void CSceneMenu::Update(double dt)
 
 void CSceneMenu::UpdateAnimations(double dt)
 {
+	float fDelta = static_cast<float>(dt);
 	if (m_bAnimOffsetDir)
 	{
 		if (m_fLeftAnimOffset < 0.f)
 		{
-			m_fLeftAnimOffset += (-m_fLeftAnimOffset * 0.1f) + (dt * 10);
+			m_fLeftAnimOffset += (-m_fLeftAnimOffset * 0.1f) + (fDelta * 10.f);
 			if (m_fLeftAnimOffset > 0.f)
 				m_fLeftAnimOffset = 0.f;
 		}
 		if (m_fBotAnimOffset < 0.f)
 		{
-			m_fBotAnimOffset += (-m_fBotAnimOffset * 0.05f) + (dt * 0.5);
+			m_fBotAnimOffset += (-m_fBotAnimOffset * 0.05f) + (fDelta * 0.5f);
 			if (m_fBotAnimOffset > 0.f)
 				m_fBotAnimOffset = 0.f;
 		}
@@ -254,13 +280,13 @@ void CSceneMenu::UpdateAnimations(double dt)
 	{
 		if (m_fLeftAnimOffset > -210.f)
 		{
-			m_fLeftAnimOffset -= (-m_fLeftAnimOffset * 0.5f) + (dt * 15);
+			m_fLeftAnimOffset -= (-m_fLeftAnimOffset * 0.5f) + (fDelta * 15.f);
 			if (m_fLeftAnimOffset < -210.f)
 				m_fLeftAnimOffset = -210.f;
 		}
 		if (m_fBotAnimOffset > -1.f)
 		{
-			m_fBotAnimOffset -= (-m_fBotAnimOffset * 0.08f) + (dt * 0.5);
+			m_fBotAnimOffset -= (-m_fBotAnimOffset * 0.08f) + (fDelta * 0.5f);
 			if (m_fBotAnimOffset < -1.f)
 			{
 				m_fBotAnimOffset = -1.f;
@@ -313,12 +339,6 @@ void CSceneMenu::Render()
 	RenderMesh(meshList[GEO_GROUND], false);
 	modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0.7f, 0.4f, 0);
-	RenderMesh(meshList[GEO_STAR], false);
-	modelStack.PopMatrix();
-
-
 	if (Application::IsKeyPressed('1'))
 	{
 		cout << "current mouse x: " << Application::getMouseWorldX() << endl;
@@ -329,10 +349,6 @@ void CSceneMenu::Render()
 		cout << "geo_pos.y R: " << geo_pos[1].y + 8.0f << endl;
 
 	}
-	
-
-
-	
 
 	switch (Application::getChoiceVal())
 	{
@@ -371,9 +387,6 @@ void CSceneMenu::Render()
 		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -52.5f);
 		break;
 	}
-#if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "SceneMenu", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
-#endif
 
 }
 

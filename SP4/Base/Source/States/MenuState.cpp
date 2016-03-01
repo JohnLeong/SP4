@@ -117,7 +117,7 @@ void CMenuState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 {
 	scene->Update(m_dElapsedTime);
 
-if (((CSceneMenu*)scene)->m_bChangeState)
+	if (((CSceneMenu*)scene)->m_bChangeState)
 	{
 		std::cout << "CHANGE";
 		switch (((CSceneMenu*)scene)->m_iNextState)

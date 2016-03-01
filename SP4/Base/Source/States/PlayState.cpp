@@ -33,6 +33,17 @@ void CPlayState::Init(const int width, const int height)
 	scene->Init();
 }
 
+void CPlayState::InitHoldData(int width, int height, int i, bool b)
+{
+#if _DEBUG
+	cout << "CPlayState::Init" << endl;
+#endif
+
+	scene = new CScenePlay(width, height);	// Use this for 3D gameplay
+
+	scene->Init();
+}
+
 void CPlayState::Cleanup()
 {
 #if _DEBUG
@@ -131,6 +142,7 @@ void CPlayState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 
 	if (CScenePlay::GetIsQuitToMain() == true)
 	{
+		//scene->Exit();
 		theGSM->ChangeState(CMenuState::Instance());
 	}
 }

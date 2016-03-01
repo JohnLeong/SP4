@@ -110,14 +110,20 @@ void CLevelSelectionState::Update(CGameStateManager* theGSM, const double m_dEla
 {
 	scene->Update(m_dElapsedTime);
 
-	if (CSceneLevelSelection::GetIsQuitToMain() == true)
+	/*if (CSceneLevelSelection::GetIsQuitToMain() == true)
 	{
 		theGSM->ChangeState(CMenuState::Instance());
+	}*/
+	if (((CSceneLevelSelection*)scene)->m_bChangeState)
+	{
+		if (((CSceneLevelSelection*)scene)->GetIsQuitToMain())
+			theGSM->ChangeState(CMenuState::Instance());
+		else
+			theGSM->ChangeState(CPlayState::Instance());
 	}
-
-	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
-		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1 && CSceneLevelSelection::GetisColWithStartButton() == true)
-		theGSM->ChangeState(CPlayState::Instance()); 
+	//if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
+	//	|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1 && CSceneLevelSelection::GetisColWithStartButton() == true)
+	//	theGSM->ChangeState(CPlayState::Instance()); 
 }
 
 void CLevelSelectionState::Draw(CGameStateManager* theGSM)

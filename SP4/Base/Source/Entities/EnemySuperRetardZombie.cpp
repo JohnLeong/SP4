@@ -42,7 +42,7 @@ void CEnemySuperRetardZombie::InitAnimation()
 	//Idle East
 	cAnim = new Animation();
 	cAnim->Set(4, 4, 0, 0.f);
-	AddAnimation(cAnim, DIR_IDLE_UP);
+	AddAnimation(cAnim, DIR_IDLE_LEFT);
 
 	//Idle East
 	cAnim = new Animation();
@@ -52,7 +52,7 @@ void CEnemySuperRetardZombie::InitAnimation()
 	//Idle North
 	cAnim = new Animation();
 	cAnim->Set(10, 10, 0, 0.f);
-	AddAnimation(cAnim, DIR_IDLE_LEFT);
+	AddAnimation(cAnim, DIR_IDLE_UP);
 
 	//Walk South
 	cAnim = new Animation();
@@ -62,7 +62,7 @@ void CEnemySuperRetardZombie::InitAnimation()
 	//Walk East
 	cAnim = new Animation();
 	cAnim->Set(3, 5, 0, 0.4f);
-	AddAnimation(cAnim, DIR_UP);
+	AddAnimation(cAnim, DIR_LEFT);
 
 	//Walk East
 	cAnim = new Animation();
@@ -72,7 +72,7 @@ void CEnemySuperRetardZombie::InitAnimation()
 	//Walk North
 	cAnim = new Animation();
 	cAnim->Set(9, 11, 0, 0.4f);
-	AddAnimation(cAnim, DIR_LEFT);
+	AddAnimation(cAnim, DIR_UP);
 }
 
 /********************************************************************************

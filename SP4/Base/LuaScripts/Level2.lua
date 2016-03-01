@@ -4,6 +4,8 @@ tileMapHeight = 13
 playerPosX = 5
 playerPosY = 11
 
+MinMoves = 20
+
 maxNumOfZombies = 1
 maxNumOfRetardZombies = 0
 maxNumOfBlocks = 0

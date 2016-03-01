@@ -482,6 +482,17 @@ void CPlayer::Reset(void)
 	this->m_iKeys_blue = 0;
 	this->m_iKeys_yellow = 0;
 	this->m_iKeys_green = 0;
+	this->m_bActive = true;
+	this->m_bAlive = true;
+	this->m_bHasReachedEndLevel = false;
+	this->direction = PD_DOWN;
+	this->action = PA_IDLE_DOWN;
+	this->m_NextDir = PD_NONE;
+	this->moving = false;
+	this->m_fDeathOffSetX = DEATH_ANIM_START_OFFSET_X;
+	this->m_fDeathOffSetY = 0.f;
+	this->m_fOffSetX = 0.f;
+	this->m_fOffSetY = 0.f;
 }
 
 void CPlayer::AddKeys(int iAmt, int type)

@@ -244,6 +244,9 @@
     <ClCompile Include="Source\PhysicsObjectManager.cpp">
       <Filter>PhysicsObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Entities\Entity_TextBox.cpp">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -260,9 +263,6 @@
     </ClInclude>
     <ClInclude Include="Source\ScenePlay.h">
       <Filter>Game State Management\Scenes\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameState.h">
-      <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\States\GameStateManager.h">
       <Filter>Game State Management\States\Header Files</Filter>
@@ -422,6 +422,12 @@
     </ClInclude>
     <ClInclude Include="Source\PhysicsObjectManager.h">
       <Filter>PhysicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities\Entity_TextBox.h">
+      <Filter>Entities\GameplayEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\GameState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

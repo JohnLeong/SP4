@@ -8,6 +8,7 @@ class CSplashState : public CGameState
 public:
 	void Init();
 	void Init(const int width, const int height);
+	void Init(const int width, const int height, int i, bool b);
 	void Cleanup();
 
 	void Pause();
@@ -22,14 +23,14 @@ public:
 	void Draw(CGameStateManager* theGSM);
 
 	static CSplashState* Instance() {
-		return &theMenuState;
+		return &theSplashState;
 	}
 
 protected:
 	CSplashState() { }
 
 private:
-	static CSplashState theMenuState;
+	static CSplashState theSplashState;
 
 	CSceneManager *scene;
 };

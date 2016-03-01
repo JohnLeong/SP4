@@ -9,6 +9,7 @@ class CGameState
 public:
 	virtual void Init() = 0;
 	virtual void Init(const int width, const int height) = 0;
+	virtual void InitHoldData(int width,int height,int i,bool b){};
 	virtual void Cleanup() = 0;
 
 	virtual void Pause() = 0;

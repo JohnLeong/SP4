@@ -8,7 +8,7 @@ using namespace std;
 #include "menustate.h"
 
 
-CSplashState CSplashState::theMenuState;
+CSplashState CSplashState::theSplashState;
 
 void CSplashState::Init()
 {
@@ -22,6 +22,16 @@ void CSplashState::Init()
 }
 
 void CSplashState::Init(const int width, const int height)
+{
+#if GSM_DEBUG_MODE
+	cout << "CSplashState::Init\n" << endl;
+#endif
+
+	scene = new CSceneSplash(width, height);
+	scene->Init();
+}
+
+void CSplashState::Init(const int width, const int height, int iLevel, bool bPanic)
 {
 #if GSM_DEBUG_MODE
 	cout << "CSplashState::Init\n" << endl;

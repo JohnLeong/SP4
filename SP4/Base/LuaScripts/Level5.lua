@@ -4,6 +4,8 @@ tileMapHeight = 18
 playerPosX = 1
 playerPosY = 2
 
+MinMoves = 50
+
 maxNumOfZombies = 1
 maxNumOfRetardZombies = 0
 maxNumOfBlocks = 2
@@ -14,6 +16,7 @@ maxNumOfRedKeys = 0
 maxNumOfBlueKeys = 0
 maxNumOfGreenKeys = 0
 maxNumOfYellowKeys = 1
+maxNumOfTextBox = 1
 
 zombie1PosX = 6
 zombie1PosY = 2
@@ -30,3 +33,7 @@ yellowKey1PosY = 2
 fire1PosX = 9
 fire1PosY = 12
 fire1Stage = 1
+
+textBox1PosX = 5
+textBox1PosY = 5
+textBox1Text = "helloooooooo"

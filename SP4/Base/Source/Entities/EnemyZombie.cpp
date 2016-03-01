@@ -41,7 +41,7 @@ void CEnemyZombie::InitAnimation()
 	//Idle East
 	cAnim = new Animation();
 	cAnim->Set(4, 4, 0, 0.f);
-	AddAnimation(cAnim, DIR_IDLE_UP);
+	AddAnimation(cAnim, DIR_IDLE_LEFT);
 
 	//Idle East
 	cAnim = new Animation();
@@ -51,27 +51,27 @@ void CEnemyZombie::InitAnimation()
 	//Idle North
 	cAnim = new Animation();
 	cAnim->Set(10, 10, 0, 0.f);
-	AddAnimation(cAnim, DIR_IDLE_LEFT);
+	AddAnimation(cAnim, DIR_IDLE_UP);
 
 	//Walk South
 	cAnim = new Animation();
-	cAnim->Set(0, 2, 0, 0.8f);
+	cAnim->Set(0, 2, 0, 0.2f);
 	AddAnimation(cAnim, DIR_DOWN);
 
-	//Walk East
+	//Walk West
 	cAnim = new Animation();
-	cAnim->Set(3, 5, 0, 0.4f);
-	AddAnimation(cAnim, DIR_UP);
+	cAnim->Set(3, 5, 0, 0.2f);
+	AddAnimation(cAnim, DIR_LEFT);
 
 	//Walk East
 	cAnim = new Animation();
-	cAnim->Set(6, 8, 0, 0.4f);
+	cAnim->Set(6, 8, 0, 0.2f);
 	AddAnimation(cAnim, DIR_RIGHT);
 
 	//Walk North
 	cAnim = new Animation();
-	cAnim->Set(9, 11, 0, 0.4f);
-	AddAnimation(cAnim, DIR_LEFT);
+	cAnim->Set(9, 11, 0, 0.2f);
+	AddAnimation(cAnim, DIR_UP);
 }
 
 /********************************************************************************

@@ -8,6 +8,7 @@ class CMenuState : public CGameState
 public:
 	void Init();
 	void Init(const int width, const int height);
+	void Init(const int width, const int height, int i, bool b);
 	void Cleanup();
 
 	void Pause();

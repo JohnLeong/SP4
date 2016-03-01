@@ -69,9 +69,12 @@ public:
 	//Boolean to close app if ran
 	static bool AppisRunning;
 
+	static int CurrentLevel;
+	static int m_window_width;
+	static int m_window_height;
+
 	static vector<CAchievements*> m_cAchievementList;
 	static vector<CProperties*> m_cPropertyList;
-
 private:
 	Application();
 	~Application();
@@ -86,8 +89,7 @@ private:
 	double m_dAccumulatedTime_ThreadOne;
 	double m_dAccumulatedTime_ThreadTwo;
 
-	static int m_window_width;
-	static int m_window_height;
+
 
 	//get mouse position in world space
 	static float mouseWorldX;

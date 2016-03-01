@@ -9,34 +9,47 @@
 #include "LoadTGA.h"
 #include "Achievements\Properties.h"
 
-#define MatchTimeLimit 15.f
 bool CScenePlay::m_bBacktoMainMenu = false;
 
 CScenePlay::CScenePlay(void)
 	: m_window_width(800)
 	, m_window_height(600)
 	, m_bExitPlay(false)
-	, m_iCurrentLevel(1)
+	, m_iCurrentLevel(3)
+	, m_bShowWin(false)
+	, m_bShowLose(false)
 {
 }
 
 CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 	:m_bExitPlay(false)
-	, m_iCurrentLevel(1)
+	, m_iCurrentLevel(5)
+	, m_bShowWin(false)
+	, m_bShowLose(false)
 {
+	this->m_window_width = m_window_width;
+	this->m_window_height = m_window_height;
+}
+
+CScenePlay::CScenePlay(const int m_window_width, const int m_window_height, int iLevel, bool bPanic)
+:m_bExitPlay(false)
+{
+	this->m_iCurrentLevel = iLevel;
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
 }
 
 CScenePlay::~CScenePlay(void)
 {
-	for (int i = 0; i < NUM_GEOMETRY; ++i)
-	{
-		if (meshList[i])
-			delete meshList[i];
-	}
-	if (m_cPlayer)
-		delete m_cPlayer;
+	//std::cout << "DESTROY";
+	//m_cLevel.Exit();
+	//for (int i = 0; i < NUM_GEOMETRY; ++i)
+	//{
+	//	if (meshList[i])
+	//		delete meshList[i];
+	//}
+	//if (m_cPlayer)
+	//	delete m_cPlayer;
 }
 
 void CScenePlay::Init()
@@ -72,13 +85,23 @@ void CScenePlay::Init()
 
 	meshList[GEO_OVERLAY_RED] = MeshBuilder::GenerateQuad("OVERLAY_RED", Color(1, 1, 1), 1.f);
 	meshList[GEO_OVERLAY_RED]->textureID = LoadTGA("Image//Tiles/cross.tga");
+	meshList[GEO_QUESTION_MARK] = MeshBuilder::GenerateQuad("MARK", Color(1, 1, 1), 1.f);
+	meshList[GEO_QUESTION_MARK]->textureID = LoadTGA("Image//Entities/question_mark.tga");
+
+	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("box", Color(1, 1, 1), 1.f);
+	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//GUI/box_blue.tga");
+
+	meshList[GEO_STAR] = MeshBuilder::GenerateQuad("star", Color(1, 1, 1), 40.f);
+	meshList[GEO_STAR]->textureID = LoadTGA("Image//GUI/star.tga");
+	meshList[GEO_STAROUTLINE] = MeshBuilder::GenerateQuad("box", Color(1, 1, 1), 1.f);
+	meshList[GEO_STAROUTLINE]->textureID = LoadTGA("Image//GUI/star_outline.tga");
 
 	//Load Tile textures
 	meshList[GEO_TILE_FLOOR_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_FLOOR_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_FLOOR_STONE_01.tga");
 	meshList[GEO_TILE_FLOOR_ICE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 7);
 	meshList[GEO_TILE_FLOOR_ICE_01]->textureID = LoadTGA("Image//Tiles/TILE_FLOOR_ICE_01.tga");
-	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 2, 2);
+	meshList[GEO_TILE_WALL_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_WALL_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_WALL_STONE_01.tga");
 	meshList[GEO_TILE_HOLE_STONE_01] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_HOLE_STONE_01]->textureID = LoadTGA("Image//Tiles/TILE_HOLE_STONE_01.tga");
@@ -116,6 +139,10 @@ void CScenePlay::Init()
 	//Quit button
 	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMeshCenter("quit button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
 	meshList[GEO_QUIT_BUTTON]->textureID = LoadTGA("Image/INVENTORY//Quit.tga");
+	meshList[GEO_RESTART_BUTTON] = MeshBuilder::Generate2DMeshCenter("restart button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
+	meshList[GEO_RESTART_BUTTON]->textureID = LoadTGA("Image/GUI//button_restart.tga");
+	meshList[GEO_NEXT_BUTTON] = MeshBuilder::Generate2DMeshCenter("next button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
+	meshList[GEO_NEXT_BUTTON]->textureID = LoadTGA("Image/GUI//button_next.tga");
 
 	//back cover
 	meshList[GEO_BACKCOVER] = MeshBuilder::Generate2DMesh("back cover", Color(0.9f, 0.9f, 0.9f), 0.0f, 0.0f, 100.0f, 180.0f);
@@ -175,6 +202,7 @@ void CScenePlay::Init()
 	m_cPlayer = new CPlayer();
 	m_cPlayer->Init(m_cLevel.GetTilemap(), 1, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]), &m_cLevel.m_cEntityIPosList);
 	//Init level after player
+	m_iCurrentLevel = Application::CurrentLevel;
 	InitLevel();
 
 	m_died = false;
@@ -193,10 +221,9 @@ void CScenePlay::InitLevel()
 	//Init level tilemap
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_STONE_01]), new Animation(0, 0, 1, 0.5f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_FLOOR_ICE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FLOOR_ICE_01]), new Animation(0, 13, 0, 0.5f));
-	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WALL_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WALL_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 0, 1, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_HOLE_STONE_01]), new Animation(0, 0, 1, 0.3f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_HOLE_STONE_FILLED_01, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_HOLE_STONE_FILLED_01]), new Animation(0, 0, 1, 0.3f));
-	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_UP, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_WALL_STONE_01]), new Animation(0, 3, 0, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_DOOR_RED, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_RED]), new Animation(0, 0, 1, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_DOOR_BLUE, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_BLUE]), new Animation(0, 0, 1, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_DOOR_GREEN, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_DOOR_GREEN]), new Animation(0, 0, 1, 1.f));
@@ -211,6 +238,8 @@ void CScenePlay::InitLevel()
 	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 
 	m_cLevel.LoadTilemap(getLevel);
+
+	m_cLevel.GenerateTextBoxEntity(2, 2, "HELLOOOOOOOWIIWDIWIWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYv");
 }
 
 void CScenePlay::Update(double dt)
@@ -277,10 +306,34 @@ void CScenePlay::Update(double dt)
 	m_fShakeOffsetY = cos(m_fShakeAngle) * 50;
 	//camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f + m_fShakeOffsetX, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()) + m_fShakeOffsetY, 0.f));
 	camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
-	if (m_cPlayer->GetHasReachedEndLevel() == true)
+	
+	if (m_cPlayer->GetHasReachedEndLevel() && !m_bShowWin)
 	{
 		//End Level
+		m_bShowWin = true;
+		m_cLevel.CalculateScore();
 	}
+	else if (m_bShowWin)
+	{
+		if (IsKeyDownOnce('n'))
+		{
+			++m_iCurrentLevel;
+			ostringstream convertor;
+			string getLevel = "Level";
+			convertor << m_iCurrentLevel;
+			getLevel.append(convertor.str());
+			m_cLevel.SetLevelName(getLevel);
+			m_cLevel.Reset();
+			m_bShowWin = false;
+		}
+	}
+
+	if (IsKeyDownOnce('r'))
+	{
+		m_cLevel.Reset();
+		m_bShowWin = false;
+	}
+
 }
 
 /********************************************************************************
@@ -312,17 +365,45 @@ void CScenePlay::UpdateWeaponStatus(const unsigned char key)
  ********************************************************************************/
 void CScenePlay::RenderGUI()
 {
-	if (m_cPlayer->GetHasReachedEndLevel())
-		RenderTextOnScreen(meshList[GEO_TEXT], "YOU WIN!", Color(1.f, 1.f, 1.f), 20.f, -100.f, 0.f);
+	if (m_bShowWin)
+		RenderWin();
 	if (!m_cPlayer->IsAlive())
-		RenderTextOnScreen(meshList[GEO_TEXT], "U DED", Color(1.f, 1.f, 1.f), 20.f, -100.f, 0.f);
-	// Render the crosshair
-	//RenderMeshIn2D(meshList[GEO_CROSSHAIR], false, 10.0f);
+		RenderLose();
+}
 
-	/*if (m_cPlayer->IsAlive())
-		RenderTextOnScreen(meshList[GEO_TEXT], "ALIVE", Color(0.f, 0.f, 0.f), 10.f, -160.f, 10.f);
+void CScenePlay::RenderWin(void)
+{
+	RenderMeshIn2D(meshList[GEO_TEXTBOX], false, 300.f, 150.f, 0, 0);
+	RenderMeshIn2D(meshList[GEO_NEXT_BUTTON], false, 2, 1.5f, -50.f, -50.f);
+	RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, 0.f, -50.f);
+	RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 50.f, -50.f);
+	for (int i = 0; i < m_cLevel.GetNumStars(); ++i)
+		RenderMeshIn2D(meshList[GEO_STAR], false, 1.f, 1.f, -50.f + (i * 50.f), 10.f);
+
+	RenderTextOnScreen(meshList[GEO_TEXT], "VICTORY!", Color(1.f, 1.f, 1.f), 50, -70.f, 10.f);
+	ostringstream s_score;
+	s_score << "Moves:" << m_cLevel.GetNumberOfMoves() << " / " << m_cLevel.GetSmallestMoves();
+	if (m_cLevel.GetNumberOfMoves() <= m_cLevel.GetSmallestMoves())
+		RenderTextOnScreen(meshList[GEO_TEXT], s_score.str(), Color(0.f, 1.f, 0.f), 20, -70.f, -35.f);
 	else
-		RenderTextOnScreen(meshList[GEO_TEXT], "DEAD", Color(0.f, 0.f, 0.f), 10.f, -160.f, 10.f);*/
+		RenderTextOnScreen(meshList[GEO_TEXT], s_score.str(), Color(1.f, 1.f, 1.f), 20, -70.f, -35.f);
+
+	ostringstream s_coins;
+	s_coins << "Coins:" << m_cPlayer->GetCoins() << " / " << m_cLevel.GetTotalCoins();
+	if (m_cPlayer->GetCoins() >= m_cLevel.GetTotalCoins())
+		RenderTextOnScreen(meshList[GEO_TEXT], s_coins.str(), Color(0.f, 1.f, 0.f), 20, -70.f, -45.f);
+	else
+		RenderTextOnScreen(meshList[GEO_TEXT], s_coins.str(), Color(1.f, 1.f, 1.f), 20, -70.f, -45.f);
+}
+
+void CScenePlay::RenderLose(void)
+{
+	RenderMeshIn2D(meshList[GEO_TEXTBOX], false, 300.f, 150.f, 0, 0);
+	RenderTextOnScreen(meshList[GEO_TEXT], "DEFEAT", Color(1.f, 1.f, 1.f), 50, -60.f, 10.f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "rekt", Color(1.f, 1.f, 1.f), 5, -10.f, -10.f);
+
+	RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, -25.f, -50.f);
+	RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 25.f, -50.f);
 }
 
 /********************************************************************************
@@ -342,6 +423,16 @@ Render the entities
 ********************************************************************************/
 void CScenePlay::RenderEntities()
 {
+	//Render text worldspace entities
+	for (std::vector<CTextBox*>::iterator entity = m_cLevel.m_cTextBoxList.begin(); entity != m_cLevel.m_cTextBoxList.end(); entity++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate((*entity)->GetRenderPosX(), (*entity)->GetRenderPosY(), 0.f);
+		modelStack.Scale(TILE_SIZE - 5, TILE_SIZE - 5, 1.f);
+		RenderMesh(meshList[GEO_QUESTION_MARK], false);
+		modelStack.PopMatrix();
+	}
+
 	for (std::vector<CEntityIPos*>::iterator entity = m_cLevel.m_cEntityIPosList.begin(); entity != m_cLevel.m_cEntityIPosList.end(); entity++)
 	{
 		if (!(*entity)->IsActive())
@@ -364,6 +455,36 @@ void CScenePlay::RenderEntities()
 
 		modelStack.PopMatrix();
 	}
+}
+
+void CScenePlay::RenderTextBox()
+{
+	//Render textbox background
+	if (CTextBox::ShowBox())
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(camera.position.x - 95.f, camera.position.y - 135.f, 0.f);
+		modelStack.Scale(CTextBox::GetBoxScaleX(), 95.f, 1.f);
+		RenderMesh(meshList[GEO_TEXTBOX], false);
+		modelStack.PopMatrix();
+	}
+
+	//Render text inside textbox
+	for (std::vector<CTextBox*>::iterator entity = m_cLevel.m_cTextBoxList.begin(); entity != m_cLevel.m_cTextBoxList.end(); entity++)
+	{
+		if (CTextBox::ShowText())
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(camera.position.x - 280.f, camera.position.y - 125.f, 0.f);
+			modelStack.Scale(30.f, 30.f, 1.f);
+			//RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+			//if ((*entity)->ShowText())
+			RenderText(meshList[GEO_TEXT], (*entity)->GetText(), Color(1.f, 1.f, 1.f), 0.7f, 180.f);
+			modelStack.PopMatrix();
+			break;
+		}
+	}
+
 }
 
 /********************************************************************************
@@ -449,6 +570,7 @@ void CScenePlay::RenderInventory()
 		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.f, 1.f, 140.0f, 55);
 		SetISQuitToMain(false);
 	}
+	RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 1.f, 1.f, 140.0f, 40.f);
 }
 
 /********************************************************************************
@@ -487,13 +609,10 @@ void CScenePlay::Render()
 
 	RenderEntities();
 	RenderPlayer();
+	RenderTextBox();
 	RenderInventory();
 
 	RenderGUI();
-
-#if _DEBUG
-	//RenderTextOnScreen(meshList[GEO_TEXT], "ScenePlay", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
-#endif
 }
 
 /********************************************************************************
@@ -501,12 +620,16 @@ void CScenePlay::Render()
  ********************************************************************************/
 void CScenePlay::Exit()
 {
+	std::cout << "PLAY EXIT";
 	// Cleanup VBO
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		if(meshList[i])
 			delete meshList[i];
 	}
+	m_cLevel.Exit();
+	if (m_cPlayer)
+		delete m_cPlayer;
 	glDeleteProgram(m_programID);
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 }

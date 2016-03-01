@@ -8,18 +8,28 @@ CLevel::CLevel(void)
 , m_bMovementReady(true)
 , m_bDoTileCheck(false)
 , m_iPlayerMoves(0)
+, m_bPanicMode(false)
+, m_iStars(0)
 {
 	m_cTilemap = new CTilemap();
 }
 
 CLevel::~CLevel(void)
 {
+	CTextBox::ResetBox();
 	while (m_cEntityIPosList.size() > 0)
 	{
 		CEntityIPos* entity = m_cEntityIPosList.back();
 		delete entity;
 		m_cEntityIPosList.pop_back();
 	}
+	while (m_cTextBoxList.size() > 0)
+	{
+		CTextBox* entity = m_cTextBoxList.back();
+		delete entity;
+		m_cTextBoxList.pop_back();
+	}
+	delete m_cTilemap;
 }
 
 CTilemap* CLevel::GetTilemap(void)
@@ -72,6 +82,7 @@ int GetYFromLua(CLuaScript* m_cLuascript, string getEntity)
 
 bool CLevel::InitLua(std::string levelName)
 {
+	m_strLevelName = levelName;
 	string addHold = "Hold";
 	string addStage = "Stage";
 	m_cLuascript = new CLuaScript(levelName);
@@ -79,6 +90,8 @@ bool CLevel::InitLua(std::string levelName)
 
 	m_cPlayerPtr->SetXIndex(m_cLuascript->getIntVariable("playerPosX"));
 	m_cPlayerPtr->SetYIndex(m_cLuascript->getIntVariable("playerPosY"));
+
+	m_iMinMoves = m_cLuascript->getIntVariable("MinMoves");
 
 	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfBlocks");
 	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
@@ -93,6 +106,7 @@ bool CLevel::InitLua(std::string levelName)
 	}
 
 	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfCoins");
+	m_iTotalCoins = maxNumberOfCurrentEntity;
 	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
 	{
 		string getCoin = "coin";
@@ -224,6 +238,7 @@ bool CLevel::InitLua(std::string levelName)
 		if (enemyHoldItem == 1)
 		{
 			GenerateZombieEntity(posX, posY, CEnemy::HOLDING_COIN);
+			++m_iTotalCoins;
 		}
 		else if (enemyHoldItem == 2)
 		{
@@ -258,6 +273,7 @@ bool CLevel::InitLua(std::string levelName)
 		if (enemyHoldItem == 1)
 		{
 			GenerateSuperRetardZombieEntity(posX, posY, CEnemy::HOLDING_COIN);
+			++m_iTotalCoins;
 		}
 		else if (enemyHoldItem == 2)
 		{
@@ -277,6 +293,23 @@ bool CLevel::InitLua(std::string levelName)
 		}
 	}
 
+	string addText = "Text";
+	maxNumberOfCurrentEntity = m_cLuascript->getIntVariable("maxNumOfTextBox");
+	for (int i = 0; i < maxNumberOfCurrentEntity; i++)
+	{
+		string getTextBox = "textBox";
+		string text;
+		getTextBox = IntConvertToString(i + 1, getTextBox);
+
+		posX = GetXFromLua(m_cLuascript, getTextBox);
+		posY = GetYFromLua(m_cLuascript, getTextBox);
+
+		getTextBox += addText;
+		text = m_cLuascript->getStringVariable(getTextBox);
+
+		GenerateTextBoxEntity(posX, posY, text);
+	}
+
 	delete m_cLuascript;
 	return true;
 }
@@ -288,6 +321,13 @@ void CLevel::SetDoMovements(bool bDoMovements)
 
 void CLevel::Update(const float dt, CPlayer* cPlayer)
 {
+	//Update text boxes
+	for (std::vector<CTextBox*>::iterator entity = m_cTextBoxList.begin(); entity != m_cTextBoxList.end(); entity++)
+	{
+		(*entity)->Update(dt);
+	}
+	CTextBox::UpdateBox(dt);
+
 	if (m_bMovementReady)
 	{
 		if (CheckPlayerCollisions(cPlayer))
@@ -461,11 +501,46 @@ int CLevel::GetNumberOfMoves(void)
 	return m_iPlayerMoves;
 }
 
+int CLevel::GetTotalCoins(void)
+{
+	return m_iTotalCoins;
+}
+
+int CLevel::GetSmallestMoves(void)
+{
+	return this->m_iMinMoves;
+}
+
+int CLevel::CalculateScore(void)
+{
+	if (m_cPlayerPtr->GetCoins() >= m_iTotalCoins)
+	{
+		if (m_iPlayerMoves <= m_iMinMoves)
+			m_iStars = 3;
+		else
+			m_iStars = 2;
+	}
+	else
+		m_iStars = 1;
+
+	return -1;
+}
+
+int CLevel::GetNumStars(void)
+{
+	return m_iStars;
+}
+
+void CLevel::SetLevelName(std::string name)
+{
+	this->m_strLevelName = name;
+}
+
 CEnemyZombie* CLevel::GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t)
 {
 	CEnemyZombie* zombie;
 	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
-	temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
+	temp_mesh->textureID = LoadTGA("Image//Entities//zombie.tga");
 	switch (t)
 	{
 	case CEnemy::HOLDING_NONE:
@@ -498,7 +573,7 @@ CEnemySuperRetardZombie* CLevel::GenerateSuperRetardZombieEntity(int iXIndex, in
 {
 	CEnemySuperRetardZombie* zombie;
 	Mesh* temp_mesh = MeshBuilder::GenerateSpriteAnimation2D("ZAMBIE", 4, 3);
-	temp_mesh->textureID = LoadTGA("Image//Entities//explorer2.tga");
+	temp_mesh->textureID = LoadTGA("Image//Entities//mummy.tga");
 	switch (t)
 	{
 	case CEnemy::HOLDING_NONE:
@@ -602,16 +677,51 @@ CEntity_Block_Movable* CLevel::GenerateMovableBlockEntity(int iXIndex, int iYInd
 	return entity;
 }
 
+CTextBox* CLevel::GenerateTextBoxEntity(int iXIndex, int iYIndex, std::string text)
+{
+	CTextBox* entity = new CTextBox(iXIndex, iYIndex, this->m_cTilemap, text, this->m_cPlayerPtr);
+	m_cTextBoxList.push_back(entity);
+
+	return entity;
+}
+
 void CLevel::Reset(void)
 {
 	m_bDoMovements = false;
 	m_bMovementReady = true;
 	m_bDoTileCheck = false;
 	m_iPlayerMoves = 0;
+	m_cPlayerPtr->Reset();
+	CTextBox::ResetBox();
 	while (m_cEntityIPosList.size() > 0)
 	{
 		CEntityIPos* entity = m_cEntityIPosList.back();
 		delete entity;
 		m_cEntityIPosList.pop_back();
+	}
+	while (m_cTextBoxList.size() > 0)
+	{
+		CTextBox* entity = m_cTextBoxList.back();
+		delete entity;
+		m_cTextBoxList.pop_back();
+	}
+	InitLua(m_strLevelName);
+	LoadTilemap(m_strLevelName);
+}
+
+void CLevel::Exit(void)
+{
+	CTextBox::ResetBox();
+	while (m_cEntityIPosList.size() > 0)
+	{
+		CEntityIPos* entity = m_cEntityIPosList.back();
+		delete entity;
+		m_cEntityIPosList.pop_back();
+	}
+	while (m_cTextBoxList.size() > 0)
+	{
+		CTextBox* entity = m_cTextBoxList.back();
+		delete entity;
+		m_cTextBoxList.pop_back();
 	}
 }

@@ -12,6 +12,7 @@
 #include "Entities\Entity_Fire.h"
 #include "Entities\Entity_DemonFire.h"
 #include "Entities\Entity_Coin.h"
+#include "Entities\Entity_TextBox.h"
 #include "Player\Player.h"
 #include <string>
 #include <vector>
@@ -35,9 +36,11 @@ public:
 	void UpdateMovement(const float dt, CPlayer* cPlayer);
 
 	void Reset(void);
+	void Exit(void);
 
 	//List of entities
 	std::vector<CEntityIPos*> m_cEntityIPosList;
+	std::vector<CTextBox*> m_cTextBoxList;
 	//Main tile map
 	CTilemap* m_cTilemap;
 	CLuaScript* m_cLuascript;
@@ -51,7 +54,14 @@ public:
 
 	void SetPlayerPtr(CPlayer* cPlayer);
 
-	int GetNumberOfMoves(void);
+	int GetNumberOfMoves(void);			//Return number of moves player has taken
+	int GetTotalCoins(void);			//Return total amount of coins in level
+	int GetSmallestMoves(void);			//Return minimum amount of steps taken to complete level
+
+	int CalculateScore(void);
+	int GetNumStars(void);
+
+	void SetLevelName(std::string name);
 
 	//Generate entities
 	CEnemyZombie* GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOLDING_OBJ_TYPE t);
@@ -67,13 +77,19 @@ public:
 	CEntity_DemonFire* GenerateDemonFireEntity(int iXIndex, int iYIndex, CEntity_DemonFire::FIRE_STATE);
 	CEntity_Block_Movable* GenerateMovableBlockEntity(int iXIndex, int iYIndex);
 
+	CTextBox* GenerateTextBoxEntity(int iXIndex, int iYIndex, std::string text);
 private:
 	bool m_bDoMovements;
 	int playerStartPosX, playerStartPosY, posX, posY, enemyHoldItem, maxNumberOfCurrentEntity, initialStage;
 	bool m_bMovementReady;		//Controller for next player movement
 	bool m_bDoTileCheck;			//Check tiles player and entities are standing on
+	bool m_bPanicMode;
 	CPlayer* m_cPlayerPtr;
 	int m_iPlayerMoves;			//Total amount of moves the player has taken
+	int m_iTotalCoins;
+	int m_iMinMoves;
+	int m_iStars;
+	std::string m_strLevelName;
 };
 
 #endif

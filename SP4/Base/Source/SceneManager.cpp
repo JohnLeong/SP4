@@ -301,13 +301,16 @@ void CSceneManager::RenderText(Mesh* mesh, std::string text, Color color)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mesh->textureID);
 	glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	float temp = 0;
+	float widthDivide = 100;
 	for(unsigned i = 0; i < text.length(); ++i)
 	{
 		Mtx44 characterSpacing;
-		characterSpacing.SetToTranslation(i * 0.8f, 0, 0); //1.0f is the spacing of each character, you may change this value
+		//characterSpacing.SetToTranslation(i * 0.8f, 0, 0); //1.0f is the spacing of each character, you may change this value
+		characterSpacing.SetToTranslation((temp * 0.7f) + 0.5f, 0.5f, 0);
 		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
 		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-	
+		temp += m_iTextWidth[text[i]] / widthDivide;
 		mesh->Render((unsigned)text[i] * 6, 6);
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -315,6 +318,50 @@ void CSceneManager::RenderText(Mesh* mesh, std::string text, Color color)
 	glEnable(GL_DEPTH_TEST);
 }
 
+void CSceneManager::RenderText(Mesh* mesh, std::string text, Color color, float CharSpacing, float MaxLength)
+{
+	if (!mesh || mesh->textureID <= 0)
+		return;
+	float lineLength = 0.f;
+	float currentY = 0.5f;
+	glDisable(GL_DEPTH_TEST);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
+	glUniform3fv(m_parameters[U_TEXT_COLOR], 1, &color.r);
+	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mesh->textureID);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	float temp = 0;
+	float widthDivide = 100;
+	for (unsigned i = 0; i < text.length(); ++i)
+	{
+		Mtx44 characterSpacing;
+		//characterSpacing.SetToTranslation(i * 0.8f, 0, 0); //1.0f is the spacing of each character, you may change this value
+		if (text[i] == '/' && text[i + 1] == 'n')
+		{
+			lineLength = 0.f;
+			currentY -= 0.5f;
+			temp = 0.f;
+			++i;
+			continue;
+		}
+		if (lineLength + (temp * CharSpacing) + 0.5f > MaxLength)
+		{
+			lineLength = 0.f;
+			currentY -= 0.5f;
+			temp = 0.f;
+		}
+		characterSpacing.SetToTranslation((temp * 0.7f) + 0.5f, currentY, 0);
+		lineLength += (temp * 0.7f) + 0.5f;
+		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
+		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+		temp += m_iTextWidth[text[i]] / widthDivide;
+		mesh->Render((unsigned)text[i] * 6, 6);
+	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
+}
 /********************************************************************************
  Render text onto the screen
  ********************************************************************************/

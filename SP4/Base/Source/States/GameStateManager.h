@@ -14,6 +14,7 @@ public:
 	void Cleanup();
 
 	void ChangeState(CGameState* state);
+	void ChangeState(CGameState* state, int i, bool b);
 	void PushState(CGameState* state);
 	void PopState();
 

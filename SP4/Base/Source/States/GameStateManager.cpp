@@ -52,6 +52,22 @@ void CGameStateManager::ChangeState(CGameState* state)
 #endif
 }
 
+void CGameStateManager::ChangeState(CGameState* state, int i, bool b)
+{
+	// cleanup the current state
+	if (!StackOfStates.empty()) {
+		StackOfStates.back()->Cleanup();
+		StackOfStates.pop_back();
+	}
+
+	// store and init the new state
+	StackOfStates.push_back(state);
+	StackOfStates.back()->InitHoldData(m_window_width, m_window_height, i, b);
+#if _DEBUG
+	cout << "CGameStateManager::ChangeState" << endl;
+#endif
+}
+
 void CGameStateManager::PushState(CGameState* state)
 {
 	// pause current state

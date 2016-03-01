@@ -27,11 +27,6 @@ void CTilemap::Init(int theNumOfTiles_Width, const int theNumOfTiles_Height, flo
 	theScreenMap.resize(theNumOfTiles_MapWidth);
 	for (int i = 0; i < theNumOfTiles_MapWidth; ++i)
 		theScreenMap[i].resize(theNumOfTiles_Height);
-
-	for (int i = 0; i < CTiledata::NUM_TILE; ++i)
-	{
-		meshArray[i] = NULL;
-	}
 }
 
 bool CTilemap::LoadMap(const string mapName)

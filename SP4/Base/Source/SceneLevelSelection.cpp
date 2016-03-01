@@ -109,7 +109,7 @@ void CSceneLevelSelection::Init()
 	meshList[GEO_LEVEL_OVERVIEW]->textureID = LoadTGA("Image/LEVELS//level1_overview.tga"); //default load lv 1
 
 	//Backgrounds
-	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 45.5f, 30.5f);
+	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 45.5f, 25.5f);
 	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
@@ -122,6 +122,8 @@ void CSceneLevelSelection::Init()
 	m_fLeftAnimOffset = -210.f;
 
 	bLightEnabled = false;
+
+	m_iSelectedLevel = 1;
 }
 
 void CSceneLevelSelection::Update(double dt)
@@ -177,7 +179,7 @@ void CSceneLevelSelection::Update(double dt)
 		{
 			//level 1 button
 			Application::setChoiceVal(1);
-
+			m_iSelectedLevel = 1;
 			if (isSelectSoundPlayingkeyboard == false)
 			{
 				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
@@ -196,7 +198,7 @@ void CSceneLevelSelection::Update(double dt)
 		{
 			//level 2 button
 			Application::setChoiceVal(2);
-
+			m_iSelectedLevel = 2;
 			if (isSelectSoundPlayingkeyboard == false)
 			{
 				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
@@ -216,7 +218,7 @@ void CSceneLevelSelection::Update(double dt)
 		{
 			//level 3 button
 			Application::setChoiceVal(3);
-
+			m_iSelectedLevel = 3;
 			if (isSelectSoundPlayingkeyboard == false)
 			{
 				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
@@ -236,7 +238,7 @@ void CSceneLevelSelection::Update(double dt)
 		{
 			//level 4 button
 			Application::setChoiceVal(4);
-
+			m_iSelectedLevel = 4;
 			if (isSelectSoundPlayingkeyboard == false)
 			{
 				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
@@ -252,17 +254,18 @@ void CSceneLevelSelection::Update(double dt)
 
 void CSceneLevelSelection::UpdateAnimations(double dt)
 {
+	float fDelta = static_cast<float>(dt);
 	if (m_bAnimOffsetDir)
 	{
 		if (m_fLeftAnimOffset < 0.f)
 		{
-			m_fLeftAnimOffset += (-m_fLeftAnimOffset * 0.1f) + (dt * 10);
+			m_fLeftAnimOffset += (-m_fLeftAnimOffset * 0.1f) + (fDelta * 10.f);
 			if (m_fLeftAnimOffset > 0.f)
 				m_fLeftAnimOffset = 0.f;
 		}
 		if (m_fBotAnimOffset < 0.f)
 		{
-			m_fBotAnimOffset += (-m_fBotAnimOffset * 0.08f) + (dt * 10);
+			m_fBotAnimOffset += (-m_fBotAnimOffset * 0.08f) + (fDelta * 10.f);
 			if (m_fBotAnimOffset > 0.f)
 				m_fBotAnimOffset = 0.f;
 		}
@@ -271,17 +274,17 @@ void CSceneLevelSelection::UpdateAnimations(double dt)
 	{
 		if (m_fLeftAnimOffset > -210.f)
 		{
-			m_fLeftAnimOffset -= (-m_fLeftAnimOffset * 0.5f) + (dt * 15);
+			m_fLeftAnimOffset -= (-m_fLeftAnimOffset * 0.5f) + (fDelta * 15.f);
 			if (m_fLeftAnimOffset < -210.f)
 				m_fLeftAnimOffset = -210.f;
 		}
-		if (m_fBotAnimOffset > -1.f)
+		if (m_fBotAnimOffset > -250.f)
 		{
-			m_fBotAnimOffset -= (-m_fBotAnimOffset * 0.08f) + (dt * 15);
-			if (m_fBotAnimOffset < -1.f)
+			m_fBotAnimOffset -= (-m_fBotAnimOffset * 0.3f) + (fDelta * 15.f);
+			if (m_fBotAnimOffset < -250.f)
 			{
-				m_fBotAnimOffset = -1.f;
-				//m_bChangeState = true;
+				m_fBotAnimOffset = -250.f;
+				m_bChangeState = true;
 			}
 		}
 	}
@@ -306,7 +309,7 @@ Set is quit to main
 ********************************************************************************/
 void CSceneLevelSelection::SetISQuitToMain(bool b)
 {
-	CSceneLevelSelection::m_bBacktoMainMenu = b;
+	m_bBacktoMainMenu = b;
 }
 
 /********************************************************************************
@@ -352,6 +355,7 @@ void CSceneLevelSelection::Render()
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || CSceneManager::IsKeyDown('q'))
 		{
 			SetISQuitToMain(true);
+			m_bAnimOffsetDir = false;
 		}
 
 		if (isSelectSoundPlayingStartQuit == false)
@@ -363,7 +367,7 @@ void CSceneLevelSelection::Render()
 	else 
 	{
 		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.0f, 1.0f, 100.0f, -70.0f + m_fBotAnimOffset);
-		SetISQuitToMain(false);
+		//SetISQuitToMain(false);
 
 		if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), start_button_vec.x, start_button_vec.y, start_button_vec.x + 16.6f, start_button_vec.y + 7.5f))
 			isSelectSoundPlayingStartQuit = false;
@@ -378,6 +382,9 @@ void CSceneLevelSelection::Render()
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) )
 		{
 			SetisColWithStartButton(true);
+			m_bAnimOffsetDir = false;
+			//Do level selection here
+			Application::CurrentLevel = m_iSelectedLevel;
 		}
 
 		if (isSelectSoundPlayingStartQuit == false)
@@ -385,7 +392,6 @@ void CSceneLevelSelection::Render()
 			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 			isSelectSoundPlayingStartQuit = true;
 		}
-
 	}
 	else 
 	{
@@ -413,21 +419,21 @@ void CSceneLevelSelection::Render()
 		//Render the text dialogue for lv 2 
 		std::ostringstream dialogue;
 		dialogue << "Description:" << "\n" << "Development in progress..";
-		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f);
+		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f + m_fBotAnimOffset);
 	}
 	else if (Application::getChoiceVal() == 3)
 	{
 		//Render the text dialogue for lv 3 
 		std::ostringstream dialogue;
 		dialogue << "Description:" << "\n" << "Development in progress..";
-		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f);
+		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f + m_fBotAnimOffset);
 	}
 	else if (Application::getChoiceVal() == 4)
 	{
 		//Render the text dialogue for lv 4 
 		std::ostringstream dialogue;
 		dialogue << "Description:" << "\n" << "Development in progress..";
-		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f);
+		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f + m_fBotAnimOffset);
 	}
 
 
@@ -470,15 +476,6 @@ void CSceneLevelSelection::Render()
 		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -45.0f);
 		break;
 	}
-
-#if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "SceneLevelSelection", Color(1.f, 1.f, 1.f), 10.f, -160.f, 80.f);
-
-	//std::ostringstream ss;
-	//ss.precision(5);
-	//ss << fps;
-	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 10.f, -180.f, -90.f);
-#endif
 }
 
 /********************************************************************************
