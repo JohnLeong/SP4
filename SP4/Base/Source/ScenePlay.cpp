@@ -548,18 +548,22 @@ void CScenePlay::RenderInventory()
 		RenderTextOnScreen(meshList[GEO_TEXT],s_coins.str(), Color(0.0f, 0.0f, 0.0f), 20.0f, 92.0f, -69.0f);
 	
 	ostringstream s_keys_red;
+	RenderTextOnScreen(meshList[GEO_TEXT], "4", Color(1.0f, 0.0f, 0.0f), 10.0f, 105.0f, -34.0f);
 	s_keys_red << m_cPlayer->GetKeys_Red();
 	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_red.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 135.0f, -40.0f);
 
 	ostringstream s_keys_blue;
+	RenderTextOnScreen(meshList[GEO_TEXT], "3", Color(0.0f, 0.0f, 1.0f), 10.0f, 65.0f, -34.0f);
 	s_keys_blue << m_cPlayer->GetKeys_Blue();
 	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_blue.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 92.0f, -40.0f);
 
 	ostringstream s_keys_green;
+	RenderTextOnScreen(meshList[GEO_TEXT], "1", Color(0.0f, 1.0f, 0.0f), 10.0f, 65.0f, -20.0f);
 	s_keys_green << m_cPlayer->GetKeys_Green();
 	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_green.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 92.0f, -26.0f);
 
 	ostringstream s_keys_yellow;
+	RenderTextOnScreen(meshList[GEO_TEXT], "2", Color(1.0f, 1.0f, 0.0f), 10.0f, 105.0f, -20.0f);
 	s_keys_yellow << m_cPlayer->GetKeys_Yellow();
 	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_yellow.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 135.0f, -26.0f);
 

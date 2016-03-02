@@ -1,6 +1,6 @@
 #include "Achievements.h"
 #include "Properties.h"
-
+	
 string CAchievements::propertyName[CAchievements::NUM_Properties] = { "Name", "Title", "TotalProperties", "Properties", "Completed", "ShowedOnce" };
 
 
@@ -86,5 +86,5 @@ void CAchievements::Save(fstream& file, int id)
 	}
 	file << propertyName[Completed] << id << " = " << mUnlocked << "\n";
 	file << propertyName[Completed] << id << " = " << mUnlocked << "\n";
-	file << propertyName[ShowOnce] << id << " = " << mShowedOnce << "\n";
+	file << propertyName[ShowOnce] << id << " = " << mShowedOnce << "\n\n";
 }

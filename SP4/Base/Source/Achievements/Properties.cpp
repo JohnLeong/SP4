@@ -100,5 +100,5 @@ void CProperties::Save(fstream& file, int id)
 	file << propertyName[Value] << id << " = " << mValue << "\n";
 	file << propertyName[Active] << id << " = " << "\"" << mActive << "\"" << "\n";
 	file << propertyName[ActivationValue] << id << " = " << mActivationValue << "\n";
-	file << propertyName[Completed] << id << " = " << mClearActive << "\n";
+	file << propertyName[Completed] << id << " = " << mClearActive << "\n\n";
 }
