@@ -2,14 +2,14 @@ TotalProperties  = 4
 
 Name1 = "Name1"
 Title1 = "Death"
-Value1 = 0
+Value1 = 1
 Active1 = "ACTIVE_EQUAL"
 ActivationValue1 = 1
-Completed1 = 0
+Completed1 = 1
 
 Name2 = "Name2"
 Title2 = "Death"
-Value2 = 0
+Value2 = 1
 Active2 = "ACTIVE_EQUAL"
 ActivationValue2 = 2
 Completed2 = 0

@@ -22,11 +22,13 @@ class CSceneMenu : public CSceneManager
 		GEO_PLAY,
 		GEO_INSTRUCTIONS,
 		GEO_OPTIONS,
+		GEO_ACHIEVEMENT,
 		GEO_EXIT,
 		//menus (highlighted)
 		GEO_PLAY_H,
 		GEO_INSTRUCTIONS_H,
 		GEO_OPTIONS_H,
+		GEO_ACHIEVEMENT_H,
 		GEO_EXIT_H,
 
 		//Backgrounds
@@ -60,6 +62,7 @@ public:
 		NEXT_INSTRUCTIONS,
 		NEXT_OPTIONS,
 		NEXT_EXIT,
+		NEXT_ACHIEVEMENT,
 		NEXT_PLAY,
 	};
 
@@ -77,7 +80,7 @@ protected:
 	bool isConfirmsoundPlaying;
 
 	//virutally create vector positions for the buttons
-	Vector3 geo_pos[4];
+	Vector3 geo_pos[5];
 
 	float m_fLeftAnimOffset;
 	float m_fBotAnimOffset;

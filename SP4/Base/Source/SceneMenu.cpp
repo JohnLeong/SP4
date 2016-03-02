@@ -55,7 +55,7 @@ void CSceneMenu::Init()
 		//0 = play 1 = instructions 2 = options 3 = exit
 		geo_pos[i].Set(69.0f, 61.0f - (15.0f * i), 0.0f);
 	}
-
+	geo_pos[4].Set(135.0f, 1.0f, 0.0f);
 	//play button
 	meshList[GEO_PLAY] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_PLAY]->textureID = LoadTGA("Image/MENU//play_button.tga");
@@ -68,6 +68,9 @@ void CSceneMenu::Init()
 	//exit button
 	meshList[GEO_EXIT] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_EXIT]->textureID = LoadTGA("Image/MENU//exit_button.tga");
+	//achievement button
+	meshList[GEO_ACHIEVEMENT] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
+	meshList[GEO_ACHIEVEMENT]->textureID = LoadTGA("Image/MENU//exit_button.tga");
 
 	//play button highlighted
 	meshList[GEO_PLAY_H] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
@@ -81,6 +84,9 @@ void CSceneMenu::Init()
 	//exit button highlighted
 	meshList[GEO_EXIT_H] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_EXIT_H]->textureID = LoadTGA("Image/MENU//h_exit_button.tga");
+	//achievement button highlighted
+	meshList[GEO_ACHIEVEMENT_H] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
+	meshList[GEO_ACHIEVEMENT_H]->textureID = LoadTGA("Image/MENU//h_exit_button.tga");
 
 	//Backgrounds
 	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.5f, 0.85f);
@@ -138,6 +144,10 @@ void CSceneMenu::Update(double dt)
 			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_EXIT;
 			break;
+		case 5:
+			m_bAnimOffsetDir = false;
+			m_iNextState = NEXT_ACHIEVEMENT;
+			break;
 		default:
 			break;
 		}
@@ -147,9 +157,9 @@ void CSceneMenu::Update(double dt)
 	{
 
 		Application::setChoiceVal(Application::getChoiceVal() - 1);
-		//1 = play, 2 = instructions, 3 = options, 4 = exit
+		//1 = play, 2 = instructions, 3 = options, 4 = exit, 5 = achievement
 		if (Application::getChoiceVal() < 1)
-			Application::setChoiceVal(4);
+			Application::setChoiceVal(5);
 
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
@@ -164,8 +174,8 @@ void CSceneMenu::Update(double dt)
 	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
 	{
 		Application::setChoiceVal(Application::getChoiceVal() + 1);
-		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal()  > 4)
+		//1 = play, 2 = instructions, 3 = options, 4 = exit, 5 = achievement
+		if (Application::getChoiceVal()  > 5)
 			Application::setChoiceVal(1);
 
 		//play select sound if false
@@ -270,6 +280,30 @@ void CSceneMenu::Update(double dt)
 		{
 			m_bAnimOffsetDir = false;
 			m_iNextState = NEXT_EXIT;
+
+			if (isConfirmsoundPlaying == false)
+			{
+				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				isConfirmsoundPlaying = true;
+			}
+		}
+		isKeyBoard = false;
+	}
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[4].x, geo_pos[4].y, geo_pos[4].x + buttonXoffset, geo_pos[4].y + buttonYoffset)
+		|| Application::IsKeyPressed(VK_RETURN)) // exit button
+	{
+		Application::setChoiceVal(5);
+
+		//play select sound if false
+		if (isSelectSoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			isSelectSoundPlaying = true;
+		}
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
+		{
+			m_bAnimOffsetDir = false;
+			m_iNextState = NEXT_ACHIEVEMENT;
 
 			if (isConfirmsoundPlaying == false)
 			{
@@ -387,34 +421,42 @@ void CSceneMenu::Render()
 		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 2.5f);
 		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -25.0f);
 		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -52.5f);
-
+		RenderMeshIn2D(meshList[GEO_ACHIEVEMENT], false, 1, 1, 120.0f, -75.0f + m_fBotAnimOffset * 100);
 		break;
 	case 2: //instructions button highlighted
 		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 30.0f);
 		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f+ m_fLeftAnimOffset, 2.5f);
 		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -25.0f);
 		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -52.5f);
-
+		RenderMeshIn2D(meshList[GEO_ACHIEVEMENT], false, 1, 1, 120.0f, -75.0f + m_fBotAnimOffset * 100);
 		break;
 	case 3: //options button highlighted
 		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 30.0f);
 		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 2.5f);
 		RenderMeshIn2D(meshList[GEO_OPTIONS_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f+ m_fLeftAnimOffset, -25.0f);
 		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -52.5f);
-
+		RenderMeshIn2D(meshList[GEO_ACHIEVEMENT], false, 1, 1, 120.0f, -75.0f + m_fBotAnimOffset * 100);
 		break;
 	case 4: //exit button highlighted
 		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 30.0f);
 		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 2.5f);
 		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -25.0f);
 		RenderMeshIn2D(meshList[GEO_EXIT_H], false, buttonSizeOffset, buttonSizeOffset, 0.0f+ m_fLeftAnimOffset, -52.5f);
-
+		RenderMeshIn2D(meshList[GEO_ACHIEVEMENT], false, 1, 1, 120.0f, -75.0f + m_fBotAnimOffset * 100);
+		break;
+	case 5: //achievement button highlighted
+		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f + m_fLeftAnimOffset, 30.0f);
+		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f + m_fLeftAnimOffset, 2.5f);
+		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f + m_fLeftAnimOffset, -25.0f);
+		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f + m_fLeftAnimOffset, -52.5f);
+		RenderMeshIn2D(meshList[GEO_ACHIEVEMENT_H], false, buttonSizeOffset, buttonSizeOffset, 120.0f, -75.0f + m_fBotAnimOffset * 100);
 		break;
 	default: //default, no option chosen
 		RenderMeshIn2D(meshList[GEO_PLAY], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 30.0f);
 		RenderMeshIn2D(meshList[GEO_INSTRUCTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, 2.5f);
 		RenderMeshIn2D(meshList[GEO_OPTIONS], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -25.0f);
 		RenderMeshIn2D(meshList[GEO_EXIT], false, 1, 1, 0.0f+ m_fLeftAnimOffset, -52.5f);
+		RenderMeshIn2D(meshList[GEO_ACHIEVEMENT], false, 1, 1, 120.0f, -75.0f +  m_fBotAnimOffset * 100);
 		break;
 	}
 

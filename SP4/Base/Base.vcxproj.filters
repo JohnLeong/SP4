@@ -250,6 +250,12 @@
     <ClCompile Include="Source\Player\Profile.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneAchievements.cpp">
+      <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\AchievementState.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -375,9 +381,6 @@
     <ClInclude Include="Source\Entities\Entity_Block_Movable.h">
       <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h">
-      <Filter>Game State Management\States\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Entities\Entity_Fire.h">
       <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
@@ -411,9 +414,6 @@
     <ClInclude Include="Source\Achievements\Properties.h">
       <Filter>Achievements</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.h">
-      <Filter>Game State Management\States\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Entities\Entity_DemonFire.h">
       <Filter>Entities\GameplayEntities</Filter>
     </ClInclude>
@@ -434,6 +434,18 @@
     </ClInclude>
     <ClInclude Include="Source\Player\Profile.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneAchievements.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\AchievementState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\InstructionState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\LevelSelectionState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

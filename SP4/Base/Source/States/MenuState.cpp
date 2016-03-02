@@ -8,6 +8,7 @@ using namespace std;
 #include "OptionsState.h"
 #include "InstructionState.h"
 #include "LevelSelectionState.h"
+#include "AchievementState.h"
 #include "../Application.h"
 
 CMenuState CMenuState::theMenuState;
@@ -111,6 +112,9 @@ void CMenuState::Update(CGameStateManager* theGSM)
 	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 4
 		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 4)
 		exit(0);
+	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 5
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 5)
+		theGSM->ChangeState(CAchievementState::Instance());
 }
 
 void CMenuState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
@@ -130,6 +134,9 @@ void CMenuState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 			break;
 		case CSceneMenu::NEXT_OPTIONS:
 			theGSM->ChangeState(COptionsState::Instance());
+			break;
+		case CSceneMenu::NEXT_ACHIEVEMENT:
+			theGSM->ChangeState(CAchievementState::Instance());
 			break;
 		case CSceneMenu::NEXT_EXIT:
 			Application::AppisRunning = false;

@@ -25,6 +25,7 @@
     <ClCompile Include="Source\PhysicsObject.cpp" />
     <ClCompile Include="Source\PhysicsObjectManager.cpp" />
     <ClCompile Include="Source\Player\Profile.cpp" />
+    <ClCompile Include="Source\SceneAchievements.cpp" />
     <ClCompile Include="Source\SceneInstruction.cpp" />
     <ClCompile Include="Source\SceneLevelSelection.cpp" />
     <ClCompile Include="Source\SoundManager.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="Source\LuaScript.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Node.cpp" />
+    <ClCompile Include="Source\States\AchievementState.cpp" />
     <ClCompile Include="Source\States\InstructionState.cpp" />
     <ClCompile Include="Source\States\LevelSelectionState.cpp" />
     <ClCompile Include="Source\Tiledata.cpp" />
@@ -69,8 +71,6 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\InstructionState.h" />
-    <ClInclude Include="..\..\..\..\..\vincent%27s\Desktop\SP4\SP4\Base\Source\States\LevelSelectionState.h" />
     <ClInclude Include="Source\Achievements\Achievements.h" />
     <ClInclude Include="Source\Achievements\Properties.h" />
     <ClInclude Include="Source\define.h" />
@@ -86,6 +86,7 @@
     <ClInclude Include="Source\PhysicsObject.h" />
     <ClInclude Include="Source\PhysicsObjectManager.h" />
     <ClInclude Include="Source\Player\Profile.h" />
+    <ClInclude Include="Source\SceneAchievements.h" />
     <ClInclude Include="Source\SceneInstruction.h" />
     <ClInclude Include="Source\SceneLevelSelection.h" />
     <ClInclude Include="Source\SoundManager.h" />
@@ -107,7 +108,10 @@
     <ClInclude Include="Source\LoadTGA.h" />
     <ClInclude Include="Source\LuaScript.h" />
     <ClInclude Include="Source\Node.h" />
+    <ClInclude Include="Source\States\AchievementState.h" />
     <ClInclude Include="Source\States\GameState.h" />
+    <ClInclude Include="Source\States\InstructionState.h" />
+    <ClInclude Include="Source\States\LevelSelectionState.h" />
     <ClInclude Include="Source\Tiledata.h" />
     <ClInclude Include="Source\Tileinfo.h" />
     <ClInclude Include="Source\Tilemap.h" />

@@ -41,7 +41,6 @@ CSoundManager::CSoundManager(string soundFile)
 		cout << "Error: Cout not create Sound engine" << endl;
 		//exit(0);
 	}
-
 	soundEngine->setSoundVolume(1);
 }
 
@@ -56,8 +55,6 @@ CSoundManager::~CSoundManager()
 		soundEngineBGM->drop();
 	if (currentSound)
 		currentSound->drop();
-
-		
 }
 
 /********************************************************************************
