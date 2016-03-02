@@ -80,26 +80,48 @@ void CSceneLevelSelection::Init()
 	meshList[GEO_QUAD]->material.kDiffuse.Set(0.f, 0.f, 0.f);
 	meshList[GEO_QUAD]->textureID = LoadTGA("Image//GUI/blank_tile.tga");
 
-	//quit buttons
-	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMeshCenter("quit button", Color(1, 1, 1), 0.0f, 0.0f, 30.0f, 15.0f);
-	meshList[GEO_QUIT_BUTTON]->textureID = LoadTGA("Image/INVENTORY//Quit.tga");
 
 	//levels buttons
-	meshList[GEO_LEVEL1_BUTTON] = MeshBuilder::Generate2DMeshCenter("lv1 button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
-	meshList[GEO_LEVEL1_BUTTON]->textureID = LoadTGA("Image/LEVELS//level1.tga");
+	meshList[GEO_LEVEL1_BUTTON] = MeshBuilder::Generate2DMeshCenter("lv1 button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
+	meshList[GEO_LEVEL1_BUTTON]->textureID = LoadTGA("Image/LEVELS//level1_button.tga");
 
 	meshList[GEO_LEVEL2_BUTTON] = MeshBuilder::Generate2DMeshCenter("lv2 button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
-	meshList[GEO_LEVEL2_BUTTON]->textureID = LoadTGA("Image/LEVELS//level2.tga");
+	meshList[GEO_LEVEL2_BUTTON]->textureID = LoadTGA("Image/LEVELS//level2_button.tga");
 
 	meshList[GEO_LEVEL3_BUTTON] = MeshBuilder::Generate2DMeshCenter("lv3 button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
-	meshList[GEO_LEVEL3_BUTTON]->textureID = LoadTGA("Image/LEVELS//level3.tga");
+	meshList[GEO_LEVEL3_BUTTON]->textureID = LoadTGA("Image/LEVELS//level3_button.tga");
 
 	meshList[GEO_LEVEL4_BUTTON] = MeshBuilder::Generate2DMeshCenter("lv4 button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
-	meshList[GEO_LEVEL4_BUTTON]->textureID = LoadTGA("Image/LEVELS//level4.tga");
+	meshList[GEO_LEVEL4_BUTTON]->textureID = LoadTGA("Image/LEVELS//level4_button.tga");
+	
+	//levels buttons highlighted
+	meshList[GEO_LEVEL1_BUTTON_HIGHLIGHTED] = MeshBuilder::Generate2DMeshCenter("lv1 button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
+	meshList[GEO_LEVEL1_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/LEVELS//h_level1_button.tga");
+
+	meshList[GEO_LEVEL2_BUTTON_HIGHLIGHTED] = MeshBuilder::Generate2DMeshCenter("lv2 button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
+	meshList[GEO_LEVEL2_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/LEVELS//h_level2_button.tga");
+
+	meshList[GEO_LEVEL3_BUTTON_HIGHLIGHTED] = MeshBuilder::Generate2DMeshCenter("lv3 button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
+	meshList[GEO_LEVEL3_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/LEVELS//h_level3_button.tga");
+
+	meshList[GEO_LEVEL4_BUTTON_HIGHLIGHTED] = MeshBuilder::Generate2DMeshCenter("lv4 button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
+	meshList[GEO_LEVEL4_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/LEVELS//h_level4_button.tga");
 	
 	//start button
 	meshList[GEO_START_BUTTON] = MeshBuilder::Generate2DMeshCenter("start button", Color(1, 1, 1), 0.0f, 0.0f, 30.0f, 15.0f);
 	meshList[GEO_START_BUTTON]->textureID = LoadTGA("Image/LEVELS//start_button.tga");
+	
+	//start highlighted
+	meshList[GEO_START_BUTTON_HIGHLIGHTED] = MeshBuilder::Generate2DMeshCenter("start button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 30.0f, 15.0f);
+	meshList[GEO_START_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/LEVELS//h_start_button.tga");
+
+	//quit buttons
+	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMeshCenter("quit button", Color(1, 1, 1), 0.0f, 0.0f, 30.0f, 15.0f);
+	meshList[GEO_QUIT_BUTTON]->textureID = LoadTGA("Image/INVENTORY//Quit.tga");
+
+	//quit buttons highlighted
+	meshList[GEO_QUIT_BUTTON_HIGHLIGHTED] = MeshBuilder::Generate2DMeshCenter("quit button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 30.0f, 15.0f);
+	meshList[GEO_QUIT_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/INVENTORY//h_Quit.tga");
 
 	//Panic buttons
 	meshList[GEO_BUTTON_PANIC_OFF] = MeshBuilder::Generate2DMeshCenter("start button", Color(1, 1, 1), 0.0f, 0.0f, 15.f, 15.0f);
@@ -374,7 +396,7 @@ void CSceneLevelSelection::Render()
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 16.0f, quit_button_vec.y + 7.5f)
 		|| CSceneManager::IsKeyDown('q'))
 	{
-		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.25f, 1.25f, 100.0f, -70.0f + m_fBotAnimOffset);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON_HIGHLIGHTED], false, 1.25f, 1.25f, 100.0f, -70.0f + m_fBotAnimOffset);
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || CSceneManager::IsKeyDown('q'))
 		{
@@ -401,7 +423,7 @@ void CSceneLevelSelection::Render()
 	//on mouse hover start button 
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), start_button_vec.x, start_button_vec.y, start_button_vec.x + 16.6f, start_button_vec.y + 7.5f))
 	{
-		RenderMeshIn2D(meshList[GEO_START_BUTTON], false, 1.25f, 1.25f, -20.0f, -70.0f + m_fBotAnimOffset);
+		RenderMeshIn2D(meshList[GEO_START_BUTTON_HIGHLIGHTED], false, 1.25f, 1.25f, -20.0f, -70.0f + m_fBotAnimOffset);
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) )
 		{
@@ -442,14 +464,14 @@ void CSceneLevelSelection::Render()
 	{
 		//Render the text dialogue for lv 2 
 		std::ostringstream dialogue;
-		dialogue << "Description:" << "\n" << "Development in progress..";
+		dialogue << "Description:" << "\n" << "Who is that guy...? is he friendly?";
 		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f + m_fBotAnimOffset);
 	}
 	else if (Application::getChoiceVal() == 3)
 	{
 		//Render the text dialogue for lv 3 
 		std::ostringstream dialogue;
-		dialogue << "Description:" << "\n" << "Development in progress..";
+		dialogue << "Description:" << "\n" << "KEYS!?..........Door?!......hmmm";
 		RenderTextOnScreen(meshList[GEO_TEXT], dialogue.str(), Color(0.f, 0.f, 0.f), 5.0f, -42.f, -40.f + m_fBotAnimOffset);
 	}
 	else if (Application::getChoiceVal() == 4)
@@ -465,7 +487,7 @@ void CSceneLevelSelection::Render()
 	switch (Application::getChoiceVal())
 	{
 	case 1: //level 1 button highlighted
-		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, 45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, 45.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -45.0f);
@@ -475,7 +497,7 @@ void CSceneLevelSelection::Render()
 		break;
 	case 2: //level 2 button highlighted
 		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 45.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, 15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, 15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -45.0f);
 
@@ -483,7 +505,7 @@ void CSceneLevelSelection::Render()
 	case 3: //level 3 button highlighted
 		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 45.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -15.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -45.0f);
 
 		break;
@@ -491,7 +513,7 @@ void CSceneLevelSelection::Render()
 		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 45.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -15.0f);
-		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -45.0f);
+		RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -45.0f);
 		break;
 	default: //default, no option chosen
 		RenderMeshIn2D(meshList[GEO_LEVEL1_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 45.0f);

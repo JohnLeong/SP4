@@ -22,14 +22,17 @@ class  CSceneLevelSelection : public CSceneManager
 		GEO_QUAD,
 		GEO_WASD,
 		GEO_MOUSE,
-		//buttons
-		GEO_QUIT_BUTTON,
 
 		//levels
 		GEO_LEVEL1_BUTTON,
 		GEO_LEVEL2_BUTTON,
 		GEO_LEVEL3_BUTTON,
 		GEO_LEVEL4_BUTTON,
+
+		GEO_LEVEL1_BUTTON_HIGHLIGHTED,
+		GEO_LEVEL2_BUTTON_HIGHLIGHTED,
+		GEO_LEVEL3_BUTTON_HIGHLIGHTED,
+		GEO_LEVEL4_BUTTON_HIGHLIGHTED,
 
 		//level overview images
 		GEO_LEVEL_OVERVIEW,
@@ -39,6 +42,11 @@ class  CSceneLevelSelection : public CSceneManager
 
 		//start button
 		GEO_START_BUTTON,
+		GEO_START_BUTTON_HIGHLIGHTED,
+
+		//quit button
+		GEO_QUIT_BUTTON,
+		GEO_QUIT_BUTTON_HIGHLIGHTED,
 
 		//Backgrounds
 		GEO_BACKGROUND_BASE,

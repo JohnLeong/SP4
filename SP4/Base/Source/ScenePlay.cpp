@@ -141,8 +141,13 @@ void CScenePlay::Init()
 	//Quit button
 	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMeshCenter("quit button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
 	meshList[GEO_QUIT_BUTTON]->textureID = LoadTGA("Image/INVENTORY//Quit.tga");
+	meshList[GEO_QUIT_BUTTON_HIGHLIGHTED] = MeshBuilder::Generate2DMeshCenter("quit button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
+	meshList[GEO_QUIT_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/INVENTORY//h_Quit.tga");
+	//Restart button
 	meshList[GEO_RESTART_BUTTON] = MeshBuilder::Generate2DMeshCenter("restart button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
 	meshList[GEO_RESTART_BUTTON]->textureID = LoadTGA("Image/GUI//button_restart.tga");
+	meshList[GEO_RESTART_BUTTON_HIGHLIGHTED] = MeshBuilder::Generate2DMeshCenter("restart button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
+	meshList[GEO_RESTART_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/GUI//h_button_restart.tga");
 	meshList[GEO_NEXT_BUTTON] = MeshBuilder::Generate2DMeshCenter("next button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
 	meshList[GEO_NEXT_BUTTON]->textureID = LoadTGA("Image/GUI//button_next.tga");
 
@@ -581,7 +586,7 @@ void CScenePlay::RenderInventory()
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 11.0f, quit_button_vec.y + 5.42f)
 		|| CSceneManager::IsKeyDown('q'))
 	{
-		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.1f, 1.1f, 140.0f, 55);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON_HIGHLIGHTED], false, 1.1f, 1.1f, 140.0f, 55);
 		
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || CSceneManager::IsKeyDown('q'))
 		{
