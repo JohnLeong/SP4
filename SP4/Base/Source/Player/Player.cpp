@@ -4,6 +4,7 @@ CPlayer::CPlayer()
 : direction(PD_DOWN)
 , action(PA_IDLE_DOWN)
 , m_NextDir(PD_NONE)
+, m_cFace(PD_DOWN)
 , m_iCoins(0)
 , m_iKeys_red(0)
 , m_iKeys_blue(0)
@@ -180,6 +181,23 @@ Vector3 CPlayer::GetNextDirectionPos(void)
 	return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex), 0));
 }
 
+Vector3 CPlayer::GetFacingPos(void)
+{
+	switch (m_cFace)
+	{
+	case PD_UP:
+		return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex - 1), 0));
+	case PD_DOWN:
+		return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex + 1), 0));
+	case PD_RIGHT:
+		return (Vector3(static_cast<float>(this->m_iXIndex + 1), static_cast<float>(this->m_iYIndex), 0));
+	case PD_LEFT:
+		return (Vector3(static_cast<float>(this->m_iXIndex - 1), static_cast<float>(this->m_iYIndex), 0));
+	default:
+		return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex), 0));
+	}
+	return (Vector3(static_cast<float>(this->m_iXIndex), static_cast<float>(this->m_iYIndex), 0));
+}
 
 bool CPlayer::IsMoving(void)
 {
@@ -190,6 +208,11 @@ void CPlayer::SetNextDirection(CPlayer::PlayerDirection p)
 {
 	this->m_NextDir = p;
 	this->direction = p;
+}
+
+void CPlayer::SetFace(CPlayer::PlayerDirection p)
+{
+	this->m_cFace = p;
 }
 
 void CPlayer::DoCurrentTileCollision(CTilemap* cTilemap)
@@ -535,7 +558,41 @@ bool CPlayer::GetHasReachedEndLevel(void)
 
 void CPlayer::UseItem(ITEM_SLOT item)
 {
-	switch (item)
+	std::cout << m_cFace << std::endl;
+	switch (m_cTilemap->GetTile(GetFacingPos().x, GetFacingPos().y).GetCollisionType())
+	{
+	case CTiledata::COL_LOCK_GREEN:
+		if (m_iKeys_green > 0)
+		{
+			--m_iKeys_green;
+			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
+		}
+		break;
+	case CTiledata::COL_LOCK_YELLOW:
+		if (m_iKeys_yellow > 0)
+		{
+			--m_iKeys_yellow;
+			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
+		}
+		break;
+	case CTiledata::COL_LOCK_BLUE:
+		if (m_iKeys_blue > 0)
+		{
+			--m_iKeys_blue;
+			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
+		}
+		break;
+	case CTiledata::COL_LOCK_RED:
+		if (m_iKeys_red > 0)
+		{
+			--m_iKeys_red;
+			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
+		}
+		break;
+	default:
+		break;
+	}
+	/*switch (item)
 	{
 	case CPlayer::SLOT_01:
 		if (m_iKeys_green > 0)
@@ -639,5 +696,5 @@ void CPlayer::UseItem(ITEM_SLOT item)
 		break;
 	default:
 		break;
-	}
+	}*/
 }

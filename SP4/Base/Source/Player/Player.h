@@ -57,7 +57,9 @@ public:
 	PlayerDirection GetNextDirection(void);
 	//Vector3 GetNextDirectionPosition(void);
 	virtual Vector3 GetNextDirectionPos(void);
+	virtual Vector3 GetFacingPos(void);
 	void SetNextDirection(PlayerDirection);
+	void SetFace(PlayerDirection);
 
 	void AddAnimation(Animation* _anim, PlayerAction playerState);
 
@@ -90,6 +92,7 @@ private:
 
 	PlayerDirection direction;
 	PlayerDirection m_NextDir;
+	PlayerDirection m_cFace;
 
 	PlayerAction action;
 

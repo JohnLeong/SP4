@@ -271,13 +271,25 @@ void CScenePlay::Update(double dt)
 	if (m_cLevel.IsMovementReady() && !m_cPlayer->GetHasReachedEndLevel() && m_cPlayer->IsAlive())
 	{
 		if (IsKeyDown('w'))
+		{
+			m_cPlayer->SetFace(CPlayer::PD_UP);
 			m_cPlayer->SetNextDirection(CPlayer::PD_UP);
+		}
 		else if (IsKeyDown('s'))
+		{
+			m_cPlayer->SetFace(CPlayer::PD_DOWN);
 			m_cPlayer->SetNextDirection(CPlayer::PD_DOWN);
+		}
 		else if (IsKeyDown('d'))
+		{
+			m_cPlayer->SetFace(CPlayer::PD_RIGHT);
 			m_cPlayer->SetNextDirection(CPlayer::PD_RIGHT);
+		}
 		else if (IsKeyDown('a'))
+		{
+			m_cPlayer->SetFace(CPlayer::PD_LEFT);
 			m_cPlayer->SetNextDirection(CPlayer::PD_LEFT);
+		}
 	}
 	if (IsKeyDownOnce('1'))
 		m_cPlayer->UseItem(CPlayer::SLOT_01);
@@ -287,7 +299,8 @@ void CScenePlay::Update(double dt)
 		m_cPlayer->UseItem(CPlayer::SLOT_03);
 	if (IsKeyDownOnce('4'))
 		m_cPlayer->UseItem(CPlayer::SLOT_04);
-
+	if (IsKeyDownOnce(VK_RETURN))
+		m_cPlayer->UseItem(CPlayer::SLOT_01);
 
 	//Update player
 	if (m_cPlayer->IsActive())
@@ -377,7 +390,7 @@ void CScenePlay::RenderGUI()
 {
 	if (m_bShowWin)
 		RenderWin();
-	if (!m_cPlayer->IsAlive())
+	if (!m_cPlayer->IsAlive() && !m_cPlayer->IsActive())
 		RenderLose();
 }
 
