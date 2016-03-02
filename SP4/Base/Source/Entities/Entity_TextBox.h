@@ -19,6 +19,8 @@ public:
 	static float GetBoxScaleX(void);
 	static float GetBoxScaleY(void);
 
+	int GetCurrentCharIndex(void);
+
 	virtual void Update(const float dt);		// Update
 	static void UpdateBox(const float dt);
 	static void ResetBox(void);
@@ -27,6 +29,7 @@ protected:
 	std::string m_Text;
 	bool m_bActivated;
 	bool m_bWasActivated;
+	int m_iCurrentCharIndex;
 
 	static bool m_bShowBox;
 	static bool m_bOpenBox;

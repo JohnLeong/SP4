@@ -247,9 +247,6 @@
     <ClCompile Include="Source\Entities\Entity_TextBox.cpp">
       <Filter>Entities\GameplayEntities</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player\Profile.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SceneSplash.h">
@@ -431,9 +428,6 @@
     </ClInclude>
     <ClInclude Include="Source\States\GameState.h">
       <Filter>Game State Management\States\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player\Profile.h">
-      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

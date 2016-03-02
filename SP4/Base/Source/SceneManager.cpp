@@ -318,7 +318,7 @@ void CSceneManager::RenderText(Mesh* mesh, std::string text, Color color)
 	glEnable(GL_DEPTH_TEST);
 }
 
-void CSceneManager::RenderText(Mesh* mesh, std::string text, Color color, float CharSpacing, float MaxLength)
+void CSceneManager::RenderText(Mesh* mesh, std::string text, Color color, float CharSpacing, float MaxLength, int charCutOff)
 {
 	if (!mesh || mesh->textureID <= 0)
 		return;
@@ -336,6 +336,8 @@ void CSceneManager::RenderText(Mesh* mesh, std::string text, Color color, float 
 	float widthDivide = 100;
 	for (unsigned i = 0; i < text.length(); ++i)
 	{
+		if (i == charCutOff)
+			break;
 		Mtx44 characterSpacing;
 		//characterSpacing.SetToTranslation(i * 0.8f, 0, 0); //1.0f is the spacing of each character, you may change this value
 		if (text[i] == '/' && text[i + 1] == 'n')
@@ -407,7 +409,7 @@ void CSceneManager::RenderTextOnScreen(Mesh* mesh, std::string text, Color color
 			modelStack.PopMatrix();
 		viewStack.PopMatrix();
 	projectionStack.PopMatrix();
-
+	glEnable(GL_DEPTH_TEST);
 }
 
 /********************************************************************************

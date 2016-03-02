@@ -52,6 +52,7 @@ void CSceneLevelSelection::Init()
 
 	//vector of start button pos
 	start_button_vec.Set(69.0f, 7.5f, 0.0f);
+	panic_button_vec = Vector3(90.0f, 7.5f, 0.0f);
 
 	//vector positions of the level buttons
 	for (int i = 0; i < 4; i++)
@@ -100,6 +101,12 @@ void CSceneLevelSelection::Init()
 	meshList[GEO_START_BUTTON] = MeshBuilder::Generate2DMeshCenter("start button", Color(1, 1, 1), 0.0f, 0.0f, 30.0f, 15.0f);
 	meshList[GEO_START_BUTTON]->textureID = LoadTGA("Image/LEVELS//start_button.tga");
 
+	//Panic buttons
+	meshList[GEO_BUTTON_PANIC_OFF] = MeshBuilder::Generate2DMeshCenter("start button", Color(1, 1, 1), 0.0f, 0.0f, 15.f, 15.0f);
+	meshList[GEO_BUTTON_PANIC_OFF]->textureID = LoadTGA("Image/GUI//button_panic_off.tga");
+	meshList[GEO_BUTTON_PANIC_ON] = MeshBuilder::Generate2DMeshCenter("start button", Color(1, 1, 1), 0.0f, 0.0f, 15.f, 15.0f);
+	meshList[GEO_BUTTON_PANIC_ON]->textureID = LoadTGA("Image/GUI//button_panic_on.tga");
+
 	//description backdrop
 	meshList[GEO_DESCRIPTION_BACKDROP] = MeshBuilder::Generate2DMeshCenter("description box", Color(1, 1, 1), 0.0f, 0.0f, 160.0f, 50.0f);
 	meshList[GEO_DESCRIPTION_BACKDROP]->textureID = LoadTGA("Image/LEVELS//Description_box.tga");
@@ -131,6 +138,17 @@ void CSceneLevelSelection::Update(double dt)
 	CSceneManager::Update(dt);
 
 	UpdateAnimations(dt);
+
+	//for debugging
+	if (Application::IsKeyPressed('1'))
+	{
+		//cout << "boolean: " << GetIsQuitToMain() << endl;
+		cout << "current mouse x: " << Application::getMouseWorldX() << endl;
+		cout << "current mouse y: " << Application::getMouseWorldY() << endl;
+		//cout << "current mouse x: " << Application::mouse_current_x << endl;
+		//cout << "current mouse y: " << Application::mouse_current_y << endl;
+		//cout << "choice: " << Application::getChoiceVal() << endl;
+	}
 
 	//keyboard controls
 	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
@@ -239,6 +257,18 @@ void CSceneLevelSelection::Update(double dt)
 
 	float fDelta = (float)dt;
 
+	static bool LMouse = false;
+	if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) && !LMouse)
+	{
+		if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), panic_button_vec.x, panic_button_vec.y, panic_button_vec.x + 7.5f, panic_button_vec.y + 7.5f))
+		{
+			LMouse = true;
+			Application::m_bScreenShake = !Application::m_bScreenShake;
+		}
+	}
+	else if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) && LMouse)
+		LMouse = false;
+
 }
 
 void CSceneLevelSelection::UpdateAnimations(double dt)
@@ -334,7 +364,12 @@ void CSceneLevelSelection::Render()
 
 	//Render backgrounds
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
-	
+
+	if(Application::m_bScreenShake)
+		RenderMeshIn2D(meshList[GEO_BUTTON_PANIC_ON], false, 1.0f, 1.0f, 10.0f, -70.0f + m_fBotAnimOffset);
+	else
+		RenderMeshIn2D(meshList[GEO_BUTTON_PANIC_OFF], false, 1.0f, 1.0f, 10.0f, -70.0f + m_fBotAnimOffset);
+
 	//on mouse hover quit button
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 16.0f, quit_button_vec.y + 7.5f)
 		|| CSceneManager::IsKeyDown('q'))

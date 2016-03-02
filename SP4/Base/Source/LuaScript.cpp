@@ -15,6 +15,7 @@ CLuaScript::CLuaScript(string path)
 	}
 }
 
+
 CLuaScript::~CLuaScript()
 {
 	lua_close(L2);

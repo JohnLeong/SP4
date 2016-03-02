@@ -50,6 +50,7 @@ private:
 		ANIM_3,
 		ANIM_4,
 		ANIM_5,
+		ANIM_6,
 	};
 	ANIM_STATE cAnimState;
 	float m_fScreenCol;
@@ -64,6 +65,7 @@ private:
 	float m_fShakeAngle;
 	float m_fShakeOffsetX;
 	float m_fShakeOffsetY;
+	float m_fBeamWait;
 
 	bool m_bDoShake;
 	bool m_bplaySplashSoundback;

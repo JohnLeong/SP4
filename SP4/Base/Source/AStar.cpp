@@ -80,7 +80,7 @@ Node* AStar::GetSuccessor(Node *current, int i)
 	}
 	else
 	{
-		if (m_cTilemap->AllowCollision(x, y))// && !m_cTilemap->GetTile(x, y).IsTinted())
+		if (m_cTilemap->AllowCollision(x, y) && m_cTilemap->GetTile(x, y).GetCollisionType() != CTiledata::COL_ENDLEVEL)// && !m_cTilemap->GetTile(x, y).IsTinted())
 		{// If Grid Element Contains Empty Space
 			//If space is occupied and is not goal
 			if (m_cTilemap->GetTile(x, y).IsTinted())//&& x != goal->x && y != goal->y)

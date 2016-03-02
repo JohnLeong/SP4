@@ -43,6 +43,10 @@ class  CSceneLevelSelection : public CSceneManager
 		//Backgrounds
 		GEO_BACKGROUND_BASE,
 
+		//Panic button
+		GEO_BUTTON_PANIC_OFF,
+		GEO_BUTTON_PANIC_ON,
+
 		NUM_GEOMETRY,
 	};
 
@@ -98,6 +102,7 @@ protected:
 	Vector3 button_vec[5];
 	Vector3 quit_button_vec;
 	Vector3 start_button_vec;
+	Vector3 panic_button_vec;
 
 	float m_fLeftAnimOffset;
 	float m_fBotAnimOffset;

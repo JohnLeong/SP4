@@ -77,6 +77,8 @@ public:
 	static vector<CProfile*> m_cProfileList;
 	static vector<CAchievements*> m_cAchievementList;
 	static vector<CProperties*> m_cPropertyList;
+
+	static bool m_bScreenShake;
 private:
 	Application();
 	~Application();
@@ -90,8 +92,6 @@ private:
 	double m_dElapsedTime;
 	double m_dAccumulatedTime_ThreadOne;
 	double m_dAccumulatedTime_ThreadTwo;
-
-
 
 	//get mouse position in world space
 	static float mouseWorldX;

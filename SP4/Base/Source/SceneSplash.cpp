@@ -74,6 +74,7 @@ void CSceneSplash::Init()
 	m_fShakeOffsetY = 0.f;
 	m_bDoShake = false;
 	m_bplaySplashSoundback = false;
+	m_fBeamWait = 0.5f;
 }
 
 void CSceneSplash::Update(double dt)
@@ -107,7 +108,7 @@ void CSceneSplash::Update(double dt)
 		if (m_fScreenCol <= 0.f)
 		{
 			//start the splash sound front
-			Application::Sound.playSound("../irrKlang/media/startup_sound_front.mp3");
+			//Application::Sound.playSound("../irrKlang/media/startup_sound_front.mp3");
 
 			m_fScreenCol = 0.f;
 			cAnimState = ANIM_1;
@@ -124,6 +125,7 @@ void CSceneSplash::Update(double dt)
 			cAnimState = ANIM_2;
 			m_fLogo1PosY = 0.f;
 			m_bDoShake = true;
+			Application::Sound.playSound("../irrKlang/media/startup_sound_front.mp3");
 		}
 		break;
 	case CSceneSplash::ANIM_2:
@@ -137,6 +139,8 @@ void CSceneSplash::Update(double dt)
 			cAnimState = ANIM_3;
 			m_fLogo2PosY = 0.f;
 			m_bDoShake = true;
+			m_bplaySplashSoundback = false;
+			Application::Sound.playSound("../irrKlang/media/startup_sound_front.mp3");
 		}
 		break;
 	case CSceneSplash::ANIM_3:
@@ -150,9 +154,17 @@ void CSceneSplash::Update(double dt)
 			cAnimState = ANIM_4;
 			m_fLogo3PosY = 0.f;
 			m_bDoShake = true;
+			Application::Sound.playSound("../irrKlang/media/startup_sound_front.mp3");
 		}
 		break;
 	case CSceneSplash::ANIM_4:
+		if (m_fBeamWait <= 0.f)
+		{
+			cAnimState = ANIM_5;
+		}
+		m_fBeamWait -= dt;
+		break;
+	case CSceneSplash::ANIM_5:
 		if (m_bDoShake)
 			break;
 		m_fBeamScaleX += fDelta * 20;
@@ -167,10 +179,10 @@ void CSceneSplash::Update(double dt)
 		if (m_fBeamScaleX >= 2.5f)
 		{
 			m_fBeamScaleX = 2.5f;
-			cAnimState = ANIM_5;
+			cAnimState = ANIM_6;
 		}
 		break;
-	case CSceneSplash::ANIM_5:
+	case CSceneSplash::ANIM_6:
 		m_fTimer -= fDelta;
 		break;
 	default:

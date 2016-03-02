@@ -520,6 +520,8 @@ int CLevel::CalculateScore(void)
 		else
 			m_iStars = 2;
 	}
+	else if (m_iPlayerMoves <= m_iMinMoves)
+		m_iStars = 2;
 	else
 		m_iStars = 1;
 

@@ -22,12 +22,15 @@ class CScenePlay : public CSceneManager
 		GEO_GRASS_DARKGREEN,
 		GEO_GRASS_LIGHTGREEN,
 		GEO_TEXT,
+		GEO_BACKCOVER,
 
 		//Tile overlay
 		GEO_OVERLAY_RED,
 		GEO_QUESTION_MARK,
 
 		GEO_TEXTBOX,
+
+		GEO_TRANSPARENT_LAYER,
 
 		GEO_STAR,
 		GEO_STAROUTLINE,
@@ -91,6 +94,7 @@ public:
 	virtual void Exit();
 
 	void InitLevel();
+
 	// Render the main components of this scene
 	void RenderGUI(void);
 	void RenderWin(void);

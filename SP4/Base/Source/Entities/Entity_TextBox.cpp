@@ -16,12 +16,14 @@ bool CTextBox::m_bShowBox = false;
 CTextBox::CTextBox()
 : m_bActivated(false)
 , m_bWasActivated(false)
+, m_iCurrentCharIndex(0)
 {
 }
 
 CTextBox::CTextBox(int iXIndex, int iYIndex, CTilemap* cTilemap, std::string text, CEntityIPos* cPlayerPtr)
 : m_bActivated(false)
 , m_bWasActivated(false)
+, m_iCurrentCharIndex(0)
 {
 	this->m_iXIndex = iXIndex;
 	this->m_iYIndex = iYIndex;
@@ -59,6 +61,11 @@ float CTextBox::GetBoxScaleY(void)
 	return CTextBox::m_fBoxScaleY;
 }
 
+int CTextBox::GetCurrentCharIndex(void)
+{
+	return m_iCurrentCharIndex;
+}
+
 /********************************************************************************
 Update
 ********************************************************************************/
@@ -69,6 +76,8 @@ void CTextBox::Update(const float dt)
 		m_bActivated = true;
 		m_bWasActivated = true;
 		CTextBox::m_bOpenBox = true;
+		if (m_iCurrentCharIndex < m_Text.size() && CTextBox::m_bShowText)
+			m_iCurrentCharIndex += 2;
 	}
 	else
 	{
@@ -78,6 +87,7 @@ void CTextBox::Update(const float dt)
 		}
 		m_bActivated = false;
 		m_bWasActivated = false;
+		m_iCurrentCharIndex = 0;
 	}
 
 }

@@ -31,6 +31,7 @@ vector<CAchievements*>  Application::m_cAchievementList;
 vector<CProperties*>  Application::m_cPropertyList;
 bool Application::m_bPauseDT = false;
 int Application::CurrentLevel = 1;
+bool Application::m_bScreenShake = false;
 /********************************************************************************
  Define an error callback
  ********************************************************************************/

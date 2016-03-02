@@ -90,10 +90,12 @@ void CScenePlay::Init()
 
 	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("box", Color(1, 1, 1), 1.f);
 	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//GUI/box_blue.tga");
+	meshList[GEO_TRANSPARENT_LAYER] = MeshBuilder::GenerateQuad("box", Color(1, 1, 1), 1.f);
+	meshList[GEO_TRANSPARENT_LAYER]->textureID = LoadTGA("Image//GUI/square_transparent.tga");
 
 	meshList[GEO_STAR] = MeshBuilder::GenerateQuad("star", Color(1, 1, 1), 40.f);
 	meshList[GEO_STAR]->textureID = LoadTGA("Image//GUI/star.tga");
-	meshList[GEO_STAROUTLINE] = MeshBuilder::GenerateQuad("box", Color(1, 1, 1), 1.f);
+	meshList[GEO_STAROUTLINE] = MeshBuilder::GenerateQuad("box", Color(1, 1, 1), 40.f);
 	meshList[GEO_STAROUTLINE]->textureID = LoadTGA("Image//GUI/star_outline.tga");
 
 	//Load Tile textures
@@ -143,6 +145,9 @@ void CScenePlay::Init()
 	meshList[GEO_RESTART_BUTTON]->textureID = LoadTGA("Image/GUI//button_restart.tga");
 	meshList[GEO_NEXT_BUTTON] = MeshBuilder::Generate2DMeshCenter("next button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
 	meshList[GEO_NEXT_BUTTON]->textureID = LoadTGA("Image/GUI//button_next.tga");
+
+	//back cover
+	meshList[GEO_BACKCOVER] = MeshBuilder::Generate2DMesh("back cover", Color(0.9f, 0.9f, 0.9f), 0.0f, 0.0f, 100.0f, 180.0f);
 
 	//coin
 	meshList[GEO_COIN] = MeshBuilder::GenerateSpriteAnimation2D("coin", 1, 8);
@@ -235,8 +240,6 @@ void CScenePlay::InitLevel()
 	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 
 	m_cLevel.LoadTilemap(getLevel);
-
-	m_cLevel.GenerateTextBoxEntity(2, 2, "HELLOOOOOOOWIIWDIWIWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYWIIWVERYVERYVERYv");
 }
 
 void CScenePlay::Update(double dt)
@@ -298,11 +301,16 @@ void CScenePlay::Update(double dt)
 	m_cLevel.Update(static_cast<float>(dt), this->m_cPlayer);
 
 	//Update camera position based on player position
-	m_fShakeAngle = static_cast<float>(rand() % 360);
-	m_fShakeOffsetX = sin(m_fShakeAngle) * 50;
-	m_fShakeOffsetY = cos(m_fShakeAngle) * 50;
-	//camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f + m_fShakeOffsetX, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()) + m_fShakeOffsetY, 0.f));
-	camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
+	if (Application::m_bScreenShake)
+	{
+		m_fShakeAngle = static_cast<float>(rand() % 360);
+		m_fShakeOffsetX = sin(m_fShakeAngle) * 20;
+		m_fShakeOffsetY = cos(m_fShakeAngle) * 20;
+
+		camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f + m_fShakeOffsetX, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()) + m_fShakeOffsetY, 0.f));
+	}
+	else
+		camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
 	
 	if (m_cPlayer->GetHasReachedEndLevel() && !m_bShowWin)
 	{
@@ -370,12 +378,16 @@ void CScenePlay::RenderGUI()
 
 void CScenePlay::RenderWin(void)
 {
+	RenderMeshIn2D(meshList[GEO_TRANSPARENT_LAYER], false, 350.f, 180.f, 0, 0);
 	RenderMeshIn2D(meshList[GEO_TEXTBOX], false, 300.f, 150.f, 0, 0);
 	RenderMeshIn2D(meshList[GEO_NEXT_BUTTON], false, 2, 1.5f, -50.f, -50.f);
 	RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, 0.f, -50.f);
 	RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 50.f, -50.f);
 	for (int i = 0; i < m_cLevel.GetNumStars(); ++i)
 		RenderMeshIn2D(meshList[GEO_STAR], false, 1.f, 1.f, -50.f + (i * 50.f), 10.f);
+
+	for (int i = 0; i < 3 - m_cLevel.GetNumStars(); ++i)
+		RenderMeshIn2D(meshList[GEO_STAROUTLINE], false, 1.f, 1.f, 50.f - (i * 50.f), 10.f);
 
 	RenderTextOnScreen(meshList[GEO_TEXT], "VICTORY!", Color(1.f, 1.f, 1.f), 50, -70.f, 10.f);
 	ostringstream s_score;
@@ -395,6 +407,7 @@ void CScenePlay::RenderWin(void)
 
 void CScenePlay::RenderLose(void)
 {
+	RenderMeshIn2D(meshList[GEO_TRANSPARENT_LAYER], false, 350.f, 180.f, 0, 0);
 	RenderMeshIn2D(meshList[GEO_TEXTBOX], false, 300.f, 150.f, 0, 0);
 	RenderTextOnScreen(meshList[GEO_TEXT], "DEFEAT", Color(1.f, 1.f, 1.f), 50, -60.f, 10.f);
 	RenderTextOnScreen(meshList[GEO_TEXT], "rekt", Color(1.f, 1.f, 1.f), 5, -10.f, -10.f);
@@ -476,7 +489,7 @@ void CScenePlay::RenderTextBox()
 			modelStack.Scale(30.f, 30.f, 1.f);
 			//RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
 			//if ((*entity)->ShowText())
-			RenderText(meshList[GEO_TEXT], (*entity)->GetText(), Color(1.f, 1.f, 1.f), 0.7f, 180.f);
+			RenderText(meshList[GEO_TEXT], (*entity)->GetText(), Color(1.f, 1.f, 1.f), 0.7f, 180.f, (*entity)->GetCurrentCharIndex());
 			modelStack.PopMatrix();
 			break;
 		}
@@ -514,7 +527,8 @@ Render the inventory
 void CScenePlay::RenderInventory()
 {
 	//Render the scroll background and back cover
-	RenderMeshIn2D(meshList[GEO_SCROLL], false, 1, 1, 65, -90);
+	RenderMeshIn2D(meshList[GEO_BACKCOVER], false, 1, 1, 60, -90);
+	RenderMeshIn2D(meshList[GEO_SCROLL], false, 1, 1, 60, -90);
 
 	//Render the number of keys obtained
 	RenderMeshIn2D(meshList[GEO_KEYS_BLUE], false, 25, 25, 80, -30);
@@ -527,28 +541,37 @@ void CScenePlay::RenderInventory()
 
 	//Fetch and Render the amount of keys/coins
 	ostringstream s_coins;
-	s_coins << m_cPlayer->GetCoins();
-	RenderTextOnScreen(meshList[GEO_TEXT], ":" + s_coins.str(), Color(0.0f, 0.0f, 0.0f), 7.0f, 92.0f, -60.0f);
-
+	s_coins << m_cPlayer->GetCoins() << "/" << m_cLevel.GetTotalCoins();
+	if (m_cPlayer->GetCoins() >= m_cLevel.GetTotalCoins())
+		RenderTextOnScreen(meshList[GEO_TEXT], s_coins.str(), Color(0.2f, 1.0f, 0.2f), 20.0f, 92.0f, -69.0f);
+	else
+		RenderTextOnScreen(meshList[GEO_TEXT],s_coins.str(), Color(0.0f, 0.0f, 0.0f), 20.0f, 92.0f, -69.0f);
+	
 	ostringstream s_keys_red;
 	s_keys_red << m_cPlayer->GetKeys_Red();
-	RenderTextOnScreen(meshList[GEO_TEXT], ":" + s_keys_red.str(), Color(0.0f, 0.0f, 0.0f), 7.0f, 135.0f, -32.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_red.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 135.0f, -40.0f);
 
 	ostringstream s_keys_blue;
 	s_keys_blue << m_cPlayer->GetKeys_Blue();
-	RenderTextOnScreen(meshList[GEO_TEXT], ":" + s_keys_blue.str(), Color(0.0f, 0.0f, 0.0f), 7.0f, 92.0f, -32.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_blue.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 92.0f, -40.0f);
 
 	ostringstream s_keys_green;
 	s_keys_green << m_cPlayer->GetKeys_Green();
-	RenderTextOnScreen(meshList[GEO_TEXT], ":" + s_keys_green.str(), Color(0.0f, 0.0f, 0.0f), 7.0f, 92.0f, -18.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_green.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 92.0f, -26.0f);
 
 	ostringstream s_keys_yellow;
 	s_keys_yellow << m_cPlayer->GetKeys_Yellow();
-	RenderTextOnScreen(meshList[GEO_TEXT], ":" + s_keys_yellow.str(), Color(0.0f, 0.0f, 0.0f), 7.0f, 135.0f, -18.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_yellow.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 135.0f, -26.0f);
 
 	ostringstream s_player_moves;
 	s_player_moves << m_cLevel.GetNumberOfMoves();
-	RenderTextOnScreen(meshList[GEO_TEXT], "Moves:" + s_player_moves.str(), Color(0.0f, 0.0f, 0.0f), 7.0f, 72.0f, 55.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Moves:" + s_player_moves.str(), Color(0.1f, 0.1f, 0.1f), 20.0f, 72.0f, 0.0f);
+
+	ostringstream s_move_goal;
+	s_move_goal << m_cLevel.GetSmallestMoves();
+	RenderTextOnScreen(meshList[GEO_TEXT], "Goal:" + s_move_goal.str(), Color(0.1f, 0.1f, 0.1f), 20.0f, 72.0f, -10.0f);
+
+	RenderMeshIn2D(meshList[GEO_PLAYER], false, TILE_SIZE, TILE_SIZE, 100.f, 45.f);
 
 	//on mouse hover quit button
 	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec.x, quit_button_vec.y, quit_button_vec.x + 11.0f, quit_button_vec.y + 5.42f)
