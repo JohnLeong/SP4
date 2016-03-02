@@ -2,7 +2,7 @@
 
 #include "MeshBuilder.h"
 #include "LoadTGA.h"
-
+#include "Application.h"
 CLevel::CLevel(void)
 : m_bDoMovements(false)
 , m_bMovementReady(true)
@@ -332,6 +332,7 @@ void CLevel::Update(const float dt, CPlayer* cPlayer)
 	{
 		if (CheckPlayerCollisions(cPlayer))
 		{
+			Application::Sound.playSound("../irrKlang/media/walking_sound.wav");
 			m_bDoMovements = true;
 			++m_iPlayerMoves;
 		}

@@ -1,4 +1,5 @@
 #include "Entity_TextBox.h"
+#include "../Application.h"
 
 #define BOX_MIN_SCALE_X 1.f
 #define BOX_MIN_SCALE_Y 1.f
@@ -78,9 +79,15 @@ void CTextBox::Update(const float dt)
 {
 	if (this->m_iXIndex == this->m_cPlayerPtr->GetXIndex() && this->m_iYIndex == this->m_cPlayerPtr->GetYIndex())
 	{
+		if (!CTextBox::m_bOpenBox)
+		{
+			CTextBox::m_bOpenBox = true;
+			Application::Sound.playSound("../irrKlang/media/dialogue_sound.wav");
+		}
+
 		m_bActivated = true;
 		m_bWasActivated = true;
-		CTextBox::m_bOpenBox = true;
+	
 		if (m_iCurrentCharIndex < m_Text.size() && CTextBox::m_bShowText)
 			m_iCurrentCharIndex += 2;
 	}

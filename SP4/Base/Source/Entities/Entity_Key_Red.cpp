@@ -1,4 +1,5 @@
 #include "Entity_Key_Red.h"
+#include "../Application.h"
 
 bool add_key_Red = false;
 
@@ -23,6 +24,7 @@ CEntity_Key_Red::~CEntity_Key_Red()
 
 bool CEntity_Key_Red::DoColDir(MOVE_DIR m_MoveDir)
 {
+	Application::Sound.playSound("../irrKlang/media/key_sound.mp3");
 	this->m_bAlive = false;
 	m_cPlayerPtr->AddKeys(1, 0);
 	return false;

@@ -117,6 +117,7 @@ protected:
 	float m_fLeftAnimOffset;
 	float m_fBotAnimOffset;
 	bool m_bAnimOffsetDir;
+	bool m_bToggleConfirmSound;
 
 	int m_iSelectedLevel;
 };

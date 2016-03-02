@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "../Application.h"
 
 CPlayer::CPlayer()
 : direction(PD_DOWN)
@@ -564,6 +565,7 @@ void CPlayer::UseItem(ITEM_SLOT item)
 	case CTiledata::COL_LOCK_GREEN:
 		if (m_iKeys_green > 0)
 		{
+			Application::Sound.playSound("../irrKlang/media/door_unlock_sound.mp3");
 			--m_iKeys_green;
 			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
 		}
@@ -571,6 +573,7 @@ void CPlayer::UseItem(ITEM_SLOT item)
 	case CTiledata::COL_LOCK_YELLOW:
 		if (m_iKeys_yellow > 0)
 		{
+			Application::Sound.playSound("../irrKlang/media/door_unlock_sound.mp3");
 			--m_iKeys_yellow;
 			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
 		}
@@ -578,6 +581,7 @@ void CPlayer::UseItem(ITEM_SLOT item)
 	case CTiledata::COL_LOCK_BLUE:
 		if (m_iKeys_blue > 0)
 		{
+			Application::Sound.playSound("../irrKlang/media/door_unlock_sound.mp3");
 			--m_iKeys_blue;
 			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
 		}
@@ -585,6 +589,7 @@ void CPlayer::UseItem(ITEM_SLOT item)
 	case CTiledata::COL_LOCK_RED:
 		if (m_iKeys_red > 0)
 		{
+			Application::Sound.playSound("../irrKlang/media/door_unlock_sound.mp3");
 			--m_iKeys_red;
 			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
 		}

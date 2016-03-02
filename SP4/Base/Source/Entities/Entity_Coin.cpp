@@ -1,5 +1,5 @@
 #include "Entity_Coin.h"
-
+#include "../Application.h"
 
 CEntity_Coin::CEntity_Coin()
 {
@@ -33,6 +33,7 @@ void CEntity_Coin::InitAnimation()
 bool CEntity_Coin::DoColDir(MOVE_DIR m_MoveDir)
 {
 	//Add coin here
+	Application::Sound.playSound("../irrKlang/media/collect_coin_sound.mp3");
 	m_cPlayerPtr->AddCoin(1);
 	this->SetAlive(false);
 	return false;

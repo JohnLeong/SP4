@@ -18,6 +18,10 @@ CScenePlay::CScenePlay(void)
 	, m_iCurrentLevel(3)
 	, m_bShowWin(false)
 	, m_bShowLose(false)
+	, m_bQuitselectsound(false)
+	, m_bMouseisPressed(false)
+	, m_bPlayWinSound(false)
+	, m_bPlayLoseSound(false)
 {
 }
 
@@ -26,6 +30,10 @@ CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 	, m_iCurrentLevel(5)
 	, m_bShowWin(false)
 	, m_bShowLose(false)
+	, m_bQuitselectsound(false)
+	, m_bMouseisPressed(false)
+	, m_bPlayWinSound(false)
+	, m_bPlayLoseSound(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -59,6 +67,11 @@ void CScenePlay::Init()
 	//init the boolean for quit
 	SetISQuitToMain(false);
 
+	Application::Sound.Stop();
+
+	Application::Sound.playSound("../irrKlang/media/Level1_BGM.mp3");
+	Application::Sound.setVolume(30);
+
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		meshList[i] = NULL;
@@ -69,6 +82,9 @@ void CScenePlay::Init()
 
 	//vector of quit button pos
 	quit_button_vec.Set(161.0f, 77.8f, 0.0f);
+
+	//vecftor of restart button pos
+	restart_button_vec.Set(161.0f, 69.0f, 0.0f);
 
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");//, 1000, 1000, 1000);
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
@@ -268,6 +284,12 @@ void CScenePlay::Update(double dt)
 			}
 		}
 	}
+	if (!m_cPlayer->IsAlive() && !m_bPlayLoseSound)
+	{
+		Application::Sound.playSound("../irrKlang/media/lose_sound.mp3");
+		m_bPlayLoseSound = true;
+	}
+
 	UpdateAchievementStatus(dt);
 	//Player control
 	if (m_cLevel.IsMovementReady() && !m_cPlayer->GetHasReachedEndLevel() && m_cPlayer->IsAlive())
@@ -328,6 +350,11 @@ void CScenePlay::Update(double dt)
 	if (m_cPlayer->GetHasReachedEndLevel() && !m_bShowWin)
 	{
 		//End Level
+		if (!m_bPlayWinSound)
+		{
+			Application::Sound.playSound("../irrKlang/media/Win_sound.mp3");
+			m_bPlayWinSound = true;
+		}
 		m_bShowWin = true;
 		m_cLevel.CalculateScore();
 	}
@@ -343,13 +370,17 @@ void CScenePlay::Update(double dt)
 			m_cLevel.SetLevelName(getLevel);
 			m_cLevel.Reset();
 			m_bShowWin = false;
+			m_bPlayWinSound = false;
 		}
 	}
 
 	if (IsKeyDownOnce('r'))
 	{
 		m_cLevel.Reset();
+		Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
 		m_bShowWin = false;
+		m_bPlayWinSound = false;
+		m_bPlayLoseSound = false;
 	}
 }
 
@@ -402,6 +433,7 @@ void CScenePlay::RenderGUI()
 
 void CScenePlay::RenderWin(void)
 {
+
 	RenderMeshIn2D(meshList[GEO_TRANSPARENT_LAYER], false, 350.f, 180.f, 0, 0);
 	RenderMeshIn2D(meshList[GEO_TEXTBOX], false, 300.f, 150.f, 0, 0);
 	if (m_iCurrentLevel <= 8)
@@ -432,6 +464,8 @@ void CScenePlay::RenderWin(void)
 
 void CScenePlay::RenderLose(void)
 {
+
+
 	RenderMeshIn2D(meshList[GEO_TRANSPARENT_LAYER], false, 350.f, 180.f, 0, 0);
 	RenderMeshIn2D(meshList[GEO_TEXTBOX], false, 300.f, 150.f, 0, 0);
 	RenderTextOnScreen(meshList[GEO_TEXT], "DEFEAT", Color(1.f, 1.f, 1.f), 50, -60.f, 10.f);
@@ -630,18 +664,53 @@ void CScenePlay::RenderInventory()
 		|| CSceneManager::IsKeyDown('q'))
 	{
 		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON_HIGHLIGHTED], false, 1.1f, 1.1f, 140.0f, 55);
-		
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 1.f, 1.f, 140.0f, 40.f);
+
+		if (!m_bQuitselectsound)
+		{
+			m_bQuitselectsound = true;
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		}
+
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || CSceneManager::IsKeyDown('q'))
 		{
 			SetISQuitToMain(true);
+			Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+		}
+	}
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), restart_button_vec.x, restart_button_vec.y, restart_button_vec.x + 11.0f, restart_button_vec.y + 5.42f))
+	{
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.f, 1.f, 140.0f, 55);
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON_HIGHLIGHTED], false, 1.1f, 1.1f, 140.0f, 40.f);
+
+		if (!m_bQuitselectsound)
+		{
+			m_bQuitselectsound = true;
+			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		}
+
+		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) && m_bMouseisPressed)
+		{
+			m_bMouseisPressed = false;
+		}
+
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) && m_bMouseisPressed == false)
+		{
+			m_cLevel.Reset();
+			m_bMouseisPressed = true;
+			Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+			m_bShowWin = false;
 		}
 	}
 	else
 	{
 		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 1.f, 1.f, 140.0f, 55);
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 1.f, 1.f, 140.0f, 40.f);
 		SetISQuitToMain(false);
+		m_bQuitselectsound = false;
 	}
-	RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 1.f, 1.f, 140.0f, 40.f);
+
+
 }
 
 /********************************************************************************

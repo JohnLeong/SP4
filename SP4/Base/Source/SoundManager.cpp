@@ -111,7 +111,7 @@ void CSoundManager::playSound(string soundFile)
 {
 	SetFileName(soundFile);
 
-	currentSound = soundEngine->play2D(filename.c_str(), false, false, true);
+	//currentSound = soundEngine->play2D(filename.c_str(), false, false, true);
 
 	if (!currentSound)
 	{

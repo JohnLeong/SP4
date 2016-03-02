@@ -2,7 +2,6 @@
 #define ENTITYIPOS_H
 
 #include "Entity.h"
-
 //Entity class for entities using index based position
 
 class CEntityIPos : public CEntity

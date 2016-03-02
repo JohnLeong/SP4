@@ -23,6 +23,7 @@ CSceneLevelSelection::CSceneLevelSelection(void)
 , m_window_height(600)
 , m_bAnimOffsetDir(true)
 , m_bChangeState(false)
+, m_bToggleConfirmSound(false)
 , isSelectSoundPlayingkeyboard(false)
 , isSelectSoundPlayingStartQuit(false)
 , m_iCurrentPage(1)
@@ -32,6 +33,7 @@ CSceneLevelSelection::CSceneLevelSelection(void)
 CSceneLevelSelection::CSceneLevelSelection(const int m_window_width, const int m_window_height)
 : m_bAnimOffsetDir(true)
 , m_bChangeState(false)
+, m_bToggleConfirmSound(false)
 , isSelectSoundPlayingkeyboard(false)
 , isSelectSoundPlayingStartQuit(false)
 , m_iCurrentPage(1)
@@ -47,6 +49,8 @@ CSceneLevelSelection::~CSceneLevelSelection(void)
 void CSceneLevelSelection::Init()
 {
 	CSceneManager::Init();
+
+	m_bBacktoMainMenu = false;
 
 	//init the choice
 	Application::setChoiceVal(1);
@@ -163,17 +167,6 @@ void CSceneLevelSelection::Update(double dt)
 	CSceneManager::Update(dt);
 
 	UpdateAnimations(dt);
-
-	//for debugging
-	if (Application::IsKeyPressed('1'))
-	{
-		//cout << "boolean: " << GetIsQuitToMain() << endl;
-		cout << "current mouse x: " << Application::getMouseWorldX() << endl;
-		cout << "current mouse y: " << Application::getMouseWorldY() << endl;
-		//cout << "current mouse x: " << Application::mouse_current_x << endl;
-		//cout << "current mouse y: " << Application::mouse_current_y << endl;
-		//cout << "choice: " << Application::getChoiceVal() << endl;
-	}
 
 	//keyboard controls
 	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
@@ -417,6 +410,12 @@ void CSceneLevelSelection::Render()
 		{
 			SetISQuitToMain(true);
 			m_bAnimOffsetDir = false;
+
+			if (!m_bToggleConfirmSound)
+			{
+				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				m_bToggleConfirmSound = true;
+			}
 		}
 
 		if (isSelectSoundPlayingStartQuit == false)
@@ -445,10 +444,20 @@ void CSceneLevelSelection::Render()
 			SetisColWithStartButton(true);
 			m_bAnimOffsetDir = false;
 			//Do level selection here
+
 			if (m_iCurrentPage != 1)
 				Application::CurrentLevel = Application::getChoiceVal() + (m_iCurrentPage - 1) * 4;
 			else
 				Application::CurrentLevel = Application::getChoiceVal();
+
+			
+			if (!m_bToggleConfirmSound)
+			{
+				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				m_bToggleConfirmSound = true;
+			}
+
+
 		}
 
 		if (isSelectSoundPlayingStartQuit == false)

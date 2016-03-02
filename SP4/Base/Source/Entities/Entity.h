@@ -4,7 +4,6 @@
 #include "../Graphics/SpriteAnimation.h"
 #include "../Tilemap.h"
 #include "../define.h"
-
 class CEntity
 {
 public:

@@ -133,6 +133,7 @@ private:
 
 	static bool m_bBacktoMainMenu;
 	Vector3 quit_button_vec;
+	Vector3 restart_button_vec;
 
 	SpriteAnimation* coins_sprite;
 
@@ -153,6 +154,11 @@ private:
 	bool m_died;
 
 	double timer;
+
+	bool m_bMouseisPressed;
+	bool m_bQuitselectsound;
+	bool m_bPlayWinSound;
+	bool m_bPlayLoseSound;
 };
 
 #endif
