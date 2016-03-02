@@ -87,6 +87,8 @@ public:
 	// Update Weapon status
 	virtual void UpdateWeaponStatus(const unsigned char key);
 
+	virtual void UpdateAchievementStatus(double dt);
+
 	//set the boolean for quit 
 	static void SetISQuitToMain(bool b);
 	//get the boolean for quit
@@ -106,10 +108,9 @@ public:
 	void RenderTextBox(void);
 	void RenderInventory(void);
 	void RenderTilemap(void);
+	void RenderAchievement(CAchievements* achievement);
 
 	bool m_bExitPlay;
-
-	void RenderAchievement(CAchievements* achievement);
 
 private:
 	//unsigned m_vertexArrayID;
@@ -150,6 +151,8 @@ private:
 	bool m_bShowLose;
 
 	bool m_died;
+
+	double timer;
 };
 
 #endif

@@ -11,7 +11,7 @@ Name2 = "Name2"
 Title2 = "Death"
 Value2 = 0
 Active2 = "ACTIVE_EQUAL"
-ActivationValue2 = 2
+ActivationValue2 = 1
 Completed2 = 0
 
 Name3 = "Name3"

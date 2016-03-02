@@ -35,6 +35,7 @@ public:
 	bool GetClearActivation();
 	void ChangeValue(int changeNumber);
 	void Save(fstream& file, int id);
+	void Reset(fstream& file, int id);
 
 	static string propertyName[NUM_Properties];
 private:

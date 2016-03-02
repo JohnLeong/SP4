@@ -411,7 +411,7 @@ void Application::Run()
 			}
 			for (int i = 0; i < Application::m_cAchievementList.size(); i++)
 			{
-				Application::m_cAchievementList[i]->Update(m_cPropertyList, m_dElapsedTime);
+				Application::m_cAchievementList[i]->Update(m_cPropertyList);
 			}
 
 			m_dAccumulatedTime_ThreadOne = 0.0;

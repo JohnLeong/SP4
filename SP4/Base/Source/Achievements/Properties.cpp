@@ -46,6 +46,7 @@ void CProperties::Update()
 	else
 	{
 		mClearActive = false;
+		
 	}
 }
 
@@ -76,25 +77,27 @@ bool  CProperties::GetClearActivation()
 
 void CProperties::ChangeValue(int changeNumber)
 {
-	int mChangedValue = mValue + changeNumber;
-
-	ostringstream convertor;
-	string getValue = "";
-	convertor << mValue;
-	getValue.append(convertor.str());
-
-	string getChangedValue = "";
-	convertor << mChangedValue;
-	getChangedValue.append(convertor.str());
+	mValue += changeNumber;
 
 	m_cLuaScript = new CLuaScript("AchievementProperties");
 	m_cLuaScript->saveAchievementPropertiesValues();
 	delete m_cLuaScript;
-	mValue += changeNumber;
 }
 
 void CProperties::Save(fstream& file, int id)
 {
+	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
+	file << propertyName[Title] << id << " = " << "\"" << mTitle << "\"" << "\n";
+	file << propertyName[Value] << id << " = " << mValue << "\n";
+	file << propertyName[Active] << id << " = " << "\"" << mActive << "\"" << "\n";
+	file << propertyName[ActivationValue] << id << " = " << mActivationValue << "\n";
+	file << propertyName[Completed] << id << " = " << mClearActive << "\n\n";
+}
+
+void CProperties::Reset(fstream& file, int id)
+{
+	mValue = 0;
+	mClearActive = false;
 	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
 	file << propertyName[Title] << id << " = " << "\"" << mTitle << "\"" << "\n";
 	file << propertyName[Value] << id << " = " << mValue << "\n";

@@ -166,7 +166,7 @@ CProperties* CLuaScript::getAchievementPropertiesVariables(string name)
 	string addTitle = "Title";
 	string addValue = "Value";
 	string addActive = "Active";
-	string addActValue = "ActValue";
+	string addActValue = "ActivationValue";
 	string addBool = "Bool";
 
 	name = addName + name;
@@ -233,6 +233,36 @@ void CLuaScript::saveAchievementPropertiesValues()
 	{
 		int counter = i + 1;
 		Application::m_cPropertyList[i]->Save(file, counter);
+	}
+
+	file.close();
+}
+
+void CLuaScript::resetAchievementValues()
+{
+	fstream file;
+	file.open("LuaScripts//Achievements.lua", std::ofstream::out, std::ostream::trunc);
+	file << "TotalAchievements = " << Application::m_cAchievementList.size() << "\n\n";
+
+	for (int i = 0; i < Application::m_cAchievementList.size(); i++)
+	{
+		int counter = i + 1;
+		Application::m_cAchievementList[i]->Reset(file, counter);
+	}
+
+	file.close();
+}
+
+void CLuaScript::resetAchievementPropertiesValues()
+{
+	fstream file;
+	file.open("LuaScripts//AchievementProperties.lua", std::ofstream::out, std::ostream::trunc);
+	file << "TotalProperties  = " << Application::m_cPropertyList.size() << "\n\n";
+
+	for (int i = 0; i < Application::m_cPropertyList.size(); i++)
+	{
+		int counter = i + 1;
+		Application::m_cPropertyList[i]->Reset(file, counter);
 	}
 
 	file.close();

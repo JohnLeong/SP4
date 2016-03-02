@@ -25,13 +25,21 @@ public:
 
 	CAchievements(string theName, string theTitle, vector<string> theRelatedProps, bool mUnlocked, bool mAppearedOnce, bool mShowedOnce);
 	~CAchievements(void);
-	void Update(vector<CProperties*> checkList, double dt);								// Update
+	void Update(vector<CProperties*> checkList);								// Update
 	vector<string> GetProps();
 	void Save(fstream& file, int id);
-
+	void Reset(fstream& file, int id);
 	static string propertyName[NUM_Properties];
 
 	string GetTitle();
+
+	bool GetUnlocked();
+	bool GetAppearedOnce();
+	bool GetShowedOnce();
+
+	void SetUnlocked(bool mUnlocked);
+	void SetAppearedOnce(bool mAppearedOnce);
+	void SetShowedOnce(bool mShowedOnce);
 
 private:
 	string mName, mTitle;

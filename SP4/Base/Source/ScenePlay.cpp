@@ -213,6 +213,8 @@ void CScenePlay::Init()
 	InitLevel();
 
 	m_died = false;
+
+	timer = 0.0;
 }
 
 void CScenePlay::InitLevel()
@@ -267,6 +269,7 @@ void CScenePlay::Update(double dt)
 			}
 		}
 	}
+	UpdateAchievementStatus(dt);
 	//Player control
 	if (m_cLevel.IsMovementReady() && !m_cPlayer->GetHasReachedEndLevel() && m_cPlayer->IsAlive())
 	{
@@ -356,7 +359,6 @@ void CScenePlay::Update(double dt)
 		m_cLevel.Reset();
 		m_bShowWin = false;
 	}
-
 }
 
 /********************************************************************************
@@ -383,6 +385,10 @@ void CScenePlay::UpdateWeaponStatus(const unsigned char key)
 	
 }
 
+void CScenePlay::UpdateAchievementStatus(double dt)
+{
+}
+
 /********************************************************************************
  Render mobile objects
  ********************************************************************************/
@@ -392,6 +398,14 @@ void CScenePlay::RenderGUI()
 		RenderWin();
 	if (!m_cPlayer->IsAlive() && !m_cPlayer->IsActive())
 		RenderLose();
+
+	for (int i = 0; i < Application::m_cAchievementList.size(); i++)
+	{
+		if (Application::m_cAchievementList[i]->GetUnlocked() == true && Application::m_cAchievementList[i]->GetShowedOnce() == false)
+		{
+			RenderAchievement(Application::m_cAchievementList[i]);
+		}
+	}
 }
 
 void CScenePlay::RenderWin(void)
@@ -523,7 +537,27 @@ Render the achievements
 ********************************************************************************/
 void CScenePlay::RenderAchievement(CAchievements* achievement)
 {
-	//RenderMesh(meshList[GEO_ACHIEVEMENT_BOX], false);
+	if (achievement->GetAppearedOnce() == false)
+	{
+		cout << timer << endl;
+		timer += 0.01;
+	
+		RenderTextOnScreen(meshList[GEO_TEXT], "You've got the \"" + achievement->GetTitle() + "\" title!", Color(1.0f, 0.0f, 0.0f), 15.0f, -150.0f, 70.0f);
+		/* Show Box*/
+		if (timer > 2) //When the box appears completely finished
+		{
+			achievement->SetAppearedOnce(true);
+			timer = 0.0;
+		}
+	}
+	else
+	{
+		achievement->SetShowedOnce(true);
+		CLuaScript* m_cLuaScript;
+		m_cLuaScript = new CLuaScript("Achievements");
+		m_cLuaScript->saveAchievementValues();
+		delete m_cLuaScript;
+	}
 }
 
 /********************************************************************************
@@ -655,7 +689,6 @@ void CScenePlay::Render()
 	RenderPlayer();
 	RenderTextBox();
 	RenderInventory();
-
 	RenderGUI();
 }
 
