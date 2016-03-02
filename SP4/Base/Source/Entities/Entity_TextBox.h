@@ -19,6 +19,8 @@ public:
 	static float GetBoxScaleX(void);
 	static float GetBoxScaleY(void);
 
+	bool IsActivated(void);
+
 	int GetCurrentCharIndex(void);
 
 	virtual void Update(const float dt);		// Update

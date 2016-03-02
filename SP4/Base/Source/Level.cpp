@@ -304,8 +304,8 @@ bool CLevel::InitLua(std::string levelName)
 		posX = GetXFromLua(m_cLuascript, getTextBox);
 		posY = GetYFromLua(m_cLuascript, getTextBox);
 
-		getTextBox += addText;
-		text = m_cLuascript->getStringVariable(getTextBox);
+		//getTextBox += addText;
+		text = m_cLuascript->getStringVariable(getTextBox + addText);
 
 		GenerateTextBoxEntity(posX, posY, text);
 	}

@@ -485,18 +485,21 @@ void CScenePlay::RenderTextBox()
 	}
 
 	//Render text inside textbox
-	for (std::vector<CTextBox*>::iterator entity = m_cLevel.m_cTextBoxList.begin(); entity != m_cLevel.m_cTextBoxList.end(); entity++)
+	if (CTextBox::ShowText())
 	{
-		if (CTextBox::ShowText())
+		for (std::vector<CTextBox*>::iterator entity = m_cLevel.m_cTextBoxList.begin(); entity != m_cLevel.m_cTextBoxList.end(); entity++)
 		{
-			modelStack.PushMatrix();
-			modelStack.Translate(camera.position.x - 280.f, camera.position.y - 125.f, 0.f);
-			modelStack.Scale(30.f, 30.f, 1.f);
-			//RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
-			//if ((*entity)->ShowText())
-			RenderText(meshList[GEO_TEXT], (*entity)->GetText(), Color(1.f, 1.f, 1.f), 0.7f, 180.f, (*entity)->GetCurrentCharIndex());
-			modelStack.PopMatrix();
-			break;
+			if ((*entity)->IsActivated())
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(camera.position.x - 280.f, camera.position.y - 125.f, 0.f);
+				modelStack.Scale(30.f, 30.f, 1.f);
+				//RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+				//if ((*entity)->ShowText())
+				RenderText(meshList[GEO_TEXT], (*entity)->GetText(), Color(1.f, 1.f, 1.f), 0.7f, 180.f, (*entity)->GetCurrentCharIndex());
+				modelStack.PopMatrix();
+				break;
+			}
 		}
 	}
 

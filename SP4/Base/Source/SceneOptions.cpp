@@ -193,7 +193,8 @@ void CSceneOptions::Update(double dt)
 	}
 
 	float fDelta = (float)dt;
-
+	if (IsKeyDownOnce('f'))
+		Application::m_bChangeRes = true;
 }
 
 /********************************************************************************
@@ -220,14 +221,14 @@ void CSceneOptions::Render()
 
 	glDisable(GL_DEPTH_TEST);
 
-#if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "SceneOptions", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
-
-	std::ostringstream ss;
-	ss.precision(5);
-	ss << fps;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
-#endif
+//#if _DEBUG
+//	RenderTextOnScreen(meshList[GEO_TEXT], "SceneOptions", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
+//
+//	std::ostringstream ss;
+//	ss.precision(5);
+//	ss << fps;
+//	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
+//#endif
 
 
 	//Render the background

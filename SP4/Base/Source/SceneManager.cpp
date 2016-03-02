@@ -336,7 +336,7 @@ void CSceneManager::RenderText(Mesh* mesh, std::string text, Color color, float 
 	float widthDivide = 100;
 	for (unsigned i = 0; i < text.length(); ++i)
 	{
-		if (i == charCutOff)
+		if (i >= charCutOff)
 			break;
 		Mtx44 characterSpacing;
 		//characterSpacing.SetToTranslation(i * 0.8f, 0, 0); //1.0f is the spacing of each character, you may change this value
@@ -409,7 +409,6 @@ void CSceneManager::RenderTextOnScreen(Mesh* mesh, std::string text, Color color
 			modelStack.PopMatrix();
 		viewStack.PopMatrix();
 	projectionStack.PopMatrix();
-	glEnable(GL_DEPTH_TEST);
 }
 
 /********************************************************************************

@@ -206,6 +206,7 @@ bool Application::GetKeyboardUpdate()
 	theGSM->HandleEvents('s', IsKeyPressed('S'));
 	theGSM->HandleEvents('a', IsKeyPressed('A'));
 	theGSM->HandleEvents('d', IsKeyPressed('D'));
+	theGSM->HandleEvents('f', IsKeyPressed('F'));
 	theGSM->HandleEvents('1', IsKeyPressed('1'));
 	theGSM->HandleEvents('2', IsKeyPressed('2'));
 	theGSM->HandleEvents('3', IsKeyPressed('3'));
@@ -318,7 +319,7 @@ void Application::InitWindow(bool fullscreen)
 
 	//Create a window and create its OpenGL context
 	if (!fullscreen)
-		m_window = glfwCreateWindow(m_window_width, m_window_height, m_window_name.c_str(), NULL, NULL);
+		m_window = glfwCreateWindow(1280, 720, m_window_name.c_str(), NULL, NULL);
 	else
 	{
 		m_window = glfwCreateWindow(mode->width, mode->height, m_window_name.c_str(), glfwGetPrimaryMonitor(), NULL);

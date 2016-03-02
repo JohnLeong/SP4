@@ -61,6 +61,11 @@ float CTextBox::GetBoxScaleY(void)
 	return CTextBox::m_fBoxScaleY;
 }
 
+bool CTextBox::IsActivated(void)
+{
+	return m_bActivated;
+}
+
 int CTextBox::GetCurrentCharIndex(void)
 {
 	return m_iCurrentCharIndex;
