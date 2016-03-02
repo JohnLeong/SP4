@@ -93,6 +93,8 @@ protected:
 	int m_window_width;
 	int m_window_height;
 
+	int m_iCurrentPage;
+
 	//for going backc to the main menu
 	static bool m_bBacktoMainMenu;
 
