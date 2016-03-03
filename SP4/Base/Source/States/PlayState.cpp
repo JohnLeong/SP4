@@ -146,7 +146,7 @@ void CPlayState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 		//scene->Exit();
 		theGSM->ChangeState(CMenuState::Instance());
 	}
-	else if (static_cast<CScenePlay*>(scene)->m_bToFinishScreen == true)
+	if (static_cast<CScenePlay*>(scene)->m_bToFinishScreen == true)
 	{
 		theGSM->ChangeState(CFinishState::Instance());
 	}

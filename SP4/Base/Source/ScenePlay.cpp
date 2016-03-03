@@ -14,30 +14,30 @@
 
 bool CScenePlay::m_bBacktoMainMenu = false;
 CScenePlay::CScenePlay(void)
-	: m_window_width(800)
-	, m_window_height(600)
-	, m_bExitPlay(false)
-	, m_iCurrentLevel(3)
-	, m_bShowWin(false)
-	, m_bShowLose(false)
-	, m_bQuitselectsound(false)
-	, m_bMouseisPressed(false)
-	, m_bPlayWinSound(false)
-	, m_bPlayLoseSound(false)
-	, m_bToFinishScreen(false)
+: m_window_width(800)
+, m_window_height(600)
+, m_bExitPlay(false)
+, m_iCurrentLevel(3)
+, m_bShowWin(false)
+, m_bShowLose(false)
+, m_bQuitselectsound(false)
+, m_bMouseisPressed(false)
+, m_bPlayWinSound(false)
+, m_bPlayLoseSound(false)
+, m_bToFinishScreen(false)
 {
 }
 
 CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
-	:m_bExitPlay(false)
-	, m_iCurrentLevel(5)
-	, m_bShowWin(false)
-	, m_bShowLose(false)
-	, m_bQuitselectsound(false)
-	, m_bMouseisPressed(false)
-	, m_bPlayWinSound(false)
-	, m_bPlayLoseSound(false)
-	, m_bToFinishScreen(false)
+:m_bExitPlay(false)
+, m_iCurrentLevel(5)
+, m_bShowWin(false)
+, m_bShowLose(false)
+, m_bQuitselectsound(false)
+, m_bMouseisPressed(false)
+, m_bPlayWinSound(false)
+, m_bPlayLoseSound(false)
+, m_bToFinishScreen(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -77,7 +77,7 @@ void CScenePlay::Init()
 	Application::Sound.setVolume(30);
 
 
-	for(int i = 0; i < NUM_GEOMETRY; ++i)
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		meshList[i] = NULL;
 	}
@@ -158,7 +158,7 @@ void CScenePlay::Init()
 	meshList[GEO_TILE_FORCE_UP]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_UP.tga");
 	meshList[GEO_TILE_FORCE_DOWN] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_FORCE_DOWN]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_DOWN.tga");
-	meshList[GEO_TILE_FORCE_LEFT ] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_FORCE_LEFT] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_FORCE_LEFT]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_LEFT.tga");
 	meshList[GEO_TILE_FORCE_RIGHT] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_FORCE_RIGHT]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_RIGHT.tga");
@@ -172,7 +172,7 @@ void CScenePlay::Init()
 	//Scroll background
 	meshList[GEO_SCROLL] = MeshBuilder::Generate2DMesh("scroll background", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 180.0f);
 	meshList[GEO_SCROLL]->textureID = LoadTGA("Image/INVENTORY//Scroll.tga");
-	
+
 	//Quit button
 	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMeshCenter("quit button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
 	meshList[GEO_QUIT_BUTTON]->textureID = LoadTGA("Image/INVENTORY//Quit.tga");
@@ -218,7 +218,7 @@ void CScenePlay::Init()
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 	//perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
 	projectionStack.LoadMatrix(perspective);
-	
+
 	std::cout << "Variables" << std::endl;
 
 	bLightEnabled = true;
@@ -244,7 +244,7 @@ void CScenePlay::Init()
 	m_iCurrentLevel = Application::CurrentLevel;
 	InitLevel();
 
-	m_died = false;
+	m_bDied = false;
 
 	timer = 0.0;
 }
@@ -295,14 +295,14 @@ void CScenePlay::Update(double dt)
 		//cout << "choice: " << Application::getChoiceVal() << endl;
 	}
 
-	if (!m_cPlayer->IsAlive() && m_died == false)
+	if (!m_cPlayer->IsAlive() && m_bDied == false)
 	{
 		for (unsigned i = 0; i < Application::m_cPropertyList.size(); i++)
 		{
 			if (Application::m_cPropertyList[i]->GetTitle() == "Death")
 			{
 				Application::m_cPropertyList[i]->ChangeValue(1);
-				m_died = true;
+				m_bDied = true;
 			}
 		}
 	}
@@ -368,7 +368,7 @@ void CScenePlay::Update(double dt)
 	}
 	else
 		camera.UpdatePosition(Vector3(static_cast<float>((m_cPlayer->GetXIndex() * m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetXOffset())) + 50.f, static_cast<float>(m_cPlayer->GetYIndex() * -m_cLevel.GetTilemap()->GetTileSize() + m_cPlayer->GetYOffset()), 0.f));
-	
+
 	if (m_cPlayer->GetHasReachedEndLevel() && !m_bShowWin)
 	{
 		//End Level
@@ -382,7 +382,7 @@ void CScenePlay::Update(double dt)
 	}
 	else if (m_bShowWin)
 	{
-		if (IsKeyDownOnce('n') && m_iCurrentLevel < 2)
+		if (IsKeyDownOnce('n') && m_iCurrentLevel <= 8)
 		{
 			++m_iCurrentLevel;
 			ostringstream convertor;
@@ -395,7 +395,7 @@ void CScenePlay::Update(double dt)
 			m_bShowLose = false;
 			m_bPlayWinSound = false;
 		}
-		if (IsKeyDown('n') && m_iCurrentLevel == 2)
+		if (IsKeyDown('n') && m_iCurrentLevel == 8)
 		{
 			m_bToFinishScreen = true;
 		}
@@ -415,16 +415,20 @@ void CScenePlay::Update(double dt)
 	if (m_bShowWin && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), nextLevel_button_vec_winScreen.x, nextLevel_button_vec_winScreen.y, nextLevel_button_vec_winScreen.x + buttonXoffset, nextLevel_button_vec_winScreen.y + buttonYoffset)
 		&& m_iCurrentLevel <= 8 && Application::IsMousePressed(GLFW_MOUSE_BUTTON_1)) // play button
 	{
-			cout << "it fucking works okay!" << endl;
-			++m_iCurrentLevel;
-			ostringstream convertor;
-			string getLevel = "Level";
-			convertor << m_iCurrentLevel;
-			getLevel.append(convertor.str());
-			m_cLevel.SetLevelName(getLevel);
-			m_cLevel.Reset();
-			m_bShowWin = false;
-			m_bPlayWinSound = false;
+		if (m_iCurrentLevel == 8)
+		{
+			m_bToFinishScreen = true;
+		}
+		++m_iCurrentLevel;
+		ostringstream convertor;
+		string getLevel = "Level";
+		convertor << m_iCurrentLevel;
+		getLevel.append(convertor.str());
+		m_cLevel.SetLevelName(getLevel);
+		m_cLevel.Reset();
+		m_bShowWin = false;
+		m_bPlayWinSound = false;
+
 	}
 	else if (m_bShowWin && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), restart_button_vec_winScreen.x, restart_button_vec_winScreen.y, restart_button_vec_winScreen.x + buttonXoffset, restart_button_vec_winScreen.y + buttonYoffset)
 		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
@@ -451,6 +455,7 @@ void CScenePlay::Update(double dt)
 		m_bShowLose = false;
 		m_bPlayWinSound = false;
 		m_bPlayLoseSound = false;
+		m_bDied = false;
 	}
 	else if (m_bShowLose && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec_loseScreen.x, quit_button_vec_loseScreen.y, quit_button_vec_loseScreen.x + buttonXoffset, quit_button_vec_loseScreen.y + buttonYoffset)
 		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
@@ -533,8 +538,6 @@ void CScenePlay::RenderWin(void)
 
 void CScenePlay::RenderLose(void)
 {
-
-
 	RenderMeshIn2D(meshList[GEO_TRANSPARENT_LAYER], false, 350.f, 180.f, 0, 0);
 	RenderMeshIn2D(meshList[GEO_TEXTBOX], false, 300.f, 150.f, 0, 0);
 	RenderTextOnScreen(meshList[GEO_TEXT], "DEFEAT", Color(1.f, 1.f, 1.f), 50, -60.f, 10.f);
@@ -555,7 +558,6 @@ void CScenePlay::RenderLose(void)
 		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, -25.f, -50.f);
 		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 25.f, -50.f);
 	}
-
 }
 
 /********************************************************************************
@@ -650,7 +652,7 @@ void CScenePlay::RenderAchievement(CAchievements* achievement)
 	if (achievement->GetAppearedOnce() == false)
 	{
 		timer += 0.01;
-	
+
 		RenderTextOnScreen(meshList[GEO_TEXT], "You've got the \"" + achievement->GetTitle() + "\" title!", Color(1.0f, 0.0f, 0.0f), 15.0f, -150.0f, 70.0f);
 		/* Show Box*/
 		if (timer > 2) //When the box appears completely finished
@@ -709,8 +711,8 @@ void CScenePlay::RenderInventory()
 	if (m_cPlayer->GetCoins() >= m_cLevel.GetTotalCoins())
 		RenderTextOnScreen(meshList[GEO_TEXT], s_coins.str(), Color(0.2f, 1.0f, 0.2f), 20.0f, 92.0f, -84.0f);
 	else
-		RenderTextOnScreen(meshList[GEO_TEXT],s_coins.str(), Color(0.0f, 0.0f, 0.0f), 20.0f, 92.0f, -84.0f);
-	
+		RenderTextOnScreen(meshList[GEO_TEXT], s_coins.str(), Color(0.0f, 0.0f, 0.0f), 20.0f, 92.0f, -84.0f);
+
 	ostringstream s_keys_red;
 	s_keys_red << m_cPlayer->GetKeys_Red();
 	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_red.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 135.0f, -50.0f);
@@ -840,9 +842,9 @@ void CScenePlay::Render()
 void CScenePlay::Exit()
 {
 	// Cleanup VBO
-	for(int i = 0; i < NUM_GEOMETRY; ++i)
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
-		if(meshList[i])
+		if (meshList[i])
 			delete meshList[i];
 	}
 	m_cLevel.Exit();

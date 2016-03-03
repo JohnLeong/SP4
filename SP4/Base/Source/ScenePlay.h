@@ -150,7 +150,7 @@ private:
 	bool m_bShowWin;
 	bool m_bShowLose;
 
-	bool m_died;
+	bool m_bDied;
 
 	double timer;
 

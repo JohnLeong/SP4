@@ -55,7 +55,7 @@ class CSceneManager : public Scene
 public:
 	CSceneManager(void);
 	CSceneManager(const int m_window_width, const int m_window_height);
-	~CSceneManager(void);
+	virtual ~CSceneManager(void);
 
 	virtual void Init();
 	virtual void Update(double dt);

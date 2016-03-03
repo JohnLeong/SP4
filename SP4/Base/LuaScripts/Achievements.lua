@@ -4,8 +4,8 @@ Name1 = "Name1"
 Title1 = "I haz nu brainz"
 TotalProperties1 = 1
 Properties1_1 = "Name1"
-Completed1 = 0
-ShowedOnce1 = 0
+Completed1 = 1
+ShowedOnce1 = 1
 
 Name2 = "Name2"
 Title2 = "YOLO is wrong"

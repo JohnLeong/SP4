@@ -202,6 +202,7 @@ void CSceneFinish::Exit()
 		if (meshList[i])
 			delete meshList[i];
 	}
+
 	glDeleteProgram(m_programID);
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 }

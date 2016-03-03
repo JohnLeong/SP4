@@ -26,6 +26,10 @@ class  CSceneAchievements : public CSceneManager
 		GEO_BACK,
 		GEO_BACK_H,
 		GEO_BACKGROUND_BASE,
+		GEO_COIN,
+		GEO_COIN2,
+		GEO_DEATH,
+		GEO_DEATH2,
 		NUM_GEOMETRY,
 	};
 

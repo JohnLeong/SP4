@@ -61,6 +61,7 @@ void CSceneAchievements::Init()
 	//back button
 	meshList[GEO_BACK] = MeshBuilder::Generate2DMeshCenter("backs button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_BACK]->textureID = LoadTGA("Image/MENU/back_button.tga");
+
 	//back button highlighted
 	meshList[GEO_BACK_H] = MeshBuilder::Generate2DMeshCenter("back button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_BACK_H]->textureID = LoadTGA("Image/MENU//h_back_button.tga");
@@ -68,6 +69,19 @@ void CSceneAchievements::Init()
 	//background base
 	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.5f, 0.85f);
 	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
+
+	//back button
+	meshList[GEO_DEATH] = MeshBuilder::Generate2DMeshCenter("coin", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 20.0f);
+	meshList[GEO_DEATH]->textureID = LoadTGA("Image/Achievement/coin.tga");
+
+	meshList[GEO_DEATH2] = MeshBuilder::Generate2DMeshCenter("coin", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 20.0f);
+	meshList[GEO_DEATH2]->textureID = LoadTGA("Image/Achievement/coin2.tga");
+
+	meshList[GEO_COIN] = MeshBuilder::Generate2DMeshCenter("coin", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 20.0f);
+	meshList[GEO_COIN]->textureID = LoadTGA("Image/Achievement/coin.tga");
+
+	meshList[GEO_COIN2] = MeshBuilder::Generate2DMeshCenter("coin", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 20.0f);
+	meshList[GEO_COIN2]->textureID = LoadTGA("Image/Achievement/coin2.tga");
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -180,6 +194,12 @@ void CSceneAchievements::Render()
 			RenderTextOnScreen(meshList[GEO_TEXT], Application::m_cAchievementList[i]->GetTitle(), Color(0.f, 1.f, 0.f), 15.f, -130.f, 50.f + (i * -20.f));
 		}
 	}
+	RenderMeshIn2D(meshList[GEO_DEATH], false, 1.f, 1.f, -145.0f, 60.f);
+	RenderMeshIn2D(meshList[GEO_DEATH2], false, 1.f, 1.f, -145.0f, 40.f);
+	RenderMeshIn2D(meshList[GEO_COIN], false, 1.f, 1.f, -145.0f, 20.f);
+	RenderMeshIn2D(meshList[GEO_COIN2], false, 1.f, 1.f, -145.0f, 0.f);
+	
+
 //#if _DEBUG
 //	RenderTextOnScreen(meshList[GEO_TEXT], "SceneAchievements", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
 //
