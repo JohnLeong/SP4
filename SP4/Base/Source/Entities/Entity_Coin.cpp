@@ -36,6 +36,13 @@ bool CEntity_Coin::DoColDir(MOVE_DIR m_MoveDir)
 	Application::Sound.playSound("media/collect_coin_sound.mp3");
 	m_cPlayerPtr->AddCoin(1);
 	this->SetAlive(false);
+	for (unsigned i = 0; i < Application::m_cPropertyList.size(); i++)
+	{
+		if (Application::m_cPropertyList[i]->GetTitle() == "Coin")
+		{
+			Application::m_cPropertyList[i]->ChangeValue(1);
+		}
+	}
 	return false;
 }
 

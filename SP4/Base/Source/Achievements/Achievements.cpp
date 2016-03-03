@@ -4,7 +4,7 @@
 string CAchievements::propertyName[CAchievements::NUM_Properties] = { "Name", "Title", "TotalProperties", "Properties", "Completed", "ShowedOnce" };
 
 
-CAchievements::CAchievements(string theName, string theTitle, vector<string> theRelatedProps, bool mUnlocked, bool mAppearedOnce, bool mShowedOnce)
+CAchievements::CAchievements(string theName, string theTitle, vector<string> theRelatedProps, bool mUnlocked, bool mAppearedOnce, bool mShowedOnce, double mTimer)
 {
 	mName = theName;
 	mTitle = theTitle;
@@ -12,6 +12,7 @@ CAchievements::CAchievements(string theName, string theTitle, vector<string> the
 	this->mUnlocked = mUnlocked;
 	this->mAppearedOnce = mAppearedOnce;
 	this->mShowedOnce = mShowedOnce;
+	this->mTimer = mTimer;
 }
 
 
@@ -72,6 +73,11 @@ bool CAchievements::GetShowedOnce()
 	return mShowedOnce;
 }
 
+double CAchievements::GetTimer()
+{
+	return mTimer;
+}
+
 void CAchievements::SetUnlocked(bool mUnlocked)
 {
 	this->mUnlocked = mUnlocked;
@@ -85,6 +91,11 @@ void CAchievements::SetAppearedOnce(bool mAppearedOnce)
 void CAchievements::SetShowedOnce(bool mShowedOnce)
 {
 	this->mShowedOnce = mShowedOnce;
+}
+
+void CAchievements::SetTimer(double mTimer)
+{
+	this->mTimer = mTimer;
 }
 
 void CAchievements::Save(fstream& file, int id)

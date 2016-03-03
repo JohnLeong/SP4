@@ -245,8 +245,7 @@ void CScenePlay::Init()
 	InitLevel();
 
 	m_bDied = false;
-
-	timer = 0.0;
+	m_bTimerCheck = false;
 }
 
 void CScenePlay::InitLevel()
@@ -478,7 +477,22 @@ void CScenePlay::RenderGUI()
 	{
 		if (Application::m_cAchievementList[i]->GetUnlocked() == true && Application::m_cAchievementList[i]->GetShowedOnce() == false)
 		{
-			RenderAchievement(Application::m_cAchievementList[i]);
+			Application::m_cAchievementList[i]->SetShowedOnce(true);
+			CLuaScript* m_cLuaScript;
+			m_cLuaScript = new CLuaScript("Achievements");
+			m_cLuaScript->saveAchievementValues();
+			delete m_cLuaScript;
+			Application::m_cAchievementList[i]->SetTimer(0.0);
+			Application::m_cAchievementList[i]->SetAppearedOnce(false);
+		}
+		if (Application::m_cAchievementList[i]->GetAppearedOnce() == false && Application::m_cAchievementList[i]->GetTimer() == 0.0)
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "You've got the \"" + Application::m_cAchievementList[i]->GetTitle() + "\" title!", Color(0.0f, 1.0f, 0.0f), 15.0f, -150.0f, 70.0f);
+			Application::m_cAchievementList[i]->SetTimer(Application::m_cAchievementList[i]->GetTimer() + 0.0166);
+			if (Application::m_cAchievementList[i]->GetTimer() > 2)
+			{
+				Application::m_cAchievementList[i]->SetAppearedOnce(true);
+			}
 		}
 	}
 }
@@ -642,33 +656,6 @@ void CScenePlay::RenderTextBox()
 		}
 	}
 
-}
-
-/********************************************************************************
-Render the achievements
-********************************************************************************/
-void CScenePlay::RenderAchievement(CAchievements* achievement)
-{
-	if (achievement->GetAppearedOnce() == false)
-	{
-		timer += 0.01;
-
-		RenderTextOnScreen(meshList[GEO_TEXT], "You've got the \"" + achievement->GetTitle() + "\" title!", Color(1.0f, 0.0f, 0.0f), 15.0f, -150.0f, 70.0f);
-		/* Show Box*/
-		if (timer > 2) //When the box appears completely finished
-		{
-			achievement->SetAppearedOnce(true);
-			timer = 0.0;
-		}
-	}
-	else
-	{
-		achievement->SetShowedOnce(true);
-		CLuaScript* m_cLuaScript;
-		m_cLuaScript = new CLuaScript("Achievements");
-		m_cLuaScript->saveAchievementValues();
-		delete m_cLuaScript;
-	}
 }
 
 /********************************************************************************

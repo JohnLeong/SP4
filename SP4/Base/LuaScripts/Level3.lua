@@ -19,11 +19,7 @@ maxNumOfYellowKeys = 0
 
 zombie1PosX = 5
 zombie1PosY = 5
-zombie1Hold = 1
-
-retardZombie1PosX = 2
-retardZombie1PosY = 3
-retardZombie1Hold = 2
+zombie1Hold = 0
 
 redKey1PosX = 8
 redKey1PosY = 8

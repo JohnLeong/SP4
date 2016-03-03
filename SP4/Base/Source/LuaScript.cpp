@@ -150,7 +150,7 @@ CAchievements* CLuaScript::getAchievementVariables(string name)
 	bool getShowedOnce = (bool)lua_toboolean(L2, -1);
 	lua_remove(L2, -1);
 
-	newAchievement = new CAchievements(getName, getTitle, propertyList, getUnlocked, false,getShowedOnce);
+	newAchievement = new CAchievements(getName, getTitle, propertyList, getUnlocked, false,getShowedOnce, -1.0) ;
 	return newAchievement;
 }
 

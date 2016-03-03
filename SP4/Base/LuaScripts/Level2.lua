@@ -16,12 +16,16 @@ maxNumOfRedKeys = 0
 maxNumOfBlueKeys = 0
 maxNumOfGreenKeys = 0
 maxNumOfYellowKeys = 0
-maxNumOfTextBox = 1
+maxNumOfTextBox = 2
 
 zombie1PosX = 5
-zombie1PosY = 1
+zombie1PosY = 1 
 zombie1Hold = 1
 
 textBox1PosX = 5
-textBox1PosY = 10
+textBox1PosY = 8
 textBox1Text = "Runes can be used to get rid of enemies"
+
+textBox2PosX = 5
+textBox2PosY = 10
+textBox2Text = "Zombies that are in the temple loves your brain"

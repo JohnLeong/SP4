@@ -4,8 +4,8 @@ Name1 = "Name1"
 Title1 = "I haz nu brainz"
 TotalProperties1 = 1
 Properties1_1 = "Name1"
-Completed1 = 1
-ShowedOnce1 = 1
+Completed1 = 0
+ShowedOnce1 = 0
 
 Name2 = "Name2"
 Title2 = "YOLO is wrong"
@@ -18,8 +18,8 @@ Name3 = "Name3"
 Title3 = "Oh a coin!"
 TotalProperties3 = 1
 Properties3_1 = "Name3"
-Completed3 = 0
-ShowedOnce3 = 0
+Completed3 = 1
+ShowedOnce3 = 1
 
 Name4 = "Name4"
 Title4 = "Ooooo more coins"

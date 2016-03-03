@@ -545,7 +545,7 @@ CEnemyZombie* CLevel::GenerateZombieEntity(int iXIndex, int iYIndex, CEnemy::HOL
 	switch (t)
 	{
 	case CEnemy::HOLDING_NONE:
-		zombie = new CEnemyZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
+		zombie = new CEnemyZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, NULL);
 		break;
 	case CEnemy::HOLDING_KEY_RED:
 		zombie = new CEnemyZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateRedKeyEntity(0, 0));
@@ -578,7 +578,7 @@ CEnemySuperRetardZombie* CLevel::GenerateSuperRetardZombieEntity(int iXIndex, in
 	switch (t)
 	{
 	case CEnemy::HOLDING_NONE:
-		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList);
+		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, NULL);
 		break;
 	case CEnemy::HOLDING_KEY_RED:
 		zombie = new CEnemySuperRetardZombie(iXIndex, iYIndex, this->m_cTilemap, dynamic_cast<SpriteAnimation*>(temp_mesh), this->m_cPlayerPtr, &m_cEntityIPosList, GenerateRedKeyEntity(0, 0));

@@ -151,9 +151,7 @@ private:
 	bool m_bShowLose;
 
 	bool m_bDied;
-
-	double timer;
-
+	bool m_bTimerCheck;
 	bool m_bMouseisPressed;
 	bool m_bQuitselectsound;
 	bool m_bPlayWinSound;
