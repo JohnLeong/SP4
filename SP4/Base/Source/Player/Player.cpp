@@ -362,10 +362,11 @@ Update
 ********************************************************************************/
 void CPlayer::Update(double dt, CTilemap* tile)
 {
+	float fDelta = static_cast<float>(dt);
 	if (!m_bAlive)
 	{
-		m_fDeathOffSetX += dt * 80.f;
-		m_fDeathOffSetY = (((m_fDeathOffSetX * m_fDeathOffSetX) - (2 * m_fDeathOffSetX) - 3) * 0.1) - 67;
+		m_fDeathOffSetX += fDelta * 80.f;
+		m_fDeathOffSetY = (((m_fDeathOffSetX * m_fDeathOffSetX) - (2.f * m_fDeathOffSetX) - 3.f) * 0.1f) - 67.f;
 
 		if (m_fDeathOffSetY > 300)
 			m_bActive = false;
@@ -377,7 +378,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionY)
 			{
-				this->m_fOffSetY += static_cast<float>(dt)* ENTITY_MOVE_SPEED;
+				this->m_fOffSetY += fDelta * ENTITY_MOVE_SPEED;
 				if (this->m_fOffSetY > tile->GetTileSize())
 				{
 					this->m_fOffSetY = 0;
@@ -387,7 +388,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 			}
 			else
 			{
-				m_fOffSetY -= static_cast<float>(dt)* ENTITY_MOVE_SPEED;
+				m_fOffSetY -= fDelta * ENTITY_MOVE_SPEED;
 				if (m_fOffSetY < -tile->GetTileSize())
 				{
 					m_fOffSetY = 0;
@@ -400,7 +401,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 		{
 			if (offSetDirectionX)
 			{
-				m_fOffSetX += static_cast<float>(dt) * ENTITY_MOVE_SPEED;
+				m_fOffSetX += fDelta * ENTITY_MOVE_SPEED;
 				if (m_fOffSetX > tile->GetTileSize())
 				{
 					m_fOffSetX = 0;
@@ -410,7 +411,7 @@ void CPlayer::Update(double dt, CTilemap* tile)
 			}
 			else
 			{
-				m_fOffSetX -= static_cast<float>(dt)* ENTITY_MOVE_SPEED;
+				m_fOffSetX -= fDelta* ENTITY_MOVE_SPEED;
 				if (m_fOffSetX < -tile->GetTileSize())
 				{
 					m_fOffSetX = 0;
@@ -560,14 +561,14 @@ bool CPlayer::GetHasReachedEndLevel(void)
 void CPlayer::UseItem(ITEM_SLOT item)
 {
 	std::cout << m_cFace << std::endl;
-	switch (m_cTilemap->GetTile(GetFacingPos().x, GetFacingPos().y).GetCollisionType())
+	switch (m_cTilemap->GetTile(static_cast<int>(GetFacingPos().x), static_cast<int>(GetFacingPos().y)).GetCollisionType())
 	{
 	case CTiledata::COL_LOCK_GREEN:
 		if (m_iKeys_green > 0)
 		{
 			Application::Sound.playSound("../irrKlang/media/door_unlock_sound.mp3");
 			--m_iKeys_green;
-			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
+			m_cTilemap->theScreenMap[static_cast<int>(GetFacingPos().x)][static_cast<int>(GetFacingPos().y)].ChangeIdState();
 		}
 		break;
 	case CTiledata::COL_LOCK_YELLOW:
@@ -575,7 +576,7 @@ void CPlayer::UseItem(ITEM_SLOT item)
 		{
 			Application::Sound.playSound("../irrKlang/media/door_unlock_sound.mp3");
 			--m_iKeys_yellow;
-			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
+			m_cTilemap->theScreenMap[static_cast<int>(GetFacingPos().x)][static_cast<int>(GetFacingPos().y)].ChangeIdState();
 		}
 		break;
 	case CTiledata::COL_LOCK_BLUE:
@@ -583,7 +584,7 @@ void CPlayer::UseItem(ITEM_SLOT item)
 		{
 			Application::Sound.playSound("../irrKlang/media/door_unlock_sound.mp3");
 			--m_iKeys_blue;
-			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
+			m_cTilemap->theScreenMap[static_cast<int>(GetFacingPos().x)][static_cast<int>(GetFacingPos().y)].ChangeIdState();
 		}
 		break;
 	case CTiledata::COL_LOCK_RED:
@@ -591,7 +592,7 @@ void CPlayer::UseItem(ITEM_SLOT item)
 		{
 			Application::Sound.playSound("../irrKlang/media/door_unlock_sound.mp3");
 			--m_iKeys_red;
-			m_cTilemap->theScreenMap[GetFacingPos().x][GetFacingPos().y].ChangeIdState();
+			m_cTilemap->theScreenMap[static_cast<int>(GetFacingPos().x)][static_cast<int>(GetFacingPos().y)].ChangeIdState();
 		}
 		break;
 	default:

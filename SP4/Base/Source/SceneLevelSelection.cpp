@@ -66,7 +66,6 @@ void CSceneLevelSelection::Init()
 	for (int i = 0; i < 4; i++)
 	{
 		button_vec[i].Set(5.7f, 69.0f + (i * -16.8f), 0.0f);
-		cout << button_vec[i] << endl;
 	}
 
 	for (int i = 0; i < NUM_GEOMETRY; ++i)

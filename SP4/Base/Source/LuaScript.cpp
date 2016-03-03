@@ -60,7 +60,7 @@ bool CLuaScript::getBoolVariable(string name)
 	lua_getglobal(L2, name.c_str());
 	if (!lua_isboolean(L2, -1))
 	{
-		return -1;
+		return false;
 	}
 	bool value = (bool)lua_toboolean(L2, -1);
 	lua_remove(L2, -1);
@@ -209,9 +209,9 @@ void CLuaScript::saveAchievementValues()
 	file.open("LuaScripts//Achievements.lua", std::ofstream::out, std::ostream::trunc);
 	file << "TotalAchievements = " << Application::m_cAchievementList.size() << "\n\n";
 
-	for (int i = 0; i < Application::m_cAchievementList.size(); i++)
+	for (unsigned i = 0; i < Application::m_cAchievementList.size(); i++)
 	{
-		int counter = i + 1;
+		int counter = static_cast<int>(i) + 1;
 		Application::m_cAchievementList[i]->Save(file,counter);
 	}
 
@@ -224,9 +224,9 @@ void CLuaScript::saveAchievementPropertiesValues()
 	file.open("LuaScripts//AchievementProperties.lua", std::ofstream::out, std::ostream::trunc);
 	file << "TotalProperties  = " << Application::m_cPropertyList.size() << "\n\n";
 
-	for (int i = 0; i < Application::m_cPropertyList.size(); i++)
+	for (unsigned i = 0; i < Application::m_cPropertyList.size(); i++)
 	{
-		int counter = i + 1;
+		int counter = static_cast<int>(i) + 1;
 		Application::m_cPropertyList[i]->Save(file, counter);
 	}
 
@@ -248,9 +248,9 @@ void CLuaScript::resetAchievementValues()
 	file.open("LuaScripts//Achievements.lua", std::ofstream::out, std::ostream::trunc);
 	file << "TotalAchievements = " << Application::m_cAchievementList.size() << "\n\n";
 
-	for (int i = 0; i < Application::m_cAchievementList.size(); i++)
+	for (unsigned i = 0; i < Application::m_cAchievementList.size(); i++)
 	{
-		int counter = i + 1;
+		int counter = static_cast<int>(i) + 1;
 		Application::m_cAchievementList[i]->Reset(file, counter);
 	}
 
@@ -263,9 +263,9 @@ void CLuaScript::resetAchievementPropertiesValues()
 	file.open("LuaScripts//AchievementProperties.lua", std::ofstream::out, std::ostream::trunc);
 	file << "TotalProperties  = " << Application::m_cPropertyList.size() << "\n\n";
 
-	for (int i = 0; i < Application::m_cPropertyList.size(); i++)
+	for (unsigned i = 0; i < Application::m_cPropertyList.size(); i++)
 	{
-		int counter = i + 1;
+		int counter = static_cast<int>(i) + 1;
 		Application::m_cPropertyList[i]->Reset(file, counter);
 	}
 

@@ -379,8 +379,6 @@ void CLevel::Update(const float dt, CPlayer* cPlayer)
 
 void CLevel::UpdateMovement(const float dt, CPlayer* cPlayer)
 {
-
-
 	for (std::vector<CEntityIPos*>::iterator entity = m_cEntityIPosList.begin(); entity != m_cEntityIPosList.end(); entity++)
 	{
 		//Skip if entity is not alive

@@ -404,11 +404,11 @@ void Application::Run()
 			else
 				theGSM->Update(m_dElapsedTime);
 
-			for (int i = 0; i < Application::m_cPropertyList.size(); i++)
+			for (unsigned i = 0; i < Application::m_cPropertyList.size(); i++)
 			{
 				Application::m_cPropertyList[i]->Update();
 			}
-			for (int i = 0; i < Application::m_cAchievementList.size(); i++)
+			for (unsigned i = 0; i < Application::m_cAchievementList.size(); i++)
 			{
 				Application::m_cAchievementList[i]->Update(m_cPropertyList);
 			}

@@ -23,7 +23,7 @@ void CAchievements::Update(vector<CProperties*> checkList)
 {
 	if (mUnlocked == false)
 	{
-		for (int j = 0; j < mProps.size(); j++)
+		for (unsigned j = 0; j < mProps.size(); j++)
 		{
 			for (unsigned int i = 0; i < checkList.size(); i++)
 			{
@@ -92,7 +92,7 @@ void CAchievements::Save(fstream& file, int id)
 	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
 	file << propertyName[Title] << id << " = " << "\"" << mTitle << "\"" << "\n";
 	file << propertyName[TotalProperties] << id << " = " << mProps.size() << "\n";
-	for (int i = 0; i < mProps.size(); i++)
+	for (unsigned i = 0; i < mProps.size(); i++)
 	{
 		file << propertyName[Properties] << id << "_" << i + 1 << " = " << "\"" << mProps[i] << "\"" << "\n";
 	}
@@ -107,7 +107,7 @@ void CAchievements::Reset(fstream& file, int id)
 	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
 	file << propertyName[Title] << id << " = " << "\"" << mTitle << "\"" << "\n";
 	file << propertyName[TotalProperties] << id << " = " << mProps.size() << "\n";
-	for (int i = 0; i < mProps.size(); i++)
+	for (unsigned i = 0; i < mProps.size(); i++)
 	{
 		file << propertyName[Properties] << id << "_" << i + 1 << " = " << "\"" << mProps[i] << "\"" << "\n";
 	}

@@ -33,8 +33,6 @@ void CSceneSplash::Init()
 	{
 		meshList[i] = NULL;
 	}
-	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("splash", Color(1, 0.f, 1), 80.f);
-	meshList[GEO_QUAD]->textureID = LoadTGA("Image//splash.tga");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/8BitWonder.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
@@ -158,7 +156,7 @@ void CSceneSplash::Update(double dt)
 		{
 			cAnimState = ANIM_5;
 		}
-		m_fBeamWait -= dt;
+		m_fBeamWait -= fDelta;
 		break;
 	case CSceneSplash::ANIM_5:
 		if (m_bDoShake)

@@ -14,12 +14,13 @@ CPhysicsObjectManager::~CPhysicsObjectManager()
 
 void CPhysicsObjectManager::Update(double dt)
 {
+	float fDelta = static_cast<float>(dt);
 	for (std::vector<CPhysicsObject*>::iterator object = m_ObjectList.begin(); object != m_ObjectList.end(); object++)
 	{
 		if ((*object)->m_bActive)
-			(*object)->Update(dt);
+			(*object)->Update(fDelta);
 	}
-	m_fNextTimer -= dt;
+	m_fNextTimer -= fDelta;
 	if (m_fNextTimer < 0.f)
 	{
 		m_fNextTimer = 0.3f;

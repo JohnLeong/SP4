@@ -13,7 +13,10 @@ CEntityIPos::CEntityIPos()
 , m_fDeathOffSetX(DEATH_ANIM_START_OFFSET_X)
 , m_fDeathOffSetY(0.f)
 {
-	m_bDeathDir = Math::RandIntMinMax(0, 1);
+	if (Math::RandIntMinMax(0, 1) == 0)
+		m_bDeathDir = true;
+	else
+		m_bDeathDir = false;
 }
 
 
@@ -116,16 +119,17 @@ Update
 ********************************************************************************/
 void CEntityIPos::Update(const float dt)
 {
+	//Update death animation if entity is dead
 	if (!m_bAlive)
 	{
 		m_fDeathOffSetX += dt * DEATH_ANIM_SPEED_X;
-		//m_fDeathOffSetY = (0.04 * (m_fDeathOffSetX * m_fDeathOffSetX)) + (0.03 * m_fDeathOffSetX) + 1;
-		m_fDeathOffSetY = (((m_fDeathOffSetX * m_fDeathOffSetX) - (2 * m_fDeathOffSetX) - 3) * 0.1) - DEATH_ANIM_OFFSET_Y;
-		//m_fDeathOffSetY = Math::RadianToDegree(sin(cos(m_fDeathOffSetX)));
+		m_fDeathOffSetY = (((m_fDeathOffSetX * m_fDeathOffSetX) - (2.f * m_fDeathOffSetX) - 3.f) * 0.1f) - static_cast<float>(DEATH_ANIM_OFFSET_Y);
 		if (m_fDeathOffSetY > DEATH_ANIM_CUTOFF_Y)
 			m_bActive = false;
 		return;
 	}
+
+	//Update position based on direction
 	switch (this->m_MoveDir)
 	{
 	case DIR_UP:

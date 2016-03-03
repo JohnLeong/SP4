@@ -165,7 +165,7 @@ void CSceneAchievements::Render()
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 
 	CSceneManager::Render();
-	for (int i = 0; i < Application::m_cAchievementList.size(); i++)
+	for (unsigned i = 0; i < Application::m_cAchievementList.size(); i++)
 	{
 		if (Application::m_cAchievementList[i]->GetUnlocked() == false)
 		{

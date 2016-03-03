@@ -278,8 +278,7 @@ void CScenePlay::InitLevel()
 void CScenePlay::Update(double dt)
 {
 	CSceneManager::Update(dt);
-	if (IsKeyDownOnce('p'))
-		std::cout << "Player Index: X:" << m_cPlayer->GetXIndex() << " Y:" << m_cPlayer->GetYIndex() << std::endl;
+
 
 	if (Application::IsKeyPressed('1'))
 	{
@@ -288,13 +287,10 @@ void CScenePlay::Update(double dt)
 
 		//cout << "choice: " << Application::getChoiceVal() << endl;
 	}
-	if (Application::IsKeyPressed('Q'))
-	{
-		cout << "boolean: " << GetIsQuitToMain() << endl;
-	}
+
 	if (!m_cPlayer->IsAlive() && m_died == false)
 	{
-		for (int i = 0; i < Application::m_cPropertyList.size(); i++)
+		for (unsigned i = 0; i < Application::m_cPropertyList.size(); i++)
 		{
 			if (Application::m_cPropertyList[i]->GetTitle() == "Death")
 			{
@@ -309,7 +305,6 @@ void CScenePlay::Update(double dt)
 		m_bPlayLoseSound = true;
 	}
 
-	UpdateAchievementStatus(dt);
 	//Player control
 	if (m_cLevel.IsMovementReady() && !m_cPlayer->GetHasReachedEndLevel() && m_cPlayer->IsAlive())
 	{
@@ -433,34 +428,6 @@ void CScenePlay::Update(double dt)
 }
 
 /********************************************************************************
- Update Camera position
- ********************************************************************************/
-void CScenePlay::UpdateCameraStatus(const unsigned char key, const bool status)
-{
-	//camera.UpdateStatus(key, status);
-}
-
-/********************************************************************************
- Update Avatar position
- ********************************************************************************/
-void CScenePlay::UpdateAvatarStatus(const unsigned char key, const bool status)
-{
-
-}
-
-/********************************************************************************
- Update Weapon status
- ********************************************************************************/
-void CScenePlay::UpdateWeaponStatus(const unsigned char key)
-{
-	
-}
-
-void CScenePlay::UpdateAchievementStatus(double dt)
-{
-}
-
-/********************************************************************************
  Render mobile objects
  ********************************************************************************/
 void CScenePlay::RenderGUI()
@@ -470,7 +437,7 @@ void CScenePlay::RenderGUI()
 	if (!m_cPlayer->IsAlive() && !m_cPlayer->IsActive())
 		RenderLose();
 
-	for (int i = 0; i < Application::m_cAchievementList.size(); i++)
+	for (unsigned i = 0; i < Application::m_cAchievementList.size(); i++)
 	{
 		if (Application::m_cAchievementList[i]->GetUnlocked() == true && Application::m_cAchievementList[i]->GetShowedOnce() == false)
 		{
@@ -638,7 +605,6 @@ void CScenePlay::RenderAchievement(CAchievements* achievement)
 {
 	if (achievement->GetAppearedOnce() == false)
 	{
-		cout << timer << endl;
 		timer += 0.01;
 	
 		RenderTextOnScreen(meshList[GEO_TEXT], "You've got the \"" + achievement->GetTitle() + "\" title!", Color(1.0f, 0.0f, 0.0f), 15.0f, -150.0f, 70.0f);
@@ -831,7 +797,6 @@ void CScenePlay::Render()
  ********************************************************************************/
 void CScenePlay::Exit()
 {
-	std::cout << "PLAY EXIT";
 	// Cleanup VBO
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{

@@ -80,14 +80,6 @@ public:
 
 	virtual void Init();
 	virtual void Update(double dt);
-	// Update Camera status
-	virtual void UpdateCameraStatus(const unsigned char key, const bool status = true);
-	// Update Avatar position
- 	virtual void UpdateAvatarStatus(const unsigned char key, const bool status = true);
-	// Update Weapon status
-	virtual void UpdateWeaponStatus(const unsigned char key);
-
-	virtual void UpdateAchievementStatus(double dt);
 
 	//set the boolean for quit 
 	static void SetISQuitToMain(bool b);

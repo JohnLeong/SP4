@@ -13,7 +13,6 @@ class CSceneSplash : public CSceneManager
 {
 	enum GEOMETRY_TYPE
 	{
-		GEO_QUAD,
 		GEO_TEXT,
 		GEO_GRADIENT,
 		GEO_BEAM,
