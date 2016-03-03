@@ -526,7 +526,7 @@ void CSceneLevelSelection::Render()
 				  dialogue << "KEYS!?..........Door?!......hmmm";
 				  break;
 			  case 4:
-				  dialogue << "Development in progress..";
+				  dialogue << "4 dead and mentally challenged brothers challenges you on the 4th level";
 			  default:
 				  break;
 			  }
@@ -537,16 +537,16 @@ void CSceneLevelSelection::Render()
 				  switch (Application::getChoiceVal())
 				  {
 				  case 1:
-					  dialogue << "Level 4 + 1";
+					  dialogue << "HOI!";
 					  break;
 				  case 2:
-					  dialogue << "Level 5+ 1?";
+					  dialogue << "AHHHHHHHHHHHHHHHHHHHHHH";
 					  break;
 				  case 3:
-					  dialogue << "LEvel 6+ 1";
+					  dialogue << "The end is near...";
 					  break;
 				  case 4:
-					  dialogue << "lEvEl 7+ 1";
+					  dialogue << "I'm almost at the top of the temple!";
 				  default:
 					  break;
 				  }

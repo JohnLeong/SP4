@@ -76,10 +76,10 @@ void CSceneAchievements::Init()
 
 	//back button
 	meshList[GEO_DEATH] = MeshBuilder::Generate2DMeshCenter("coin", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 20.0f);
-	meshList[GEO_DEATH]->textureID = LoadTGA("Image/Achievement/coin.tga");
+	meshList[GEO_DEATH]->textureID = LoadTGA("Image/Achievement/grave.tga");
 
 	meshList[GEO_DEATH2] = MeshBuilder::Generate2DMeshCenter("coin", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 20.0f);
-	meshList[GEO_DEATH2]->textureID = LoadTGA("Image/Achievement/coin2.tga");
+	meshList[GEO_DEATH2]->textureID = LoadTGA("Image/Achievement/grave2.tga");
 
 	meshList[GEO_COIN] = MeshBuilder::Generate2DMeshCenter("coin", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 20.0f);
 	meshList[GEO_COIN]->textureID = LoadTGA("Image/Achievement/coin.tga");
@@ -217,10 +217,10 @@ void CSceneAchievements::Render()
 			RenderTextOnScreen(meshList[GEO_TEXT], Application::m_cAchievementList[i]->GetTitle(), Color(0.f, 1.f, 0.f), 15.f, -130.f + m_fLeftAnimOffset, 40.f + (i * -20.f));
 		}
 	}
-	RenderMeshIn2D(meshList[GEO_DEATH], false, 1.f, 1.f, -145.0f, 60.f);
-	RenderMeshIn2D(meshList[GEO_DEATH2], false, 1.f, 1.f, -145.0f, 40.f);
-	RenderMeshIn2D(meshList[GEO_COIN], false, 1.f, 1.f, -145.0f, 20.f);
-	RenderMeshIn2D(meshList[GEO_COIN2], false, 1.f, 1.f, -145.0f, 0.f);
+	RenderMeshIn2D(meshList[GEO_DEATH], false, 1.f, 1.f, -145.0f + m_fLeftAnimOffset, 55.f);
+	RenderMeshIn2D(meshList[GEO_DEATH2], false, 1.f, 1.f, -145.0f + m_fLeftAnimOffset, 35.f);
+	RenderMeshIn2D(meshList[GEO_COIN], false, 1.f, 1.f, -145.0f + m_fLeftAnimOffset, 15.f);
+	RenderMeshIn2D(meshList[GEO_COIN2], false, 1.f, 1.f, -145.0f + m_fLeftAnimOffset, -5.f);
 	
 
 //#if _DEBUG
