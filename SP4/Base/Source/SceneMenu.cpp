@@ -98,6 +98,9 @@ void CSceneMenu::Init()
 	meshList[GEO_STAR] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.f, 0.05f, 0.05f);
 	meshList[GEO_STAR]->textureID = LoadTGA("Image//Background/star.tga");
 
+	meshList[GEO_LOGO] = MeshBuilder::Generate2DMeshCenter("logo", Color(1, 1, 1), 0.0f, 0.f, 70.0f, 50.0f);
+	meshList[GEO_LOGO]->textureID = LoadTGA("Image//Background/logo.tga");
+
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
@@ -401,6 +404,9 @@ void CSceneMenu::Render()
 
 	RenderMesh(meshList[GEO_TEMPLE], false);
 	RenderMesh(meshList[GEO_GROUND], false);
+
+	//Render the logo
+	RenderMeshIn2D(meshList[GEO_LOGO], false, 1, 1, 0.0f, 70.0f);
 	modelStack.PopMatrix();
 
 	if (Application::IsKeyPressed('1'))
