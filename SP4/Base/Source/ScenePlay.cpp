@@ -475,9 +475,9 @@ void CScenePlay::RenderGUI()
 
 	for (unsigned i = 0; i < Application::m_cAchievementList.size(); i++)
 	{
-		if (Application::m_cAchievementList[i]->GetUnlocked() == true && Application::m_cAchievementList[i]->GetShowedOnce() == false)
+		if (Application::m_cAchievementList[i]->GetUnlocked() == 1 && Application::m_cAchievementList[i]->GetShowedOnce() == 0)
 		{
-			Application::m_cAchievementList[i]->SetShowedOnce(true);
+			Application::m_cAchievementList[i]->SetShowedOnce(1);
 			CLuaScript* m_cLuaScript;
 			m_cLuaScript = new CLuaScript("Achievements");
 			m_cLuaScript->saveAchievementValues();

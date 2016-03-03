@@ -23,7 +23,7 @@ public:
 		NUM_Properties
 	};
 
-	CAchievements(string theName, string theTitle, vector<string> theRelatedProps, bool mUnlocked, bool mAppearedOnce, bool mShowedOnce, double timer);
+	CAchievements(string theName, string theTitle, vector<string> theRelatedProps, int mUnlocked, bool mAppearedOnce, int mShowedOnce, double timer);
 	~CAchievements(void);
 	void Update(vector<CProperties*> checkList);								// Update
 	vector<string> GetProps();
@@ -33,9 +33,9 @@ public:
 
 	string GetTitle();
 
-	bool GetUnlocked();
+	int GetUnlocked();
 	bool GetAppearedOnce();
-	bool GetShowedOnce();
+	int GetShowedOnce();
 	double GetTimer();
 
 	void SetUnlocked(bool mUnlocked);
@@ -46,6 +46,7 @@ public:
 private:
 	string mName, mTitle;
 	vector<string> mProps;
-	bool mUnlocked, mAppearedOnce, mShowedOnce;
+	int mUnlocked, mShowedOnce;
+	bool mAppearedOnce;
 	double mTimer;
 };

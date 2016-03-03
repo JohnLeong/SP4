@@ -24,7 +24,7 @@ public:
 
 	string getStringVariable(string name);
 	int getIntVariable(string name);
-	bool getBoolVariable(string name);
+	int getBoolVariable(string name);
 	float getFloatVariable(string name);
 
 	CEnemyZombie* getNsetZombieVariables(string name);

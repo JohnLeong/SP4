@@ -208,11 +208,11 @@ void CSceneAchievements::Render()
 
 	for (unsigned i = 0; i < Application::m_cAchievementList.size(); i++)
 	{
-		if (Application::m_cAchievementList[i]->GetUnlocked() == false)
+		if (Application::m_cAchievementList[i]->GetUnlocked() == 0)
 		{
 			RenderTextOnScreen(meshList[GEO_TEXT], Application::m_cAchievementList[i]->GetTitle(), Color(0.f, 0.f, 0.f), 15.f, -130.f + m_fLeftAnimOffset, 40.f + (i * -20.f));
 		}
-		else if (Application::m_cAchievementList[i]->GetUnlocked() == true)
+		else if (Application::m_cAchievementList[i]->GetUnlocked() == 1)
 		{
 			RenderTextOnScreen(meshList[GEO_TEXT], Application::m_cAchievementList[i]->GetTitle(), Color(0.f, 1.f, 0.f), 15.f, -130.f + m_fLeftAnimOffset, 40.f + (i * -20.f));
 		}
@@ -244,7 +244,7 @@ void CSceneAchievements::Render()
 	}
 
 	modelStack.PushMatrix();
-	modelStack.Translate(m_fLeftAnimOffset * 0.005, 0.f, 0.f);
+	modelStack.Translate(m_fLeftAnimOffset * 0.005f, 0.f, 0.f);
 	RenderMesh(meshList[GEO_HEADER], false);
 	modelStack.PopMatrix();
 }

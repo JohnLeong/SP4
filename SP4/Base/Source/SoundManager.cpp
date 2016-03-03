@@ -98,7 +98,7 @@ void CSoundManager::playSound(int milliseconds)
 		//exit(0);
 	}
 
-	_sleep(milliseconds);
+	//_sleep(milliseconds);
 
 	pause();
 
@@ -161,7 +161,7 @@ void CSoundManager::playSound(string soundFile, int milliseconds)
 		//exit(0);
 	}
 
-	_sleep(milliseconds);
+	//_sleep(milliseconds);
 	pause();
 }
 

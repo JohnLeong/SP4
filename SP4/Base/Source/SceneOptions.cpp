@@ -302,7 +302,7 @@ void CSceneOptions::Render()
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 
 	modelStack.PushMatrix();
-	modelStack.Translate(0, m_fBotAnimOffset * 0.005, 0);
+	modelStack.Translate(0, m_fBotAnimOffset * 0.005f, 0);
 	//Render the tiki image
 	RenderMesh(meshList[GEO_BACKGROUND_IMAGE], false);
 
@@ -347,7 +347,7 @@ void CSceneOptions::Render()
 
 	//Render header
 	modelStack.PushMatrix();
-	modelStack.Translate(m_fLeftAnimOffset * 0.005, 0.f, 0.f);
+	modelStack.Translate(m_fLeftAnimOffset * 0.005f, 0.f, 0.f);
 	RenderMesh(meshList[GEO_HEADER], false);
 	modelStack.PopMatrix();
 }

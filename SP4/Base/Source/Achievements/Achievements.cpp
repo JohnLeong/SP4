@@ -4,7 +4,7 @@
 string CAchievements::propertyName[CAchievements::NUM_Properties] = { "Name", "Title", "TotalProperties", "Properties", "Completed", "ShowedOnce" };
 
 
-CAchievements::CAchievements(string theName, string theTitle, vector<string> theRelatedProps, bool mUnlocked, bool mAppearedOnce, bool mShowedOnce, double mTimer)
+CAchievements::CAchievements(string theName, string theTitle, vector<string> theRelatedProps, int mUnlocked, bool mAppearedOnce, int mShowedOnce, double mTimer)
 {
 	mName = theName;
 	mTitle = theTitle;
@@ -58,7 +58,7 @@ string CAchievements::GetTitle()
 	return mTitle;
 }
 
-bool CAchievements::GetUnlocked()
+int CAchievements::GetUnlocked()
 {
 	return mUnlocked;
 }
@@ -68,7 +68,7 @@ bool CAchievements::GetAppearedOnce()
 	return mAppearedOnce;
 }
 
-bool CAchievements::GetShowedOnce()
+int CAchievements::GetShowedOnce()
 {
 	return mShowedOnce;
 }
@@ -113,8 +113,8 @@ void CAchievements::Save(fstream& file, int id)
 
 void CAchievements::Reset(fstream& file, int id)
 {
-	mUnlocked = false;
-	mShowedOnce = false;
+	mUnlocked = 0;
+	mShowedOnce = 0;
 	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
 	file << propertyName[Title] << id << " = " << "\"" << mTitle << "\"" << "\n";
 	file << propertyName[TotalProperties] << id << " = " << mProps.size() << "\n";

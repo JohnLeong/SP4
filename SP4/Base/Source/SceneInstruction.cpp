@@ -216,7 +216,7 @@ void CSceneInstruction::Render()
 
 	//Render header
 	modelStack.PushMatrix();
-	modelStack.Translate(m_fLeftAnimOffset * 0.005, 0.f, 0.f);
+	modelStack.Translate(m_fLeftAnimOffset * 0.005f, 0.f, 0.f);
 	RenderMesh(meshList[GEO_HEADER], false);
 	RenderMesh(meshList[GEO_MONKEY], false);
 	modelStack.PopMatrix();

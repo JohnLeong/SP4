@@ -24,7 +24,7 @@ public:
 		NUM_Properties
 	};
 	
-	CProperties(string theName, string theTitle, int theInitialValue, string theActivation, int theActivationValue, bool clearActivation);
+	CProperties(string theName, string theTitle, int theInitialValue, string theActivation, int theActivationValue, int clearActivation);
 	~CProperties(void);
 
 	void Update();								// Update
@@ -32,7 +32,7 @@ public:
 	string GetTitle();
 	void SetValue(int theValue);
 	int GetValue();
-	bool GetClearActivation();
+	int GetClearActivation();
 	void ChangeValue(int changeNumber);
 	void Save(fstream& file, int id);
 	void Reset(fstream& file, int id);
@@ -44,6 +44,6 @@ private:
 	int mActivationValue;
 	int mValue;
 	string mActive;
-	bool mClearActive;
+	int mClearActive;
 	CLuaScript* m_cLuaScript;
 };

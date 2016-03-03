@@ -2,7 +2,7 @@
 
 string CProperties::propertyName[CProperties::NUM_Properties] = { "Name", "Title", "Value", "Active", "ActivationValue", "Completed" };
 
-CProperties::CProperties(string theName, string theTitle, int theInitialValue, string theActivation, int theActivationValue, bool clearActivation)
+CProperties::CProperties(string theName, string theTitle, int theInitialValue, string theActivation, int theActivationValue, int clearActivation)
 {
 	mName = theName;
 	mTitle = theTitle;
@@ -23,7 +23,7 @@ void CProperties::Update()
 	{
 		if (mValue > mActivationValue)
 		{
-			mClearActive = true;
+			mClearActive = 1;
 			m_cLuaScript->saveAchievementPropertiesValues();
 		}
 	}
@@ -31,7 +31,7 @@ void CProperties::Update()
 	{
 		if (mValue < mActivationValue)
 		{
-			mClearActive = true;
+			mClearActive = 1;
 			m_cLuaScript->saveAchievementPropertiesValues();
 		}
 	}
@@ -39,13 +39,13 @@ void CProperties::Update()
 	{
 		if (mValue == mActivationValue)
 		{
-			mClearActive = true;
+			mClearActive = 1;
 			m_cLuaScript->saveAchievementPropertiesValues();
 		}
 	}
 	else
 	{
-		mClearActive = false;
+		mClearActive = 0;
 		
 	}
 }
@@ -70,7 +70,7 @@ int CProperties::GetValue()
 	return mValue;
 }
 
-bool  CProperties::GetClearActivation()
+int CProperties::GetClearActivation()
 {
 	return mClearActive;
 }
@@ -97,7 +97,7 @@ void CProperties::Save(fstream& file, int id)
 void CProperties::Reset(fstream& file, int id)
 {
 	mValue = 0;
-	mClearActive = false;
+	mClearActive = 0;
 	file << propertyName[Name] << id << " = " << "\"" << mName << "\"" << "\n";
 	file << propertyName[Title] << id << " = " << "\"" << mTitle << "\"" << "\n";
 	file << propertyName[Value] << id << " = " << mValue << "\n";
