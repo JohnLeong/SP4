@@ -1,5 +1,5 @@
-#ifndef SCENE_OPTIONS_H
-#define SCENE_OPTIONS_H
+#ifndef SCENE_FINISH_H
+#define SCENE_FINISH_H
 
 #include "SceneManager.h"
 #include "Mtx44.h"
@@ -9,7 +9,7 @@
 #include "Light.h"
 
 class CLuaScript;
-class CSceneOptions : public CSceneManager
+class CSceneFinish : public CSceneManager
 {
 	enum GEOMETRY_TYPE
 	{
@@ -28,31 +28,13 @@ class CSceneOptions : public CSceneManager
 		GEO_BACKGROUND_BASE,
 		GEO_BACKGROUND_IMAGE,
 
-		//volume control
-		GEO_MUTE_IMAGE,
-		GEO_VOL_HIGH,
-		GEO_VOL_MID,
-		GEO_VOL_LOW,
-
-		GEO_RESET,
-		GEO_RESET_H,
-
 		NUM_GEOMETRY,
 	};
 
-	enum VOL_CONTROL
-	{
-		VOL_HIGH,
-		VOL_MID,
-		VOL_LOW,
-
-		VOL_MUTE,
-	};
-
 public:
-	CSceneOptions(void);
-	CSceneOptions(const int m_window_width, const int m_window_height);
-	~CSceneOptions(void);
+	CSceneFinish(void);
+	CSceneFinish(const int m_window_width, const int m_window_height);
+	~CSceneFinish(void);
 
 	virtual void Init();
 	virtual void Update(double dt);
@@ -63,7 +45,6 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
-	VOL_CONTROL m_ivolControl;
 
 protected:
 	Mesh* meshList[NUM_GEOMETRY];
@@ -78,11 +59,8 @@ protected:
 	//check if selectSound is currently acftive
 	bool isSelectSoundPlaying;
 
-	//for volume control
-	int m_volControl;
-
 	//virutally create vector positions for the buttons
-	Vector3 geo_pos[3];
+	Vector3 geo_pos[2];
 
 	CLuaScript* m_cLuaScript;
 };

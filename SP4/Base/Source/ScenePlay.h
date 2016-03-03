@@ -104,7 +104,7 @@ public:
 	void RenderAchievement(CAchievements* achievement);
 
 	bool m_bExitPlay;
-
+	bool m_bToFinishScreen;
 private:
 	//unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
@@ -125,6 +125,7 @@ private:
 	int m_iCurrentLevel;
 
 	static bool m_bBacktoMainMenu;
+    
 	Vector3 quit_button_vec;
 	Vector3 restart_button_vec;
 	Vector3 nextLevel_button_vec_winScreen;

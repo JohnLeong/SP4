@@ -13,7 +13,6 @@
 #define buttonYoffset 8.5f
 
 bool CScenePlay::m_bBacktoMainMenu = false;
-
 CScenePlay::CScenePlay(void)
 	: m_window_width(800)
 	, m_window_height(600)
@@ -25,6 +24,7 @@ CScenePlay::CScenePlay(void)
 	, m_bMouseisPressed(false)
 	, m_bPlayWinSound(false)
 	, m_bPlayLoseSound(false)
+	, m_bToFinishScreen(false)
 {
 }
 
@@ -37,6 +37,7 @@ CScenePlay::CScenePlay(const int m_window_width, const int m_window_height)
 	, m_bMouseisPressed(false)
 	, m_bPlayWinSound(false)
 	, m_bPlayLoseSound(false)
+	, m_bToFinishScreen(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -237,7 +238,6 @@ void CScenePlay::Init()
 	keys_sprite_yellow = dynamic_cast<SpriteAnimation*>(meshList[GEO_KEYS_YELLOW]);
 	keys_sprite_yellow->m_anim = new Animation(0, 10, 0, 0.7f);
 
-
 	m_cPlayer = new CPlayer();
 	m_cPlayer->Init(m_cLevel.GetTilemap(), 1, 1, dynamic_cast<SpriteAnimation*>(meshList[GEO_PLAYER]), &m_cLevel.m_cEntityIPosList);
 	//Init level after player
@@ -382,7 +382,7 @@ void CScenePlay::Update(double dt)
 	}
 	else if (m_bShowWin)
 	{
-		if (IsKeyDownOnce('n') && m_iCurrentLevel <= 8)
+		if (IsKeyDownOnce('n') && m_iCurrentLevel < 2)
 		{
 			++m_iCurrentLevel;
 			ostringstream convertor;
@@ -394,6 +394,10 @@ void CScenePlay::Update(double dt)
 			m_bShowWin = false;
 			m_bShowLose = false;
 			m_bPlayWinSound = false;
+		}
+		if (IsKeyDown('n') && m_iCurrentLevel == 2)
+		{
+			m_bToFinishScreen = true;
 		}
 	}
 
@@ -504,8 +508,6 @@ void CScenePlay::RenderWin(void)
 		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, 0.f, -50.f);
 		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 50.f, -50.f);
 	}
-
-
 
 	for (int i = 0; i < m_cLevel.GetNumStars(); ++i)
 		RenderMeshIn2D(meshList[GEO_STAR], false, 1.f, 1.f, -50.f + (i * 50.f), 10.f);

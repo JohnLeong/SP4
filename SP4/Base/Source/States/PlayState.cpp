@@ -5,6 +5,7 @@ using namespace std;
 #include "GameStateManager.h"
 #include "playstate.h"
 #include "menustate.h"
+#include "FinishState.h"
 
 CPlayState CPlayState::thePlayState;
 
@@ -144,6 +145,10 @@ void CPlayState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 	{
 		//scene->Exit();
 		theGSM->ChangeState(CMenuState::Instance());
+	}
+	else if (static_cast<CScenePlay*>(scene)->m_bToFinishScreen == true)
+	{
+		theGSM->ChangeState(CFinishState::Instance());
 	}
 }
 

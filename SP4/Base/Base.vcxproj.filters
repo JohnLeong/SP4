@@ -127,6 +127,9 @@
     <ClCompile Include="Source\Application.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Mesh Tools</Filter>
     </ClCompile>
@@ -253,8 +256,11 @@
     <ClCompile Include="Source\States\AchievementState.cpp">
       <Filter>Game State Management\States\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\main.cpp">
-      <Filter>Entities</Filter>
+    <ClCompile Include="Source\SceneFinish.cpp">
+      <Filter>Game State Management\Scenes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\States\FinishState.cpp">
+      <Filter>Game State Management\States\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +451,12 @@
       <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\States\LevelSelectionState.h">
+      <Filter>Game State Management\States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneFinish.h">
+      <Filter>Game State Management\Scenes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\FinishState.h">
       <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
