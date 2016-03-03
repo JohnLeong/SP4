@@ -48,7 +48,7 @@ void CSceneAchievements::Init()
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");//, 1000, 1000, 1000);
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/Anonymous.tga");
+	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Font/8BitWonder.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_LOGO] = MeshBuilder::GenerateQuad("play", Color(1, 1, 1), 1.f);
 	meshList[GEO_LOGO]->textureID = LoadTGA("Image//GUI/button_unselected_play.tga");
@@ -176,14 +176,14 @@ void CSceneAchievements::Render()
 			RenderTextOnScreen(meshList[GEO_TEXT], Application::m_cAchievementList[i]->GetTitle(), Color(0.f, 1.f, 0.f), 15.f, -130.f, 50.f + (i * -20.f));
 		}
 	}
-#if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "SceneAchievements", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
-
-	std::ostringstream ss;
-	ss.precision(5);
-	ss << fps;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
-#endif
+//#if _DEBUG
+//	RenderTextOnScreen(meshList[GEO_TEXT], "SceneAchievements", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
+//
+//	std::ostringstream ss;
+//	ss.precision(5);
+//	ss << fps;
+//	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
+//#endif
 
 	switch (Application::getChoiceVal())
 	{

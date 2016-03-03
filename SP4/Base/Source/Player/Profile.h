@@ -15,21 +15,18 @@ public:
 
 	enum saveProperties
 	{
-		Name,
 		HighestLevelUnlocked,
 		NUM_Properties
 	};
 
-	CProfile(string theName, int theHighestLevelUnlocked);
+	CProfile(int theHighestLevelUnlocked);
 	~CProfile(void);
 	void Update();		// Update
-	string GetName();
 	int GetHighestLevelUnlocked();
 	void Save(fstream& file, int id);
-
+	void Reset(fstream& file, int id);
 	static string propertyName[NUM_Properties];
 
 private:
-	string mName;
 	int mHighestLevelUnlocked;
 };

@@ -1,2 +1,1 @@
-Name = ""
 HighestLevelUnlocked = 1

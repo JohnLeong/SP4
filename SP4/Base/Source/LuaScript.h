@@ -36,9 +36,11 @@ public:
 
 	void saveAchievementValues();
 	void saveAchievementPropertiesValues();
+	void saveProfileValues();
 
 	void resetAchievementValues();
 	void resetAchievementPropertiesValues();
+	void resetProfileValues();
 
 	int luaAdd(int x, int y);
 	int luaMinus(int x, int y);

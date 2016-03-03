@@ -85,18 +85,13 @@ CProfile* CLuaScript::getProfileVariables()
 {
 	CProfile* getProfile;
 
-	string name = "Name";
 	string highestLevelUnlocked = "HighestLevelUnlocked";
-
-	lua_getglobal(L2, name.c_str());
-	string getName = (string)lua_tostring(L2, -1);
-	lua_remove(L2, -1);
 
 	lua_getglobal(L2, highestLevelUnlocked.c_str());
 	int getHighestLevelUnlocked = (int)lua_tonumber(L2, -1);
 	lua_remove(L2, -1);
 
-	getProfile = new CProfile(getName, getHighestLevelUnlocked);
+	getProfile = new CProfile(getHighestLevelUnlocked);
 	return getProfile;
 }
 
@@ -238,6 +233,15 @@ void CLuaScript::saveAchievementPropertiesValues()
 	file.close();
 }
 
+void CLuaScript::saveProfileValues()
+{
+	fstream file;
+	file.open("LuaScripts//Profile.lua", std::ofstream::out, std::ostream::trunc);
+	file << "HighestLevelUnlocked = " << Application::m_cProfile->GetHighestLevelUnlocked();
+
+	file.close();
+}
+
 void CLuaScript::resetAchievementValues()
 {
 	fstream file;
@@ -264,6 +268,15 @@ void CLuaScript::resetAchievementPropertiesValues()
 		int counter = i + 1;
 		Application::m_cPropertyList[i]->Reset(file, counter);
 	}
+
+	file.close();
+}
+
+void CLuaScript::resetProfileValues()
+{
+	fstream file;
+	file.open("LuaScripts//Profile.lua", std::ofstream::out, std::ostream::trunc);
+	file << "HighestLevelUnlocked = 1";
 
 	file.close();
 }

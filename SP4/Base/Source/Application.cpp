@@ -26,7 +26,7 @@ int Application::choice = 0; float Application::mouseWorldX = 0; float Applicati
 CSoundManager Application::Sound; 
 bool Application::AppisRunning = true;
 //CSoundManager Application::Sound;
-vector<CProfile*>  Application::m_cProfileList;
+CProfile* Application::m_cProfile;
 vector<CAchievements*>  Application::m_cAchievementList;
 vector<CProperties*>  Application::m_cPropertyList;
 bool Application::m_bPauseDT = false;
@@ -271,10 +271,9 @@ void Application::Init()
 	m_dAccumulatedTime_ThreadTwo = 0.0;
 
 	InitWindow(false);
-
+	m_cProfile = new CProfile(1);
 	m_cLuaScript = new CLuaScript("Profile");
-	CProfile* test = m_cLuaScript->getProfileVariables();
-	m_cProfileList.push_back(test);
+	m_cProfile = m_cLuaScript->getProfileVariables();
 	delete m_cLuaScript;
 
 	m_cLuaScript = new CLuaScript("AchievementProperties");

@@ -7,6 +7,7 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 #include <sstream>
+#include "LuaScript.h"
 
 #define buttonXoffset 38.0f
 #define buttonYoffset 11.5f
@@ -36,7 +37,8 @@ void CSceneOptions::Init()
 	CSceneManager::Init();
 
 	//create virtual positions for the buttons (back)
-	geo_pos.Set(70.0f, 15.0f, 0.0f);
+	geo_pos[1].Set(70.0f, 15.0f, 0.0f);
+	geo_pos[2].Set(130.0f, 15.0f, 0.0f);
 
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
@@ -85,6 +87,14 @@ void CSceneOptions::Init()
 
 	meshList[GEO_VOL_LOW] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.3f, 0.3f, 0.3f);
 	meshList[GEO_VOL_LOW]->textureID = LoadTGA("Image//MENU/tiki_vol_low.tga");
+
+	//reset button
+	meshList[GEO_RESET] = MeshBuilder::Generate2DMeshCenter("reset button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
+	meshList[GEO_RESET]->textureID = LoadTGA("Image/MENU//back_button.tga");
+
+	//reset button highlighted
+	meshList[GEO_RESET_H] = MeshBuilder::Generate2DMeshCenter("reset button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
+	meshList[GEO_RESET_H]->textureID = LoadTGA("Image/MENU//h_back_button.tga");
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -150,7 +160,7 @@ void CSceneOptions::Update(double dt)
 		Application::setChoiceVal(Application::getChoiceVal() - 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
 		if (Application::getChoiceVal() < 0)
-			Application::setChoiceVal(1);
+			Application::setChoiceVal(2);
 
 		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 
@@ -161,18 +171,16 @@ void CSceneOptions::Update(double dt)
 	{
 		Application::setChoiceVal(Application::getChoiceVal() + 1);
 		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal() > 1)
+		if (Application::getChoiceVal() > 2)
 			Application::setChoiceVal(0);
 
-
 		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-
 
 		m_bisKeyBoard = true;
 	}
 
 	//Update image on mouse hover
-	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)) // back button
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, static_cast<float>(geo_pos[1].x + buttonXoffset), geo_pos[1].y + buttonYoffset)) // back button
 	{
 		Application::setChoiceVal(1);
 		m_bisKeyBoard = false;
@@ -184,7 +192,26 @@ void CSceneOptions::Update(double dt)
 		}
 
 	}
-	else if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, static_cast<float>(geo_pos[2].x + buttonXoffset), geo_pos[2].y + buttonYoffset)) // reset button
+	{
+		Application::setChoiceVal(2);
+		m_bisKeyBoard = false;
+
+		m_cLuaScript->resetProfileValues();
+		m_cLuaScript->resetAchievementValues();
+		m_cLuaScript->resetAchievementPropertiesValues();
+
+		/*m_cLuaScript = new CLuaScript("Achievements");
+		m_cLuaScript->resetAchievementValues();
+		delete m_cLuaScript;
+		m_cLuaScript = new CLuaScript("AchievementProperties");
+		m_cLuaScript->resetAchievementPropertiesValues();
+		delete m_cLuaScript;
+		m_cLuaScript = new CLuaScript("Profile");
+		m_cLuaScript->resetProfileValues();
+		delete m_cLuaScript;*/
+	}
+	else if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, static_cast<float>(geo_pos[0].x + buttonXoffset), geo_pos[0].y + buttonYoffset)
 		&& !m_bisKeyBoard)
 	{
 		Application::setChoiceVal(0);
@@ -263,13 +290,17 @@ void CSceneOptions::Render()
 	{
 	case 1:
 		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1.15f, 1.15f, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_RESET], false, 1, 1, 100.0f, -52.5f);
 		break;
-
+	case 2:
+		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_RESET_H], false, 1.15f, 1.15f, 100.0f, -52.5f);
+		break;
 	default:
 		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_RESET], false, 1, 1, 100.0f, -52.5f);
 		break;
 	}
-
 }
 
 /********************************************************************************

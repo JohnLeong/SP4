@@ -9,6 +9,7 @@
 #include "Light.h"
 #include "SceneOptions.h"
 
+class CLuaScript;
 class CSceneOptions : public CSceneManager
 {
 	enum GEOMETRY_TYPE
@@ -33,6 +34,9 @@ class CSceneOptions : public CSceneManager
 		GEO_VOL_HIGH,
 		GEO_VOL_MID,
 		GEO_VOL_LOW,
+
+		GEO_RESET,
+		GEO_RESET_H,
 
 		NUM_GEOMETRY,
 	};
@@ -79,7 +83,9 @@ protected:
 	int m_volControl;
 
 	//virutally create vector positions for the buttons
-	Vector3 geo_pos;
+	Vector3 geo_pos[3];
+
+	CLuaScript* m_cLuaScript;
 };
 
 #endif

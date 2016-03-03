@@ -74,7 +74,8 @@ public:
 	static int m_window_width;
 	static int m_window_height;
 
-	static vector<CProfile*> m_cProfileList;
+	static CProfile* m_cProfile;
+
 	static vector<CAchievements*> m_cAchievementList;
 	static vector<CProperties*> m_cPropertyList;
 

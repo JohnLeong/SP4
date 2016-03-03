@@ -125,7 +125,15 @@ void COptionsState::Update(CGameStateManager* theGSM, const double m_dElapsedTim
 
 		theGSM->ChangeState(CMenuState::Instance());
 	}
-
+	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 2
+		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 2)
+	{
+		if (isConfirmsoundPlaying == false)
+		{
+			Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+			isConfirmsoundPlaying = true;
+		}
+	}
 }
 
 void COptionsState::Draw(CGameStateManager* theGSM) 
