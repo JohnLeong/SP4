@@ -15,11 +15,15 @@ CSceneInstruction::CSceneInstruction(void)
 : m_window_width(800)
 , m_window_height(600)
 , isSelectSoundPlaying(false)
+, m_bAnimOffsetDir(true)
+, m_bChangeState(false)
 {
 }
 
 CSceneInstruction::CSceneInstruction(const int m_window_width, const int m_window_height)
 : isSelectSoundPlaying(false)
+, m_bAnimOffsetDir(true)
+, m_bChangeState(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -65,6 +69,8 @@ void CSceneInstruction::Init()
 	//back button highlighted
 	meshList[GEO_BACK_H] = MeshBuilder::Generate2DMeshCenter("back button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_BACK_H]->textureID = LoadTGA("Image/MENU//h_back_button.tga");
+	meshList[GEO_MONKEY] = MeshBuilder::Generate2DMeshCenter("back button highlighted", Color(1, 1, 1), 0.0f, -0.05f, 0.8f, 0.8f);
+	meshList[GEO_MONKEY]->textureID = LoadTGA("Image/Background//golden_monkey.tga");
 	meshList[GEO_HEADER] = MeshBuilder::Generate2DMeshCenter("back button", Color(1, 1, 1), -0.55f, 3.5f, 0.7f, 0.1f);
 	meshList[GEO_HEADER]->textureID = LoadTGA("Image/GUI//instructions_text.tga");
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
@@ -76,12 +82,15 @@ void CSceneInstruction::Init()
 	bLightEnabled = true;
 
 	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+
+	m_fBotAnimOffset = -210.f;
+	m_fLeftAnimOffset = -210.f;
 }
 
 void CSceneInstruction::Update(double dt)
 {
 	CSceneManager::Update(dt);
-
+	UpdateAnimations(dt);
 	if (Application::IsKeyPressed('1'))
 	{
 		//cout << "current mouse x: " << Application::getMouseWorldX() << endl;
@@ -128,7 +137,8 @@ void CSceneInstruction::Update(double dt)
 			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
-
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+			m_bAnimOffsetDir = false;
 	}
 	else if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)
 		&& !m_bisKeyBoard)
@@ -140,6 +150,44 @@ void CSceneInstruction::Update(double dt)
 
 	float fDelta = (float)dt;
 
+}
+
+void CSceneInstruction::UpdateAnimations(double dt)
+{
+	float fDelta = static_cast<float>(dt);
+	if (m_bAnimOffsetDir)
+	{
+		if (m_fLeftAnimOffset < 0.f)
+		{
+			m_fLeftAnimOffset += (-m_fLeftAnimOffset * 0.1f) + (fDelta * 10.f);
+			if (m_fLeftAnimOffset > 0.f)
+				m_fLeftAnimOffset = 0.f;
+		}
+		if (m_fBotAnimOffset < 0.f)
+		{
+			m_fBotAnimOffset += (-m_fBotAnimOffset * 0.08f) + (fDelta * 10.f);
+			if (m_fBotAnimOffset > 0.f)
+				m_fBotAnimOffset = 0.f;
+		}
+	}
+	else
+	{
+		if (m_fLeftAnimOffset > -210.f)
+		{
+			m_fLeftAnimOffset -= (-m_fLeftAnimOffset * 0.5f) + (fDelta * 15.f);
+			if (m_fLeftAnimOffset < -210.f)
+				m_fLeftAnimOffset = -210.f;
+		}
+		if (m_fBotAnimOffset > -250.f)
+		{
+			m_fBotAnimOffset -= (-m_fBotAnimOffset * 0.3f) + (fDelta * 15.f);
+			if (m_fBotAnimOffset < -250.f)
+			{
+				m_fBotAnimOffset = -250.f;
+				m_bChangeState = true;
+			}
+		}
+	}
 }
 
 /********************************************************************************
@@ -165,17 +213,26 @@ void CSceneInstruction::Render()
 
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 
+
+	//Render header
+	modelStack.PushMatrix();
+	modelStack.Translate(m_fLeftAnimOffset * 0.005, 0.f, 0.f);
+	RenderMesh(meshList[GEO_HEADER], false);
+	RenderMesh(meshList[GEO_MONKEY], false);
+	modelStack.PopMatrix();
+
 	switch (Application::getChoiceVal())
 	{
 	case 1:
-		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1.15f, 1.15f, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1.15f, 1.15f, 0.0f, -52.5f + m_fBotAnimOffset);
 		break;
 
 	default:
-		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f + m_fBotAnimOffset);
 		break;
 	}
-	RenderMesh(meshList[GEO_HEADER], false);
+
+	RenderTextOnScreen(meshList[GEO_TEXT], "Take control of your character as you journey into a mysterious temple, in search of the fabled golden/nmonkey!", Color(1.f, 1.f, 1.f), 20.f, -150.f, 35.f + m_fBotAnimOffset, 15.f);
 }
 
 /********************************************************************************

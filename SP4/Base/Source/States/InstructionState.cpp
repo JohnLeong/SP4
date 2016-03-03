@@ -113,10 +113,13 @@ void CInstructionState::Update(CGameStateManager* theGSM)
 void CInstructionState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 {
 	scene->Update(m_dElapsedTime);
-
-	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
-		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
+	if (((CSceneInstruction*)scene)->m_bChangeState)
+	{
 		theGSM->ChangeState(CMenuState::Instance());
+	}
+	//if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
+	//	|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
+	//	theGSM->ChangeState(CMenuState::Instance());
 }
 
 void CInstructionState::Draw(CGameStateManager* theGSM)

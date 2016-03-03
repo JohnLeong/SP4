@@ -1,5 +1,5 @@
-#ifndef SCENE_FINISH_H
-#define SCENE_FINISH_H
+#ifndef SCENE_FINISHED_H
+#define SCENE_FINISHED_H
 
 #include "SceneManager.h"
 #include "Mtx44.h"
@@ -8,7 +8,6 @@
 #include "MatrixStack.h"
 #include "Light.h"
 
-class CLuaScript;
 class CSceneFinish : public CSceneManager
 {
 	enum GEOMETRY_TYPE
@@ -60,9 +59,7 @@ protected:
 	bool isSelectSoundPlaying;
 
 	//virutally create vector positions for the buttons
-	Vector3 geo_pos[2];
-
-	CLuaScript* m_cLuaScript;
+	Vector3 geo_pos;
 };
 
 #endif

@@ -114,26 +114,31 @@ void COptionsState::Update(CGameStateManager* theGSM, const double m_dElapsedTim
 {
 	scene->Update(m_dElapsedTime);
 
-	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
-		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
+	if (((CSceneOptions*)scene)->m_bChangeState)
 	{
-		if (isConfirmsoundPlaying == false)
-		{
-			Application::Sound.playSound("media/confirm_sound.wav");
-			isConfirmsoundPlaying = true;
-		}
-
 		theGSM->ChangeState(CMenuState::Instance());
 	}
-	else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 2
-		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 2)
-	{
-		if (isConfirmsoundPlaying == false)
-		{
-			Application::Sound.playSound("media/confirm_sound.wav");
-			isConfirmsoundPlaying = true;
-		}
-	}
+
+	//if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
+	//	|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
+	//{
+	//	if (isConfirmsoundPlaying == false)
+	//	{
+	//		Application::Sound.playSound("media/confirm_sound.wav");
+	//		isConfirmsoundPlaying = true;
+	//	}
+
+	//	theGSM->ChangeState(CMenuState::Instance());
+	//}
+	//else if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 2
+	//	|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 2)
+	//{
+	//	if (isConfirmsoundPlaying == false)
+	//	{
+	//		Application::Sound.playSound("media/confirm_sound.wav");
+	//		isConfirmsoundPlaying = true;
+	//	}
+	//}
 }
 
 void COptionsState::Draw(CGameStateManager* theGSM) 

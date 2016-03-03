@@ -11,6 +11,7 @@
 #include "SoundManager.h"
 #include "States\InstructionState.h"
 #include "States\LevelSelectionState.h"
+#include "States\FinishState.h"
 #include <string>
 #include "Achievements\Achievements.h"
 #include "Achievements\Properties.h"

@@ -23,6 +23,7 @@ class  CSceneInstruction : public CSceneManager
 		GEO_BACKGROUND_BASE,
 
 		GEO_HEADER,
+		GEO_MONKEY,
 		//buttons
 		GEO_BACK,
 		GEO_BACK_H,
@@ -43,6 +44,9 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
+	void UpdateAnimations(double dt);
+
+	bool m_bChangeState;
 protected:
 	Mesh* meshList[NUM_GEOMETRY];
 
@@ -58,6 +62,10 @@ protected:
 
 	//virutally create vector positions for the buttons
 	Vector3 geo_pos;
+
+	float m_fLeftAnimOffset;
+	float m_fBotAnimOffset;
+	bool m_bAnimOffsetDir;
 };
 
 #endif

@@ -26,7 +26,7 @@ public:
 	}
 
 protected:
-	CFinishState() { }
+	CFinishState() {}
 
 	//check if confirmsound is currently active
 	bool isConfirmsoundPlaying;

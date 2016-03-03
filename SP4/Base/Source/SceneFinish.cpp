@@ -7,7 +7,6 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 #include <sstream>
-#include "LuaScript.h"
 
 #define buttonXoffset 38.0f
 #define buttonYoffset 11.5f
@@ -35,8 +34,7 @@ void CSceneFinish::Init()
 	CSceneManager::Init();
 
 	//create virtual positions for the buttons (back)
-	geo_pos[1].Set(70.0f, 15.0f, 0.0f);
-	geo_pos[2].Set(130.0f, 15.0f, 0.0f);
+	geo_pos.Set(70.0f, 15.0f, 0.0f);
 
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
@@ -69,8 +67,8 @@ void CSceneFinish::Init()
 	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
 
 	//background image
-	meshList[GEO_BACKGROUND_IMAGE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.0f, 0.85f);
-	meshList[GEO_BACKGROUND_IMAGE]->textureID = LoadTGA("Image//Background/background_image_options.tga");
+	meshList[GEO_BACKGROUND_IMAGE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.5f, 0.85f);
+	meshList[GEO_BACKGROUND_IMAGE]->textureID = LoadTGA("Image//Background/TOTEMBACKTHING.tga");
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -87,34 +85,8 @@ void CSceneFinish::Update(double dt)
 {
 	CSceneManager::Update(dt);
 
-	//button control
-	if (CSceneManager::IsKeyDownOnce('w') || CSceneManager::IsKeyDownOnce(VK_UP))
-	{
-
-		Application::setChoiceVal(Application::getChoiceVal() - 1);
-		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal() < 0)
-			Application::setChoiceVal(1);
-
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-
-
-		m_bisKeyBoard = true;
-	}
-	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
-	{
-		Application::setChoiceVal(Application::getChoiceVal() + 1);
-		//1 = play, 2 = instructions, 3 = options, 4 = exit
-		if (Application::getChoiceVal() > 1)
-			Application::setChoiceVal(0);
-
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
-
-		m_bisKeyBoard = true;
-	}
-
 	//Update image on mouse hover
-	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[1].x, geo_pos[1].y, static_cast<float>(geo_pos[1].x + buttonXoffset), geo_pos[1].y + buttonYoffset)) // back button
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos.x, geo_pos.y, static_cast<float>(geo_pos.x + buttonXoffset), geo_pos.y + buttonYoffset)) // back button
 	{
 		Application::setChoiceVal(1);
 		m_bisKeyBoard = false;
@@ -124,10 +96,8 @@ void CSceneFinish::Update(double dt)
 			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
-
 	}
-	else if (!Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[0].x, geo_pos[0].y, static_cast<float>(geo_pos[0].x + buttonXoffset), geo_pos[0].y + buttonYoffset)
-		&& !m_bisKeyBoard)
+	else
 	{
 		Application::setChoiceVal(0);
 

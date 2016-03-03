@@ -4,12 +4,12 @@ tileMapHeight = 17
 playerPosX = 1
 playerPosY = 2
 
-MinMoves = 50
+MinMoves = 75
 
 maxNumOfZombies = 1
 maxNumOfRetardZombies = 0
 maxNumOfBlocks = 2
-maxNumOfCoins = 0
+maxNumOfCoins = 2
 maxNumOfFire = 1
 maxNumOfDemonFire = 0
 maxNumOfRedKeys = 0
@@ -34,6 +34,12 @@ fire1PosX = 9
 fire1PosY = 12
 fire1Stage = 1
 
-textBox1PosX = 5
-textBox1PosY = 5
-textBox1Text = "helloooooooo"
+textBox1PosX = 3
+textBox1PosY = 2
+textBox1Text = "Sometimes, you will have to backtrack in order to get rid of an enemy"
+
+coin1PosX = 9
+coin1PosY = 9
+
+coin2PosX = 11
+coin2PosY = 13

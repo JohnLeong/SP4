@@ -16,6 +16,8 @@ CSceneOptions::CSceneOptions(void)
 : isSelectSoundPlaying(false)
 , m_bisKeyBoard(false)
 , m_volControl(0)
+, m_bAnimOffsetDir(true)
+, m_bChangeState(false)
 {
 }
 
@@ -23,6 +25,8 @@ CSceneOptions::CSceneOptions(const int m_window_width, const int m_window_height
 : isSelectSoundPlaying(false)
 , m_bisKeyBoard(false)
 , m_volControl(0)
+, m_bAnimOffsetDir(true)
+, m_bChangeState(false)
 {
 	this->m_window_width = m_window_width;
 	this->m_window_height = m_window_height;
@@ -108,12 +112,15 @@ void CSceneOptions::Init()
 	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	bLightEnabled = true;
+
+	m_fBotAnimOffset = -210.f;
+	m_fLeftAnimOffset = -210.f;
 }
 
 void CSceneOptions::Update(double dt)
 {
 	CSceneManager::Update(dt);
-
+	UpdateAnimations(dt);
 	//for debugging
 	if (Application::IsKeyPressed('1'))
 	{
@@ -193,7 +200,8 @@ void CSceneOptions::Update(double dt)
 			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
-
+		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+			m_bAnimOffsetDir = false;
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), geo_pos[2].x, geo_pos[2].y, static_cast<float>(geo_pos[2].x + buttonXoffset), geo_pos[2].y + buttonYoffset)) // reset button
 	{
@@ -220,11 +228,50 @@ void CSceneOptions::Update(double dt)
 		Application::setChoiceVal(0);
 
 		isSelectSoundPlaying = false;
+		
 	}
 
 	float fDelta = (float)dt;
 	if (IsKeyDownOnce('f'))
 		Application::m_bChangeRes = true;
+}
+
+void CSceneOptions::UpdateAnimations(double dt)
+{
+	float fDelta = static_cast<float>(dt);
+	if (m_bAnimOffsetDir)
+	{
+		if (m_fLeftAnimOffset < 0.f)
+		{
+			m_fLeftAnimOffset += (-m_fLeftAnimOffset * 0.1f) + (fDelta * 10.f);
+			if (m_fLeftAnimOffset > 0.f)
+				m_fLeftAnimOffset = 0.f;
+		}
+		if (m_fBotAnimOffset < 0.f)
+		{
+			m_fBotAnimOffset += (-m_fBotAnimOffset * 0.08f) + (fDelta * 10.f);
+			if (m_fBotAnimOffset > 0.f)
+				m_fBotAnimOffset = 0.f;
+		}
+	}
+	else
+	{
+		if (m_fLeftAnimOffset > -210.f)
+		{
+			m_fLeftAnimOffset -= (-m_fLeftAnimOffset * 0.5f) + (fDelta * 15.f);
+			if (m_fLeftAnimOffset < -210.f)
+				m_fLeftAnimOffset = -210.f;
+		}
+		if (m_fBotAnimOffset > -250.f)
+		{
+			m_fBotAnimOffset -= (-m_fBotAnimOffset * 0.3f) + (fDelta * 15.f);
+			if (m_fBotAnimOffset < -250.f)
+			{
+				m_fBotAnimOffset = -250.f;
+				m_bChangeState = true;
+			}
+		}
+	}
 }
 
 /********************************************************************************
@@ -254,6 +301,8 @@ void CSceneOptions::Render()
 	//Render the background
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 
+	modelStack.PushMatrix();
+	modelStack.Translate(0, m_fBotAnimOffset * 0.005, 0);
 	//Render the tiki image
 	RenderMesh(meshList[GEO_BACKGROUND_IMAGE], false);
 
@@ -282,21 +331,25 @@ void CSceneOptions::Render()
 	switch (Application::getChoiceVal())
 	{
 	case 1:
-		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1.15f, 1.15f, 0.0f, -52.5f);
-		RenderMeshIn2D(meshList[GEO_RESET], false, 1, 1, 100.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_BACK_H], false, 1.15f, 1.15f, 0.0f, -52.5f + m_fBotAnimOffset);
+		RenderMeshIn2D(meshList[GEO_RESET], false, 1, 1, 100.0f, -52.5f + m_fBotAnimOffset);
 		break;
 	case 2:
-		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f);
-		RenderMeshIn2D(meshList[GEO_RESET_H], false, 1.15f, 1.15f, 100.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f + m_fBotAnimOffset);
+		RenderMeshIn2D(meshList[GEO_RESET_H], false, 1.15f, 1.15f, 100.0f, -52.5f + m_fBotAnimOffset);
 		break;
 	default:
-		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f);
-		RenderMeshIn2D(meshList[GEO_RESET], false, 1, 1, 100.0f, -52.5f);
+		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f + m_fBotAnimOffset);
+		RenderMeshIn2D(meshList[GEO_RESET], false, 1, 1, 100.0f, -52.5f + m_fBotAnimOffset);
 		break;
 	}
+	modelStack.PopMatrix();
 
 	//Render header
+	modelStack.PushMatrix();
+	modelStack.Translate(m_fLeftAnimOffset * 0.005, 0.f, 0.f);
 	RenderMesh(meshList[GEO_HEADER], false);
+	modelStack.PopMatrix();
 }
 
 /********************************************************************************

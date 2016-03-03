@@ -89,10 +89,35 @@ void CEntity_Block_Movable::UpdateMovement(const float dt)
 
 bool CEntity_Block_Movable::DoCurrentTileCollision()
 {
-	if (CEntityIPos::DoCurrentTileCollision())
-		return true;
+	if (this->m_cTilemap->GetTile(this->m_iXIndex, this->m_iYIndex).GetCollisionType() != CTiledata::COL_ICE)
+	{
+		if (CEntityIPos::DoCurrentTileCollision())// && m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).GetCollisionType() != CTiledata::COL_HOLE)
+		{
+			return true;
+		}
+	}
+
+
 	switch (this->m_cTilemap->GetTile(this->m_iXIndex, this->m_iYIndex).GetCollisionType())
 	{
+	case CTiledata::COL_ICE:
+		if (this->m_cTilemap->AllowCollision(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)) || this->m_cTilemap->GetTile(static_cast<int>(GetNextDirectionPos().x), static_cast<int>(GetNextDirectionPos().y)).GetCollisionType() == CTiledata::COL_HOLE)
+		{
+			for (std::vector<CEntityIPos*>::iterator entity = (*m_cEntityList).begin(); entity != (*m_cEntityList).end(); entity++)
+			{
+				if ((*entity) == this || !(*entity)->IsAlive())
+					continue;
+				if (static_cast<int>(GetNextDirectionPos().x) == (*entity)->GetXIndex() && static_cast<int>(GetNextDirectionPos().y) == (*entity)->GetYIndex())
+				{
+					this->m_MoveDir = DIR_NONE;
+					return false;
+				}
+			}
+			m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
+			return true;
+		}
+		this->m_MoveDir = DIR_NONE;
+		return false;
 	case CTiledata::COL_RUNE:
 		this->m_MoveDir = DIR_NONE;
 		return false;
