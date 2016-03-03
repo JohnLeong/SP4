@@ -406,7 +406,7 @@ void CSceneMenu::Render()
 	RenderMesh(meshList[GEO_GROUND], false);
 
 	//Render the logo
-	RenderMeshIn2D(meshList[GEO_LOGO], false, 1, 1, 0.0f, 70.0f);
+	RenderMeshIn2D(meshList[GEO_LOGO], false, 1, 1, m_fLeftAnimOffset, 70.0f);
 	modelStack.PopMatrix();
 
 	if (Application::IsKeyPressed('1'))
