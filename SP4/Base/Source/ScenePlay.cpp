@@ -166,7 +166,7 @@ void CScenePlay::Init()
 
 	//Scroll background
 	meshList[GEO_SCROLL] = MeshBuilder::Generate2DMesh("scroll background", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 180.0f);
-	meshList[GEO_SCROLL]->textureID = LoadTGA("Image/INVENTORY//Scroll2.tga");
+	meshList[GEO_SCROLL]->textureID = LoadTGA("Image/INVENTORY//Scroll.tga");
 	
 	//Quit button
 	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMeshCenter("quit button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
