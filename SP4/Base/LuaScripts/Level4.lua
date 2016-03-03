@@ -4,12 +4,12 @@ tileMapHeight = 13
 playerPosX = 6
 playerPosY = 7
 
-MinMoves = 30
+MinMoves = 40
 
 maxNumOfZombies = 0
 maxNumOfRetardZombies = 4
 maxNumOfBlocks = 1
-maxNumOfCoins = 0
+maxNumOfCoins = 2
 maxNumOfFire = 0
 maxNumOfDemonFire = 0
 maxNumOfRedKeys = 0
@@ -35,3 +35,9 @@ retardZombie4Hold = 0
 
 block1PosX = 6
 block1PosY = 8
+
+coin1PosX = 4
+coin1PosY = 3
+
+coin2PosX = 8
+coin2PosY = 3
