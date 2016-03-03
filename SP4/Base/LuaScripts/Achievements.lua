@@ -11,7 +11,7 @@ Name2 = "Name2"
 Title2 = "YOLO is wrong"
 TotalProperties2 = 1
 Properties2_1 = "Name2"
-Completed2 = 1
+Completed2 = 0
 ShowedOnce2 = 1
 
 Name3 = "Name3"

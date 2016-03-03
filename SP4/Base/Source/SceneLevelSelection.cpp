@@ -160,6 +160,27 @@ void CSceneLevelSelection::Init()
 	meshList[GEO_LEVEL_OVERVIEW] = MeshBuilder::Generate2DMeshCenter("level overview", Color(1, 1, 1), 0.0f, 0.0f, 170.0f, 95.0f);
 	meshList[GEO_LEVEL_OVERVIEW]->textureID = LoadTGA("Image/LEVELS//level1_overview.tga"); //default load lv 1
 
+	meshList[GEO_LEVEL_OVERVIEW2] = MeshBuilder::Generate2DMeshCenter("level overview", Color(1, 1, 1), 0.0f, 0.0f, 170.0f, 95.0f);
+	meshList[GEO_LEVEL_OVERVIEW2]->textureID = LoadTGA("Image/LEVELS//level2_overview.tga"); //default load lv 2
+
+	meshList[GEO_LEVEL_OVERVIEW3] = MeshBuilder::Generate2DMeshCenter("level overview", Color(1, 1, 1), 0.0f, 0.0f, 170.0f, 95.0f);
+	meshList[GEO_LEVEL_OVERVIEW3]->textureID = LoadTGA("Image/LEVELS//level3_overview.tga"); //default load lv 3
+
+	meshList[GEO_LEVEL_OVERVIEW4] = MeshBuilder::Generate2DMeshCenter("level overview", Color(1, 1, 1), 0.0f, 0.0f, 170.0f, 95.0f);
+	meshList[GEO_LEVEL_OVERVIEW4]->textureID = LoadTGA("Image/LEVELS//level4_overview.tga"); //default load lv 4
+
+	meshList[GEO_LEVEL_OVERVIEW5] = MeshBuilder::Generate2DMeshCenter("level overview", Color(1, 1, 1), 0.0f, 0.0f, 170.0f, 95.0f);
+	meshList[GEO_LEVEL_OVERVIEW5]->textureID = LoadTGA("Image/LEVELS//level5_overview.tga"); //default load lv 5 
+
+	meshList[GEO_LEVEL_OVERVIEW6] = MeshBuilder::Generate2DMeshCenter("level overview", Color(1, 1, 1), 0.0f, 0.0f, 170.0f, 95.0f);
+	meshList[GEO_LEVEL_OVERVIEW6]->textureID = LoadTGA("Image/LEVELS//level6_overview.tga"); //default load lv 6
+
+	meshList[GEO_LEVEL_OVERVIEW7] = MeshBuilder::Generate2DMeshCenter("level overview", Color(1, 1, 1), 0.0f, 0.0f, 170.0f, 95.0f);
+	meshList[GEO_LEVEL_OVERVIEW7]->textureID = LoadTGA("Image/LEVELS//level7_overview.tga"); //default load lv 7
+
+	meshList[GEO_LEVEL_OVERVIEW8] = MeshBuilder::Generate2DMeshCenter("level overview", Color(1, 1, 1), 0.0f, 0.0f, 170.0f, 95.0f);
+	meshList[GEO_LEVEL_OVERVIEW8]->textureID = LoadTGA("Image/LEVELS//level8_overview.tga"); //default load lv 8
+
 	//Backgrounds
 	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 45.5f, 25.5f);
 	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
@@ -570,12 +591,15 @@ void CSceneLevelSelection::Render()
 			break;
 		case 2: //level 2 button highlighted
 			RenderMeshIn2D(meshList[GEO_LEVEL2_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, 15.0f);
+			RenderMeshIn2D(meshList[GEO_LEVEL_OVERVIEW2], false, 1.0f, 1.0f, 40.0f, 30.0f + m_fBotAnimOffset);
 			break;
 		case 3: //level 3 button highlighted
 			RenderMeshIn2D(meshList[GEO_LEVEL3_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -15.0f);
+			RenderMeshIn2D(meshList[GEO_LEVEL_OVERVIEW3], false, 1.0f, 1.0f, 40.0f, 30.0f + m_fBotAnimOffset);
 			break;
 		case 4: //level 4 button highlighted
 			RenderMeshIn2D(meshList[GEO_LEVEL4_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -45.0f);
+			RenderMeshIn2D(meshList[GEO_LEVEL_OVERVIEW4], false, 1.0f, 1.0f, 40.0f, 30.0f + m_fBotAnimOffset);
 			break;
 		default: //default, no option chosen
 			break;
@@ -586,19 +610,24 @@ void CSceneLevelSelection::Render()
 		RenderMeshIn2D(meshList[GEO_LEVEL6_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, 15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL7_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -15.0f);
 		RenderMeshIn2D(meshList[GEO_LEVEL8_BUTTON], false, 1.0f, 1.0f, -111.5f + m_fLeftAnimOffset, -45.0f);
+
 		switch (Application::getChoiceVal())
 		{
 		case 1: //level 1 button highlighted
 			RenderMeshIn2D(meshList[GEO_LEVEL5_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, 45.0f);
+			RenderMeshIn2D(meshList[GEO_LEVEL_OVERVIEW5], false, 1.0f, 1.0f, 40.0f, 30.0f + m_fBotAnimOffset);
 			break;
 		case 2: //level 2 button highlighted
 			RenderMeshIn2D(meshList[GEO_LEVEL6_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, 15.0f);
+			RenderMeshIn2D(meshList[GEO_LEVEL_OVERVIEW6], false, 1.0f, 1.0f, 40.0f, 30.0f + m_fBotAnimOffset);
 			break;
 		case 3: //level 3 button highlighted
 			RenderMeshIn2D(meshList[GEO_LEVEL7_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -15.0f);
+			RenderMeshIn2D(meshList[GEO_LEVEL_OVERVIEW7], false, 1.0f, 1.0f, 40.0f, 30.0f + m_fBotAnimOffset);
 			break;
 		case 4: //level 4 button highlighted
 			RenderMeshIn2D(meshList[GEO_LEVEL8_BUTTON_HIGHLIGHTED], false, buttonSizeOffset, buttonSizeOffset, -111.5f + m_fLeftAnimOffset, -45.0f);
+			RenderMeshIn2D(meshList[GEO_LEVEL_OVERVIEW8], false, 1.0f, 1.0f, 40.0f, 30.0f + m_fBotAnimOffset);
 			break;
 		default: //default, no option chosen
 			break;
