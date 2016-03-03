@@ -485,13 +485,14 @@ void CScenePlay::RenderGUI()
 			Application::m_cAchievementList[i]->SetTimer(0.0);
 			Application::m_cAchievementList[i]->SetAppearedOnce(false);
 		}
-		if (Application::m_cAchievementList[i]->GetAppearedOnce() == false && Application::m_cAchievementList[i]->GetTimer() == 0.0)
+		if (Application::m_cAchievementList[i]->GetAppearedOnce() == false && Application::m_cAchievementList[i]->GetTimer() >= 0.0)
 		{
 			RenderTextOnScreen(meshList[GEO_TEXT], "You've got the \"" + Application::m_cAchievementList[i]->GetTitle() + "\" title!", Color(0.0f, 1.0f, 0.0f), 15.0f, -150.0f, 70.0f);
 			Application::m_cAchievementList[i]->SetTimer(Application::m_cAchievementList[i]->GetTimer() + 0.0166);
 			if (Application::m_cAchievementList[i]->GetTimer() > 2)
 			{
 				Application::m_cAchievementList[i]->SetAppearedOnce(true);
+				Application::m_cAchievementList[i]->SetTimer(-1.0);
 			}
 		}
 	}

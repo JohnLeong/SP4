@@ -105,7 +105,7 @@ CAchievements* CLuaScript::getAchievementVariables(string name)
 	string addProperties = "Properties";
 	string addExtraProp = "_";
 	string addBool = "Bool";
-	string addShowedOnce = "ShowOnce";
+	string addShowedOnce = "ShowedOnce";
 
 	name = addName + name;
 	lua_getglobal(L2, name.c_str());
@@ -150,7 +150,7 @@ CAchievements* CLuaScript::getAchievementVariables(string name)
 	bool getShowedOnce = (bool)lua_toboolean(L2, -1);
 	lua_remove(L2, -1);
 
-	newAchievement = new CAchievements(getName, getTitle, propertyList, getUnlocked, false,getShowedOnce, -1.0) ;
+	newAchievement = new CAchievements(getName, getTitle, propertyList, getUnlocked, true, getShowedOnce, -1.0) ;
 	return newAchievement;
 }
 

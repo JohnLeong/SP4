@@ -16,7 +16,7 @@ public:
 	void InitAnimation();
 
 	virtual bool DoColDir(MOVE_DIR m_MoveDir);
-
+	
 	virtual void Update(const float dt);			// Update
 	virtual void UpdateMovement(const float dt);
 
