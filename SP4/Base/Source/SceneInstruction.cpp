@@ -65,7 +65,8 @@ void CSceneInstruction::Init()
 	//back button highlighted
 	meshList[GEO_BACK_H] = MeshBuilder::Generate2DMeshCenter("back button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_BACK_H]->textureID = LoadTGA("Image/MENU//h_back_button.tga");
-
+	meshList[GEO_HEADER] = MeshBuilder::Generate2DMeshCenter("back button", Color(1, 1, 1), -0.55f, 3.5f, 0.7f, 0.1f);
+	meshList[GEO_HEADER]->textureID = LoadTGA("Image/GUI//instructions_text.tga");
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
@@ -174,7 +175,7 @@ void CSceneInstruction::Render()
 		RenderMeshIn2D(meshList[GEO_BACK], false, 1, 1, 0.0f, -52.5f);
 		break;
 	}
-
+	RenderMesh(meshList[GEO_HEADER], false);
 }
 
 /********************************************************************************

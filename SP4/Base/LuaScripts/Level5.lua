@@ -1,5 +1,5 @@
-tileMapWidth = 14
-tileMapHeight = 18
+tileMapWidth = 13
+tileMapHeight = 17
 
 playerPosX = 1
 playerPosY = 2

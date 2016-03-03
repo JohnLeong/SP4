@@ -62,6 +62,9 @@ void CSceneOptions::Init()
 	meshList[GEO_BACK] = MeshBuilder::Generate2DMeshCenter("back button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_BACK]->textureID = LoadTGA("Image/MENU//back_button.tga");
 
+	meshList[GEO_HEADER] = MeshBuilder::Generate2DMeshCenter("back button", Color(1, 1, 1), -1.3f, 3.5f, 0.4f, 0.1f);
+	meshList[GEO_HEADER]->textureID = LoadTGA("Image/GUI//options_text.tga");
+
 	//back button highlighted
 	meshList[GEO_BACK_H] = MeshBuilder::Generate2DMeshCenter("back button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_BACK_H]->textureID = LoadTGA("Image/MENU//h_back_button.tga");
@@ -248,16 +251,6 @@ void CSceneOptions::Render()
 
 	glDisable(GL_DEPTH_TEST);
 
-//#if _DEBUG
-//	RenderTextOnScreen(meshList[GEO_TEXT], "SceneOptions", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
-//
-//	std::ostringstream ss;
-//	ss.precision(5);
-//	ss << fps;
-//	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
-//#endif
-
-
 	//Render the background
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 
@@ -301,6 +294,9 @@ void CSceneOptions::Render()
 		RenderMeshIn2D(meshList[GEO_RESET], false, 1, 1, 100.0f, -52.5f);
 		break;
 	}
+
+	//Render header
+	RenderMesh(meshList[GEO_HEADER], false);
 }
 
 /********************************************************************************

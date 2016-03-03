@@ -795,7 +795,9 @@ void CScenePlay::RenderTilemap(void)
 			modelStack.Scale(static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), static_cast<float>(m_cLevel.GetTilemap()->GetTileSize()), 1.f);
 
 			if (m_cLevel.m_cTilemap->GetTileSprite(m_cLevel.GetTilemap()->GetTile(i, j).GetTileId()) == NULL)
-				RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+			{
+			//	RenderMesh(meshList[GEO_GRASS_DARKGREEN], false);
+			}
 			else
 				RenderMesh(m_cLevel.m_cTilemap->GetTileSprite(m_cLevel.GetTilemap()->GetTile(i, j).GetTileId()), false);
 

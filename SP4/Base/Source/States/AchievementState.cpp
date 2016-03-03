@@ -110,9 +110,14 @@ void CAchievementState::Update(CGameStateManager* theGSM, const double m_dElapse
 {
 	scene->Update(m_dElapsedTime);
 
-	if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
-		|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
+	if (((CSceneAchievements*)scene)->m_bChangeState)
+	{
 		theGSM->ChangeState(CMenuState::Instance());
+	}
+
+	//if (scene->IsKeyDown(VK_RETURN) && Application::getChoiceVal() == 1
+	//	|| ((Application*)scene)->IsMousePressed(GLFW_MOUSE_BUTTON_1) && Application::getChoiceVal() == 1)
+	//	theGSM->ChangeState(CMenuState::Instance());
 }
 
 void CAchievementState::Draw(CGameStateManager* theGSM)

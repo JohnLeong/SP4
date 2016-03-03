@@ -88,7 +88,7 @@ void CTextBox::Update(const float dt)
 		m_bActivated = true;
 		m_bWasActivated = true;
 	
-		if (m_iCurrentCharIndex < m_Text.size() && CTextBox::m_bShowText)
+		if (m_iCurrentCharIndex < static_cast<int>(m_Text.size()) && CTextBox::m_bShowText)
 			m_iCurrentCharIndex += 2;
 	}
 	else

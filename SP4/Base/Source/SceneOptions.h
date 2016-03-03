@@ -24,7 +24,7 @@ class CSceneOptions : public CSceneManager
 
 		GEO_BACK,
 		GEO_BACK_H,
-
+		GEO_HEADER,
 		GEO_BACKGROUND_BASE,
 		GEO_BACKGROUND_IMAGE,
 
