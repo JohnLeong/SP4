@@ -394,7 +394,7 @@ void CScenePlay::Update(double dt)
 			m_bShowLose = false;
 			m_bPlayWinSound = false;
 		}
-		if (IsKeyDown('n') && m_iCurrentLevel == 8)
+		else if (IsKeyDown('n') && m_iCurrentLevel == 8)
 		{
 			m_bToFinishScreen = true;
 		}
@@ -411,21 +411,25 @@ void CScenePlay::Update(double dt)
 	}
 
 	//update win screen
-	if (m_bShowWin && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), nextLevel_button_vec_winScreen.x, nextLevel_button_vec_winScreen.y, nextLevel_button_vec_winScreen.x + buttonXoffset, nextLevel_button_vec_winScreen.y + buttonYoffset)
-		&& m_iCurrentLevel <= 8 && Application::IsMousePressed(GLFW_MOUSE_BUTTON_1)) // play button
+	if ((m_bShowWin && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), nextLevel_button_vec_winScreen.x, nextLevel_button_vec_winScreen.y, nextLevel_button_vec_winScreen.x + buttonXoffset, nextLevel_button_vec_winScreen.y + buttonYoffset)
+		&& m_iCurrentLevel <= 8 && Application::IsMousePressed(GLFW_MOUSE_BUTTON_1)) || IsKeyDownOnce('l')) // play button
 	{
 		if (m_iCurrentLevel == 8)
 		{
 			m_bToFinishScreen = true;
 		}
-		++m_iCurrentLevel;
-		ostringstream convertor;
-		string getLevel = "Level";
-		convertor << m_iCurrentLevel;
-		getLevel.append(convertor.str());
-		m_cLevel.SetLevelName(getLevel);
-		m_cLevel.Reset();
-		m_bShowWin = false;
+		else
+		{
+			++m_iCurrentLevel;
+			ostringstream convertor;
+			string getLevel = "Level";
+			convertor << m_iCurrentLevel;
+			getLevel.append(convertor.str());
+			m_cLevel.SetLevelName(getLevel);
+			m_cLevel.Reset();
+			m_bShowWin = false;
+		}
+
 		m_bPlayWinSound = false;
 
 	}

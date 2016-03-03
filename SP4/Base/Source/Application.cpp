@@ -207,6 +207,7 @@ bool Application::GetKeyboardUpdate()
 	theGSM->HandleEvents('a', IsKeyPressed('A'));
 	theGSM->HandleEvents('d', IsKeyPressed('D'));
 	theGSM->HandleEvents('f', IsKeyPressed('F'));
+	theGSM->HandleEvents('l', IsKeyPressed('L'));
 	theGSM->HandleEvents('1', IsKeyPressed('1'));
 	theGSM->HandleEvents('2', IsKeyPressed('2'));
 	theGSM->HandleEvents('3', IsKeyPressed('3'));
