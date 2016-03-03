@@ -61,7 +61,7 @@ bool CEnemy::DoCurrentTileCollision()
 		this->m_MoveDir = DIR_NONE;
 		return false;
 	case CTiledata::COL_RUNE:
-		Application::Sound.playSound("../irrKlang/media/zombie_die_sound.wav");
+		Application::Sound.playSound("media/zombie_die_sound.wav");
 		this->m_MoveDir = DIR_NONE;
 		this->SetAlive(false);
 		this->m_cTilemap->theScreenMap[this->m_iXIndex][this->m_iYIndex].ChangeIdState();	//Change tile to normal tile

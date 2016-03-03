@@ -121,7 +121,7 @@ void CSceneSplash::Update(double dt)
 			cAnimState = ANIM_2;
 			m_fLogo1PosY = 0.f;
 			m_bDoShake = true;
-			Application::Sound.playSound("../irrKlang/media/startup_sound_front.mp3");
+			Application::Sound.playSound("media/startup_sound_front.mp3");
 		}
 		break;
 	case CSceneSplash::ANIM_2:
@@ -167,7 +167,7 @@ void CSceneSplash::Update(double dt)
 		if (m_bplaySplashSoundback == false)
 		{
 			m_bplaySplashSoundback = true;
-			Application::Sound.playSound("../irrKlang/media/startup_sound_back.wav");
+			Application::Sound.playSound("media/startup_sound_back.wav");
 		}
 
 		if (m_fBeamScaleX >= 2.5f)

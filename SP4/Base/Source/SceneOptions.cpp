@@ -126,12 +126,12 @@ void CSceneOptions::Update(double dt)
 	if (CSceneManager::IsKeyDownOnce('a') && Application::Sound.GetCurrentVolume() > 0)
 	{
 		Application::Sound.decreaseVolume();
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		Application::Sound.playSound("media/scroll_sound.wav");
 	}
 	else if (CSceneManager::IsKeyDownOnce('d') && Application::Sound.GetCurrentVolume() < 100 )
 	{
 		Application::Sound.increaseVolume();
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		Application::Sound.playSound("media/scroll_sound.wav");
 	}
 
 	if (Application::Sound.GetCurrentVolume() > 0 && Application::Sound.GetCurrentVolume()  <= 30)
@@ -162,7 +162,7 @@ void CSceneOptions::Update(double dt)
 		if (Application::getChoiceVal() < 0)
 			Application::setChoiceVal(2);
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		Application::Sound.playSound("media/scroll_sound.wav");
 
 
 		m_bisKeyBoard = true;
@@ -174,7 +174,7 @@ void CSceneOptions::Update(double dt)
 		if (Application::getChoiceVal() > 2)
 			Application::setChoiceVal(0);
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		Application::Sound.playSound("media/scroll_sound.wav");
 
 		m_bisKeyBoard = true;
 	}
@@ -187,7 +187,7 @@ void CSceneOptions::Update(double dt)
 
 		if (isSelectSoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
 

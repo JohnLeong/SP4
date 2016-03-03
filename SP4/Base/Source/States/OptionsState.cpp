@@ -119,7 +119,7 @@ void COptionsState::Update(CGameStateManager* theGSM, const double m_dElapsedTim
 	{
 		if (isConfirmsoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+			Application::Sound.playSound("media/confirm_sound.wav");
 			isConfirmsoundPlaying = true;
 		}
 
@@ -130,7 +130,7 @@ void COptionsState::Update(CGameStateManager* theGSM, const double m_dElapsedTim
 	{
 		if (isConfirmsoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+			Application::Sound.playSound("media/confirm_sound.wav");
 			isConfirmsoundPlaying = true;
 		}
 	}

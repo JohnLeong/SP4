@@ -97,7 +97,7 @@ void CSceneInstruction::Update(double dt)
 		if (Application::getChoiceVal() < 0)
 			Application::setChoiceVal(1);
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		Application::Sound.playSound("media/scroll_sound.wav");
 
 
 		m_bisKeyBoard = true;
@@ -110,7 +110,7 @@ void CSceneInstruction::Update(double dt)
 			Application::setChoiceVal(0);
 
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		Application::Sound.playSound("media/scroll_sound.wav");
 
 
 		m_bisKeyBoard = true;
@@ -124,7 +124,7 @@ void CSceneInstruction::Update(double dt)
 
 		if (isSelectSoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
 

@@ -34,7 +34,7 @@ void CSceneMenu::Init()
 	CSceneManager::Init();
 
 	//Play the main menu background sound
-	Application::Sound.playBackgroundSound("../irrKlang/media/mainmenu_BGM.mp3");
+	Application::Sound.playBackgroundSound("media/mainmenu_BGM.mp3");
 	Application::Sound.setVolume(50);
 
 	//init the choice
@@ -164,7 +164,7 @@ void CSceneMenu::Update(double dt)
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
 
@@ -181,7 +181,7 @@ void CSceneMenu::Update(double dt)
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
 
@@ -200,7 +200,7 @@ void CSceneMenu::Update(double dt)
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
@@ -209,7 +209,7 @@ void CSceneMenu::Update(double dt)
 			m_iNextState = NEXT_LEVEL_SELECT;
 			if (isConfirmsoundPlaying == false)
 			{
-				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				Application::Sound.playSound("media/confirm_sound.wav");
 				isConfirmsoundPlaying = true;
 			}
 			
@@ -225,7 +225,7 @@ void CSceneMenu::Update(double dt)
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
@@ -235,7 +235,7 @@ void CSceneMenu::Update(double dt)
 
 			if (isConfirmsoundPlaying == false)
 			{
-				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				Application::Sound.playSound("media/confirm_sound.wav");
 				isConfirmsoundPlaying = true;
 			}
 		}
@@ -249,7 +249,7 @@ void CSceneMenu::Update(double dt)
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
@@ -259,7 +259,7 @@ void CSceneMenu::Update(double dt)
 
 			if (isConfirmsoundPlaying == false)
 			{
-				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				Application::Sound.playSound("media/confirm_sound.wav");
 				isConfirmsoundPlaying = true;
 			}
 		}
@@ -273,7 +273,7 @@ void CSceneMenu::Update(double dt)
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
@@ -283,7 +283,7 @@ void CSceneMenu::Update(double dt)
 
 			if (isConfirmsoundPlaying == false)
 			{
-				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				Application::Sound.playSound("media/confirm_sound.wav");
 				isConfirmsoundPlaying = true;
 			}
 		}
@@ -297,7 +297,7 @@ void CSceneMenu::Update(double dt)
 		//play select sound if false
 		if (isSelectSoundPlaying == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlaying = true;
 		}
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || Application::IsKeyPressed(VK_RETURN))
@@ -307,7 +307,7 @@ void CSceneMenu::Update(double dt)
 
 			if (isConfirmsoundPlaying == false)
 			{
-				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				Application::Sound.playSound("media/confirm_sound.wav");
 				isConfirmsoundPlaying = true;
 			}
 		}

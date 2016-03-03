@@ -130,7 +130,9 @@ private:
 	Vector3 nextLevel_button_vec_winScreen;
 	Vector3 restart_button_vec_winScreen;
 	Vector3 exit_button_vec_winScreen;
-
+	Vector3 restart_button_vec_loseScreen;
+	Vector3 quit_button_vec_loseScreen;
+	
 	SpriteAnimation* coins_sprite;
 
 	//keys sprite animation

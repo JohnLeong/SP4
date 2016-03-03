@@ -65,7 +65,7 @@ bool CEntity_Block_Movable::DoColDir(MOVE_DIR m_MoveDir)
 	this->m_MoveDir = m_MoveDir;
 
 	//push sound here
-	Application::Sound.playSound("../irrKlang/media/push_sound.wav");
+	Application::Sound.playSound("media/push_sound.wav");
 
 	this->m_cTilemap->theScreenMap[static_cast<int>(GetNextDirectionPos().x)][static_cast<int>(GetNextDirectionPos().y)].SetTint(true);
 	return false;
@@ -98,7 +98,7 @@ bool CEntity_Block_Movable::DoCurrentTileCollision()
 		return false;
 	case CTiledata::COL_HOLE:
 		//sound for filling the hole
-		Application::Sound.playSound("../irrKlang/media/filled_trap_sound.wav");
+		Application::Sound.playSound("media/filled_trap_sound.wav");
 
 		this->m_MoveDir = DIR_NONE;
 		this->m_bActive = false;

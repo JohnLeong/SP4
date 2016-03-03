@@ -82,7 +82,7 @@ void CTextBox::Update(const float dt)
 		if (!CTextBox::m_bOpenBox)
 		{
 			CTextBox::m_bOpenBox = true;
-			Application::Sound.playSound("../irrKlang/media/dialogue_sound.wav");
+			Application::Sound.playSound("media/dialogue_sound.wav");
 		}
 
 		m_bActivated = true;

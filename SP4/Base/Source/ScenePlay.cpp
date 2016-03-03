@@ -72,7 +72,7 @@ void CScenePlay::Init()
 
 	Application::Sound.Stop();
 
-	Application::Sound.playSound("../irrKlang/media/Level1_BGM.mp3");
+	Application::Sound.playSound("media/Level1_BGM.mp3");
 	Application::Sound.setVolume(30);
 
 
@@ -94,6 +94,10 @@ void CScenePlay::Init()
 	restart_button_vec_winScreen.Set(77.0f, 17.5f, 0.0f);
 	//vector of exit button pos (winpage)
 	exit_button_vec_winScreen.Set(105.0f, 17.5f, 0.0f);
+	//vector of restart button pos (losepage)
+	restart_button_vec_loseScreen.Set(63.0f, 17.5f, 0.0f);
+	//vector of exit button pos (losepage)
+	quit_button_vec_loseScreen.Set(91.0f, 17.5f, 0.0f);
 
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");//, 1000, 1000, 1000);
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
@@ -302,10 +306,11 @@ void CScenePlay::Update(double dt)
 			}
 		}
 	}
-	if (!m_cPlayer->IsAlive() && !m_bPlayLoseSound)
+	if (!m_cPlayer->IsAlive() && !m_cPlayer->IsActive() && !m_bShowLose)
 	{
-		Application::Sound.playSound("../irrKlang/media/lose_sound.mp3");
+		Application::Sound.playSound("media/lose_sound.mp3");
 		m_bPlayLoseSound = true;
+		m_bShowLose = true;
 	}
 
 	//Player control
@@ -369,7 +374,7 @@ void CScenePlay::Update(double dt)
 		//End Level
 		if (!m_bPlayWinSound)
 		{
-			Application::Sound.playSound("../irrKlang/media/Win_sound.mp3");
+			Application::Sound.playSound("media/Win_sound.mp3");
 			m_bPlayWinSound = true;
 		}
 		m_bShowWin = true;
@@ -387,6 +392,7 @@ void CScenePlay::Update(double dt)
 			m_cLevel.SetLevelName(getLevel);
 			m_cLevel.Reset();
 			m_bShowWin = false;
+			m_bShowLose = false;
 			m_bPlayWinSound = false;
 		}
 	}
@@ -394,12 +400,14 @@ void CScenePlay::Update(double dt)
 	if (IsKeyDownOnce('r'))
 	{
 		m_cLevel.Reset();
-		Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+		Application::Sound.playSound("media/confirm_sound.wav");
 		m_bShowWin = false;
+		m_bShowLose = false;
 		m_bPlayWinSound = false;
 		m_bPlayLoseSound = false;
 	}
 
+	//update win screen
 	if (m_bShowWin && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), nextLevel_button_vec_winScreen.x, nextLevel_button_vec_winScreen.y, nextLevel_button_vec_winScreen.x + buttonXoffset, nextLevel_button_vec_winScreen.y + buttonYoffset)
 		&& m_iCurrentLevel <= 8 && Application::IsMousePressed(GLFW_MOUSE_BUTTON_1)) // play button
 	{
@@ -418,12 +426,29 @@ void CScenePlay::Update(double dt)
 		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 	{
 		m_cLevel.Reset();
-		Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+		Application::Sound.playSound("media/confirm_sound.wav");
 		m_bShowWin = false;
 		m_bPlayWinSound = false;
 		m_bPlayLoseSound = false;
 	}
 	else if (m_bShowWin && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), exit_button_vec_winScreen.x, exit_button_vec_winScreen.y, exit_button_vec_winScreen.x + buttonXoffset, exit_button_vec_winScreen.y + buttonYoffset)
+		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+	{
+		SetISQuitToMain(true);
+	}
+
+	//update lose screen
+	if (m_bShowLose && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), restart_button_vec_loseScreen.x, restart_button_vec_loseScreen.y, restart_button_vec_loseScreen.x + buttonXoffset, restart_button_vec_loseScreen.y + buttonYoffset)
+		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+	{
+		m_cLevel.Reset();
+		Application::Sound.playSound("media/confirm_sound.wav");
+		m_bShowWin = false;
+		m_bShowLose = false;
+		m_bPlayWinSound = false;
+		m_bPlayLoseSound = false;
+	}
+	else if (m_bShowLose && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec_loseScreen.x, quit_button_vec_loseScreen.y, quit_button_vec_loseScreen.x + buttonXoffset, quit_button_vec_loseScreen.y + buttonYoffset)
 		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
 	{
 		SetISQuitToMain(true);
@@ -437,7 +462,7 @@ void CScenePlay::RenderGUI()
 {
 	if (m_bShowWin)
 		RenderWin();
-	if (!m_cPlayer->IsAlive() && !m_cPlayer->IsActive())
+	if (m_bShowLose)
 		RenderLose();
 
 	for (unsigned i = 0; i < Application::m_cAchievementList.size(); i++)
@@ -513,8 +538,22 @@ void CScenePlay::RenderLose(void)
 	RenderTextOnScreen(meshList[GEO_TEXT], "DEFEAT", Color(1.f, 1.f, 1.f), 50, -60.f, 10.f);
 	RenderTextOnScreen(meshList[GEO_TEXT], "rekt", Color(1.f, 1.f, 1.f), 5, -10.f, -10.f);
 
-	RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, -25.f, -50.f);
-	RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 25.f, -50.f);
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), restart_button_vec_loseScreen.x, restart_button_vec_loseScreen.y, restart_button_vec_loseScreen.x + buttonXoffset, restart_button_vec_loseScreen.y + buttonYoffset))
+	{
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON_HIGHLIGHTED], false, 2, 1.5f, -25.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 25.f, -50.f);
+	}
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), quit_button_vec_loseScreen.x, quit_button_vec_loseScreen.y, quit_button_vec_loseScreen.x + buttonXoffset, quit_button_vec_loseScreen.y + buttonYoffset))
+	{
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, -25.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON_HIGHLIGHTED], false, 2, 1.5f, 25.f, -50.f);
+	}
+	else
+	{
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, -25.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 25.f, -50.f);
+	}
+
 }
 
 /********************************************************************************
@@ -706,13 +745,13 @@ void CScenePlay::RenderInventory()
 		if (!m_bQuitselectsound)
 		{
 			m_bQuitselectsound = true;
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 		}
 
 		if (Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) || CSceneManager::IsKeyDown('q'))
 		{
 			SetISQuitToMain(true);
-			Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+			Application::Sound.playSound("media/confirm_sound.wav");
 		}
 	}
 	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), restart_button_vec.x, restart_button_vec.y, restart_button_vec.x + 11.0f, restart_button_vec.y + 5.42f))
@@ -723,7 +762,7 @@ void CScenePlay::RenderInventory()
 		if (!m_bQuitselectsound)
 		{
 			m_bQuitselectsound = true;
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 		}
 
 		if (!Application::IsMousePressed(GLFW_MOUSE_BUTTON_1) && m_bMouseisPressed)
@@ -735,7 +774,7 @@ void CScenePlay::RenderInventory()
 		{
 			m_cLevel.Reset();
 			m_bMouseisPressed = true;
-			Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+			Application::Sound.playSound("media/confirm_sound.wav");
 			m_bShowWin = false;
 		}
 	}

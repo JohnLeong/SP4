@@ -22,7 +22,7 @@ CEntity_Key_Yellow::~CEntity_Key_Yellow()
 
 bool CEntity_Key_Yellow::DoColDir(MOVE_DIR m_MoveDir)
 {
-	Application::Sound.playSound("../irrKlang/media/key_sound.mp3");
+	Application::Sound.playSound("media/key_sound.mp3");
 	this->m_bAlive = false;
 	m_cPlayerPtr->AddKeys(1, 3);
 	return false;

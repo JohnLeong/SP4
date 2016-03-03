@@ -193,7 +193,7 @@ void CSceneLevelSelection::Update(double dt)
 		if (Application::getChoiceVal()  < 1)
 			Application::setChoiceVal(4);
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		Application::Sound.playSound("media/scroll_sound.wav");
 		m_bisKeyBoard = true;
 	}
 	else if (CSceneManager::IsKeyDownOnce('s') || CSceneManager::IsKeyDownOnce(VK_DOWN))
@@ -204,7 +204,7 @@ void CSceneLevelSelection::Update(double dt)
 		if (Application::getChoiceVal() > 4)
 			Application::setChoiceVal(1);
 
-		Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+		Application::Sound.playSound("media/scroll_sound.wav");
 
 		m_bisKeyBoard = true;
 	}
@@ -232,7 +232,7 @@ void CSceneLevelSelection::Update(double dt)
 			m_iSelectedLevel = 1;
 			if (isSelectSoundPlayingkeyboard == false)
 			{
-				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+				Application::Sound.playSound("media/scroll_sound.wav");
 				isSelectSoundPlayingkeyboard = true;
 			}
 		}
@@ -251,7 +251,7 @@ void CSceneLevelSelection::Update(double dt)
 			m_iSelectedLevel = 2;
 			if (isSelectSoundPlayingkeyboard == false)
 			{
-				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+				Application::Sound.playSound("media/scroll_sound.wav");
 				isSelectSoundPlayingkeyboard = true;
 			}
 		}
@@ -271,7 +271,7 @@ void CSceneLevelSelection::Update(double dt)
 			m_iSelectedLevel = 3;
 			if (isSelectSoundPlayingkeyboard == false)
 			{
-				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+				Application::Sound.playSound("media/scroll_sound.wav");
 				isSelectSoundPlayingkeyboard = true;
 			}
 		}
@@ -291,7 +291,7 @@ void CSceneLevelSelection::Update(double dt)
 			m_iSelectedLevel = 4;
 			if (isSelectSoundPlayingkeyboard == false)
 			{
-				Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+				Application::Sound.playSound("media/scroll_sound.wav");
 				isSelectSoundPlayingkeyboard = true;
 			}
 		}
@@ -441,14 +441,14 @@ void CSceneLevelSelection::Render()
 
 			if (!m_bToggleConfirmSound)
 			{
-				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				Application::Sound.playSound("media/confirm_sound.wav");
 				m_bToggleConfirmSound = true;
 			}
 		}
 
 		if (isSelectSoundPlayingStartQuit == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlayingStartQuit = true;
 		}
 	}
@@ -481,7 +481,7 @@ void CSceneLevelSelection::Render()
 			
 			if (!m_bToggleConfirmSound)
 			{
-				Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+				Application::Sound.playSound("media/confirm_sound.wav");
 				m_bToggleConfirmSound = true;
 			}
 
@@ -490,7 +490,7 @@ void CSceneLevelSelection::Render()
 
 		if (isSelectSoundPlayingStartQuit == false)
 		{
-			Application::Sound.playSound("../irrKlang/media/scroll_sound.wav");
+			Application::Sound.playSound("media/scroll_sound.wav");
 			isSelectSoundPlayingStartQuit = true;
 		}
 	}
