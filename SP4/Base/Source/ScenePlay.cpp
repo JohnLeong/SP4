@@ -9,6 +9,9 @@
 #include "LoadTGA.h"
 #include "Achievements\Properties.h"
 
+#define buttonXoffset 22.0f
+#define buttonYoffset 8.5f
+
 bool CScenePlay::m_bBacktoMainMenu = false;
 
 CScenePlay::CScenePlay(void)
@@ -72,6 +75,7 @@ void CScenePlay::Init()
 	Application::Sound.playSound("../irrKlang/media/Level1_BGM.mp3");
 	Application::Sound.setVolume(30);
 
+
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
 		meshList[i] = NULL;
@@ -82,9 +86,14 @@ void CScenePlay::Init()
 
 	//vector of quit button pos
 	quit_button_vec.Set(161.0f, 77.8f, 0.0f);
-
-	//vecftor of restart button pos
+	//vector of restart button pos
 	restart_button_vec.Set(161.0f, 69.0f, 0.0f);
+	//vector of next level button pos (winpage)
+	nextLevel_button_vec_winScreen.Set(50.0f, 17.5f, 0.0f);
+	//vector of restart button pos (winpage)
+	restart_button_vec_winScreen.Set(77.0f, 17.5f, 0.0f);
+	//vector of exit button pos (winpage)
+	exit_button_vec_winScreen.Set(105.0f, 17.5f, 0.0f);
 
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference");//, 1000, 1000, 1000);
 	meshList[GEO_CROSSHAIR] = MeshBuilder::GenerateCrossHair("crosshair");
@@ -168,6 +177,8 @@ void CScenePlay::Init()
 	meshList[GEO_RESTART_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/GUI//h_button_restart.tga");
 	meshList[GEO_NEXT_BUTTON] = MeshBuilder::Generate2DMeshCenter("next button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
 	meshList[GEO_NEXT_BUTTON]->textureID = LoadTGA("Image/GUI//button_next.tga");
+	meshList[GEO_NEXT_BUTTON_HIGHLIGHTED] = MeshBuilder::Generate2DMeshCenter("next button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
+	meshList[GEO_NEXT_BUTTON_HIGHLIGHTED]->textureID = LoadTGA("Image/GUI//h_button_next.tga");
 
 	//back cover
 	meshList[GEO_BACKCOVER] = MeshBuilder::Generate2DMesh("back cover", Color(0.9f, 0.9f, 0.9f), 0.0f, 0.0f, 100.0f, 180.0f);
@@ -269,6 +280,14 @@ void CScenePlay::Update(double dt)
 	CSceneManager::Update(dt);
 	if (IsKeyDownOnce('p'))
 		std::cout << "Player Index: X:" << m_cPlayer->GetXIndex() << " Y:" << m_cPlayer->GetYIndex() << std::endl;
+
+	if (Application::IsKeyPressed('1'))
+	{
+		cout << "current mouse x: " << Application::getMouseWorldX() << endl;
+		cout << "current mouse y: " << Application::getMouseWorldY() << endl;
+
+		//cout << "choice: " << Application::getChoiceVal() << endl;
+	}
 	if (Application::IsKeyPressed('Q'))
 	{
 		cout << "boolean: " << GetIsQuitToMain() << endl;
@@ -382,6 +401,35 @@ void CScenePlay::Update(double dt)
 		m_bPlayWinSound = false;
 		m_bPlayLoseSound = false;
 	}
+
+	if (m_bShowWin && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), nextLevel_button_vec_winScreen.x, nextLevel_button_vec_winScreen.y, nextLevel_button_vec_winScreen.x + buttonXoffset, nextLevel_button_vec_winScreen.y + buttonYoffset)
+		&& m_iCurrentLevel <= 8 && Application::IsMousePressed(GLFW_MOUSE_BUTTON_1)) // play button
+	{
+			cout << "it fucking works okay!" << endl;
+			++m_iCurrentLevel;
+			ostringstream convertor;
+			string getLevel = "Level";
+			convertor << m_iCurrentLevel;
+			getLevel.append(convertor.str());
+			m_cLevel.SetLevelName(getLevel);
+			m_cLevel.Reset();
+			m_bShowWin = false;
+			m_bPlayWinSound = false;
+	}
+	else if (m_bShowWin && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), restart_button_vec_winScreen.x, restart_button_vec_winScreen.y, restart_button_vec_winScreen.x + buttonXoffset, restart_button_vec_winScreen.y + buttonYoffset)
+		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+	{
+		m_cLevel.Reset();
+		Application::Sound.playSound("../irrKlang/media/confirm_sound.wav");
+		m_bShowWin = false;
+		m_bPlayWinSound = false;
+		m_bPlayLoseSound = false;
+	}
+	else if (m_bShowWin && Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), exit_button_vec_winScreen.x, exit_button_vec_winScreen.y, exit_button_vec_winScreen.x + buttonXoffset, exit_button_vec_winScreen.y + buttonYoffset)
+		&& Application::IsMousePressed(GLFW_MOUSE_BUTTON_1))
+	{
+		SetISQuitToMain(true);
+	}
 }
 
 /********************************************************************************
@@ -436,10 +484,34 @@ void CScenePlay::RenderWin(void)
 
 	RenderMeshIn2D(meshList[GEO_TRANSPARENT_LAYER], false, 350.f, 180.f, 0, 0);
 	RenderMeshIn2D(meshList[GEO_TEXTBOX], false, 300.f, 150.f, 0, 0);
-	if (m_iCurrentLevel <= 8)
+	if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), nextLevel_button_vec_winScreen.x, nextLevel_button_vec_winScreen.y, nextLevel_button_vec_winScreen.x + buttonXoffset, nextLevel_button_vec_winScreen.y + buttonYoffset)
+		&& m_iCurrentLevel <= 8) // play button
+	{
+		RenderMeshIn2D(meshList[GEO_NEXT_BUTTON_HIGHLIGHTED], false, 2, 1.5f, -50.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, 0.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 50.f, -50.f);
+	}
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), restart_button_vec_winScreen.x, restart_button_vec_winScreen.y, restart_button_vec_winScreen.x + buttonXoffset, restart_button_vec_winScreen.y + buttonYoffset))
+	{
 		RenderMeshIn2D(meshList[GEO_NEXT_BUTTON], false, 2, 1.5f, -50.f, -50.f);
-	RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, 0.f, -50.f);
-	RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 50.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON_HIGHLIGHTED], false, 2, 1.5f, 0.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 50.f, -50.f);
+	}
+	else if (Application::checkForcollision(Application::getMouseWorldX(), Application::getMouseWorldY(), exit_button_vec_winScreen.x, exit_button_vec_winScreen.y, exit_button_vec_winScreen.x + buttonXoffset, exit_button_vec_winScreen.y + buttonYoffset))
+	{
+		RenderMeshIn2D(meshList[GEO_NEXT_BUTTON], false, 2, 1.5f, -50.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, 0.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON_HIGHLIGHTED], false, 2, 1.5f, 50.f, -50.f);
+	}
+	else
+	{
+		RenderMeshIn2D(meshList[GEO_NEXT_BUTTON], false, 2, 1.5f, -50.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, 0.f, -50.f);
+		RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 50.f, -50.f);
+	}
+
+
+
 	for (int i = 0; i < m_cLevel.GetNumStars(); ++i)
 		RenderMeshIn2D(meshList[GEO_STAR], false, 1.f, 1.f, -50.f + (i * 50.f), 10.f);
 

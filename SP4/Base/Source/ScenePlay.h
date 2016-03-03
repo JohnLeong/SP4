@@ -67,7 +67,7 @@ class CScenePlay : public CSceneManager
 		GEO_RESTART_BUTTON,
 		GEO_RESTART_BUTTON_HIGHLIGHTED,
 		GEO_NEXT_BUTTON,
-
+		GEO_NEXT_BUTTON_HIGHLIGHTED,
 
 		NUM_GEOMETRY,
 	};
@@ -134,6 +134,9 @@ private:
 	static bool m_bBacktoMainMenu;
 	Vector3 quit_button_vec;
 	Vector3 restart_button_vec;
+	Vector3 nextLevel_button_vec_winScreen;
+	Vector3 restart_button_vec_winScreen;
+	Vector3 exit_button_vec_winScreen;
 
 	SpriteAnimation* coins_sprite;
 
