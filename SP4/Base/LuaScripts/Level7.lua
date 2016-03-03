@@ -9,7 +9,7 @@ MinMoves = 150
 maxNumOfZombies = 0
 maxNumOfRetardZombies = 0
 maxNumOfBlocks = 3
-maxNumOfCoins = 0
+maxNumOfCoins = 2
 maxNumOfFire = 9
 maxNumOfDemonFire = 5
 maxNumOfRedKeys = 1
@@ -30,6 +30,13 @@ redKey1PosY = 7
 
 blueKey1PosX = 3
 blueKey1PosY = 14
+
+coin1PosX = 13
+coin1PosY = 12
+
+coin2PosX = 5
+coin2PosY = 1
+
 
 fire1PosX = 11
 fire1PosY = 10
@@ -60,7 +67,7 @@ fire7PosY = 11
 fire7Stage = 1
 
 fire8PosX = 5
-firePosY = 12
+fire8PosY = 12
 fire8Stage = 1
 
 fire9PosX = 3
