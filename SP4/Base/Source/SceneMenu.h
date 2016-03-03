@@ -37,6 +37,9 @@ class CSceneMenu : public CSceneManager
 		GEO_GROUND,
 		GEO_STAR,
 
+		//logo
+		GEO_LOGO,
+
 		NUM_GEOMETRY,
 	};
 
