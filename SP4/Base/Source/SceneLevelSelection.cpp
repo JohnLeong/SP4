@@ -50,7 +50,7 @@ void CSceneLevelSelection::Init()
 
 	//init the choice
 	Application::setChoiceVal(1);
-
+	m_bBacktoMainMenu = false;
 	//vector of quit button pos
 	quit_button_vec.Set(136.0f, 7.5f, 0.0f);
 
@@ -480,7 +480,7 @@ void CSceneLevelSelection::Render()
 			  switch (Application::getChoiceVal())
 			  {
 			  case 1:
-				  dialogue << "That temple awaits..fdnsnfdsiafdsinafindsifgfmigfdmigfgndsuhuhuhgnfsijfndisaufnsdioanfiasnfduisgfhudsaihfuihasduifhihasuihuihuihihuihuihuiuhsughduhuhufhudhuhsuhduisduihiudshuihuigsdfjigdsfingdsfihhdsusfmieimvandsinifds";
+				  dialogue << "That temple awaits..";
 				  break;
 			  case 2:
 				  dialogue << "Who is that guy...? is he friendly?";

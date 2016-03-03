@@ -46,6 +46,10 @@ void CSplashState::Cleanup()
 #if GSM_DEBUG_MODE
 	cout << "CSplashState::Cleanup\n" << endl;
 #endif
+	// Delete the scene
+	scene->Exit();
+	delete scene;
+	scene = NULL;
 }
 
 void CSplashState::Pause()
@@ -90,13 +94,8 @@ void CSplashState::Update(CGameStateManager* theGSM)
 void CSplashState::Update(CGameStateManager* theGSM, const double m_dElapsedTime)
 {
 	scene->Update(m_dElapsedTime);
-	if (scene->IsKeyDown(VK_RETURN))
+	if (scene->IsKeyDown(VK_RETURN) || ((CSceneSplash*)scene)->m_fTimer < 0.f)
 		theGSM->ChangeState(CMenuState::Instance());
-	if (((CSceneSplash*)scene)->m_fTimer < 0.f)
-	{
-		std::cout << "Changing to MENU state" << std::endl;
-		theGSM->ChangeState(CMenuState::Instance());
-	}
 }
 
 void CSplashState::Draw(CGameStateManager* theGSM) 

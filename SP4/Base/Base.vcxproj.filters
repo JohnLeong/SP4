@@ -447,5 +447,16 @@
     <ClInclude Include="Source\States\LevelSelectionState.h">
       <Filter>Game State Management\States\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Base.rc">
+      <Filter>Shader</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\monkey.ico">
+      <Filter>Shader</Filter>
+    </Image>
   </ItemGroup>
 </Project>

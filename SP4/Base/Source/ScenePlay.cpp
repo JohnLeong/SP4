@@ -131,6 +131,8 @@ void CScenePlay::Init()
 	meshList[GEO_TILE_FORCE_RIGHT]->textureID = LoadTGA("Image//Tiles/TILE_FORCE_RIGHT.tga");
 	meshList[GEO_TILE_STAIRCASE] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
 	meshList[GEO_TILE_STAIRCASE]->textureID = LoadTGA("Image//Tiles/TILE_STAIRCASE.tga");
+	meshList[GEO_TILE_MONKEY] = MeshBuilder::GenerateSpriteAnimation2D("Geo", 1, 1);
+	meshList[GEO_TILE_MONKEY]->textureID = LoadTGA("Image//Tiles/TILE_MONKEY.tga");
 	meshList[GEO_PLAYER] = MeshBuilder::GenerateSpriteAnimation2D("GEO_PLAYER", 4, 3);
 	meshList[GEO_PLAYER]->textureID = LoadTGA("Image//Entities//explorer.tga");
 
@@ -173,10 +175,6 @@ void CScenePlay::Init()
 	//yellow keys
 	meshList[GEO_KEYS_YELLOW] = MeshBuilder::GenerateSpriteAnimation2D("yellow key", 1, 11);
 	meshList[GEO_KEYS_YELLOW]->textureID = LoadTGA("Image//Entities//key_yellow.tga");
-
-	//achievement box
-	meshList[GEO_ACHIEVEMENT_BOX] = MeshBuilder::GenerateQuad("Achievement Box", Color(1, 1, 1), 1.f);
-	//meshList[GEO_ACHIEVEMENT_BOX]->textureID = LoadTGA("Image//grass_darkgreen.tga");
 
 	Math::InitRNG();
 
@@ -244,6 +242,7 @@ void CScenePlay::InitLevel()
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_LEFT, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_LEFT]), new Animation(0, 0, 1, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_WIND_RIGHT, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_FORCE_RIGHT]), new Animation(0, 0, 1, 1.f));
 	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_STAIRCASE, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_STAIRCASE]), new Animation(0, 0, 1, 1.f));
+	m_cLevel.m_cTilemap->SetMeshArray(CTiledata::TILE_MONKEY, dynamic_cast<SpriteAnimation*>(meshList[GEO_TILE_MONKEY]), new Animation(0, 0, 1, 1.f));
 	//m_cLevel.LoadTilemap("LevelMap//" + getLevel + ".csv");
 
 	m_cLevel.LoadTilemap(getLevel);
@@ -294,14 +293,7 @@ void CScenePlay::Update(double dt)
 			m_cPlayer->SetNextDirection(CPlayer::PD_LEFT);
 		}
 	}
-	if (IsKeyDownOnce('1'))
-		m_cPlayer->UseItem(CPlayer::SLOT_01);
-	if (IsKeyDownOnce('2'))
-		m_cPlayer->UseItem(CPlayer::SLOT_02);
-	if (IsKeyDownOnce('3'))
-		m_cPlayer->UseItem(CPlayer::SLOT_03);
-	if (IsKeyDownOnce('4'))
-		m_cPlayer->UseItem(CPlayer::SLOT_04);
+
 	if (IsKeyDownOnce(VK_RETURN))
 		m_cPlayer->UseItem(CPlayer::SLOT_01);
 
@@ -341,7 +333,7 @@ void CScenePlay::Update(double dt)
 	}
 	else if (m_bShowWin)
 	{
-		if (IsKeyDownOnce('n'))
+		if (IsKeyDownOnce('n') && m_iCurrentLevel <= 8)
 		{
 			++m_iCurrentLevel;
 			ostringstream convertor;
@@ -412,7 +404,8 @@ void CScenePlay::RenderWin(void)
 {
 	RenderMeshIn2D(meshList[GEO_TRANSPARENT_LAYER], false, 350.f, 180.f, 0, 0);
 	RenderMeshIn2D(meshList[GEO_TEXTBOX], false, 300.f, 150.f, 0, 0);
-	RenderMeshIn2D(meshList[GEO_NEXT_BUTTON], false, 2, 1.5f, -50.f, -50.f);
+	if (m_iCurrentLevel <= 8)
+		RenderMeshIn2D(meshList[GEO_NEXT_BUTTON], false, 2, 1.5f, -50.f, -50.f);
 	RenderMeshIn2D(meshList[GEO_RESTART_BUTTON], false, 2, 1.5f, 0.f, -50.f);
 	RenderMeshIn2D(meshList[GEO_QUIT_BUTTON], false, 2, 1.5f, 50.f, -50.f);
 	for (int i = 0; i < m_cLevel.GetNumStars(); ++i)

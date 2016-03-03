@@ -49,12 +49,12 @@ Destructor
 ********************************************************************************/
 CSoundManager::~CSoundManager()
 {
+	if (currentSound)
+		currentSound->drop();
 	if (soundEngine)
 		soundEngine->drop();
 	if (soundEngineBGM)
 		soundEngineBGM->drop();
-	if (currentSound)
-		currentSound->drop();
 }
 
 /********************************************************************************

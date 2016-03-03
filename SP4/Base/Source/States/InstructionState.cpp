@@ -35,6 +35,10 @@ void CInstructionState::Cleanup()
 #if _DEBUG
 	cout << "CInstructionState::Cleanup" << endl;
 #endif
+	// Delete the scene
+	scene->Exit();
+	delete scene;
+	scene = NULL;
 }
 
 void CInstructionState::Pause()

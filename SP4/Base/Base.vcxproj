@@ -135,6 +135,12 @@
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Base.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\monkey.ico" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9B172635-4E2B-46F1-A403-08F4194D00F5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

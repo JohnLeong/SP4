@@ -9,12 +9,7 @@ CPhysicsObjectManager::CPhysicsObjectManager()
 
 CPhysicsObjectManager::~CPhysicsObjectManager()
 {
-	while (m_ObjectList.size() > 0)
-	{
-		CPhysicsObject* object = m_ObjectList.back();
-		delete object;
-		m_ObjectList.pop_back();
-	}
+
 }
 
 void CPhysicsObjectManager::Update(double dt)
@@ -29,6 +24,16 @@ void CPhysicsObjectManager::Update(double dt)
 	{
 		m_fNextTimer = 0.3f;
 		FetchObject();
+	}
+}
+
+void CPhysicsObjectManager::Cleanup(void)
+{
+	while (m_ObjectList.size() > 0)
+	{
+		CPhysicsObject* object = m_ObjectList.back();
+		delete object;
+		m_ObjectList.pop_back();
 	}
 }
 

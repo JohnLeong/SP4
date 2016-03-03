@@ -38,6 +38,10 @@ void CMenuState::Cleanup()
 #if _DEBUG
 	cout << "CMenuState::Cleanup" << endl;
 #endif
+	// Delete the scene
+	scene->Exit();
+	delete scene;
+	scene = NULL;
 }
 
 void CMenuState::Pause()

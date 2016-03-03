@@ -11,6 +11,7 @@ public:
 	~CPhysicsObjectManager();
 
 	void Update(double dt);
+	void Cleanup(void);
 
 	CPhysicsObject* FetchObject(void);
 

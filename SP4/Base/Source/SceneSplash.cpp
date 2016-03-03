@@ -138,6 +138,7 @@ void CSceneSplash::Update(double dt)
 			m_fLogo2PosY = 0.f;
 			m_bDoShake = true;
 			m_bplaySplashSoundback = false;
+			Application::Sound.playSound("../irrKlang/media/startup_sound_front.mp3");
 		}
 		break;
 	case CSceneSplash::ANIM_3:
@@ -151,6 +152,7 @@ void CSceneSplash::Update(double dt)
 			cAnimState = ANIM_4;
 			m_fLogo3PosY = 0.f;
 			m_bDoShake = true;
+			Application::Sound.playSound("../irrKlang/media/startup_sound_front.mp3");
 		}
 		break;
 	case CSceneSplash::ANIM_4:

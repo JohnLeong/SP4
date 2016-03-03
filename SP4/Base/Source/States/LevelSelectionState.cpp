@@ -35,6 +35,10 @@ void CLevelSelectionState::Cleanup()
 #if _DEBUG
 	cout << "CLevelSelectionState::Cleanup" << endl;
 #endif
+	// Delete the scene
+	scene->Exit();
+	delete scene;
+	scene = NULL;
 }
 
 void CLevelSelectionState::Pause()

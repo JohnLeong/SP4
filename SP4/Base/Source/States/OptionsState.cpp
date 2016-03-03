@@ -35,6 +35,10 @@ void COptionsState::Cleanup()
 #if _DEBUG
 	cout << "COptionsState::Cleanup" << endl;
 #endif
+	// Delete the scene
+	scene->Exit();
+	delete scene;
+	scene = NULL;
 }
 
 void COptionsState::Pause()

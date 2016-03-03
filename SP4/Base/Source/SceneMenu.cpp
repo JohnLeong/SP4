@@ -467,6 +467,7 @@ void CSceneMenu::Render()
  ********************************************************************************/
 void CSceneMenu::Exit()
 {
+	m_cObjectManager.Cleanup();
 	// Cleanup VBO
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{

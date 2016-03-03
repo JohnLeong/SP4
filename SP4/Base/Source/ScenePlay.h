@@ -58,6 +58,7 @@ class CScenePlay : public CSceneManager
 		GEO_TILE_FORCE_LEFT,
 		GEO_TILE_FORCE_RIGHT,
 		GEO_TILE_STAIRCASE,
+		GEO_TILE_MONKEY,
 
 		GEO_PLAYER,
 		GEO_SCROLL,
@@ -67,7 +68,6 @@ class CScenePlay : public CSceneManager
 		GEO_RESTART_BUTTON_HIGHLIGHTED,
 		GEO_NEXT_BUTTON,
 
-		GEO_ACHIEVEMENT_BOX,
 
 		NUM_GEOMETRY,
 	};

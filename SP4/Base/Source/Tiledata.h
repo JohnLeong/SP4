@@ -28,6 +28,7 @@ public:
 		TILE_RUNE,				//Kills enemies on touch
 		TILE_RUNE_USED,
 		TILE_STAIRCASE,
+		TILE_MONKEY,
 		NUM_TILE
 	};
 	//Collision check based on COLLISION_TYPE
