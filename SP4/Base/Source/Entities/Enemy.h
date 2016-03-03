@@ -4,7 +4,10 @@
 #include "../Tilemap.h"
 #include "EntityIPos.h"
 
-
+/*
+\brief
+Base class for all enemies
+*/
 class CEnemy : public CEntityIPos
 {
 public:
@@ -20,17 +23,17 @@ public:
 	CEnemy();
 	~CEnemy(void);
 
-	virtual void AddAnimation(Animation* cAnim, MOVE_DIR cMoveDir);
-	virtual void Update(const float dt);		// Update
+	virtual void AddAnimation(Animation* cAnim, MOVE_DIR cMoveDir);		//Add animation to animation array
+	virtual void Update(const float dt);				// Update
 
-	virtual bool DoColDir(MOVE_DIR m_MoveDir);						//Do collision response in specified direction
-	virtual	bool DoCurrentTileCollision();
+	virtual bool DoColDir(MOVE_DIR m_MoveDir);			//Do collision response in specified direction
+	virtual	bool DoCurrentTileCollision();				//Do collision check with tilemap and entities for current position
 
 	virtual bool DeathOnEntry(void);
 
 protected:
-	Animation* m_animationList[NUM_DIR];
-	MOVE_DIR m_NextDir;
+	Animation* m_animationList[NUM_DIR];		//Array of animations for this entity
+	MOVE_DIR m_NextDir;							//Next movement direction of enemy
 
 };
 

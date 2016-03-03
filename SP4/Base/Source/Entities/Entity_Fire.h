@@ -2,7 +2,10 @@
 #define ENTITY_FIRE_H
 
 #include "EntityIPos.h"
-
+/*
+\brief
+Fire entity - changes state whenever player moves
+*/
 class CEntity_Fire : public CEntityIPos
 {
 public:

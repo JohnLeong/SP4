@@ -4,7 +4,10 @@
 #include "Enemy.h"
 #include "../AStar.h"
 
-//Zombie enemy which always tracks the player
+/*
+\brief
+Special enemy - moves only after player moves twice
+*/
 
 class CEnemySuperRetardZombie : public CEnemy
 {

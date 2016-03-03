@@ -108,6 +108,9 @@ void CScenePlay::Init()
 	meshList[GEO_GRASS_LIGHTGREEN] = MeshBuilder::GenerateQuad("GEO_GRASS_Lcx	IGHTGREEN", Color(1, 1, 1), 1.f);
 	meshList[GEO_GRASS_LIGHTGREEN]->textureID = LoadTGA("Image//grass_lightgreen.tga");
 
+	meshList[GEO_BACKGROUND] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 320.5f, 200.f);
+	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//Background/wall_drawing.tga");
+
 	meshList[GEO_OVERLAY_RED] = MeshBuilder::GenerateQuad("OVERLAY_RED", Color(1, 1, 1), 1.f);
 	meshList[GEO_OVERLAY_RED]->textureID = LoadTGA("Image//Tiles/cross.tga");
 	meshList[GEO_QUESTION_MARK] = MeshBuilder::GenerateQuad("MARK", Color(1, 1, 1), 1.f);
@@ -163,7 +166,7 @@ void CScenePlay::Init()
 
 	//Scroll background
 	meshList[GEO_SCROLL] = MeshBuilder::Generate2DMesh("scroll background", Color(1, 1, 1), 0.0f, 0.0f, 100.0f, 180.0f);
-	meshList[GEO_SCROLL]->textureID = LoadTGA("Image/INVENTORY//Scroll.tga");
+	meshList[GEO_SCROLL]->textureID = LoadTGA("Image/INVENTORY//Scroll2.tga");
 	
 	//Quit button
 	meshList[GEO_QUIT_BUTTON] = MeshBuilder::Generate2DMeshCenter("quit button", Color(1, 1, 1), 0.0f, 0.0f, 20.0f, 10.0f);
@@ -216,19 +219,19 @@ void CScenePlay::Init()
 	bLightEnabled = true;
 
 	coins_sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_COIN]);
-	coins_sprite->m_anim = new Animation(0, 7, 0, 1.0f);
+	coins_sprite->m_anim = new Animation(0, 7, 0, 0.7f);
 
 	keys_sprite_blue = dynamic_cast<SpriteAnimation*>(meshList[GEO_KEYS_BLUE]);
-	keys_sprite_blue->m_anim = new Animation(0, 10, 0, 1.0f);
+	keys_sprite_blue->m_anim = new Animation(0, 10, 0, 0.7f);
 
 	keys_sprite_red = dynamic_cast<SpriteAnimation*>(meshList[GEO_KEYS_RED]);
-	keys_sprite_red->m_anim = new Animation(0, 10, 0, 1.0f);
+	keys_sprite_red->m_anim = new Animation(0, 10, 0, 0.7f);
 
 	keys_sprite_green = dynamic_cast<SpriteAnimation*>(meshList[GEO_KEYS_GREEN]);
-	keys_sprite_green->m_anim = new Animation(0, 10, 0, 1.0f);
+	keys_sprite_green->m_anim = new Animation(0, 10, 0, 0.7f);
 
 	keys_sprite_yellow = dynamic_cast<SpriteAnimation*>(meshList[GEO_KEYS_YELLOW]);
-	keys_sprite_yellow->m_anim = new Animation(0, 10, 0, 1.0f);
+	keys_sprite_yellow->m_anim = new Animation(0, 10, 0, 0.7f);
 
 
 	m_cPlayer = new CPlayer();
@@ -651,41 +654,37 @@ void CScenePlay::RenderInventory()
 	RenderMeshIn2D(meshList[GEO_SCROLL], false, 1, 1, 60, -90);
 
 	//Render the number of keys obtained
-	RenderMeshIn2D(meshList[GEO_KEYS_BLUE], false, 25, 25, 80, -30);
-	RenderMeshIn2D(meshList[GEO_KEYS_RED], false, 25, 25, 120, -30);
-	RenderMeshIn2D(meshList[GEO_KEYS_GREEN], false, 25, 25, 80, -15);
-	RenderMeshIn2D(meshList[GEO_KEYS_YELLOW], false, 25, 25, 120, -15);
+	RenderMeshIn2D(meshList[GEO_KEYS_BLUE], false, 25, 25, 80, -40);
+	RenderMeshIn2D(meshList[GEO_KEYS_RED], false, 25, 25, 120, -40);
+	RenderMeshIn2D(meshList[GEO_KEYS_GREEN], false, 25, 25, 80, -25);
+	RenderMeshIn2D(meshList[GEO_KEYS_YELLOW], false, 25, 25, 120, -25);
 
 	//Render the number of coins obtained
-	RenderMeshIn2D(meshList[GEO_COIN], false, 20, 20, 80, -55);
+	RenderMeshIn2D(meshList[GEO_COIN], false, 20, 20, 80, -70.f);
 
 	//Fetch and Render the amount of keys/coins
 	ostringstream s_coins;
 	s_coins << m_cPlayer->GetCoins() << "/" << m_cLevel.GetTotalCoins();
 	if (m_cPlayer->GetCoins() >= m_cLevel.GetTotalCoins())
-		RenderTextOnScreen(meshList[GEO_TEXT], s_coins.str(), Color(0.2f, 1.0f, 0.2f), 20.0f, 92.0f, -69.0f);
+		RenderTextOnScreen(meshList[GEO_TEXT], s_coins.str(), Color(0.2f, 1.0f, 0.2f), 20.0f, 92.0f, -84.0f);
 	else
-		RenderTextOnScreen(meshList[GEO_TEXT],s_coins.str(), Color(0.0f, 0.0f, 0.0f), 20.0f, 92.0f, -69.0f);
+		RenderTextOnScreen(meshList[GEO_TEXT],s_coins.str(), Color(0.0f, 0.0f, 0.0f), 20.0f, 92.0f, -84.0f);
 	
 	ostringstream s_keys_red;
-	RenderTextOnScreen(meshList[GEO_TEXT], "4", Color(1.0f, 0.0f, 0.0f), 10.0f, 105.0f, -34.0f);
 	s_keys_red << m_cPlayer->GetKeys_Red();
-	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_red.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 135.0f, -40.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_red.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 135.0f, -50.0f);
 
 	ostringstream s_keys_blue;
-	RenderTextOnScreen(meshList[GEO_TEXT], "3", Color(0.0f, 0.0f, 1.0f), 10.0f, 65.0f, -34.0f);
 	s_keys_blue << m_cPlayer->GetKeys_Blue();
-	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_blue.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 92.0f, -40.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_blue.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 92.0f, -50.0f);
 
 	ostringstream s_keys_green;
-	RenderTextOnScreen(meshList[GEO_TEXT], "1", Color(0.0f, 1.0f, 0.0f), 10.0f, 65.0f, -20.0f);
 	s_keys_green << m_cPlayer->GetKeys_Green();
-	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_green.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 92.0f, -26.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_green.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 92.0f, -36.0f);
 
 	ostringstream s_keys_yellow;
-	RenderTextOnScreen(meshList[GEO_TEXT], "2", Color(1.0f, 1.0f, 0.0f), 10.0f, 105.0f, -20.0f);
 	s_keys_yellow << m_cPlayer->GetKeys_Yellow();
-	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_yellow.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 135.0f, -26.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], s_keys_yellow.str(), Color(0.0f, 0.0f, 0.0f), 15.0f, 135.0f, -36.0f);
 
 	ostringstream s_player_moves;
 	s_player_moves << m_cLevel.GetNumberOfMoves();
@@ -782,6 +781,8 @@ void CScenePlay::RenderTilemap(void)
 void CScenePlay::Render()
 {
 	CSceneManager::Render2D();
+
+	RenderMeshIn2D(meshList[GEO_BACKGROUND], false);
 
 	RenderTilemap();
 

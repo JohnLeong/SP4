@@ -28,7 +28,7 @@ CSceneManager::~CSceneManager(void)
 void CSceneManager::Init()
 {
 	// Blue background
-	glClearColor(0.9f, 0.9f, 0.9f, 0.9f);
+	glClearColor(0.f, 0.f, 0.f, 0.9f);
 	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);

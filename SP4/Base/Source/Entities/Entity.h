@@ -4,6 +4,12 @@
 #include "../Graphics/SpriteAnimation.h"
 #include "../Tilemap.h"
 #include "../define.h"
+
+/*
+\brief
+Base class for all game entities
+*/
+
 class CEntity
 {
 public:
@@ -27,12 +33,12 @@ public:
 
 protected:
 	//Gameplay variables
-	int m_iCurrent_health;
-	int m_iMax_health;
-	bool m_bAlive;
-	bool m_bActive;
-	SpriteAnimation* m_cSprite;
-	CTilemap* m_cTilemap;
+	int m_iCurrent_health;			//Current health of entity
+	int m_iMax_health;				//Max health of entity
+	bool m_bAlive;					//Enemy alive state
+	bool m_bActive;					//Enemy active state
+	SpriteAnimation* m_cSprite;		//Sprite animation for this entity
+	CTilemap* m_cTilemap;			//Pointer to current tilemap
 };
 
 #endif

@@ -2,7 +2,10 @@
 #define ENTITY_DEMONFIRE_H
 
 #include "EntityIPos.h"
-
+/*
+\brief
+Demon fire - toggles on and off everytime tha player moves
+*/
 class CEntity_DemonFire : public CEntityIPos
 {
 public:

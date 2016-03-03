@@ -20,6 +20,7 @@ class  CSceneInstruction : public CSceneManager
 		GEO_TEXT,
 		GEO_LOGO,
 		GEO_QUAD,
+		GEO_BACKGROUND_BASE,
 		GEO_WASD,
 		GEO_MOUSE,
 		//buttons

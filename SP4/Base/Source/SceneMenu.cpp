@@ -70,7 +70,7 @@ void CSceneMenu::Init()
 	meshList[GEO_EXIT]->textureID = LoadTGA("Image/MENU//exit_button.tga");
 	//achievement button
 	meshList[GEO_ACHIEVEMENT] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
-	meshList[GEO_ACHIEVEMENT]->textureID = LoadTGA("Image/MENU//exit_button.tga");
+	meshList[GEO_ACHIEVEMENT]->textureID = LoadTGA("Image/GUI//button_achievements.tga");
 
 	//play button highlighted
 	meshList[GEO_PLAY_H] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
@@ -86,7 +86,7 @@ void CSceneMenu::Init()
 	meshList[GEO_EXIT_H]->textureID = LoadTGA("Image/MENU//h_exit_button.tga");
 	//achievement button highlighted
 	meshList[GEO_ACHIEVEMENT_H] = MeshBuilder::Generate2DMeshCenter("play button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
-	meshList[GEO_ACHIEVEMENT_H]->textureID = LoadTGA("Image/MENU//h_exit_button.tga");
+	meshList[GEO_ACHIEVEMENT_H]->textureID = LoadTGA("Image/GUI//button_achievements_h.tga");
 
 	//Backgrounds
 	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.5f, 0.85f);

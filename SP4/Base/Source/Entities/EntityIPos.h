@@ -2,7 +2,11 @@
 #define ENTITYIPOS_H
 
 #include "Entity.h"
-//Entity class for entities using index based position
+
+/*
+\brief
+Base class for all game entities using index based position
+*/
 
 class CEntityIPos : public CEntity
 {
@@ -33,23 +37,23 @@ public:
 	virtual int GetXIndex(void);									// Get position x of the player
 	virtual int GetYIndex(void);									// Get position y of the player
 
-	virtual float GetXOffset(void);
-	virtual float GetYOffset(void);
+	virtual float GetXOffset(void);									// Get offset x of the player
+	virtual float GetYOffset(void);									// Get offset y of the player
 
 	virtual float GetRenderPosX(void);
 	virtual float GetRenderPosY(void);
 
-	virtual Vector3 GetNextDirectionPos(void);
+	virtual Vector3 GetNextDirectionPos(void);						//Get next movement direction of this entity
 
 	virtual bool IsMoving(void);
 
-	virtual void Update(const float dt);		// Update
-	virtual void UpdateMovement(const float dt);
+	virtual void Update(const float dt);							//Update
+	virtual void UpdateMovement(const float dt);					//Update movement
 
-	virtual	bool DoCurrentTileCollision(void);
+	virtual	bool DoCurrentTileCollision(void);						//Do collision check with tilemap and entities for current position
 
-	virtual bool AllowEnemyMovement(void);
-	virtual bool DeathOnEntry(void);
+	virtual bool AllowEnemyMovement(void);							//Return true if enemies are able to path through this entity
+	virtual bool DeathOnEntry(void);								//Return true if this entity kills player on collision
 
 	//For player
 	virtual int GetCoins(void);
@@ -67,24 +71,24 @@ public:
 	virtual void SetRecalculate(bool b);
 
 protected:
-	int m_iXIndex;			//X Index
-	int m_iYIndex;			//Y Index
+	int m_iXIndex;			//X Index position of entity
+	int m_iYIndex;			//Y Index position of entity
 
 	float m_fOffSetX;		//Render offset for translation in X axis
 	float m_fOffSetY;		//Render offset for translation in Y axis
 
-	float m_fDeathOffSetX;
-	float m_fDeathOffSetY;
+	float m_fDeathOffSetX;	//X axis Translation offset for death animation
+	float m_fDeathOffSetY;	//Y axis Translation offset for death animation
 
 	MOVE_DIR m_MoveDir;		//Current movement direction of entity
-	MOVE_DIR m_AnimDir;
+	MOVE_DIR m_AnimDir;		//Current animation direction to display
 
-	CEntityIPos* m_cPlayerPtr;							//Pointer to player
-	CEntityIPos* m_cObjPtr;							//Pointer to object this entity is holding
-	std::vector<CEntityIPos*>* m_cEntityList;		//Pointer to list of entities
-	bool m_bHoldingObj;
-	bool m_bRecalculate;
-	bool m_bDeathDir;
+	CEntityIPos* m_cPlayerPtr;							//Player pointer to access player propeties
+	CEntityIPos* m_cObjPtr;								//Pointer to object this entity is holding
+	std::vector<CEntityIPos*>* m_cEntityList;			//Pointer to list of entities
+	bool m_bHoldingObj;									//true = holding object, false = not holding object
+	bool m_bRecalculate;								//recalculate movements (pathfinding etc)
+	bool m_bDeathDir;									//Death animation direction - left || right
 };
 
 #endif

@@ -76,6 +76,8 @@ void CSceneAchievements::Init()
 	projectionStack.LoadMatrix(perspective);
 
 	bLightEnabled = true;
+
+	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 }
 
 void CSceneAchievements::Update(double dt)
@@ -161,10 +163,12 @@ Render this scene
 ********************************************************************************/
 void CSceneAchievements::Render()
 {
+	CSceneManager::Render();
+
+	glDisable(GL_DEPTH_TEST);
 	//Render the background
 	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 
-	CSceneManager::Render();
 	for (unsigned i = 0; i < Application::m_cAchievementList.size(); i++)
 	{
 		if (Application::m_cAchievementList[i]->GetUnlocked() == false)

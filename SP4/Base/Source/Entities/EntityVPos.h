@@ -3,7 +3,10 @@
 
 #include "Vector3.h"
 #include "Entity.h"
-
+/*
+\brief
+Base class for all game entities using world space based position
+*/
 class CEntityVPos	: public CEntity
 {
 public:

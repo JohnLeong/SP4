@@ -57,7 +57,8 @@ void CSceneInstruction::Init()
 	meshList[GEO_QUAD]->material.kAmbient.Set(0.f, 0.f, 0.f);
 	meshList[GEO_QUAD]->material.kDiffuse.Set(0.f, 0.f, 0.f);
 	meshList[GEO_QUAD]->textureID = LoadTGA("Image//GUI/blank_tile.tga");
-
+	meshList[GEO_BACKGROUND_BASE] = MeshBuilder::Generate2DMeshCenter("background", Color(1, 1, 1), 0.0f, 0.0f, 1.5f, 0.85f);
+	meshList[GEO_BACKGROUND_BASE]->textureID = LoadTGA("Image//Background/gradient_background.tga");
 	//back button
 	meshList[GEO_BACK] = MeshBuilder::Generate2DMeshCenter("backs button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
 	meshList[GEO_BACK]->textureID = LoadTGA("Image/MENU/back_button.tga");
@@ -72,6 +73,8 @@ void CSceneInstruction::Init()
 	projectionStack.LoadMatrix(perspective);
 
 	bLightEnabled = true;
+
+	camera.Init(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
 }
 
 void CSceneInstruction::Update(double dt)
@@ -159,14 +162,7 @@ void CSceneInstruction::Render()
 {
 	CSceneManager::Render();
 
-#if _DEBUG
-	RenderTextOnScreen(meshList[GEO_TEXT], "SceneInstructions", Color(1.f, 1.f, 1.f), 20.f, -160.f, 70.f);
-
-	std::ostringstream ss;
-	ss.precision(5);
-	ss << fps;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1.f, 1.f, 1.f), 20.f, -160.f, -100.f);
-#endif
+	RenderMesh(meshList[GEO_BACKGROUND_BASE], false);
 
 	switch (Application::getChoiceVal())
 	{

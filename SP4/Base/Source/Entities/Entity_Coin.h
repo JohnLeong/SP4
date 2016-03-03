@@ -2,7 +2,10 @@
 #define ENTITY_COIN_H
 
 #include "EntityIPos.h"
-
+/*
+\brief
+Coin entity that the player can pick up
+*/
 class CEntity_Coin : public CEntityIPos
 {
 public:

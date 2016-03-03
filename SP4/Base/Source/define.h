@@ -2,7 +2,7 @@
 #define VARIABLE_DEFINES_H
 
 #define ENTITY_MOVE_SPEED 180.0f
-#define TILE_SIZE 25.0f
+#define TILE_SIZE 38.0f
 #define KEY_HUD_SIZE 15.0f
 #define KEY_HUD_OFFSET 15.0f
 

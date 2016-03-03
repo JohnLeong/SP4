@@ -4,7 +4,10 @@
 #include "Enemy.h"
 #include "../AStar.h"
 
-//Zombie enemy which always tracks the player
+/*
+\brief
+Normal zombie - moves whenever player moves
+*/
 
 class CEnemyZombie : public CEnemy
 {

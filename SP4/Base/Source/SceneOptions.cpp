@@ -90,11 +90,11 @@ void CSceneOptions::Init()
 
 	//reset button
 	meshList[GEO_RESET] = MeshBuilder::Generate2DMeshCenter("reset button", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
-	meshList[GEO_RESET]->textureID = LoadTGA("Image/MENU//back_button.tga");
+	meshList[GEO_RESET]->textureID = LoadTGA("Image/GUI//button_clear.tga");
 
 	//reset button highlighted
 	meshList[GEO_RESET_H] = MeshBuilder::Generate2DMeshCenter("reset button highlighted", Color(1, 1, 1), 0.0f, 0.0f, 70.0f, 20.0f);
-	meshList[GEO_RESET_H]->textureID = LoadTGA("Image/MENU//h_back_button.tga");
+	meshList[GEO_RESET_H]->textureID = LoadTGA("Image/GUI//button_clear_h.tga");
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;

@@ -3,6 +3,10 @@
 
 #include "EntityIPos.h"
 
+/*
+\brief
+Text box class to display text
+*/
 
 class CTextBox : public CEntityIPos
 {
@@ -28,16 +32,16 @@ public:
 	static void ResetBox(void);
 
 protected:
-	std::string m_Text;
-	bool m_bActivated;
-	bool m_bWasActivated;
-	int m_iCurrentCharIndex;
+	std::string m_Text;				//Text to display
+	bool m_bActivated;				//Is current textbox entity activated by player
+	bool m_bWasActivated;			//Was current textbox entity activated by player previously
+	int m_iCurrentCharIndex;		//Char index to display text up to a certain point
 
-	static bool m_bShowBox;
-	static bool m_bOpenBox;
-	static bool m_bShowText;
-	static float m_fBoxScaleX;
-	static float m_fBoxScaleY;
+	static bool m_bShowBox;			//Show text box
+	static bool m_bOpenBox;			//Allow text box to open
+	static bool m_bShowText;		//Show text inside text box
+	static float m_fBoxScaleX;		//ScaleX of textbox
+	static float m_fBoxScaleY;		//ScaleY of textbox
 };
 
 #endif

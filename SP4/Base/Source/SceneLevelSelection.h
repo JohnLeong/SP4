@@ -28,11 +28,22 @@ class  CSceneLevelSelection : public CSceneManager
 		GEO_LEVEL2_BUTTON,
 		GEO_LEVEL3_BUTTON,
 		GEO_LEVEL4_BUTTON,
+		GEO_LEVEL5_BUTTON,
+		GEO_LEVEL6_BUTTON,
+		GEO_LEVEL7_BUTTON,
+		GEO_LEVEL8_BUTTON,
 
 		GEO_LEVEL1_BUTTON_HIGHLIGHTED,
 		GEO_LEVEL2_BUTTON_HIGHLIGHTED,
 		GEO_LEVEL3_BUTTON_HIGHLIGHTED,
 		GEO_LEVEL4_BUTTON_HIGHLIGHTED,
+		GEO_LEVEL5_BUTTON_HIGHLIGHTED,
+		GEO_LEVEL6_BUTTON_HIGHLIGHTED,
+		GEO_LEVEL7_BUTTON_HIGHLIGHTED,
+		GEO_LEVEL8_BUTTON_HIGHLIGHTED,
+
+		GEO_BUTTON_LEFT,
+		GEO_BUTTON_RIGHT,
 
 		//level overview images
 		GEO_LEVEL_OVERVIEW,
@@ -113,6 +124,8 @@ protected:
 	Vector3 quit_button_vec;
 	Vector3 start_button_vec;
 	Vector3 panic_button_vec;
+	Vector3 left_button_vec;
+	Vector3 right_button_vec;
 
 	float m_fLeftAnimOffset;
 	float m_fBotAnimOffset;
